@@ -14,11 +14,11 @@ class TeamsController < ApplicationController
   end
   def create
     @team = Team.new(params[:team])
-    @team.users.first.skip_confirmation_notification! 
+    @team.users.first.skip_confirmation_notification!
     if @team.save
       @team.team_captain = @team.users.first
       if @team.save
-        Devise::Mailer.confirmation_instructions(@team.users.first).deliver
+        Devise::Mailer.confirmation_instructions(@team.users.first, @team.users.first.confirmation_token).deliver
         redirect_to :root, :notice => 'Team was successfully created. Please check your email to finish your registration.'
       else
         render :action => "new"
