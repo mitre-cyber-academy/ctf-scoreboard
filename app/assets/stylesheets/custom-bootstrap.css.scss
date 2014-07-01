@@ -3,7 +3,7 @@ $btnPrimaryBackground: #5d8cb6;
 $btnPrimaryBackgroundHighlight: #39546c;
 @import "bootstrap";
 body { padding-top: 60px; }
-@import "bootstrap-responsive";
+//@import "bootstrap-responsive";
 
 .breadcrumb {
   text-align:left;
@@ -150,7 +150,7 @@ body { padding-top: 60px; }
 	color: #5A5A5A;
 	font-weight: normal;
 	font-size: 28px;
-	border-bottom: 1px solid #EEE;	
+	border-bottom: 1px solid #EEE;
 }
 .centerbutton {
 	display:inline-block;
@@ -162,7 +162,7 @@ body { padding-top: 60px; }
 }
 .directions h3 {
 	font-weight:normal;
-	color: #5A5A5A;	
+	color: #5A5A5A;
 }
 .directions {
 	padding-left:10px;
@@ -225,7 +225,7 @@ body { padding-top: 60px; }
 }
 #contactform button {
 	margin:2px 0 20px 10px;
-	
+
 }
 #contactform textarea{
 	margin-bottom:20px;
@@ -320,5 +320,5 @@ body { padding-top: 60px; }
     padding: 3px 9px !important;
     font-size: 12px !important;
     line-height: 18px !important;
-  } 
+  }
 }
