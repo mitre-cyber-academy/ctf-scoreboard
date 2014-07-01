@@ -1,0 +1,12 @@
+Script started on Fri Feb 22 10:30:52 2013
+[?1034hbash-3.2$ cd script
+bash: cd: script: No such file or directory
+bash-3.2$ cd ..
+bash-3.2$ cd ..
+bash-3.2$ ~
+bash: /Users/rbclark: is a directory
+bash-3.2$ cd ~
+bash-3.2$ exit
+exit
+
+Script done on Fri Feb 22 10:31:21 2013

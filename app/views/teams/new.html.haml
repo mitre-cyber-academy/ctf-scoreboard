@@ -1,0 +1,26 @@
+- content_for :header do
+  Register new team
+
+.container
+  =form_for @team, :html => { :class => "form-horizontal"} do |f|
+    - if @team.errors.any?
+      .alert.alert-error
+        %a.close{"data-dismiss" => "alert", :href => "#"} ×
+        = pluralize(@team.errors.count, "error")
+        prohibited this team from being saved:
+        %ul.errors
+          - @team.errors.full_messages.each do |msg|
+            %li= msg
+    %legend Your team information
+    .control-group
+      = f.label :team_name, :class => "control-label"
+      .controls
+        = f.text_field :team_name, :class => "textarea"
+    .control-group
+      = f.label :affiliation, :class => "control-label"
+      .controls
+        = f.text_field :affiliation, :class => "textarea"
+    = f.fields_for :users do |user|
+      - render 'teamuser', f: user
+    .controls  
+      = button_tag "Submit", :class => "btn"

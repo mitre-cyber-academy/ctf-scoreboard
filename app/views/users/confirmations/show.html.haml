@@ -1,0 +1,60 @@
+- content_for :header do
+  Confirm your account
+
+=form_for(resource, :as => resource_name, :url => confirm_path, :html => { :class => "form-horizontal"}) do |f|
+  - if resource.errors.any?
+    .alert.alert-error
+      %a.close{"data-dismiss" => "alert", :href => "#"} ×
+      = pluralize(resource.errors.count, "error")
+      prohibited your user from being saved:
+      %ul.errors
+        - resource.errors.full_messages.each do |msg|
+          %li= msg
+  %legend Almost there! Please fill out a few final fields to confirm your account.
+  %label.label-custom Note: Fields marked with * are required.
+  .control-group
+    = f.label :name, :class => "control-label-required"
+    .controls
+      = f.text_field :name, :class => "textarea"
+  .control-group
+    = f.label :school, :class => "control-label-required"
+    .controls
+      = f.text_field :school, :class => "textarea"
+  .control-group
+    = f.label :year_in_school, :class => "control-label-required"
+    .controls
+      = f.select :year_in_school, [['',''],['9','9'],['10','10'],['11','11'],['12','12']]
+  .control-group
+    = f.label :gender, :class => "control-label"
+    .controls
+      = f.select :gender, [['',''],['Male','M'],['Female','F']]
+  .control-group
+    = f.label :age, :class => "control-label"
+    .controls
+      = f.text_field :age, :class => "textarea"
+  .control-group
+    = f.label :area_of_study, "Major/area of study", :class => "control-label"
+    .controls
+      = f.text_field :area_of_study, :class => "textarea"
+  .control-group
+    = f.label :location, :class => "control-label"
+    .controls
+      = f.text_field :location, :class => "textarea"
+  .control-group
+    = f.label :personal_email, :class => "control-label"
+    .controls
+      = f.text_field :personal_email, :class => "textarea"
+  .control-group
+    = f.label :password, :class => "control-label-required"
+    .controls
+      = f.password_field :password, :input_html => {:autofocus => true}, :class => "textarea", :placeholder => "Minimum 10 characters"
+  .control-group
+    = f.label :password_confirmation, "Confirm Password", :class => "control-label-required"
+    .controls
+      = f.password_field :password_confirmation, :class => "textarea"
+    = f.hidden_field :confirmation_token
+  .controls  
+    = button_tag :submit, :label => 'Confirm Account', :class => "btn"
+  %br
+  %label.disclaimer
+    Gender and age will be used in aggregate statistics and are held confidentially.

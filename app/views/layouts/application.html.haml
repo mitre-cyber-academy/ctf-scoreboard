@@ -1,0 +1,67 @@
+!!!
+%html
+  %head
+    %title MITRE Cyber Academy CTF Registration
+    = stylesheet_link_tag    "application"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    .navbar.navbar-fixed-top.navbar-inverse
+      .navbar-inner
+        .container
+          %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.brand{:href => "/"} MITRE Cyber Academy
+          .nav-collapse.collapse
+            %ul.nav
+              %li
+                %a{:href => "/home/about"}
+                  %i.icon-info-sign.icon-white
+                  About
+              %li
+                %a{:href => "/home/contact"}
+                  %i.icon-globe.icon-white
+                  Contact
+            %ul.nav.pull-right
+              - if user_signed_in?
+                %li.dropdown
+                  %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                    Hello #{current_user.name}
+                    %b.caret
+                  %ul.dropdown-menu
+                    - if !current_user.team_id.nil?
+                      %li
+                        = link_to "See your team", team_path(current_user.team_id)
+                    %li.divider
+                    %li
+                      = link_to "Log out", destroy_user_session_path, :method => :delete 
+              - else
+                %li.dropdown
+                  %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                    Log in / Register
+                    %b.caret
+                  %ul.dropdown-menu
+                    %li
+                      =link_to "Log in", new_user_session_path
+                    %li.divider
+                    %li
+                      =link_to "Register a Team", new_team_path   
+    %header#subpage.jumbotron.masthead.remove_top_padding 
+      .container
+        %h1 
+          = yield :header
+    .colored-divider
+    .container
+      - if !flash[:notice].blank?
+        .alert.alert-success
+          %a.close{"data-dismiss" => "alert", :href => "#"} ×
+          = notice
+      - if !flash[:alert].blank?
+        .alert.alert-error
+          %a.close{"data-dismiss" => "alert", :href => "#"} ×
+          = alert
+    .container
+      = yield
+    

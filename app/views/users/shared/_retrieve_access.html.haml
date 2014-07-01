@@ -1,0 +1,14 @@
+- if resource.errors.any?
+  .alert.alert-error
+    %a.close{"data-dismiss" => "alert", :href => "#"} ×
+    = pluralize(resource.errors.count, "error")
+    prohibited your email from being sent:
+    %ul.errors
+      - resource.errors.full_messages.each do |msg|
+        %li= msg
+= user.label :email, :class => "control-label-required"
+.input-append
+  = user.email_field :email, :id => "appendedInputButton"
+  = user.submit "Resend instructions", :class => "btn"
+%br/
+= render "users/shared/links"

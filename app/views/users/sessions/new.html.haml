@@ -1,0 +1,25 @@
+- content_for :header do
+  Access your account
+%legend Login
+= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-horizontal"}) do |f|
+  .control-group
+    = f.label :email, :class => "control-label"
+    .controls
+      = f.email_field :email, :tabindex => "1"
+      = render 'users/shared/create_team_link'
+  .control-group
+    = f.label :password, :class => "control-label"
+    .controls
+      = f.password_field :password, :tabindex => "2"
+      = render 'users/shared/reset_your_password'
+  - if devise_mapping.rememberable?
+    .control-group
+      .controls
+        = f.label :remember_me, :class => "checkbox" do
+          = f.check_box :remember_me, :class => "checkbox"
+          Remember me
+  .controls
+    = button_tag "Submit", :class => "btn", :tabindex => "3"
+  %br/
+  .controls
+    = render 'users/shared/resend_confirmation_email'

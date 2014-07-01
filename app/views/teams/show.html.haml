@@ -1,0 +1,29 @@
+- content_for :header do
+  See your Team
+
+.container
+  %h2 #{@team.team_name} - Team Information
+  %table.table.table-condensed.table-striped
+    %thead
+    %tr
+      %th.span1
+        Lead
+      %th Email
+      %th Status
+    - @team.users.each do |current|
+      %tbody 
+        %tr{:class=>current.confirmed? ? 'success' : 'warning'}
+          %td 
+            -if current == @team.team_captain
+              %i.icon-ok
+          %td=current.email
+          -if current.confirmed?
+            %td='Accepted'
+          -else
+            %td='Pending'
+  - if is_editable
+    = form_for([@team, @team.users.build]) do |user|
+      %h3 Invite a Team Member
+      = render 'user', f: user
+      .controls  
+        = user.submit "Invite Member", :class => "btn"

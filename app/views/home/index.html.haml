@@ -1,0 +1,62 @@
+- content_for :header do
+  MITRE CTF Registration
+
+.container
+  .catchphrase
+    %h2 Registration is now open
+    %h4 High school cyber club competition on April 20, 2013
+  .maincontent.row-fluid.indent-40px-left
+    %p
+      %b
+        %u Forming a team
+    %ul
+      %li Team captains, register a team name and then invite your friends to join (five team members max).
+      %li Don’t have a team? Use our matchmaking service to find one.
+    %p
+      %b
+        %u Preparing the team
+    %ul
+      %li Sharpen your team’s skills on our practice range before you compete.
+      %li Questions about the event challenges? Chat with the organizers on IRC (channel #mitrectf on freenode).
+      %li Be sure to use Backtrack Linux 5.x 32-bit as your host operating system. Directions on setting it up and connecting to the competition (Coming Soon).
+    %p
+      %b
+        %u How to compete
+    %ul
+      %li
+        Read the rules. If you don't follow them, you could be disqualified.
+      %li The competition comprises 24 separate challenges in 6 categories.
+      %ul
+        %li Challenges open when any team completes the challenge previous in the category.
+        %li Open challenges can be worked in any order, but the challenges become more difficult as you progress within each category.
+        %li Each challenge has a flag of the form MCA-XXXXXXXX, where XXXXXXXX is a hexadecimal value (using uppercase characters). For example, MCA-BAD3EE15.
+      %li Each challenge is worth 100 to 300 points.
+      %li Teams are awarded points after submitting the flag earned by completing a challenge successfully.
+      %li If multiple teams end the CTF with the same number of points, the team that reaches the total first is declared the winner.
+    %p
+      %b
+        %u When to compete
+    %ul
+      %li The high school Capture the Flag runs from 10:00 AM to 6:00 PM ET on April 20.
+    %p
+      %b
+        %u Help, I'm Stuck!
+    %ul
+      %li We'd be happy to give you a hand if you shoot us an email through the #{ link_to 'contact form.', :controller => 'home', :action => 'contact'}
+  - if user_signed_in?
+    .btn-toolbar
+      .pagination-centered
+        - if !current_user.team_id.nil?
+          .btn-group
+            = link_to "See your team", team_path(current_user.team_id), :class => "btn btn-large btn-primary"
+        .btn-group
+          = link_to "Log out", destroy_user_session_path, :method => :delete, :class => "btn btn-large btn-primary"
+  - else
+    .btn-toolbar
+      .pagination-centered
+        .btn-group
+          = link_to "Register a team", new_team_path, :class => "btn btn-large btn-primary"
+        .btn-group
+          = link_to "Log in", new_user_session_path, :class => "btn btn-large btn-primary"
+        .btn-group
+          = link_to "Register for VIP session", new_vip_path, :class => "btn btn-large btn-primary"

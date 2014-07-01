@@ -1,0 +1,6 @@
+- content_for :header do
+  Forgot your password
+
+%legend Send me a password reset
+= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, :class => "user-reset-form" }) do |user|
+  = render "users/shared/retrieve_access", user: user

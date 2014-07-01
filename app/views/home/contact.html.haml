@@ -1,0 +1,23 @@
+- content_for :header do
+  Contact MITRE Cyber Academy
+
+.container
+  .maincontent.row-fluid
+    #contactform.span8.offset2
+      %h2 Contact Us
+      %form{:action => "mailto:jmpalmer@mitre.org", :enctype => "text/plain", :method => "POST"}
+        %fieldset
+          .block
+            %label Name
+            %input{:name => "Name", :placeholder => "Your name...", :type => "text"}/
+          .block
+            %label Topic
+            %select{:name => "Topic"}
+              %option{:value => ""}
+              %option{:value => "Site Registration"} Site Registation
+              %option{:value => "Other"} Other
+          .block
+            %label Your Comments
+            %textarea{:cols => "20", :name => "Comments", :rows => "5"}
+            %br/
+          %button.btn{:type => "submit"} Submit

@@ -1,0 +1,8 @@
+%h2 Sign up. All we need is your email address.
+= semantic_form_for(resource, :as => resource_name, :url => user_registration_path(resource)) do |form|
+  = devise_error_messages!
+  = form.inputs do
+    = form.input :email, :input_html => {:autofocus => true}
+  = form.actions do
+    = form.action :submit, :label => "Sign up"
+= render 'users/shared/links'

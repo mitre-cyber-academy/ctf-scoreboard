@@ -1,0 +1,38 @@
+- content_for :header do
+  Register to become a VIP
+
+.maincontent.row-fluid.top-border
+  %p
+    As a service to interested members of the community and industry, MITRE is concurrently hosting a VIP day during the beginning of the competition. This is a chance for VIPs to see how the MITRE Cyber Academy is helping develop cyber-security expertise, how the competition occurs and discuss avenues for further collaboration between educators, non-profits and industry.
+=form_for @vip, :html => { :class => "form-horizontal"} do |f|
+  - if @vip.errors.any?
+    .alert.alert-error
+      %a.close{"data-dismiss" => "alert", :href => "#"} ×
+      = pluralize(@vip.errors.count, "error")
+      prohibited your information from being saved:
+      %ul.errors
+        - @vip.errors.full_messages.each do |msg|
+          %li= msg
+  %legend Please provide the information requested below
+  .control-group
+    = f.label :name, :class => "control-label"
+    .controls
+      = f.text_field :name, :class => "textarea"
+  .control-group
+    = f.label :email, :class => "control-label"
+    .controls
+      = f.email_field(:email)
+  .control-group
+    = f.label :phone, :class => "control-label"
+    .controls
+      = f.telephone_field(:phone)
+  .control-group
+    = f.label :company, :class => "control-label"
+    .controls
+      = f.text_field :company, :class => "textarea"
+  .control-group
+    = f.label :why_are_you_a_vip, "What is your role and interest in our event?", :class => "control-label"
+    .controls
+      = f.text_area :why_are_you_a_vip, :class => "textarea", :size => "10x8"
+  .controls  
+    = button_tag "Submit", :class => "btn"

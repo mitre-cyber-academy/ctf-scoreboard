@@ -1,0 +1,2 @@
+- if devise_mapping.confirmable? && controller_name != 'confirmations'
+  = link_to "Resend confirmation email", new_confirmation_path(resource_name)
