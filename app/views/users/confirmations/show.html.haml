@@ -1,7 +1,7 @@
 - content_for :header do
   Confirm your account
 
-=form_for(resource, :as => resource_name, :url => confirm_path, :html => { :class => "form-horizontal"}) do |f|
+=form_for(resource, :as => resource_name, :url => confirm_path, :html => { :multipart => "true", :class => "form-horizontal"}) do |f|
   - if resource.errors.any?
     .alert.alert-error
       %a.close{"data-dismiss" => "alert", :href => "#"} ×
@@ -41,6 +41,10 @@
     .controls
       = f.text_field :location, :class => "textarea"
   .control-group
+    = f.label :resume, :class => "control-label"
+    .controls
+      = f.file_field :resume, :class => "textarea"
+  .control-group
     = f.label :personal_email, :class => "control-label"
     .controls
       = f.text_field :personal_email, :class => "textarea"
@@ -53,7 +57,7 @@
     .controls
       = f.password_field :password_confirmation, :class => "textarea"
     = f.hidden_field :confirmation_token
-  .controls  
+  .controls
     = button_tag :submit, :label => 'Confirm Account', :class => "btn"
   %br
   %label.disclaimer

@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   belongs_to :team
+  has_attached_file :resume
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -7,11 +9,12 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :username, :password, :password_confirmation, :remember_me, :team_id, :team_captain, :email, :name, :school, :year_in_school, :gender, :age, :area_of_study, :location, :personal_email
+  attr_accessible :username, :password, :password_confirmation, :remember_me, :team_id, :team_captain, :email, :name, :school, :year_in_school, :gender, :age, :area_of_study, :location, :personal_email, :resume
 
   validates_presence_of :name, :school, :password, :password_confirmation, :if => :final_registration_step?
   validates_inclusion_of :year_in_school, :in => [9, 10, 11, 12], :presence => true, :if => :final_registration_step?
   validates_inclusion_of :gender, :in => ['M','F'], :allow_blank => true
+  do_not_validate_attachment_file_type :resume
 
   def password_required?
     super if confirmed?

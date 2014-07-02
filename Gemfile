@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.2'
+gem 'rails', '~> 3.2.19'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -48,5 +48,5 @@ gem "haml-rails"
 gem "formtastic"
 gem "awesome_nested_fields"
 gem 'bootstrap-sass'
-gem 'rails_admin', '~> 0.6.0', :git=>'git://github.com/sferik/rails_admin.git'
-gem 'protected_attributes'
+gem 'rails_admin'
+gem "paperclip"
