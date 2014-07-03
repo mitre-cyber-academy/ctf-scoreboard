@@ -23,7 +23,7 @@
   .control-group
     = f.label :year_in_school, :class => "control-label-required"
     .controls
-      = f.select :year_in_school, [['',''],['9','9'],['10','10'],['11','11'],['12','12']]
+      = f.select :year_in_school, [['',''],['9','9'],['10','10'],['11','11'],['12','12'],['College - Freshman','13'],['College - Sophomore','14'],['College - Junior','15'],['College - Senior','16']]
   .control-group
     = f.label :gender, :class => "control-label"
     .controls
@@ -41,7 +41,7 @@
     .controls
       = f.text_field :location, :class => "textarea"
   .control-group
-    = f.label :resume, :class => "control-label"
+    = f.label :resume, :class => "control-label-required"
     .controls
       = f.file_field :resume, :class => "textarea"
   .control-group
