@@ -22,3 +22,6 @@
 
 # Ignore Bundle Files
 /vendor/*
+
+# Ignore sensitive files
+.gmail_env
