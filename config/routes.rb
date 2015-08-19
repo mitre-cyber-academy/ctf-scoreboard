@@ -16,7 +16,7 @@ CtfRegistration::Application.routes.draw do
   devise_for :users, :controllers => {:confirmations => 'confirmations', :registrations => 'registrations'}, :path => '', :path_names => {:sign_in => 'login', :sign_out => 'logout', :confirmation => 'confirm'}
   
   devise_scope :user do
-    put "/confirm" => "confirmations#confirm"
+    patch "/confirm" => "confirmations#confirm"
   end
 
   resources :teams do

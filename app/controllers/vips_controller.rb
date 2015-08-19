@@ -3,7 +3,7 @@ class VipsController < ApplicationController
   	@vip = Vip.new
   end
   def create
-  	@vip = Vip.new(params[:vip])
+  	@vip = Vip.new(vip_params)
   	if @vip.save
       VipMailer.confirmation_email(@vip)
       redirect_to :root, :notice => 'You have successfully registered for a VIP account.' 
@@ -22,5 +22,11 @@ class VipsController < ApplicationController
     else
       redirect_to :root, :alert => "No such confirmation token was found."
     end
+  end
+
+  private 
+
+  def vip_params
+    params.require(:vip).permit(:company, :email, :name, :phone, :confirmation_token, :confirmed, :why_are_you_a_vip, :manually_approved)
   end
 end
