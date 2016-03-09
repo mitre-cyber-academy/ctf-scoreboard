@@ -91,14 +91,19 @@ ActiveRecord::Schema.define(version: 20140702145602) do
     t.string   "school"
     t.integer  "year_in_school",         limit: 2
     t.string   "gender",                 limit: 1
+    t.string   "gender",               limit: 1
     t.integer  "age",                    limit: 2
     t.string   "area_of_study"
     t.string   "location"
     t.string   "personal_email"
-    t.string   "resume_file_name"
-    t.string   "resume_content_type"
-    t.integer  "resume_file_size"
-    t.datetime "resume_updated_at"
+    t.string   "Verification_file_name"
+    t.string   "Verification_content_type"
+    t.integer  "Verification_file_size"
+    t.datetime "Verification_updated_at"
+    t.string   "Resume_file_name"
+    t.string   "Resume_content_type"
+    t.integer  "Resume_file_size"
+    t.datetime "Resume_updated_at"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
