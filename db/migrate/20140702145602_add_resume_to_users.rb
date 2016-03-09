@@ -1,5 +1,5 @@
-class AddResumeToUsers < ActiveRecord::Migration
+class AddVerificationToUsers < ActiveRecord::Migration
   def change
-    add_attachment :users, :resume
+    add_attachment :users, :Verification, :Resume
   end
 end
