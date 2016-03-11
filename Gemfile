@@ -7,6 +7,8 @@ gem 'rails', '~> 4.2.3'
 
 group :development do
 	gem 'sqlite3'
+	gem 'rspec-rails'
+	gem 'capybara'
 end
 
 group :production do

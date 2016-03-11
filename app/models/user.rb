@@ -11,8 +11,8 @@ class User < ActiveRecord::Base
   validates_presence_of :Verification, :name, :school, :password, :password_confirmation, :if => :final_registration_step?
   validates_presence_of :Resume, :name, :school, :password, :password_confirmation, :if => :final_registration_step?
   validates_inclusion_of :year_in_school, :in => [9, 10, 11, 12, 13, 14, 15, 16], :presence => true, :if => :final_registration_step?
-  validates_inclusion_of :gender, :in => ['M','F'], :allow_blank => true
-  validates_inclusion_of :gender, :in => ['M', 'F'], :allow_blank => true
+  validates_inclusion_of :compete_for_money, :in => ['Money', 'No Money'], :presence => true, :if => :final_registration_step?
+  validates_inclusion_of :gender, :in => ['Yes','No'], :allow_blank => true
   do_not_validate_attachment_file_type :Verification
   do_not_validate_attachment_file_type :Resume
 
