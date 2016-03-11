@@ -51,4 +51,4 @@ gem "formtastic"
 gem "awesome_nested_fields"
 gem 'bootstrap-sass', '~> 2.3.2.2'
 gem 'rails_admin'
-gem "paperclip" , '~> 4.0.0'
+gem "paperclip" , '~> 4.3.5'
