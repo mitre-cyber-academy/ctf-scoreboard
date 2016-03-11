@@ -90,8 +90,8 @@ ActiveRecord::Schema.define(version: 20140702145602) do
     t.string   "name"
     t.string   "school"
     t.integer  "year_in_school",         limit: 2
+    t.integer  "compete_for_money",         limit: 2
     t.string   "gender",                 limit: 1
-    t.string   "gender",               limit: 1
     t.integer  "age",                    limit: 2
     t.string   "area_of_study"
     t.string   "location"
