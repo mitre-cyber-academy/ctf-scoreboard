@@ -29,6 +29,6 @@ class ConfirmationsController < Devise::ConfirmationsController
 
  private
    def permitted_params # Make sure to update this in the users controller as well
-     params.require(resource_name).permit(:username, :password, :password_confirmation, :remember_me, :team_id, :team_captain, :email, :name, :school, :year_in_school, :compete_for_money, :gender, :age, :area_of_study, :location, :personal_email, :Verification, :Resume)
+     params.require(resource_name).permit(:username, :password, :password_confirmation, :remember_me, :team_id, :team_captain, :email, :name, :school, :year_in_school, :gender, :age, :area_of_study, :location, :personal_email, :Verification, :Resume, :gender)
    end
 end
