@@ -29,9 +29,6 @@
     .controls
       = f.select :gender, [['',''],['Male','M'],['Female','F']]
   .control-group
-    .controls
-      = f.select :gender, [['',''],['Male','M'],['Female','F']]
-  .control-group
     = f.label :age, :class => "control-label"
     .controls
       = f.text_field :age, :class => "textarea"
@@ -44,13 +41,9 @@
     .controls
       = f.text_field :location, :class => "textarea"
   .control-group
-    = f.label :Verification, :class => "control-label-required"
+    = f.label :resume, :class => "control-label-required"
     .controls
-      = f.file_field :Verification, :class => "textarea"
-  .control-group
-    = f.label :Resume, :class => "control-label-required"
-    .controls
-      = f.file_field :Resume, :class => "textarea"
+      = f.file_field :resume, :class => "textarea"
   .control-group
     = f.label :personal_email, :class => "control-label"
     .controls

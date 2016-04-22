@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   belongs_to :team
-  has_attached_file :Verification, :path => ":rails_root/files/:attachment/:id/:style/:basename.:extension"
+  has_attached_file :resume, :path => ":rails_root/files/:attachment/:id/:style/:basename.:extension"
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -8,13 +8,10 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  validates_presence_of :Verification, :name, :school, :password, :password_confirmation, :if => :final_registration_step?
-  validates_presence_of :Resume, :name, :school, :password, :password_confirmation, :if => :final_registration_step?
+  validates_presence_of :resume, :name, :school, :password, :password_confirmation, :if => :final_registration_step?
   validates_inclusion_of :year_in_school, :in => [9, 10, 11, 12, 13, 14, 15, 16], :presence => true, :if => :final_registration_step?
   validates_inclusion_of :gender, :in => ['M','F'], :allow_blank => true
-  validates_inclusion_of :gender, :in => ['M', 'F'], :allow_blank => true
-  do_not_validate_attachment_file_type :Verification
-  do_not_validate_attachment_file_type :Resume
+  do_not_validate_attachment_file_type :resume
 
   def password_required?
     super if confirmed?
