@@ -24,15 +24,11 @@
     = f.label :year_in_school, :class => "control-label-required"
     .controls
       = f.select :year_in_school, [['',''],['9','9'],['10','10'],['11','11'],['12','12'],['College - Freshman','13'],['College - Sophomore','14'],['College - Junior','15'],['College - Senior','16']]
-
-  .control-group
-    = f.label :compete_for_money, :class => "control-label-required"
-    .controls
-      = f.select :compete_for_money, [['',''],['Yes','Yes'],['No','No']]
-
-
   .control-group
     = f.label :gender, :class => "control-label"
+    .controls
+      = f.select :gender, [['',''],['Male','M'],['Female','F']]
+  .control-group
     .controls
       = f.select :gender, [['',''],['Male','M'],['Female','F']]
   .control-group
@@ -72,4 +68,4 @@
     = button_tag :submit, :label => 'Confirm Account', :class => "btn"
   %br
   %label.disclaimer
-    gender and age will be used in aggregate statistics and are held confidentially.
+    Gender and age will be used in aggregate statistics and are held confidentially.
