@@ -1,6 +1,6 @@
-class AddVerificationToUsers < ActiveRecord::Migration
+class AddResumeToUsers < ActiveRecord::Migration
   def change
-    add_attachment :users, :Verification, :Resume
+    add_attachment :users, :resume
   end
 
   # def prevent_spoofing
