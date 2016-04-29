@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140702145602) do
+ActiveRecord::Schema.define(version: 20160429040936) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",              default: "", null: false
@@ -69,12 +69,12 @@ ActiveRecord::Schema.define(version: 20140702145602) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                            default: "", null: false
-    t.string   "encrypted_password",               default: "", null: false
+    t.string   "email",                               default: "", null: false
+    t.string   "encrypted_password",                  default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                    default: 0
+    t.integer  "sign_in_count",                       default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -89,9 +89,9 @@ ActiveRecord::Schema.define(version: 20140702145602) do
     t.integer  "team_id"
     t.string   "name"
     t.string   "school"
-    t.integer  "year_in_school",         limit: 2
-    t.string   "gender",                 limit: 1
-    t.integer  "age",                    limit: 2
+    t.integer  "year_in_school",            limit: 2
+    t.string   "gender",                    limit: 1
+    t.integer  "age",                       limit: 2
     t.string   "area_of_study"
     t.string   "location"
     t.string   "personal_email"
@@ -99,6 +99,12 @@ ActiveRecord::Schema.define(version: 20140702145602) do
     t.string   "resume_content_type"
     t.integer  "resume_file_size"
     t.datetime "resume_updated_at"
+    t.string   "verification_file_name"
+    t.string   "verification_content_type"
+    t.integer  "verification_file_size"
+    t.datetime "verification_updated_at"
+    t.string   "play_for_money",            limit: 2
+    t.string   "still_compete",             limit: 2
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

@@ -29,6 +29,14 @@
     .controls
       = f.select :gender, [['',''],['Male','M'],['Female','F']]
   .control-group
+    = f.label :play_for_money, :class => "control-label"
+    .controls
+      = f.select :play_for_money, [['',''],['Yes','Y'],['No','N']]
+  .control-group
+    = f.label :still_compete, :class => "control-label"
+    .controls
+      = f.select :still_compete, [['',''],['Yes','Y'],['No','N']]
+  .control-group
     = f.label :age, :class => "control-label"
     .controls
       = f.text_field :age, :class => "textarea"
@@ -44,6 +52,10 @@
     = f.label :resume, :class => "control-label-required"
     .controls
       = f.file_field :resume, :class => "textarea"
+  .control-group
+    = f.label :verification, :class => "control-label-required"
+    .controls
+      = f.file_field :verification, :class => "textarea"
   .control-group
     = f.label :personal_email, :class => "control-label"
     .controls
@@ -62,3 +74,4 @@
   %br
   %label.disclaimer
     Gender and age will be used in aggregate statistics and are held confidentially.
+    Please provide a verification of enrollment
