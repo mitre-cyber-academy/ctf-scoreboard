@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   #do_not_validate_attachment_file_type :resume
   do_not_validate_attachment_file_type :resume
   # How do I have a message come up saying you can't uplaod a file without the correct extension
-  validates :verification, :matches => [/pdf\f/, /rtf\f/,/doc\f/,/docx\f/]
+  #validates :verification, :matches => [/pdf\f/, /rtf\f/,/doc\f/,/docx\f/]
 
   def password_required?
     super if confirmed?
