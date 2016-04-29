@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160429040936) do
+ActiveRecord::Schema.define(version: 20160429194516) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",              default: "", null: false
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 20160429040936) do
     t.datetime "verification_updated_at"
     t.string   "play_for_money",            limit: 2
     t.string   "still_compete",             limit: 2
+    t.string   "state",                     limit: 1
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

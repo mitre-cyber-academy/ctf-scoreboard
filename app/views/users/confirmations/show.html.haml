@@ -25,6 +25,10 @@
     .controls
       = f.select :year_in_school, [['',''],['9','9'],['10','10'],['11','11'],['12','12'],['College - Freshman','13'],['College - Sophomore','14'],['College - Junior','15'],['College - Senior','16']]
   .control-group
+    = f.label :state, :class => "control-label-required"
+    .controls
+      = f.select :state, [['',''],['Alabama','AL '],['Alaska','AK'],['Arizona','AZ'],['Arkansas','AR'],['California','CA'],['Colorado','CO'],['Connecticut','CT'],['Delaware','DE'],['Florida','FL'],['Georgia','GA'],['Hawaii','HI'],['Idaho','ID'],['Illinois','IL'],['Indiana','IN'],['Iowa','IA'],['Kanas','KS'],['Kentucky','KY'],['Louisiana','LA'],['Maine','ME'],['Maryland','MD'],['Massachusetts','MA'],['Michigan','MI'],['Minnesota','MN'],['Mississippi','MS'],['Missouri','MO'],['Montana','MT'],['Nebraska','NV'],['Nevada','NV'],['New Hamsphire','NV'],['New Jersy','NJ'],['Minnesota', 'NM'],['New York','NY'],['North Carolina','NC'],['North Dakota','ND'],['Ohio','OH'],['Oklahoma','OK'],['Oregon','OR'],['Pennsylvania','PA'],['Rhode Island','RI'],['South Carolina','SC'],['South Dakota','SD'],['Tennessee','TN'],['Texas','TX'],['Utah','UT'],['Vermont','VT'],['Virginia','VA'],['Washington','WA'],['West Virginia','WV'],['Wisconsin','WI'],['Wyoming','WY']]
+  .control-group
     = f.label :gender, :class => "control-label"
     .controls
       = f.select :gender, [['',''],['Male','M'],['Female','F']]
@@ -74,4 +78,6 @@
   %br
   %label.disclaimer
     Gender and age will be used in aggregate statistics and are held confidentially.
+  %br
+  %label.disclaimer
     Please provide a verification of enrollment
