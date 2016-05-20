@@ -205,7 +205,7 @@ DEPENDENCIES
   formtastic
   haml-rails
   jquery-rails
-  paperclip
+  paperclip (~> 4.3.5)
   pg
   rails (~> 4.2.3)
   rails_admin

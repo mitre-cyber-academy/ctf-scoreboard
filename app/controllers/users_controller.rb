@@ -50,6 +50,6 @@ end
   private
 
   def user_params # Be sure to update this in the confirmations controller as well if you need to add parameters.
-    params.require(:user).permit(:username, :password, :password_confirmation, :remember_me, :team_id, :team_captain, :email, :name, :school, :year_in_school, :gender, :play_for_money,:still_compete ,:age, :area_of_study, :location, :state,:personal_email, :resume, :verification)
+    params.require(:user).permit(:username, :password, :password_confirmation, :remember_me, :team_id, :team_captain, :email, :name, :school, :year_in_school, :gender, :compete_for_prizes ,:age, :area_of_study, :location, :state,:personal_email, :resume, :verification)
   end
 end

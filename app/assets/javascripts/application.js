@@ -16,3 +16,7 @@
 //= require jquery.nested-fields
 // Loads all Bootstrap javascripts
 //= require bootstrap
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})

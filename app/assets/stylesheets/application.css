@@ -12,3 +12,7 @@
  *= require_tree .
  *= require_custom-bootstrap
  */
+
+.helpertext-wrapper {
+  display: inline-block;
+}

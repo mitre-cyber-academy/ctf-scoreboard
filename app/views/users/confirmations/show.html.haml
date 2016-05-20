@@ -23,39 +23,11 @@
   .control-group
     = f.label :year_in_school, :class => "control-label-required"
     .controls
-      = f.select :year_in_school, [['',''],['9','9'],['10','10'],['11','11'],['12','12'],['College - Freshman','13'],['College - Sophomore','14'],['College - Junior','15'],['College - Senior','16'], ['Not in School', '0']]
+      = f.select :year_in_school, options_for_select(years_in_school), { :include_blank => '' }, :onChange => "hidePrizesCheckbox(this)"
   .control-group
     = f.label :state, :class => "control-label-required"
     .controls
-      = f.select :state, [['',' '],['Alabama','AL '],['Alaska','AK'],['Arizona','AZ'],['Arkansas','AR'],['California','CA'],['Colorado','CO'],['Connecticut','CT'],['Delaware','DE'],['Florida','FL'],['Georgia','GA'],['Hawaii','HI'],['Idaho','ID'],['Illinois','IL'],['Indiana','IN'],['Iowa','IA'],['Kanas','KS'],['Kentucky','KY'],['Louisiana','LA'],['Maine','ME'],['Maryland','MD'],['Massachusetts','MA'],['Michigan','MI'],['Minnesota','MN'],['Mississippi','MS'],['Missouri','MO'],['Montana','MT'],['Nebraska','NV'],['Nevada','NV'],['New Hamsphire','NV'],['New Jersy','NJ'],['Minnesota', 'NM'],['New York','NY'],['North Carolina','NC'],['North Dakota','ND'],['Ohio','OH'],['Oklahoma','OK'],['Oregon','OR'],['Pennsylvania','PA'],['Rhode Island','RI'],['South Carolina','SC'],['South Dakota','SD'],['Tennessee','TN'],['Texas','TX'],['Utah','UT'],['Vermont','VT'],['Virginia','VA'],['Washington','WA'],['West Virginia','WV'],['Wisconsin','WI'],['Wyoming','WY']]
-  .control-group
-    = f.label :gender, :class => "control-label"
-    .controls
-      = f.select :gender, [['',''],['Male','M'],['Female','F']]
-  .control-group
-    = f.label :play_for_money, :class => "control-label"
-    .controls
-      = f.select :play_for_money, [['',''],['Yes','Y'],['No','N']]
-  .control-group
-    = f.label :still_compete, :class => "control-label"
-    .controls
-      = f.select :still_compete, [['',''],['Yes','Y'],['No','N']]
-  .control-group
-    = f.label :age, :class => "control-label"
-    .controls
-      = f.text_field :age, :class => "textarea"
-  .control-group
-    = f.label :area_of_study, "Major/area of study", :class => "control-label"
-    .controls
-      = f.text_field :area_of_study, :class => "textarea"
-  .control-group
-    = f.label :location, :class => "control-label"
-    .controls
-      = f.text_field :location, :class => "textarea"
-  .control-group
-    = f.label :personal_email, :class => "control-label"
-    .controls
-      = f.text_field :personal_email, :class => "textarea"
+      = f.select :state, options_for_select(us_states), { :include_blank => '' }, :onChange => "hidePrizesCheckbox(this)"
   .control-group
     = f.label :password, :class => "control-label-required"
     .controls
@@ -65,11 +37,24 @@
     .controls
       = f.password_field :password_confirmation, :class => "textarea"
     = f.hidden_field :confirmation_token
+  .control-group#compete-for-prizes
+    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Only US Citizens enrolled in a US High School or College are elegible for prizes. Verification of enrollment and citizenship will be required post-competition from the winning teams." }
+      = f.label :compete_for_prizes, :class => "control-label"
+      .controls
+        = f.check_box :compete_for_prizes
+  .control-group
+    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Gender and age will be used in aggregate statistics and are held confidentially." }
+      = f.label :gender, :class => "control-label"
+      .controls
+        = f.select :gender, User.genders.keys, { :include_blank => '' }
+  .control-group
+    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Gender and age will be used in aggregate statistics and are held confidentially." }
+      = f.label :age, :class => "control-label"
+      .controls
+        = f.text_field :age, :class => "textarea"
+  .control-group
+    = f.label :area_of_study, "Major/area of study", :class => "control-label"
+    .controls
+      = f.text_field :area_of_study, :class => "textarea"
   .controls
     = button_tag :submit, :label => 'Confirm Account', :class => "btn"
-  %br
-  %label.disclaimer
-    Gender and age will be used in aggregate statistics and are held confidentially.
-  %br
-  %label.disclaimer
-    Please provide a verification of enrollment

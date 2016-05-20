@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160520144502) do
+ActiveRecord::Schema.define(version: 20160520181719) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",              default: "", null: false
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 20160520144502) do
     t.string   "area_of_study"
     t.string   "location"
     t.string   "personal_email"
-    t.string   "play_for_money",         limit: 2
+    t.boolean  "compete_for_prizes",     limit: 2
     t.string   "still_compete",          limit: 2
     t.string   "state",                  limit: 1
   end
