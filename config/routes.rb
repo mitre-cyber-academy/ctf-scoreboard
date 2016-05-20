@@ -12,7 +12,7 @@ CtfRegistration::Application.routes.draw do
 
   resources :teams, :only => [:new, :create, :show]
 
-  devise_for :users, :controllers => {:confirmations => 'confirmations', :registrations => 'registrations'}, :path => '', :path_names => {:sign_in => 'login', :sign_out => 'logout', :confirmation => 'confirm'}
+  devise_for :users, :path_names => {:sign_in => 'login', :sign_out => 'logout', :confirmation => 'confirm', :sign_up => 'new'}
   
   devise_scope :user do
     patch "/confirm" => "confirmations#confirm"
