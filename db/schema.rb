@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160520181719) do
+ActiveRecord::Schema.define(version: 20160520185517) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",              default: "", null: false
@@ -103,18 +103,5 @@ ActiveRecord::Schema.define(version: 20160520181719) do
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-
-  create_table "vips", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "company"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "confirmation_token"
-    t.boolean  "confirmed",          default: false
-    t.string   "phone"
-    t.boolean  "manually_approved"
-    t.text     "why_are_you_a_vip"
-  end
 
 end
