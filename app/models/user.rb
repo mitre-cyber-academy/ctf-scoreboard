@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   belongs_to :team
   before_validation { self.email = email.downcase }
+  before_save :clear_compete_for_prizes
   VALID_EMAIL_REGEX = /\A.+@.+\..+\z/i
   enum gender: [ :Male, :Female ]
 
@@ -14,7 +15,7 @@ class User < ActiveRecord::Base
 
   validates :password, presence: true, length: { minimum: 10 }, :if => :final_registration_step?
 
-  validates_presence_of :resume, :name, :school, :password, :password_confirmation, :if => :final_registration_step?, presence: true
+  validates_presence_of :name, :school, :password, :password_confirmation, :if => :final_registration_step?, presence: true
   validates_inclusion_of :year_in_school, :in => [0, 9, 10, 11, 12, 13, 14, 15, 16], :presence => true, :if => :final_registration_step?
   validates :gender, inclusion: { in: genders.keys }, :allow_blank => true
 
@@ -31,5 +32,17 @@ class User < ActiveRecord::Base
     self.errors[:password_confirmation] << "can't be blank" if password_confirmation.blank?
     self.errors[:password_confirmation] << "does not match password" if password != password_confirmation
     password == password_confirmation && !password.blank?
+  end
+
+  private
+
+
+  # If a user chooses to compete for prizes then they must be located in the US and be in school.
+  # When a user is not in school the frontend sets the value to 0 and when they are located out
+  # of the USA the state is set to NA.
+  def clear_compete_for_prizes
+    if year_in_school.eql? 0 or state.eql? "NA"
+      compete_for_prizes = false
+    end
   end
 end

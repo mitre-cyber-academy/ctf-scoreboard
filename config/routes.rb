@@ -1,7 +1,5 @@
 CtfRegistration::Application.routes.draw do
 
-  get 'eddit_user_information/new'
-
   resources :vips, :only => [:new, :create]
   get '/vips/confirm/:confirmation_token', to: 'vips#confirm', as: 'vip_confirmation'
 
