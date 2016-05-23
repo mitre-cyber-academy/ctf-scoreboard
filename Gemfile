@@ -50,3 +50,5 @@ gem "awesome_nested_fields"
 gem 'bootstrap-sass', '~> 2.3.2.2'
 gem 'rails_admin'
 gem "paperclip" , '~> 4.3.5'
+gem 'devise_security_extension'
+gem 'rails_email_validator'
