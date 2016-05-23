@@ -12,10 +12,10 @@ class UsersController < ApplicationController
   #deletes the user entirely
   def destroy
     @user = User.find(params[:id])
-    if @user.destory
-    flash[:notice] = "User was successfully removed."
+    if @user.destroy
+      flash[:notice] = "User was successfully removed."
     else
-    flash[:error] = "There was a problem with removing the user."
+      flash[:error] = "There was a problem with removing the user."
     end
   redirect_to teams_path
   end
