@@ -17,7 +17,7 @@
           .nav-collapse.collapse
             %ul.nav
               %li
-                %a{:href => "/home/about"}
+                %a{:href => home_about_path}
                   %i.icon-info-sign.icon-white
                   About
               %li
@@ -28,7 +28,7 @@
               - if user_signed_in?
                 %li.dropdown
                   %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                    Hello #{current_user.name}
+                    Hello #{current_user.full_name}
                     %b.caret
                   %ul.dropdown-menu
                     - if !current_user.team_id.nil?
@@ -47,7 +47,7 @@
                       =link_to "Log in", new_user_session_path
                     %li.divider
                     %li
-                      =link_to "Register a Team", new_team_path  
+                      =link_to "Register a User", new_user_registration_path  
     %header#subpage.jumbotron.masthead.remove_top_padding 
       .container
         %h1 

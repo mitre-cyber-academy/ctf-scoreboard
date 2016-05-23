@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160520185517) do
+ActiveRecord::Schema.define(version: 20160523145649) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",              default: "", null: false
@@ -87,8 +87,8 @@ ActiveRecord::Schema.define(version: 20160520185517) do
     t.string   "unconfirmed_email"
     t.string   "username"
     t.integer  "team_id"
-    t.string   "name"
-    t.string   "school"
+    t.string   "full_name"
+    t.string   "affiliation"
     t.integer  "year_in_school",         limit: 2
     t.integer  "gender",                 limit: 1
     t.integer  "age",                    limit: 2

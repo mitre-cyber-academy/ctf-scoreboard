@@ -1,5 +1,5 @@
 - content_for :header do
-  Register a Team
+  Create a Team
 
 .container
   =form_for @team, :html => { :class => "form-horizontal"} do |f|
@@ -21,7 +21,5 @@
       = f.label :affiliation, :class => "control-label"
       .controls
         = f.text_field :affiliation, :class => "textarea"
-    = f.fields_for :users do |user|
-      - render 'teamuser', f: user
     .controls
       = button_tag "Submit", :class => "btn"

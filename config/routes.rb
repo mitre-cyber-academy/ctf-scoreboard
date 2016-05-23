@@ -1,8 +1,5 @@
 CtfRegistration::Application.routes.draw do
 
-  resources :vips, :only => [:new, :create]
-  get '/vips/confirm/:confirmation_token', to: 'vips#confirm', as: 'vip_confirmation'
-
   devise_for :admins
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
@@ -10,17 +7,9 @@ CtfRegistration::Application.routes.draw do
   get "home/index"
   get "/home/about"
 
-  resources :teams, :only => [:new, :create, :show]
-
   devise_for :users, :path_names => {:sign_in => 'login', :sign_out => 'logout', :confirmation => 'confirm', :sign_up => 'new'}
-  
-  devise_scope :user do
-    patch "/confirm" => "confirmations#confirm"
-  end
 
-  resources :teams do
-    resources :users
-  end
+  resources :teams
 
   root :to => "home#index"
   # The priority is based upon order of creation:

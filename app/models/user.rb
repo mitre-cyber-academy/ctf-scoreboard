@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  validates_presence_of :name, :school, presence: true
+  validates_presence_of :full_name, :affiliation, :state, presence: true
   validates_inclusion_of :year_in_school, :in => [0, 9, 10, 11, 12, 13, 14, 15, 16], :presence => true
   validates :gender, inclusion: { in: genders.keys }, :allow_blank => true
 

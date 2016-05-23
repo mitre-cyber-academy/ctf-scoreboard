@@ -1,6 +1,5 @@
 class TeamsController < ApplicationController
   include ApplicationHelper
-  before_filter :user_confirmed, only: :show
   helper_method :is_editable
   def new
     @team = Team.new
@@ -14,30 +13,10 @@ class TeamsController < ApplicationController
   end
   def create
     @team = Team.new(team_params)
-    logger.debug @team.to_yaml
-    @team.users.first.skip_confirmation_notification!
     if @team.save
-      @team.team_captain = @team.users.first
-      if @team.save
-        @team.users.first.send_confirmation_instructions
-        redirect_to :root, :notice => 'Team was successfully created. Please check your email to finish your registration.'
-      else
-        render :action => "new"
-      end
+      redirect_to @team, :notice => 'Team was successfully created.'
     else
       render :action => "new"
-    end
-  end
-  private
-  def user_confirmed
-    if !authenticate_user!
-      redirect_to :root, :alert => "You must be logged in to access this resource."
-    elsif !current_user.confirmed?
-      redirect_to :root, :alert => "Please confirm your account first"
-    elsif current_user.team_id.to_s != params[:id]
-      raise ActionController::RoutingError.new('Not Found')
-    else
-      return true
     end
   end
   def is_editable
