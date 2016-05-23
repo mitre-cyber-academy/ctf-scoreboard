@@ -30,11 +30,11 @@
   - if user_signed_in?
     .btn-toolbar
       .pagination-centered
-        - if !current_user.team_id.nil?
+        - if current_user.team_id.nil?
           .btn-group
-            = link_to "View team", team_path(current_user.team_id), :class => "btn btn-large btn-primary"
-        .btn-group
-          = link_to "Log out", destroy_user_session_path, :method => :delete, :class => "btn btn-large btn-primary"
+            = link_to "Join a Team", new_team_path, :class => "btn btn-large btn-primary"
+          .btn-group
+            = link_to "Create a Team", new_team_path, :class => "btn btn-large btn-primary"
   - else
     .btn-toolbar
       .pagination-centered

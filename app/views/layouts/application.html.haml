@@ -34,9 +34,10 @@
                     - if !current_user.team_id.nil?
                       %li
                         = link_to "See your team", team_path(current_user.team_id)
-                    %li.divider
+                      %li.divider
                     %li
-                      = link_to "Log out", destroy_user_session_path, :method => :delete 
+                      = link_to "Edit your account", edit_user_registration_path, :method => :get
+                      = link_to "Log out", destroy_user_session_path, :method => :delete
               - else
                 %li.dropdown
                   %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
@@ -47,10 +48,10 @@
                       =link_to "Log in", new_user_session_path
                     %li.divider
                     %li
-                      =link_to "Register a User", new_user_registration_path  
-    %header#subpage.jumbotron.masthead.remove_top_padding 
+                      =link_to "Register", new_user_registration_path
+    %header#subpage.jumbotron.masthead.remove_top_padding
       .container
-        %h1 
+        %h1
           = yield :header
     .colored-divider
     .container
@@ -64,4 +65,4 @@
           = alert
     .container
       = yield
-    
+
