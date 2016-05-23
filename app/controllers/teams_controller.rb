@@ -3,22 +3,38 @@ class TeamsController < ApplicationController
   helper_method :is_editable
   def new
     @team = Team.new
-    @team.users.build
   end
+
   def show
     @team = Team.find(params[:id])
     if is_team_captain and !is_editable
       flash.now[:notice] = 'You have added all the users you can to your team.'
     end
   end
+
   def create
     @team = Team.new(team_params)
+    # When creating a new team, make the user creating the team the captain
+    @team.users << current_user
+    @team.team_captain = current_user
+
     if @team.save
       redirect_to @team, :notice => 'Team was successfully created.'
     else
       render :action => "new"
     end
   end
+
+  def update
+    team = Team.find(params[:id])
+    team.update_attributes!(team_params)
+    if team.save
+      redirect_to team, :notice => 'Team member was successfully invited.'
+    else
+      render :action => "show"
+    end
+  end
+
   def is_editable
     if (authenticate_user! and is_team_captain) and @team.users.count < 5
       return true
@@ -26,7 +42,8 @@ class TeamsController < ApplicationController
       return false
     end
   end
+
   def team_params
-    params.require(:team).permit(:team_name, :affiliation, users_attributes: [:email])
+    params.require(:team).permit(:team_name, :affiliation, :user_invites_attributes => [:email])
   end
 end

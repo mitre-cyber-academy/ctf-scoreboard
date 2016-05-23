@@ -22,8 +22,12 @@
           -else
             %td='Pending'
   - if is_editable
-    = form_for([@team, @team.users.build]) do |user|
+    = form_for(@team) do |team|
       %h3 Invite a Team Member
-      = render 'user', f: user
-      .controls  
-        = user.submit "Invite Member", :class => "btn"
+      = team.fields_for :user_invites, @team.user_invites.build do |invite_fields|
+        .control-group
+          = invite_fields.label :email, :class => "control-label"
+          .controls
+            = invite_fields.text_field :email, :class => "textarea"
+      .controls
+        = team.submit "Invite Member", :class => "btn"

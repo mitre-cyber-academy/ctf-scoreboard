@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   belongs_to :team
+  has_one :user_invite
   before_validation { self.email = email.downcase }
   before_save :clear_compete_for_prizes
   enum gender: [ :Male, :Female ]
