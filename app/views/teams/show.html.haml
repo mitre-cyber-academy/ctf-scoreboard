@@ -9,25 +9,55 @@
       %th.span1
         Lead
       %th Email
-      %th Status
     - @team.users.each do |current|
       %tbody 
-        %tr{:class=>current.confirmed? ? 'success' : 'warning'}
+        %tr{:class=>'success'}
           %td 
             -if current == @team.team_captain
               %i.icon-ok
           %td=current.email
-          -if current.confirmed?
-            %td='Accepted'
-          -else
-            %td='Pending'
-  - if is_editable
-    = form_for(@team) do |team|
-      %h3 Invite a Team Member
-      = team.fields_for :user_invites, @team.user_invites.build do |invite_fields|
-        .control-group
-          = invite_fields.label :email, :class => "control-label"
+  .row
+    .span6
+      %h3 Pending User Invites
+      - if @pending_invites.empty?
+        No pending invites at this time.
+      - else
+        %table.table.table-condensed.table-striped
+          %thead
+          %tr
+            %th.span1
+              Email
+            %th
+              Invited On
+          - @pending_invites.each do |current|
+            %tbody 
+              %tr{:class=>'warning'}
+                %td=current.email
+                %td=current.created_at.strftime("%b %d %Y")
+      - if is_editable
+        = form_for(@team) do |team|
+          %h4 Invite a Team Member
+          = team.fields_for :user_invites, @team.user_invites.build do |invite_fields|
+            .control-group
+              = invite_fields.label :email, :class => "control-label"
+              .controls
+                = invite_fields.text_field :email, :class => "textarea"
           .controls
-            = invite_fields.text_field :email, :class => "textarea"
-      .controls
-        = team.submit "Invite Member", :class => "btn"
+            = team.submit "Invite Member", :class => "btn"
+    .span6
+      %h3 Pending User Requests
+      - if @pending_requests.empty?
+        No pending join requests at this time.
+      - else
+        %table.table.table-condensed.table-striped
+          %thead
+          %tr
+            %th.span1
+              Email
+            %th
+              Requested On
+          - @pending_requests.each do |current|
+            %tbody 
+              %tr{:class=>'warning'}
+                %td=current.email
+                %td=current.created_at.strftime("%b %d %Y")

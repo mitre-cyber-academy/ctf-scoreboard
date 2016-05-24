@@ -7,6 +7,9 @@ class TeamsController < ApplicationController
 
   def show
     @team = Team.find(params[:id])
+    # Filter for only pending invites and requests.
+    @pending_invites = @team.user_invites.map {|invite| invite if invite.pending? }
+    @pending_requests = @team.user_requests.map {|request| request if request.pending? }
     if is_team_captain and !is_editable
       flash.now[:notice] = 'You have added all the users you can to your team.'
     end
@@ -27,11 +30,11 @@ class TeamsController < ApplicationController
 
   def update
     team = Team.find(params[:id])
-    team.update_attributes!(team_params)
+    team.update_attributes(team_params)
     if team.save
       redirect_to team, :notice => 'Team member was successfully invited.'
     else
-      render :action => "show"
+      redirect_to team, :alert => team.errors.full_messages.first
     end
   end
 

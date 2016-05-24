@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523185148) do
+ActiveRecord::Schema.define(version: 20160524091921) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",              default: "", null: false
@@ -78,6 +78,17 @@ ActiveRecord::Schema.define(version: 20160523185148) do
 
   add_index "user_invites", ["team_id"], name: "index_user_invites_on_team_id"
   add_index "user_invites", ["user_id"], name: "index_user_invites_on_user_id"
+
+  create_table "user_requests", force: :cascade do |t|
+    t.boolean  "pending"
+    t.integer  "team_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_requests", ["team_id"], name: "index_user_requests_on_team_id"
+  add_index "user_requests", ["user_id"], name: "index_user_requests_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                            default: "", null: false
