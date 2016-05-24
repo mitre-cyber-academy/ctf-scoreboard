@@ -1,6 +1,9 @@
 class TeamsController < ApplicationController
   include ApplicationHelper
   helper_method :is_editable
+
+  before_filter :check_membership, only: [:show, :update, :destroy]
+
   def new
     @team = Team.new
   end
@@ -48,5 +51,15 @@ class TeamsController < ApplicationController
 
   def team_params
     params.require(:team).permit(:team_name, :affiliation, :user_invites_attributes => [:email])
+  end
+
+  private
+
+  def check_membership
+    # If the user is not signed in, not on a team, or not on the team they are trying to access
+    # then deny them from accessing the team page.
+    if current_user.nil? or current_user.team.nil? or (current_user.team_id != params[:id].to_i)
+      raise ActiveRecord::RecordNotFound
+    end
   end
 end
