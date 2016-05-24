@@ -1,0 +1,73 @@
+= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => { :multipart => "true", :class => "form-horizontal"}) do |f|
+  - if resource.errors.any?
+    .alert.alert-error
+      %a.close{"data-dismiss" => "alert", :href => "#"} ×
+      = pluralize(resource.errors.count, "error")
+      prohibited your user from being updated:
+      %ul.errors
+        - resource.errors.full_messages.each do |msg|
+          %li= msg
+  %legend=legend
+  %label.label-custom
+    Note: Fields marked with
+    %span{:style => "color: red;"} *
+    can not be blank.
+  .control-group
+    = f.label :full_name, :class => "control-label-required"
+    .controls
+      = f.text_field :full_name, :class => "textarea"
+  .control-group
+    = f.label :email, :class => "control-label-required"
+    .controls
+      = f.text_field :email, :class => "textarea"
+  .control-group
+    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "If you are a student, please list your school. If you are an industry professional please list your professional organization." }
+      = f.label :affiliation, :class => "control-label-required"
+      .controls
+        = f.text_field :affiliation, :class => "textarea"
+  .control-group
+    = f.label :year_in_school, :class => "control-label-required"
+    .controls
+      = f.select :year_in_school, options_for_select(years_in_school, resource.year_in_school), { :include_blank => '' }, :onChange => "hidePrizesCheckbox()"
+  .control-group
+    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Enter the state in which you are a resident." }
+      = f.label :state, :class => "control-label-required"
+      .controls
+        = f.select :state, options_for_select(us_states, resource.state), { :include_blank => '' }, :onChange => "hidePrizesCheckbox()"
+  .control-group
+    = f.label :password, :class => "control-label-required"
+    .controls
+      = f.password_field :password, :input_html => {:autofocus => true}, :class => "textarea", :placeholder => "Minimum 10 characters"
+  .control-group
+    = f.label :password_confirmation, "Confirm Password", :class => "control-label-required"
+    .controls
+      = f.password_field :password_confirmation, :class => "textarea"
+  .control-group#compete-for-prizes
+    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Only US Citizens enrolled in a US High School or College are elegible for prizes. Verification of enrollment and citizenship will be required post-competition from the winning teams." }
+      = f.label :compete_for_prizes, :class => "control-label"
+      .controls
+        = f.check_box :compete_for_prizes
+  .control-group
+    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Gender and age will be used in aggregate statistics and are held confidentially." }
+      = f.label :gender, :class => "control-label"
+      .controls
+        = f.select :gender, options_for_select(User.genders.keys, resource.gender), { :include_blank => '' }
+  .control-group
+    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Gender and age will be used in aggregate statistics and are held confidentially." }
+      = f.label :age, :class => "control-label"
+      .controls
+        = f.text_field :age, :class => "textarea"
+  .control-group
+    = f.label :area_of_study, "Major/area of study", :class => "control-label"
+    .controls
+      = f.text_field :area_of_study, :class => "textarea"
+  -# If a user is updating their information then require_current_password should be passed to the partial as true, 
+  -# if this is a new user registering then require_current_password should be false.
+  - if require_current_password 
+    .control-group
+      .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "We need your current password to update your account information." }
+        = f.label :current_password, :class => "control-label-required"
+        .controls
+          = f.password_field :current_password, :class => "textarea"
+  .controls
+    = button_tag :Submit, :label => 'Confirm Account', :class => "btn"
