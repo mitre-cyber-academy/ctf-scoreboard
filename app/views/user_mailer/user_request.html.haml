@@ -1,0 +1,5 @@
+%p
+  Hello #{@captain.email}!
+%p #{@user.full_name} has requested to join your team #{team.name}
+%p Click the link below to view and accept or reject the request.
+%p= link_to 'View Team Dashboard', team_url(@team)

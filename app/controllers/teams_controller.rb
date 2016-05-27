@@ -5,14 +5,18 @@ class TeamsController < ApplicationController
   before_filter :check_membership, only: [:show, :update, :destroy]
 
   def new
-    @team = Team.new
+    if current_user.team.nil?
+      @team = Team.new
+    else
+      redirect_to current_user.team, :alert => 'You cannot create a new team while already being a member of one.'
+    end
   end
 
   def show
     @team = Team.find(params[:id])
     # Filter for only pending invites and requests.
-    @pending_invites = @team.user_invites.map {|invite| invite if invite.pending? }
-    @pending_requests = @team.user_requests.map {|request| request if request.pending? }
+    @pending_invites = @team.user_invites.pending
+    @pending_requests = @team.user_requests.pending
     if is_team_captain and !is_editable
       flash.now[:notice] = 'You have added all the users you can to your team.'
     end
@@ -59,7 +63,7 @@ class TeamsController < ApplicationController
     # If the user is not signed in, not on a team, or not on the team they are trying to access
     # then deny them from accessing the team page.
     if current_user.nil? or current_user.team.nil? or (current_user.team_id != params[:id].to_i)
-      raise ActiveRecord::RecordNotFound
+      redirect_to join_team_users_path
     end
   end
 end

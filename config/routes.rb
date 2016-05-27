@@ -9,7 +9,21 @@ CtfRegistration::Application.routes.draw do
 
   devise_for :users, :path_names => {:sign_in => 'login', :sign_out => 'logout', :confirmation => 'confirm', :sign_up => 'new'}
 
-  resources :teams
+  resource :users, only: [] do
+    get :join_team, on: :member
+  end
+
+  # Saying resources :users do causes all routes for the team to be generated. By saying only: [] it keeps only the routes
+  # specified in the do block to be generated.
+  resources :teams do
+    # Custom route for accepting user invites.
+    resources :user_invites, only: [:destroy] do
+      get :accept, on: :member
+    end
+    resources :users, only: [] do
+      delete :leave_team
+    end
+  end
 
   root :to => "home#index"
   # The priority is based upon order of creation:

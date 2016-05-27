@@ -1,0 +1,8 @@
+%p
+  Hello #{@invite.email}!
+%p 
+  You have been invited to join the team
+  %b #{@team.team_name}
+  for the upcoming MITRE CTF
+%p Click the link below to register an account in order to accept the invitation.
+%p= link_to 'Create my account', new_user_registration_url

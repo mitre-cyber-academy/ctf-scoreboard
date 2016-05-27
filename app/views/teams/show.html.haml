@@ -6,9 +6,9 @@
   %table.table.table-condensed.table-striped
     %thead
     %tr
-      %th.span1
-        Lead
+      %th.span1 Lead
       %th Email
+      %th Remove
     - @team.users.each do |current|
       %tbody 
         %tr{:class=>'success'}
@@ -16,6 +16,10 @@
             -if current == @team.team_captain
               %i.icon-ok
           %td=current.email
+          %td
+            - if current != @team.team_captain
+              = link_to team_user_leave_team_path(current.team, current), method: :delete, data: {confirm: "Are you sure?"} do
+                %i.icon-remove
   .row
     .span6
       %h3 Pending User Invites
@@ -25,15 +29,20 @@
         %table.table.table-condensed.table-striped
           %thead
           %tr
-            %th.span1
+            %th
               Email
             %th
               Invited On
+            %th
+              Cancel Invite
           - @pending_invites.each do |current|
             %tbody 
               %tr{:class=>'warning'}
                 %td=current.email
                 %td=current.created_at.strftime("%b %d %Y")
+                %td
+                  = link_to team_user_invite_path(@team, current), method: :delete, data: {confirm: "Are you sure?"} do
+                    %i.icon-remove
       - if is_editable
         = form_for(@team) do |team|
           %h4 Invite a Team Member
@@ -52,7 +61,7 @@
         %table.table.table-condensed.table-striped
           %thead
           %tr
-            %th.span1
+            %th
               Email
             %th
               Requested On

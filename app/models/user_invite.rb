@@ -4,15 +4,31 @@ class UserInvite < ActiveRecord::Base
   belongs_to :team
   belongs_to :user
 
-  before_validation { self.email = email.downcase }
+  enum status: [ :Pending, :Accepted, :Rejected ]
+
+  after_create :send_email, :link_to_user
+
+  before_validation { self.email = self.email.downcase }
 
   validates_presence_of :email, :team
 
   validates_format_of :email,:with => Devise::email_regexp
 
-  # When a user accepts an invite, a user ID will be added to the invite. If the user
-  # id is nil then the invite is still pending.
-  def pending?
-    return self.user.nil?
+  validates :status, inclusion: { in: statuses.keys }
+
+  # Get only invites in the pending status.
+  scope :pending, -> {where(status: 'Pending')}
+
+  private
+
+  def send_email
+    UserMailer.invite_user(self).deliver_now
+  end
+
+  def link_to_user
+    User.where(email: email).each do |user|
+      user.user_invites << self
+      user.save
+    end
   end
 end

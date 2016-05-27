@@ -1,22 +1,24 @@
 class UsersController < ApplicationController
+  include ApplicationHelper
 
-  #will remove user affiliations with current team
-  #only can be part of 1 team at a time
-  def update
-    user = User.where(:id => params[:id])
-    user.update(params[])
-    user.save
+  def join_team
+    if current_user.team.nil?
+      @user = current_user
+      @pending_invites = @user.user_invites.pending
+      @pending_requests = @user.user_requests.pending
+    else
+      redirect_to current_user.team, :alert => 'You cannot join another team while already being a member of one.'
+    end
   end
 
-  #remove a user from a team
-  #deletes the user entirely
-  def destroy
-    @user = User.find(params[:id])
-    if @user.destroy
-      flash[:notice] = "User was successfully removed."
+  def leave_team
+    # Only allow the team captain or the current user to remove themselves from a team.
+    if (authenticate_user! and (is_team_captain or current_user.id.eql? params[:user_id].to_i))
+      @team = Team.find(params[:team_id])
+      @team.users.delete(params[:user_id])
+      redirect_to @team, :notice => 'Player was successfully removed.'
     else
-      flash[:error] = "There was a problem with removing the user."
+      raise ActiveRecord::RecordNotFound
     end
-  redirect_to teams_path
   end
 end
