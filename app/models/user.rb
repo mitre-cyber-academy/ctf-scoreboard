@@ -23,7 +23,8 @@ class User < ActiveRecord::Base
   # of the USA the state is set to NA.
   def clear_compete_for_prizes
     if year_in_school.eql? 0 or state.eql? "NA"
-      compete_for_prizes = false
+      self.compete_for_prizes = false
+      nil # http://apidock.com/rails/ActiveRecord/RecordNotSaved
     end
   end
 

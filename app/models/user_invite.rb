@@ -12,7 +12,7 @@ class UserInvite < ActiveRecord::Base
 
   validates_presence_of :email, :team
 
-  validates_format_of :email,:with => Devise::email_regexp
+  validates :email, :email => true
 
   validates :status, inclusion: { in: statuses.keys }
 
@@ -26,7 +26,7 @@ class UserInvite < ActiveRecord::Base
   end
 
   def link_to_user
-    User.where(email: email).each do |user|
+    User.where(email: self.email).each do |user|
       user.user_invites << self
       user.save
     end

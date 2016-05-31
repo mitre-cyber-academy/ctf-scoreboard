@@ -1,11 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  email: MyString
-  team_id: 
-  user_id: 
+invite_one:
+  email: user2@domain.com
+  team: team_one
 
-two:
-  email: MyString
-  team_id: 
-  user_id: 
+invite_two:
+  email: user@otherdomain.com
+  team: team_two

@@ -1,7 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  team_name: MyString
+team_one:
+  team_name: team_one
+  affiliation: school1
 
-two:
-  team_name: MyString
+team_two:
+  team_name: team_two
+  affiliation: school2

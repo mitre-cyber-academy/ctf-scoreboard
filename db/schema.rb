@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160524122753) do
+ActiveRecord::Schema.define(version: 20160531192412) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",              default: "", null: false
@@ -93,8 +93,8 @@ ActiveRecord::Schema.define(version: 20160524122753) do
   add_index "user_requests", ["user_id"], name: "index_user_requests_on_user_id"
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                            default: "", null: false
-    t.string   "encrypted_password",               default: "", null: false
+    t.string   "email",                            default: "",    null: false
+    t.string   "encrypted_password",               default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -119,8 +119,7 @@ ActiveRecord::Schema.define(version: 20160524122753) do
     t.string   "area_of_study"
     t.string   "location"
     t.string   "personal_email"
-    t.boolean  "compete_for_prizes",     limit: 2
-    t.string   "still_compete",          limit: 2
+    t.boolean  "compete_for_prizes",     limit: 2, default: false
     t.string   "state",                  limit: 1
   end
 

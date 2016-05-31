@@ -1,6 +1,9 @@
 class TeamsController < ApplicationController
   include ApplicationHelper
+
   helper_method :is_editable
+
+  before_filter :is_logged_in
 
   before_filter :check_membership, only: [:show, :update, :destroy]
 
@@ -59,10 +62,16 @@ class TeamsController < ApplicationController
 
   private
 
+  def is_logged_in
+    if current_user.nil?
+      redirect_to root_path, :alert => 'You must first login.'
+    end
+  end
+
   def check_membership
     # If the user is not signed in, not on a team, or not on the team they are trying to access
     # then deny them from accessing the team page.
-    if current_user.nil? or current_user.team.nil? or (current_user.team_id != params[:id].to_i)
+    if current_user.team.nil? or (current_user.team_id != params[:id].to_i)
       redirect_to join_team_users_path
     end
   end
