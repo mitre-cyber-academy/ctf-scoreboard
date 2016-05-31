@@ -32,7 +32,7 @@
       .pagination-centered
         - if current_user.team_id.nil?
           .btn-group
-            = link_to "Join a Team", new_team_path, :class => "btn btn-large btn-primary"
+            = link_to "Join a Team", join_team_users_path, :class => "btn btn-large btn-primary"
           .btn-group
             = link_to "Create a Team", new_team_path, :class => "btn btn-large btn-primary"
   - else
