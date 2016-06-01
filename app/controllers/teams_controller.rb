@@ -8,7 +8,7 @@ class TeamsController < ApplicationController
   before_filter :check_membership, only: [:show, :update, :destroy]
 
   def new
-    if current_user.team.nil?
+    if !current_user.on_a_team?
       @team = Team.new
     else
       redirect_to current_user.team, :alert => 'You cannot create a new team while already being a member of one.'
@@ -71,7 +71,7 @@ class TeamsController < ApplicationController
   def check_membership
     # If the user is not signed in, not on a team, or not on the team they are trying to access
     # then deny them from accessing the team page.
-    if current_user.team.nil? or (current_user.team_id != params[:id].to_i)
+    if !current_user.on_a_team? or (current_user.team_id != params[:id].to_i)
       redirect_to join_team_users_path
     end
   end

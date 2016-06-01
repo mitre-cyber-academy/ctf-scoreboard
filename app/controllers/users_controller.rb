@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   include ApplicationHelper
 
   def join_team
-    if current_user.team.nil?
+    if !current_user.on_a_team?
       @user = current_user
       @pending_invites = @user.user_invites.pending
       @pending_requests = @user.user_requests.pending

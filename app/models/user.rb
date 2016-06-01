@@ -16,6 +16,11 @@ class User < ActiveRecord::Base
   validates_inclusion_of :year_in_school, :in => [0, 9, 10, 11, 12, 13, 14, 15, 16], :presence => true
   validates :gender, inclusion: { in: genders.keys }, :allow_blank => true
 
+  # Returns whether a user is currently on a team or not.
+  def on_a_team?
+    !team.nil?
+  end
+
   private
 
   # If a user chooses to compete for prizes then they must be located in the US and be in school.

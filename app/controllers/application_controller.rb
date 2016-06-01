@@ -4,6 +4,14 @@ class ApplicationController < ActionController::Base
   before_filter :set_mailer_host
   helper :all
 
+  def after_sign_in_path_for(resource)
+    if current_user.on_a_team?
+      team_path(current_user.team_id)
+    else
+      join_team_users_path
+    end
+  end
+
   def set_mailer_host
     ActionMailer::Base.default_url_options[:host] = request.host_with_port
   end

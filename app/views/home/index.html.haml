@@ -30,7 +30,10 @@
   - if user_signed_in?
     .btn-toolbar
       .pagination-centered
-        - if current_user.team_id.nil?
+        - if current_user.on_a_team?
+          .btn-group
+            = link_to "See your team", team_path(current_user.team_id), :class => "btn btn-large btn-primary"
+        - else
           .btn-group
             = link_to "Join a Team", join_team_users_path, :class => "btn btn-large btn-primary"
           .btn-group

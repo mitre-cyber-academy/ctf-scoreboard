@@ -31,9 +31,12 @@
                     Hello #{current_user.full_name}
                     %b.caret
                   %ul.dropdown-menu
-                    - if !current_user.team_id.nil?
-                      %li
+                    %li
+                      - if current_user.on_a_team?
                         = link_to "See your team", team_path(current_user.team_id)
+                      - else
+                        = link_to "Join a team", join_team_users_path
+                        = link_to "Create a team", new_team_path
                       %li.divider
                     %li
                       = link_to "Edit your account", edit_user_registration_path, :method => :get
