@@ -31,7 +31,7 @@ class UserMailerTest < ActionMailer::TestCase
 
     assert_equal ['do-not-reply@mitrecyberacademy.org'], email.from
     assert_equal ['user2@domain.com'], email.to
-    assert_equal 'MITRE CTF: Invite to join team team_one', email.subject
+    assert_equal "MITRE CTF: Invite to join team #{user_invites(:invite_one).team.team_name}", email.subject
     assert_equal @inv_email_body, strip_tags(email.body.to_s).squish
   end
 

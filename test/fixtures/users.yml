@@ -16,7 +16,7 @@ user_one:
   team: team_one
 
 # User with every possible piece of information provided
-user_two: 
+user_two:
   full_name: User two
   email: user2@domain.com
   affiliation: Industry
