@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  
+
   def setup
     @user_in_school = User.create!(
       full_name: "User one",
@@ -43,7 +43,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(false, @user_out_of_state.compete_for_prizes)
   end
 
-  test "user in the US can compete for prizes" do
+  test "user previously not in the US can compete for prizes" do
     @user_out_of_state.state = "FL"
     @user_out_of_state.compete_for_prizes = true
     assert @user_out_of_state.save

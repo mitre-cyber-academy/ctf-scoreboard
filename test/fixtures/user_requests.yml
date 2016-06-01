@@ -1,11 +1,5 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  pending: false
-  team_id: 
-  user_id: 
-
-two:
-  pending: false
-  team_id: 
-  user_id: 
+request_one:
+  team: team_one
+  user: user_two

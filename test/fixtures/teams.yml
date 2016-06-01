@@ -3,6 +3,7 @@
 team_one:
   team_name: team_one
   affiliation: school1
+  team_captain: user_one
 
 team_two:
   team_name: team_two

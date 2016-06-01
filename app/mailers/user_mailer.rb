@@ -9,6 +9,6 @@ class UserMailer < ApplicationMailer
     @team = user_request.team
     @captain = @team.team_captain
     @user = user_request.user
-    mail(to: @captain.email, subject: "MITRE CTF: Request from #{@user.full_name} to join #{@team.name}")
+    mail(to: @captain.email, subject: "MITRE CTF: Request from #{@user.full_name} to join #{@team.team_name}")
   end
 end
