@@ -49,4 +49,9 @@ class UserTest < ActiveSupport::TestCase
     assert @user_out_of_state.save
     assert_equal(true, @user_out_of_state.compete_for_prizes)
   end
+
+  test "user is a team captain" do
+    assert_equal(true, users(:user_one).team_captain?)
+    assert_equal(false, users(:user_two).team_captain?)
+  end
 end
