@@ -9,6 +9,17 @@ class Team < ActiveRecord::Base
 
   after_save :set_team_captain
 
+  # Returns whether everyone on the team is currently eligible for prize money.
+  def eligible_for_prizes?
+    eligible = true
+    users.each do |user|
+      if !user.compete_for_prizes
+        eligible = false
+      end
+    end
+    eligible
+  end
+
   private
 
   # If a team doesn't have a team captain, set the team captain to the first user.
