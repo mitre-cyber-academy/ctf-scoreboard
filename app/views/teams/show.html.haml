@@ -1,72 +1,120 @@
 - content_for :header do
   See your Team
 
-.container
-  %h2 #{@team.team_name} - Team Information
-  %table.table.table-condensed.table-striped
-    %thead
-    %tr
-      %th.span1 Lead
-      %th Email
-      %th Remove
-    - @team.users.each do |current|
-      %tbody 
-        %tr{:class=>'success'}
-          %td 
-            -if current == @team.team_captain
-              %i.icon-ok
-          %td=current.email
-          %td
-            - if current != @team.team_captain
-              = link_to team_user_leave_team_path(current.team, current), method: :delete, data: {confirm: "Are you sure?"} do
-                %i.icon-remove
-  .row
-    .span6
-      %h3 Pending User Invites
-      - if @pending_invites.empty?
-        No pending invites at this time.
-      - else
-        %table.table.table-condensed.table-striped
-          %thead
-          %tr
-            %th
-              Email
-            %th
-              Invited On
-            %th
-              Cancel Invite
-          - @pending_invites.each do |current|
-            %tbody 
-              %tr{:class=>'warning'}
-                %td=current.email
-                %td=current.created_at.strftime("%b %d %Y")
-                %td
-                  = link_to team_user_invite_path(@team, current), method: :delete, data: {confirm: "Are you sure?"} do
-                    %i.icon-remove
-      - if is_editable
-        = form_for(@team) do |team|
-          %h4 Invite a Team Member
-          = team.fields_for :user_invites, @team.user_invites.build do |invite_fields|
-            .control-group
-              = invite_fields.label :email, :class => "control-label"
-              .controls
-                = invite_fields.text_field :email, :class => "textarea"
-          .controls
-            = team.submit "Invite Member", :class => "btn"
-    .span6
-      %h3 Pending User Requests
-      - if @pending_requests.empty?
-        No pending join requests at this time.
-      - else
-        %table.table.table-condensed.table-striped
-          %thead
-          %tr
-            %th
-              Email
-            %th
-              Requested On
-          - @pending_requests.each do |current|
-            %tbody 
-              %tr{:class=>'warning'}
-                %td=current.email
-                %td=current.created_at.strftime("%b %d %Y")
+%h2 #{@team.team_name} - Team Information
+%table.table.table-condensed.table-striped
+  %thead
+  %tr
+    %th.span1 Lead
+    %th Email
+    %th.span2 Eligible for Prizes
+    %th Remove
+  - @team.users.each do |current|
+    %tbody 
+      %tr{:class=>'success'}
+        %td
+          -if current == @team.team_captain
+            %i.icon-ok
+        %td=current.email
+        %td
+          -if current.compete_for_prizes
+            %i.icon-ok
+          -else
+            %i.icon-remove
+        %td
+          - if current != @team.team_captain
+            = link_to team_user_leave_team_path(current.team, current), method: :delete, data: {confirm: "Are you sure?"} do
+              %i.icon-remove
+%hr
+.row
+  .span12
+    %h4 Team Prize Eligibility Status
+    Your team is currently
+    - if @team.eligible_for_prizes?
+      competing for prizes.
+    - else
+      %b NOT
+      competing for prizes since one or more team members is not eligible to do so or has chosen to not compete for prizes in their profile. Please contact the users marked as ineligible above for more information.
+    %br
+    %br
+    Only US Citizens enrolled in a US High School or College are eligible for prizes. Verification of enrollment and citizenship will be required post-competition from all members of the winning teams.
+%hr
+.row
+  .span6
+    %h3 Pending User Invites
+    - if @pending_invites.empty?
+      No pending invites at this time.
+    - else
+      %table.table.table-condensed.table-striped.table-overflow
+        %thead
+        %tr
+          %th.span2
+            Email
+          %th
+            Prize Eligible?
+          %th
+            Invited On
+          %th
+            Cancel Invite
+        - @pending_invites.each do |current|
+          %tbody
+            %tr{:class=>'warning'}
+              %td
+                .helpertext-wrapper-overflow{  'data-toggle' => 'tooltip', 'data-placement' => 'bottom', :title => current.email }
+                  =current.email
+              %td
+                - if current.user.nil?
+                  .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "This user has not yet registered and therefore we cannot determine their eligibility status at this time." }
+                    %i.icon-question-sign
+                - elsif current.user.compete_for_prizes
+                  %i.icon-ok
+                - else
+                  %i.icon-remove
+
+              %td=current.created_at.strftime("%b %d %Y")
+              %td
+                = link_to team_user_invite_path(@team, current), method: :delete, data: {confirm: "Are you sure?"} do
+                  %i.icon-remove
+    - if is_editable
+      = form_for(@team) do |team|
+        %h4 Invite a Team Member
+        = team.fields_for :user_invites, @team.user_invites.build do |invite_fields|
+          .control-group
+            = invite_fields.label :email, :class => "control-label"
+            .controls
+              = invite_fields.text_field :email, :class => "textarea"
+        .controls
+          = team.submit "Invite Member", :class => "btn"
+  .span6
+    %h3 Pending User Requests
+    - if @pending_requests.empty?
+      No pending join requests at this time.
+    - else
+      %table.table.table-condensed.table-striped.table-overflow
+        %thead
+        %tr
+          %th.span2
+            Email
+          %th
+            Prize Eligible?
+          %th
+            Requested On
+          %th
+            Accept?
+        - @pending_requests.each do |current|
+          %tbody 
+            %tr{:class=>'warning'}
+              %td
+                .helpertext-wrapper-overflow{  'data-toggle' => 'tooltip', 'data-placement' => 'bottom', :title => current.user.email }
+                  =current.user.email
+              %td
+                -if current.user.compete_for_prizes
+                  %i.icon-ok
+                -else
+                  %i.icon-remove
+              %td=current.created_at.strftime("%b %d %Y")
+              %td
+                = link_to do
+                  %i.icon-ok
+                = link_to method: :delete, data: {confirm: "Are you sure?"} do
+                  %i.icon-remove

@@ -16,3 +16,14 @@
 .helpertext-wrapper {
   display: inline-block;
 }
+.helpertext-wrapper-overflow {
+  overflow: hidden;
+  text-overflow:ellipsis;
+  display: block;
+}
+.table-overflow {
+  table-layout: fixed;
+}
+.tooltip {
+  word-wrap: break-word;
+}
