@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable, :recoverable, 
+  devise :database_authenticatable, :registerable, :recoverable,
          :rememberable, :trackable, :confirmable, :secure_validatable
 
   validates_presence_of :full_name, :affiliation, :state, presence: true
@@ -19,6 +19,14 @@ class User < ActiveRecord::Base
   # Returns whether a user is currently on a team or not.
   def on_a_team?
     !team.nil?
+  end
+
+  def team_captain?
+    if self.on_a_team?
+      team.team_captain.eql? self
+    else
+      false
+    end
   end
 
   private
