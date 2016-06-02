@@ -4,7 +4,7 @@ class UserRequest < ActiveRecord::Base
 
   enum status: [ :Pending, :Accepted, :Rejected ]
 
-  validates :status, inclusion: { in: statuses.keys }
+  validates :status, inclusion: { in: statuses.keys, allow_blank: true }
 
   validates_presence_of :team, :user
 
