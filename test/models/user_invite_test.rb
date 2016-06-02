@@ -11,7 +11,7 @@ class UserInviteTest < ActiveSupport::TestCase
   end
 
   test "invites are linked to user" do
-    assert_difference 'users(:user_two).user_invites.size', +1 do
+    assert_difference 'users(:user_two).user_invites(:reload).size', +1 do
       user_invites(:invite_one).send(:link_to_user)
     end
   end
