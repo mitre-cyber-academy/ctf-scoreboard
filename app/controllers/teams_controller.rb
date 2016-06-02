@@ -16,7 +16,7 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @team = Team.find(params[:id])
+    @team = current_user.team
     # Filter for only pending invites and requests.
     @pending_invites = @team.user_invites.pending
     @pending_requests = @team.user_requests.pending
@@ -39,7 +39,7 @@ class TeamsController < ApplicationController
   end
 
   def update
-    team = Team.find(params[:id])
+    team = current_user.team
     team.update_attributes(team_params)
     if team.save
       redirect_to team, :notice => 'Team member was successfully invited.'

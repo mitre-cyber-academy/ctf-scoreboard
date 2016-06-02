@@ -3,8 +3,8 @@ class UserInvitesController < ApplicationController
 
   # Method for a free agent user to accept a team invitation.
   def accept
-    @user_invite = UserInvite.find(params[:id])
-    if @user_invite.user.eql? current_user
+    @user_invite = current_user.user_invites.find(params[:id])
+    if !@user_invite.nil?
       @user_invite.status = :Accepted
       @user_invite.save
       @user_invite.team.users << @user_invite.user
