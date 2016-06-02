@@ -27,11 +27,11 @@ class TeamsController < ApplicationController
 
   def create
     @team = Team.new(team_params)
-    # When creating a new team, make the user creating the team the captain
-    @team.users << current_user
-    @team.team_captain = current_user
-
     if @team.save
+      # Add current user to the team as team captain
+      @team.users << current_user
+      @team.team_captain = current_user
+      @team.save
       redirect_to @team, :notice => 'Team was successfully created.'
     else
       render :action => "new"
@@ -72,7 +72,7 @@ class TeamsController < ApplicationController
     # If the user is not signed in, not on a team, or not on the team they are trying to access
     # then deny them from accessing the team page.
     if !current_user.on_a_team? or (current_user.team_id != params[:id].to_i)
-      redirect_to join_team_users_path
+      redirect_to user_root_path, :alert => "You must first be a member of a team in order to view it."
     end
   end
 end
