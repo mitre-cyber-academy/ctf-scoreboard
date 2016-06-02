@@ -26,9 +26,6 @@ class UserInvite < ActiveRecord::Base
   end
 
   def link_to_user
-    User.where(email: self.email).each do |user|
-      user.user_invites << self
-      user.save
-    end
+    update_attribute(:user, User.find_by_email(self.email))
   end
 end
