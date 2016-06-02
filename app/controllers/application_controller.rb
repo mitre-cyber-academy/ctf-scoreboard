@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_mailer_host
   helper :all
 
-  def after_sign_in_path_for(resource)
+  def user_root_path
     if current_user.on_a_team?
       team_path(current_user.team_id)
     else
