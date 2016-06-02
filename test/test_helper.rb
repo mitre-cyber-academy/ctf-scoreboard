@@ -1,5 +1,5 @@
-require 'simplecov'
-SimpleCov.start
+require 'coveralls'
+Coveralls.wear!
 
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
@@ -16,5 +16,5 @@ class ActiveSupport::TestCase
 end
 
 class ActionController::TestCase
-  include Devise::TestHelpers    
+  include Devise::TestHelpers
 end

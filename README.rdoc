@@ -1,3 +1,0 @@
-== MITRE CTF Registration Site
-
-Rails application for registering for the MITRE Capture the Flag competition website.

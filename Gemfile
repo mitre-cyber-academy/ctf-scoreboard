@@ -21,7 +21,7 @@ group :production do
 end
 
 group :test do
-  gem 'simplecov', require: false
+  gem 'coveralls', require: false
   gem 'brakeman', require: false
   gem 'bundler-audit'
 end
