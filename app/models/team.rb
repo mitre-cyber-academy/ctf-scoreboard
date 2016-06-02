@@ -5,7 +5,7 @@ class Team < ActiveRecord::Base
   belongs_to :team_captain, :class_name => 'User'
   accepts_nested_attributes_for :user_invites
   validates_presence_of :team_name, :affiliation
-  validates_uniqueness_of :team_name
+  validates_uniqueness_of :team_name, :case_sensitive => false
 
   after_save :set_team_captain
 
@@ -22,11 +22,10 @@ class Team < ActiveRecord::Base
 
   private
 
-  # If a team doesn't have a team captain, set the team captain to the first user.
+  # If a team doesn't have a team captain but does have a user, set the team captain to the first user.
   def set_team_captain
-    if team_captain.nil?
-      team_captain = users.first
-      save
+    if team_captain.nil? and !users.empty?
+      update_attribute(:team_captain, users.first)
     end
   end
 end
