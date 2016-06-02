@@ -1,8 +1,9 @@
 language: ruby
-sudo: false
 notifications:
+  email: false
   slack:
-    secure: BU22IQqojSJwkLBpLF4y2+BgEPUaZ7cdxRExsdWqDCoXGKSVBFY1I0/E4qm+abPZzSUqfvx8CC2hRqvdtymAmHbew6L8K+yDfdmBKwug3WRXWBqy65xWdQBQlvnYhmn7WfstbVYb2xHQj3YE+ZtNPI0UmJRUYdAJLI2qlzOjes8=
+    rooms:
+      secure: BU22IQqojSJwkLBpLF4y2+BgEPUaZ7cdxRExsdWqDCoXGKSVBFY1I0/E4qm+abPZzSUqfvx8CC2hRqvdtymAmHbew6L8K+yDfdmBKwug3WRXWBqy65xWdQBQlvnYhmn7WfstbVYb2xHQj3YE+ZtNPI0UmJRUYdAJLI2qlzOjes8=
     on_success: change
     on_failure: always
 before_script:
