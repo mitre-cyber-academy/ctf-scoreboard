@@ -28,3 +28,6 @@
 
 # Ignore config secrets file
 /config/secrets.yml
+
+# Ignore simplecov output.
+coverage

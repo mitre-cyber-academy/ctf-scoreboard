@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   def leave_team
     # Only allow the team captain or the current user to remove the current user from a team.
     if (authenticate_user! and (is_team_captain or current_user.id.eql? params[:user_id].to_i))
-      @team = Team.find(params[:team_id])
+      @team = current_user.team
       @team.users.delete(params[:user_id])
       redirect_to @team, :notice => 'Player was successfully removed.'
     else
