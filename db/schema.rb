@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531192412) do
+ActiveRecord::Schema.define(version: 20160602143221) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",              default: "", null: false
@@ -81,7 +81,6 @@ ActiveRecord::Schema.define(version: 20160531192412) do
   add_index "user_invites", ["user_id"], name: "index_user_invites_on_user_id"
 
   create_table "user_requests", force: :cascade do |t|
-    t.boolean  "pending"
     t.integer  "team_id"
     t.integer  "user_id"
     t.datetime "created_at",             null: false
