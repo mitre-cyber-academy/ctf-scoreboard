@@ -1,6 +1,13 @@
 %h2 Change your password
 = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f|
-  = devise_error_messages!
+  - if resource.errors.any?
+    .alert.alert-error
+      %a.close{"data-dismiss" => "alert", :href => "#"} ×
+      = pluralize(resource.errors.count, "error")
+      prohibited your user from being updated:
+      %ul.errors
+        - resource.errors.full_messages.each do |msg|
+          %li= msg
   = f.hidden_field :reset_password_token
   %div
     = f.label :password, "New password"
@@ -10,5 +17,5 @@
     = f.label :password_confirmation, "Confirm new password"
     %br/
     = f.password_field :password_confirmation
-  %div= f.submit "Change my password"
+  %div= button_tag :Reset, :label => 'Change Password', :class => "btn"
 = render "users/shared/links"
