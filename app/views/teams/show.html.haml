@@ -75,7 +75,7 @@
               %td
                 = link_to team_user_invite_path(@team, current), method: :delete, data: {confirm: "Are you sure?"} do
                   %i.icon-remove
-    - if is_editable
+    - if team_editable?
       = form_for(@team) do |team|
         %h4 Invite a Team Member
         = team.fields_for :user_invites, @team.user_invites.build do |invite_fields|

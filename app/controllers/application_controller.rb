@@ -1,7 +1,9 @@
+# Main controller for the application, handles redirects for the user login to the correct pages
+# and sets devise parameters.
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery with: :exception
-  before_filter :set_mailer_host
+  before_action :set_mailer_host
   helper :all
 
   def user_root_path
@@ -18,8 +20,15 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def configure_permitted_parameters # Be sure to update this in the confirmations controller as well if you need to add parameters.
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:full_name, :affiliation, :year_in_school, :state, :compete_for_prizes, :gender, :age, :area_of_study])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:full_name, :affiliation, :year_in_school, :state, :compete_for_prizes, :gender, :age, :area_of_study])
+  def configure_permitted_parameters
+    # Be sure to update this in the confirmations controller as well if you need to add parameters.
+    devise_parameter_sanitizer.permit(
+      :sign_up,
+      keys: [:full_name, :affiliation, :year_in_school, :state, :compete_for_prizes, :gender, :age, :area_of_study]
+    )
+    devise_parameter_sanitizer.permit(
+      :account_update,
+      keys: [:full_name, :affiliation, :year_in_school, :state, :compete_for_prizes, :gender, :age, :area_of_study]
+    )
   end
 end

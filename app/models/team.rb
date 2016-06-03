@@ -1,11 +1,12 @@
+# Team model for holding the main user list and all invites and requests to a team.
 class Team < ActiveRecord::Base
   has_many :users
   has_many :user_invites
   has_many :user_requests
-  belongs_to :team_captain, :class_name => 'User'
+  belongs_to :team_captain, class_name: 'User'
   accepts_nested_attributes_for :user_invites
-  validates_presence_of :team_name, :affiliation
-  validates_uniqueness_of :team_name, :case_sensitive => false
+  validates :team_name, :affiliation, presence: true
+  validates :team_name, uniqueness: { case_sensitive: false }
 
   after_save :set_team_captain
 
@@ -13,9 +14,7 @@ class Team < ActiveRecord::Base
   def eligible_for_prizes?
     eligible = true
     users.each do |user|
-      if !user.compete_for_prizes
-        eligible = false
-      end
+      eligible = false unless user.compete_for_prizes
     end
     eligible
   end
@@ -30,8 +29,7 @@ class Team < ActiveRecord::Base
 
   # If a team doesn't have a team captain but does have a user, set the team captain to the first user.
   def set_team_captain
-    if team_captain.nil? and !users.empty?
-      update_attribute(:team_captain, users.first)
-    end
+    return unless team_captain.nil? && !users.empty?
+    update_attribute(:team_captain, users.first)
   end
 end

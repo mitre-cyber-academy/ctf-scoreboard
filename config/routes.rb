@@ -1,21 +1,21 @@
 CtfRegistration::Application.routes.draw do
-
   devise_for :admins
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
-  get "home/index"
-  get "/home/about"
+  get 'home/index'
+  get '/home/about'
 
-  devise_for :users, :path_names => {:sign_in => 'login', :sign_out => 'logout', :confirmation => 'confirm', :sign_up => 'new'}, :controllers => { :registrations => 'registrations' }
-
+  devise_for :users,
+             path_names: { sign_in: 'login', sign_out: 'logout', confirmation: 'confirm', sign_up: 'new' },
+             controllers: { registrations: 'registrations' }
 
   resource :users, only: [] do
     get :join_team, on: :member
   end
 
-  # Saying resources :users do causes all routes for the team to be generated. By saying only: [] it keeps only the routes
-  # specified in the do block to be generated.
+  # Saying resources :users do causes all routes for the team to be generated.
+  # By saying only: [] it keeps only the routes specified in the do block to be generated.
   resources :teams, except: [:edit, :destroy, :index] do
     # Custom route for accepting user invites.
     resources :user_invites, only: [:destroy] do
@@ -26,7 +26,7 @@ CtfRegistration::Application.routes.draw do
     end
   end
 
-  root :to => "home#index"
+  root to: 'home#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

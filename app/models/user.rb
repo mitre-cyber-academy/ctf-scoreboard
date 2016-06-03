@@ -1,10 +1,12 @@
+# User model, uses devise to manage registrations. Each user has a team reference which is
+# set to nil until they are added to a team.
 class User < ActiveRecord::Base
   belongs_to :team
   has_many :user_invites
   has_many :user_requests
   before_save :clear_compete_for_prizes
   after_create :link_to_invitations
-  enum gender: [ :Male, :Female ]
+  enum gender: [:Male, :Female]
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -12,9 +14,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :recoverable,
          :rememberable, :trackable, :confirmable, :secure_validatable
 
-  validates_presence_of :full_name, :affiliation, :state, presence: true
-  validates_inclusion_of :year_in_school, :in => [0, 9, 10, 11, 12, 13, 14, 15, 16], :presence => true
-  validates :gender, inclusion: { in: genders.keys }, :allow_blank => true
+  validates :full_name, :affiliation, :state, presence: true
+  validates :year_in_school, inclusion: { in: [0, 9, 10, 11, 12, 13, 14, 15, 16] }, presence: true
+  validates :gender, inclusion: { in: genders.keys }, allow_blank: true
 
   # Returns whether a user is currently on a team or not.
   def on_a_team?
@@ -22,7 +24,7 @@ class User < ActiveRecord::Base
   end
 
   def team_captain?
-    if self.on_a_team?
+    if on_a_team?
       team.team_captain.eql? self
     else
       false
@@ -35,15 +37,14 @@ class User < ActiveRecord::Base
   # When a user is not in school the frontend sets the value to 0 and when they are located out
   # of the USA the state is set to NA.
   def clear_compete_for_prizes
-    if year_in_school.eql? 0 or state.eql? "NA"
-      self.compete_for_prizes = false
-      nil # http://apidock.com/rails/ActiveRecord/RecordNotSaved
-    end
+    return unless year_in_school.eql?(0) || state.eql?('NA')
+    self.compete_for_prizes = false
+    nil # http://apidock.com/rails/ActiveRecord/RecordNotSaved
   end
 
   # When a new user is created, check to see if the users email has been invited to any teams.
   def link_to_invitations
-    UserInvite.where(email: self.email).each do |invite|
+    UserInvite.where(email: email).find_each do |invite|
       invite.user = self
       invite.save
     end

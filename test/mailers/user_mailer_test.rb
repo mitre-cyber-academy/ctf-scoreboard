@@ -24,7 +24,7 @@ class UserMailerTest < ActionMailer::TestCase
                    #{link_to 'View Team Dashboard', team_url(user_requests(:request_one).team)}").squish
   end
 
-  test "invite" do
+  test 'invite' do
     email = UserMailer.invite_user(user_invites(:invite_one)).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
@@ -35,7 +35,7 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal @inv_email_body, strip_tags(email.body.to_s).squish
   end
 
-  test "request" do
+  test 'request' do
     email = UserMailer.user_request(user_requests(:request_one)).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?

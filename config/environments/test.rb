@@ -41,5 +41,5 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   # Set default URL for mailer to mimic production
-  config.action_mailer.default_url_options = { :host => "test.mitrecyberacademy.org" }
+  config.action_mailer.default_url_options = { host: 'test.mitrecyberacademy.org' }
 end
