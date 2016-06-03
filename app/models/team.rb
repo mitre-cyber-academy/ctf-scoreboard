@@ -20,6 +20,12 @@ class Team < ActiveRecord::Base
     eligible
   end
 
+  # A team is only allowed to hold 5 players at the most. If the user count is 5 (or above which should
+  # never happen) then mark the team as full.
+  def full?
+    users.count >= 5
+  end
+
   private
 
   # If a team doesn't have a team captain but does have a user, set the team captain to the first user.

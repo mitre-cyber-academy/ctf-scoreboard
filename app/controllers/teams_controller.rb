@@ -47,7 +47,7 @@ class TeamsController < ApplicationController
   end
 
   def is_editable
-    if (authenticate_user! and is_team_captain) and @team.users.count < 5
+    if (authenticate_user! and is_team_captain) and !@team.full?
       return true
     else
       return false

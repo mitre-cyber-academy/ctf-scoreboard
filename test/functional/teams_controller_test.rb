@@ -74,4 +74,11 @@ class TeamsControllerTest < ActionController::TestCase
     assert_redirected_to team_path(user.team)
     assert_equal user.team.team_captain, user
   end
+
+  test "a team captain of a full team sees a message informing them that their team is full" do
+    user = users(:full_team_user_one)
+    sign_in user
+    get :show, id: user.team
+    assert_equal flash[:notice], 'You have added all the users you can to your team.'
+  end
 end
