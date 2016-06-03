@@ -8,7 +8,7 @@ module UserHelper
       ['College - Freshman','13'],
       ['College - Sophomore','14'],
       ['College - Junior','15'],
-      ['College - Senior','16'], 
+      ['College - Senior','16'],
       ['Graduate Student', '0'],
       ['Not in School', '0']
     ]

@@ -65,14 +65,14 @@ RailsAdmin.config do |config|
 
   #   # Found associations:
 
-  #     configure :users, :has_many_association 
+  #     configure :users, :has_many_association
 
   #   # Found columns:
 
-  #     configure :id, :integer 
-  #     configure :team_name, :string 
-  #     configure :created_at, :datetime 
-  #     configure :updated_at, :datetime 
+  #     configure :id, :integer
+  #     configure :team_name, :string
+  #     configure :created_at, :datetime
+  #     configure :updated_at, :datetime
 
   #   # Cross-section configuration:
 
@@ -108,31 +108,31 @@ RailsAdmin.config do |config|
 
   #   # Found associations:
 
-  #     configure :team, :belongs_to_association 
+  #     configure :team, :belongs_to_association
 
   #   # Found columns:
 
-  #     configure :id, :integer 
-  #     configure :email, :string 
-  #     configure :password, :password         # Hidden 
-  #     configure :password_confirmation, :password         # Hidden 
-  #     configure :reset_password_token, :string         # Hidden 
-  #     configure :reset_password_sent_at, :datetime 
-  #     configure :remember_created_at, :datetime 
-  #     configure :sign_in_count, :integer 
-  #     configure :current_sign_in_at, :datetime 
-  #     configure :last_sign_in_at, :datetime 
-  #     configure :current_sign_in_ip, :string 
-  #     configure :last_sign_in_ip, :string 
-  #     configure :created_at, :datetime 
-  #     configure :updated_at, :datetime 
-  #     configure :confirmation_token, :string 
-  #     configure :confirmed_at, :datetime 
-  #     configure :confirmation_sent_at, :datetime 
-  #     configure :unconfirmed_email, :string 
-  #     configure :username, :string 
-  #     configure :team_id, :integer         # Hidden 
-  #     configure :team_captain, :boolean 
+  #     configure :id, :integer
+  #     configure :email, :string
+  #     configure :password, :password         # Hidden
+  #     configure :password_confirmation, :password         # Hidden
+  #     configure :reset_password_token, :string         # Hidden
+  #     configure :reset_password_sent_at, :datetime
+  #     configure :remember_created_at, :datetime
+  #     configure :sign_in_count, :integer
+  #     configure :current_sign_in_at, :datetime
+  #     configure :last_sign_in_at, :datetime
+  #     configure :current_sign_in_ip, :string
+  #     configure :last_sign_in_ip, :string
+  #     configure :created_at, :datetime
+  #     configure :updated_at, :datetime
+  #     configure :confirmation_token, :string
+  #     configure :confirmed_at, :datetime
+  #     configure :confirmation_sent_at, :datetime
+  #     configure :unconfirmed_email, :string
+  #     configure :username, :string
+  #     configure :team_id, :integer         # Hidden
+  #     configure :team_captain, :boolean
 
   #   # Cross-section configuration:
 

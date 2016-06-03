@@ -32,7 +32,7 @@ class TeamsController < ApplicationController
       @team.users << current_user
       redirect_to @team, :notice => 'Team was successfully created.'
     else
-      render :action => "new"
+      render :new
     end
   end
 

@@ -15,7 +15,7 @@
       %th
         Accept/Reject
     - @pending_invites.each do |current|
-      %tbody 
+      %tbody
         %tr{:class=>'warning'}
           %td=current.team.team_name
           %td=current.created_at.strftime("%b %d %Y")

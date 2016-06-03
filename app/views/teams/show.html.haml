@@ -10,7 +10,7 @@
     %th.span2 Eligible for Prizes
     %th Remove
   - @team.users.each do |current|
-    %tbody 
+    %tbody
       %tr{:class=>'success'}
         %td
           -if current == @team.team_captain
@@ -102,7 +102,7 @@
           %th
             Accept?
         - @pending_requests.each do |current|
-          %tbody 
+          %tbody
             %tr{:class=>'warning'}
               %td
                 .helpertext-wrapper-overflow{  'data-toggle' => 'tooltip', 'data-placement' => 'bottom', :title => current.user.email }
