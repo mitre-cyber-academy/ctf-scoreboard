@@ -6,13 +6,10 @@ class UserInvitesController < ApplicationController
     @user_invite = current_user.user_invites.find(params[:id])
     if @user_invite.nil?
       redirect_to :back, :alert => 'You do not have permission to accept this invite.'
-    elsif @user_invite.team.full?
-      redirect_to :back, :alert => 'This team currently does not have any more open slots. Please try again later.'
-    else
-      @user_invite.status = :Accepted
-      @user_invite.save
-      @user_invite.team.users << @user_invite.user
+    elsif @user_invite.accept
       redirect_to team_path(@user_invite.team), :notice => 'User invite was successfully accepted.'
+    else
+      redirect_to :back, :alert => 'This team currently does not have any more open slots. Please try again later.'
     end
   end
 

@@ -19,6 +19,15 @@ class UserInvite < ActiveRecord::Base
   # Get only invites in the pending status.
   scope :pending, -> {where(status: 'Pending')}
 
+  def accept
+    if team.full?
+      false
+    else
+      update_attribute(:status, :Accepted)
+      team.users << user
+    end
+  end
+
   private
 
   def send_email
