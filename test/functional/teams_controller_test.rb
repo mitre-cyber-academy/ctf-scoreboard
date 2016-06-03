@@ -64,7 +64,7 @@ class TeamsControllerTest < ActionController::TestCase
     assert_template :new
   end
 
-  test "a team can be created by a user not currently on a team" do
+  test "a team can be created by a user not currently on a team and the current user will be set as the team captain" do
     user = users(:user_two)
     sign_in user
     assert_difference 'Team.count' do
@@ -72,5 +72,6 @@ class TeamsControllerTest < ActionController::TestCase
     end
     user.reload
     assert_redirected_to team_path(user.team)
+    assert_equal user.team.team_captain, user
   end
 end

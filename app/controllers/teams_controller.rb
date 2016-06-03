@@ -26,12 +26,10 @@ class TeamsController < ApplicationController
   end
 
   def create
-    @team = Team.new(team_params)
+    @team = Team.new(team_params.merge(team_captain_id: current_user.id))
     if @team.save
       # Add current user to the team as team captain
       @team.users << current_user
-      @team.team_captain = current_user
-      @team.save
       redirect_to @team, :notice => 'Team was successfully created.'
     else
       render :action => "new"
