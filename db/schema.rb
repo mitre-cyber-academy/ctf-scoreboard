@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160602143221) do
+ActiveRecord::Schema.define(version: 20160603123411) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",              default: "", null: false
@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(version: 20160602143221) do
     t.string   "affiliation"
     t.integer  "team_captain_id"
   end
+
+  add_index "teams", ["team_captain_id"], name: "index_teams_on_team_captain_id"
 
   create_table "user_invites", force: :cascade do |t|
     t.string   "email"
@@ -125,5 +127,6 @@ ActiveRecord::Schema.define(version: 20160602143221) do
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["team_id"], name: "index_users_on_team_id"
 
 end
