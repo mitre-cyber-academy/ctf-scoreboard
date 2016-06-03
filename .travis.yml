@@ -1,4 +1,7 @@
 language: ruby
+# Use travis CI Docker Infrastructure
+sudo: false
+cache: bundler
 notifications:
   email: false
   slack:
@@ -12,3 +15,4 @@ script:
 - bundle exec brakeman -qAzw1
 - bundle exec bundle-audit check --update
 - bundle exec rake test
+- bundle exec rubocop
