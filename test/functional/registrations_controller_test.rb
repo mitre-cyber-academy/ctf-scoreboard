@@ -2,6 +2,8 @@ require 'test_helper'
 
 class RegistrationsControllerTest < ActionController::TestCase
 
+  @password = 'TestPassword123'
+
   def setup
     @request.env["devise.mapping"] = Devise.mappings[:user]
   end
@@ -16,7 +18,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   test 'destroy user on a team' do
     sign_in users(:full_team_user_five)
     assert_difference 'users(:full_team_user_five).team.users.count', -1 do
-      delete :destroy, id: users(:full_team_user_five).id, current_password: 'TestPassword123'
+      delete :destroy, id: users(:full_team_user_five).id, current_password: @password
     end
     assert :success
     assert_equal I18n.t("devise.registrations.destroyed"), flash[:notice]
@@ -25,9 +27,17 @@ class RegistrationsControllerTest < ActionController::TestCase
   test 'destroy user not on a team' do
     sign_in users(:user_three)
     assert_difference 'User.count', -1 do
-      delete :destroy, id: users(:user_three).id, current_password: 'TestPassword123'
+      delete :destroy, id: users(:user_three).id, current_password: @password
     end
     assert :success
     assert_equal I18n.t("devise.registrations.destroyed"), flash[:notice]
+  end
+
+  test 'user unable to delete account without password' do
+    sign_in users(:user_three)
+    assert_no_difference 'User.count' do
+      delete :destroy, id: users(:user_three).id, current_password: @password
+    end
+    assert_equal I18n.t("devise.registrations.password_needed_destroy"), flash[:alert]
   end
 end

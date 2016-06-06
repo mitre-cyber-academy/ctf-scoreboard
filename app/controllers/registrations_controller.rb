@@ -14,6 +14,7 @@ class RegistrationsController < Devise::RegistrationsController
       yield resource if block_given?
       respond_with_navigational(resource) { redirect_to after_sign_out_path_for(resource_name) }
     else
+      set_flash_message! :alert, :password_needed_destroy
       render 'edit'
     end
   end
