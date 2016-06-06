@@ -6,7 +6,7 @@ class RegistrationsController < Devise::RegistrationsController
     if resource.team_captain?
       set_flash_message! :alert, :captain_tried_to_destroy
       render 'edit'
-    elsif update_resource(resource, account_update_params)
+    elsif resource.valid_password?(params[:current_password])
       resource.team.users.delete(resource.id) if resource.on_a_team?
       resource.destroy
       Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
@@ -16,6 +16,10 @@ class RegistrationsController < Devise::RegistrationsController
     else
       render 'edit'
     end
+  end
+
+  def update
+    super
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize

@@ -15,15 +15,19 @@ class RegistrationsControllerTest < ActionController::TestCase
 
   test 'destroy user on a team' do
     sign_in users(:full_team_user_five)
-    delete :destroy, id: users(:full_team_user_five).id
+    assert_difference 'users(:full_team_user_five).team.users.count', -1 do
+      delete :destroy, id: users(:full_team_user_five).id, current_password: 'TestPassword123'
+    end
     assert :success
-    # assert_equal I18n.t("devise.registrations.destroyed"), flash[:notice]
+    assert_equal I18n.t("devise.registrations.destroyed"), flash[:notice]
   end
 
   test 'destroy user not on a team' do
     sign_in users(:user_three)
-    delete :destroy, id: users(:user_three).id
+    assert_difference 'User.count', -1 do
+      delete :destroy, id: users(:user_three).id, current_password: 'TestPassword123'
+    end
     assert :success
-    # assert_equal I18n.t("devise.registrations.destroyed"), flash[:notice]
+    assert_equal I18n.t("devise.registrations.destroyed"), flash[:notice]
   end
 end

@@ -17,7 +17,6 @@ class UserMailerTest < ActionMailer::TestCase
                    for the upcoming MITRE CTF Click the link below to register
                    an account in order to accept the invitation. #{link_to '
                    Create my account', new_user_registration_url(:email => user_invites(:invite_one).email)}").squish
-    puts @inv_email_body
     @reg_email_body = strip_tags("Hello #{user_requests(:request_one).team.team_captain.email}!
                    #{user_requests(:request_one).user.full_name}
                    has requested to join your team #{user_requests(:request_one).team.team_name}
