@@ -1,0 +1,16 @@
+AllCops:
+  Include:
+    - Rakefile
+    - config.ru
+  Exclude:
+    - db/schema.rb
+    - db/migrate/*
+    - config/initializers/*
+    - test/**/*
+    - 'vendor/**/*'
+Rails:
+  Enabled: true
+Metrics/LineLength:
+  Max: 120
+Documentation:
+  Enabled: false

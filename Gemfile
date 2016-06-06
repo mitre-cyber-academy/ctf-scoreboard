@@ -23,7 +23,8 @@ end
 group :test do
   gem 'coveralls', require: false
   gem 'brakeman', require: false
-  gem 'bundler-audit'
+  gem 'rubocop', require: false
+  gem 'bundler-audit', require: false
 end
 
 # Gems used only for assets and not required

@@ -10,7 +10,7 @@
     %th.span2 Eligible for Prizes
     %th Remove
   - @team.users.each do |current|
-    %tbody 
+    %tbody
       %tr{:class=>'success'}
         %td
           -if current == @team.team_captain
@@ -75,7 +75,7 @@
               %td
                 = link_to team_user_invite_path(@team, current), method: :delete, data: {confirm: "Are you sure?"} do
                   %i.icon-remove
-    - if is_editable
+    - if team_editable?
       = form_for(@team) do |team|
         %h4 Invite a Team Member
         = team.fields_for :user_invites, @team.user_invites.build do |invite_fields|
@@ -102,7 +102,7 @@
           %th
             Accept?
         - @pending_requests.each do |current|
-          %tbody 
+          %tbody
             %tr{:class=>'warning'}
               %td
                 .helpertext-wrapper-overflow{  'data-toggle' => 'tooltip', 'data-placement' => 'bottom', :title => current.user.email }

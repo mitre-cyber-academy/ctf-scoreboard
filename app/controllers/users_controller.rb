@@ -1,24 +1,33 @@
 class UsersController < ApplicationController
   include ApplicationHelper
 
+  before_action :user_logged_in?
+  before_action :check_removal_permissions, only: [:leave_team]
+
   def join_team
     if !current_user.on_a_team?
       @user = current_user
       @pending_invites = @user.user_invites.pending
       @pending_requests = @user.user_requests.pending
     else
-      redirect_to current_user.team, :alert => 'You cannot join another team while already being a member of one.'
+      redirect_to current_user.team, alert: 'You cannot join another team while already being a member of one.'
     end
   end
 
   def leave_team
-    # Only allow the team captain or the current user to remove the current user from a team.
-    if (authenticate_user! and (is_team_captain or current_user.id.eql? params[:user_id].to_i))
-      @team = current_user.team
-      @team.users.delete(params[:user_id])
-      redirect_to @team, :notice => 'Player was successfully removed.'
+    @team = current_user.team
+    @team.users.delete(params[:user_id])
+    if current_user.team_captain?
+      redirect_to @team, notice: 'Player was successfully removed.'
     else
-      raise ActiveRecord::RecordNotFound
+      redirect_to join_team_users_path, notice: 'You have successfully left the team.'
     end
+  end
+
+  private
+
+  # Only allow the team captain or the current user to remove the current user from a team.
+  def check_removal_permissions
+    raise ActiveRecord::RecordNotFound unless team_captain? || current_user.id.eql?(params[:user_id].to_i)
   end
 end

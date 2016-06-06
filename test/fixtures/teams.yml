@@ -8,3 +8,8 @@ team_one:
 team_two:
   team_name: team_two
   affiliation: school2
+
+full_team:
+  team_name: full_team
+  affiliation: school3
+  team_captain: full_team_user_one
