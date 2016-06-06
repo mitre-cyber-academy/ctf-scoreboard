@@ -7,7 +7,7 @@ class RegistrationsController < Devise::RegistrationsController
       set_flash_message! :alert, :captain_tried_to_destroy
       render 'edit'
     elsif update_resource(resource, account_update_params)
-      resource.leave_team if resource.on_a_team?
+      resource.team.users.delete(resource.id) if resource.on_a_team?
       resource.destroy
       Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
       set_flash_message! :notice, :destroyed
