@@ -16,7 +16,8 @@ class UserMailerTest < ActionMailer::TestCase
                    invited to join the team #{user_invites(:invite_one).team.team_name}
                    for the upcoming MITRE CTF Click the link below to register
                    an account in order to accept the invitation. #{link_to '
-                   Create my account', new_user_registration_url}").squish
+                   Create my account', new_user_registration_url(:email => user_invites(:invite_one).email)}").squish
+    puts @inv_email_body
     @reg_email_body = strip_tags("Hello #{user_requests(:request_one).team.team_captain.email}!
                    #{user_requests(:request_one).user.full_name}
                    has requested to join your team #{user_requests(:request_one).team.team_name}
@@ -33,6 +34,9 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal ['user2@domain.com'], email.to
     assert_equal "MITRE CTF: Invite to join team #{user_invites(:invite_one).team.team_name}", email.subject
     assert_equal @inv_email_body, strip_tags(email.body.to_s).squish
+  end
+
+  test 'invite contains correct url' do
   end
 
   test 'request' do
