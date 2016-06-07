@@ -5,6 +5,14 @@ class TeamTest < ActiveSupport::TestCase
     assert_equal(false, teams(:team_one).eligible_for_prizes?)
   end
 
+  test 'team without team captain is automatically assigned to first user' do
+    team = teams(:team_two)
+    user = users(:user_two)
+    team.users << user
+    team.save
+    assert_equal(user, team.team_captain)
+  end
+
   test 'team with one eligible user and one ineligible is ineligible for prizes' do
     teams(:team_one).users << users(:user_two)
     assert_equal(false, teams(:team_one).eligible_for_prizes?)
