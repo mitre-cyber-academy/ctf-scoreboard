@@ -32,11 +32,9 @@ body { padding-top: 60px; }
   li {list-style-type: none;}
   li:before {content: " - ";}
 }
-.user-reset-form .field_with_errors {
-	display:inline;
-}
 .field_with_errors {
   color: red;
+  display: inline;
 }
 .jumbotron {
   position: relative;

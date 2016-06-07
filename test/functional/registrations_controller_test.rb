@@ -36,7 +36,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   test 'user unable to delete account without password' do
     sign_in users(:user_three)
     assert_no_difference 'User.count' do
-      delete :destroy, id: users(:user_three).id, current_password: @password
+      delete :destroy, id: users(:user_three).id
     end
     assert_equal I18n.t("devise.registrations.password_needed_destroy"), flash[:alert]
   end

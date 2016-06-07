@@ -11,8 +11,4 @@ class RegistrationsController < Devise::RegistrationsController
       render 'edit'
     end
   end
-
-  def update
-    super
-  end
 end
