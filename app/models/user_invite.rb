@@ -9,6 +9,8 @@ class UserInvite < ActiveRecord::Base
 
   before_validation { self.email = email.downcase }
 
+  validate :uniqueness_of_pending_invite, on: :create
+
   validates :email, :team, presence: true
 
   validates :email, email: true
@@ -18,8 +20,15 @@ class UserInvite < ActiveRecord::Base
   # Get only invites in the pending status.
   scope :pending, -> { where(status: 'Pending') }
 
+  # Make sure a user cannot be invited to the same team over and over.
+  def uniqueness_of_pending_invite
+    errors.add(:email, 'already has a pending invite') unless UserInvite.pending.where(team: team, email: email).empty?
+  end
+
   def accept
     if team.full?
+      false
+    elsif user.nil? || !user.team.nil? # Check to make sure user isn't already on a team.
       false
     else
       update_attribute(:status, :Accepted)

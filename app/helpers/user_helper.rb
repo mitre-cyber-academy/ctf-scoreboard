@@ -1,4 +1,10 @@
 module UserHelper
+  def check_if_user_on_team
+    if current_user.on_a_team?
+      redirect_to current_user.team, alert: 'You cannot join another team while already being a member of one.'
+    end
+  end
+
   def years_in_school
     [
       %w(9 9), %w(10 10), %w(11 11), %w(12 12),

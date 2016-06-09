@@ -1,10 +1,11 @@
 - content_for :header do
   Join a Team
 
-%h3 Pending Team Invites
-- if @pending_invites.empty?
-  No pending team invites at this time.
-- else
+
+- if !@pending_invites.empty?
+  %h3
+    Pending Team Invitations
+    %small Teams that would like you to join them
   %table.table.table-condensed.table-striped
     %thead
     %tr
@@ -24,3 +25,61 @@
               %i.icon-ok
             = link_to team_user_invite_path(current.team, current), method: :delete, data: {confirm: "Are you sure?"} do
               %i.icon-remove
+- if !@pending_requests.empty?
+  %h3
+    Pending Team Requests
+    %small Teams that you have requested to join
+  %table.table.table-condensed.table-striped
+    %thead
+    %tr
+      %th
+        Team Name
+      %th
+        Requested On
+      %th
+        Cancel
+    - @pending_requests.each do |current|
+      %tbody
+        %tr{:class=>'warning'}
+          %td=current.team.team_name
+          %td=current.created_at.strftime("%b %d %Y")
+          %td
+            = link_to team_user_request_path(current.team, current), method: :delete, data: {confirm: "Are you sure?"} do
+              %i.icon-remove
+%h3 Search for a Team
+.well
+  .row
+    = form_for_filterrific @filterrific do |f|
+      %div.span3
+        Team Name
+        = f.text_field(                                |
+            :filter_team_name,                         |
+            class: 'filterrific-periodically-observed' |
+          )                                            |
+      %div.span3
+        Affiliation
+        = f.text_field(                                |
+            :filter_affiliation,                       |
+            class: 'filterrific-periodically-observed' |
+          )                                            |
+      %div.span2
+        Location
+        = f.select(                                    |
+            :location,                                 |
+            @filterrific.select_options[:location],    |
+            { :include_blank => '- Any -' },           |
+            :class => "span2",                         |
+          )                                            |
+      %div.span3
+        High School / College
+        = f.select(                                    |
+            :hs_college,                               |
+            @filterrific.select_options[:hs_college],  |
+            { :include_blank => '- Any -' },           |
+          )                                            |
+      = render_filterrific_spinner
+
+= render(                                 |
+partial: 'teams/list',                    |
+locals: { teams: @teams }                 |
+)                                         |

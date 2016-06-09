@@ -11,6 +11,7 @@ gem "paperclip" , '~> 4.3.5'
 gem 'devise_security_extension'
 gem 'rails_email_validator'
 gem 'jquery-rails'
+gem 'filterrific'
 
 group :development do
 	gem 'sqlite3'

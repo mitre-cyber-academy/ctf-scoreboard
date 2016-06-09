@@ -15,4 +15,17 @@ class UserInviteTest < ActiveSupport::TestCase
       user_invites(:invite_one).send(:link_to_user)
     end
   end
+
+  test 'invites can be accepted' do
+    user_invites(:invite_one).send(:link_to_user)
+    assert_difference 'user_invites(:invite_one).team.users.size', +1 do
+      user_invites(:invite_one).accept
+    end
+  end
+
+  test 'invites with no linked user cannot be accepted' do
+    assert_no_difference 'user_invites(:invite_one).team.users.size' do
+      user_invites(:invite_one).accept
+    end
+  end
 end

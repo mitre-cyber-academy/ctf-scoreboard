@@ -1,0 +1,4 @@
+- js = escape_javascript(
+- render(partial: 'teams/list', locals: { teams: @teams })
+- )
+$("#filterrific_results").html("#{js}");

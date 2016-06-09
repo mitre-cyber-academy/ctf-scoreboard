@@ -16,6 +16,7 @@
 //= require jquery.nested-fields
 // Loads all Bootstrap javascripts
 //= require bootstrap
+//= require filterrific/filterrific-jquery
 
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()

@@ -9,6 +9,32 @@ class UserRequest < ActiveRecord::Base
 
   validates :team, :user, presence: true
 
-  # Get only requests in the pending status.
-  scope :pending, -> { where(status: 'Pending') }
+  validate :uniqueness_of_pending_request, on: :create
+
+  scope :pending_requests, -> { where(status: 'Pending') }
+
+  # Get only invites in the pending status where the user is not already on a team.
+  scope :pending, -> { pending_requests.joins(:user).where(users: { team_id: nil }) }
+
+  # Make sure a user cannot be invited to the same team over and over.
+  def uniqueness_of_pending_request
+    unless UserRequest.pending_requests.where(team: team, user: user).empty?
+      errors.add(:user, 'already has a pending request for this team.')
+    end
+  end
+
+  def user_on_team?
+    !user.team.nil?
+  end
+
+  def accept
+    if team.full?
+      false
+    elsif user_on_team? # Check to make sure user isn't already on a team.
+      false
+    else
+      update_attribute(:status, :Accepted)
+      team.users << user
+    end
+  end
 end

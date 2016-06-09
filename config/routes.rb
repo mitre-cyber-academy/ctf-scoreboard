@@ -21,6 +21,9 @@ CtfRegistration::Application.routes.draw do
     resources :user_invites, only: [:destroy] do
       get :accept, on: :member
     end
+    resources :user_requests, only: [:create, :destroy] do
+      get :accept, on: :member
+    end
     resources :users, only: [] do
       delete :leave_team
     end

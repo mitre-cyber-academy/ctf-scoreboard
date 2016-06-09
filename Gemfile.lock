@@ -78,6 +78,8 @@ GEM
     docile (1.1.5)
     erubis (2.7.0)
     execjs (2.7.0)
+    filterrific (2.0.5)
+      rails (>= 3.1.0)
     font-awesome-rails (4.6.3.0)
       railties (>= 3.2, < 5.1)
     formtastic (3.1.4)
@@ -247,6 +249,7 @@ DEPENDENCIES
   coveralls
   devise
   devise_security_extension
+  filterrific
   formtastic
   haml-rails
   jquery-rails

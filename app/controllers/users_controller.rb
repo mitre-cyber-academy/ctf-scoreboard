@@ -1,18 +1,28 @@
 class UsersController < ApplicationController
-  include ApplicationHelper
+  include ApplicationHelper, UserHelper
 
   before_action :user_logged_in?
   before_action :check_removal_permissions, only: [:leave_team]
+  before_action :check_if_user_on_team, only: [:join_team]
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable MethodLength
   def join_team
-    if !current_user.on_a_team?
-      @user = current_user
-      @pending_invites = @user.user_invites.pending
-      @pending_requests = @user.user_requests.pending
-    else
-      redirect_to current_user.team, alert: 'You cannot join another team while already being a member of one.'
+    @pending_invites = current_user.user_invites.pending
+    @pending_requests = current_user.user_requests.pending
+    (@filterrific = initialize_filterrific(
+      Team, params[:filterrific],
+      select_options: { location: us_states, hs_college: Team.options_for_school_level }
+    )) || return
+    @teams = @filterrific.find.page(params[:page])
+
+    respond_to do |format|
+      format.html
+      format.js
     end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable MethodLength
 
   def leave_team
     @team = current_user.team
