@@ -20,4 +20,19 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  teams:
+    captain_removed_player: 'Player was successfully removed.'
+    player_removed_self: 'You have successfully left the team.'
+  requests:
+    sent_successful: 'Team join request was successfully sent.'
+    accepted_another: 'User has accepted another teams invitation, sorry!'
+    accepted_successful: 'User request was successfully accepted.'
+    rejected_successful: 'User request was successfully rejected.'
+    too_many_players: 'You must remove a different player in order to accept this request.'
+
+
+
+
+
+
+
