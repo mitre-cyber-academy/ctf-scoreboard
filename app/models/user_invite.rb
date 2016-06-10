@@ -5,7 +5,7 @@ class UserInvite < ActiveRecord::Base
 
   enum status: [:Pending, :Accepted, :Rejected]
 
-  after_create :send_email, :link_to_user
+  after_create :link_to_user, :send_email
 
   before_validation { self.email = email.downcase }
 
