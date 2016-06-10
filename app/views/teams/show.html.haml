@@ -7,7 +7,8 @@
   %tr
     %th.span1 Lead
     %th Email
-    %th.span2 Eligible for Prizes
+    %th Eligible Division
+    %th.span2 Prize Eligible?
     %th Remove
   - @team.users.each do |current|
     %tbody
@@ -16,27 +17,34 @@
           -if current == @team.team_captain
             %i.icon-ok
         %td=current.email
+        %td=current.division
         %td
           -if current.compete_for_prizes
-            %i.icon-ok
+            Yes
           -else
-            %i.icon-remove
+            No
         %td
           - if current != @team.team_captain && (team_captain? || current_user == current)
             = link_to team_user_leave_team_path(current.team, current), method: :delete, data: {confirm: "Are you sure?"} do
               %i.icon-remove
 %hr
 .row
-  .span12
+  .span6
     %h4 Team Prize Eligibility Status
     Your team is currently
     - if @team.eligible_for_prizes?
-      competing for prizes.
+      competing for prizes. This will change for your whole team if you add any users to you team that are not eligible to receive prizes.
     - else
       %b NOT
       competing for prizes since one or more team members is not eligible to do so or has chosen to not compete for prizes in their profile. Please contact the users marked as ineligible above for more information.
-    %br
-    %br
+  .span6
+    %h4 Team Division Status
+    Your team is currently competing at the
+    %b=@team.division_level
+    since it is the highest common denominator between the team members you currently have signed up. Note that your division level will change based on the users you accept or reject into your team.
+%hr
+.row
+  .span12
     Only US Citizens enrolled in a US High School or College are eligible for prizes and consideration for internships. Verification of enrollment and citizenship will be required post-competition from all members of the winning teams.
 %hr
 .row
@@ -53,28 +61,35 @@
           %th
             Prize Eligible?
           %th
-            Invited On
-          %th
-            Cancel Invite
+            Division
+          - if team_captain?
+            %th
+              Cancel Invite
         - @pending_invites.each do |current|
           %tbody
             %tr{:class=>'warning'}
               %td
-                .helpertext-wrapper-overflow{  'data-toggle' => 'tooltip', 'data-placement' => 'bottom', :title => current.email }
-                  =current.email
+                .helpertext-wrapper-overflow{ 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', :title => current.email }
+                  = current.email
               %td
                 - if current.user.nil?
                   .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "This user has not yet registered and therefore we cannot determine their eligibility status at this time." }
                     %i.icon-question-sign
                 - elsif current.user.compete_for_prizes
-                  %i.icon-ok
+                  Yes
                 - else
-                  %i.icon-remove
+                  No
 
-              %td=current.created_at.strftime("%b %d %Y")
               %td
-                = link_to team_user_invite_path(@team, current), method: :delete, data: {confirm: "Are you sure?"} do
-                  %i.icon-remove
+                - if current.user.nil?
+                  .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "This user has not yet registered and therefore we cannot determine their division at this time." }
+                    %i.icon-question-sign
+                - else
+                  = current.user.division
+              - if team_captain?
+                %td
+                  = link_to team_user_invite_path(@team, current), method: :delete, data: {confirm: "Are you sure?"} do
+                    %i.icon-remove
     - if team_editable?
       = form_for(@team) do |team|
         %h4 Invite a Team Member
@@ -99,8 +114,9 @@
             Prize Eligible?
           %th
             Requested On
-          %th
-            Accept?
+          - if team_captain?
+            %th
+              Accept?
         - @pending_requests.each do |current|
           %tbody
             %tr{:class=>'warning'}
@@ -109,9 +125,9 @@
                   =current.user.email
               %td
                 -if current.user.compete_for_prizes
-                  %i.icon-ok
+                  Yes
                 -else
-                  %i.icon-remove
+                  No
               %td=current.created_at.strftime("%b %d %Y")
               %td
                 = link_to accept_team_user_request_path(@team,current) do
