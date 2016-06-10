@@ -31,6 +31,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  def division
+    return 'College' if year_in_school >= 13
+    return 'Industry' if year_in_school.eql? 0
+    return 'High School' if year_in_school <= 12
+    'Unknown' # If user is not in any of the other three then fallback.
+  end
+
   private
 
   # If a user chooses to compete for prizes then they must be located in the US and be in school.

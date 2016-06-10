@@ -20,6 +20,15 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  activerecord:
+    errors:
+      models:
+        user_invite:
+          attributes:
+            email:
+              blank: 'You cannot invite your invisible friend.'
+              invalid: 'Email address is not valid.'
+              uniqueness: "Inviting the same friend multiple times doesn't make your team perform any better."
   teams:
     captain_removed_player: 'Player was successfully removed.'
     player_removed_self: 'You have successfully left the team.'
