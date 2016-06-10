@@ -1,4 +1,6 @@
 class UserInvitesController < ApplicationController
+  include ApplicationHelper
+
   before_action :user_logged_in?
   before_action :check_accept_access, only: [:accept]
   before_action :check_destroy_access, only: [:destroy]
