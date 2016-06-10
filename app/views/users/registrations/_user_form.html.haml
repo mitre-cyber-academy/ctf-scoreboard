@@ -30,16 +30,16 @@
     .controls
       = f.select :year_in_school, options_for_select(years_in_school, resource.year_in_school), { :include_blank => '' }, :onChange => "hidePrizesCheckbox()"
   .control-group
-    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Enter the state in which you are a resident." }
+    .helpertext-wrapper{ 'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Enter the state in which you are a resident." }
       = f.label :state, :class => "control-label-required"
       .controls
         = f.select :state, options_for_select(us_states, resource.state), { :include_blank => '' }, :onChange => "hidePrizesCheckbox()"
   .control-group
-    = f.label :password, :class => "control-label-required"
+    = f.label :password, :class => on_update_page ? "control-label" : "control-label-required"
     .controls
       = f.password_field :password, :input_html => {:autofocus => true}, :class => "textarea", :placeholder => "Minimum 10 characters"
   .control-group
-    = f.label :password_confirmation, "Confirm Password", :class => "control-label-required"
+    = f.label :password_confirmation, "Confirm Password", :class => on_update_page ? "control-label" : "control-label-required"
     .controls
       = f.password_field :password_confirmation, :class => "textarea"
   .control-group#compete-for-prizes
@@ -61,9 +61,9 @@
     = f.label :area_of_study, "Major/area of study", :class => "control-label"
     .controls
       = f.text_field :area_of_study, :class => "textarea"
-  -# If a user is updating their information then require_current_password should be passed to the partial as true,
-  -# if this is a new user registering then require_current_password should be false.
-  - if require_current_password
+  -# If a user is updating their information then on_update_page should be passed to the partial as true,
+  -# if this is a new user registering then on_update_page should be false.
+  - if on_update_page
     .control-group
       .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "We need your current password to update your account information." }
         = f.label :current_password, :class => "control-label-required"
@@ -71,7 +71,7 @@
           = f.password_field :current_password, :class => "textarea"
   .controls
     = button_tag :Submit, :label => 'Confirm Account', :class => "btn"
-- if require_current_password
+- if on_update_page
   %hr
   = form_for(resource, as: resource_name, url: registration_path(resource_name), :html => { :multipart => "true", :class => "form-horizontal"}, :method => :delete) do |f|
     .control-group

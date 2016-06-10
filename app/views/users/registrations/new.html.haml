@@ -1,4 +1,4 @@
 - content_for :header do
   Register for the CTF
 
-= render "user_form", require_current_password: false, legend: "Almost there! Please fill out a few fields to create your account."
+= render "user_form", on_update_page: false, legend: "Almost there! Please fill out a few fields to create your account."

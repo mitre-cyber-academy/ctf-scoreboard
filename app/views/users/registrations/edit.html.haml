@@ -1,4 +1,4 @@
 - content_for :header do
   Edit Account
 
-= render "user_form", require_current_password: true, legend: ""
+= render "user_form", on_update_page: true, legend: ""
