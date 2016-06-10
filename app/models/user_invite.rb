@@ -22,7 +22,9 @@ class UserInvite < ActiveRecord::Base
 
   # Make sure a user cannot be invited to the same team over and over.
   def uniqueness_of_pending_invite
-    errors.add(:email, :uniqueness) unless UserInvite.pending.where(team: team, email: email).empty?
+    unless UserInvite.pending.where(team: team, email: email).empty? && team.users.where(email: email).empty?
+      errors.add(:email, :uniqueness)
+    end
   end
 
   def accept
