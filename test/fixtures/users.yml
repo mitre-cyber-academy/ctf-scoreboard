@@ -39,6 +39,39 @@ user_three:
   encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
   confirmed_at: <%= Time.now %>
 
+user_four:
+  full_name: User four
+  email: user4@domain.com
+  team: team_two
+  affiliation: Industry
+  year_in_school: 0
+  state: FL
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  confirmed_at: <%= Time.now %>
+  team: team_three
+
+user_five:
+  full_name: User five
+  email: user5@domain.com
+  affiliation: Industry
+  year_in_school: 13
+  compete_for_prizes: false
+  state: MI
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  confirmed_at: <%= Time.now %>
+  team: team_three
+
+user_six:
+  full_name: User six
+  email: user6@domain.com
+  affiliation: Industry
+  year_in_school: 13
+  compete_for_prizes: false
+  state: HI
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  confirmed_at: <%= Time.now %>
+  team: team_three
+
 full_team_user_one:
   full_name: User four
   email: user@user.com

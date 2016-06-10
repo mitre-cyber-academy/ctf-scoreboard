@@ -9,6 +9,11 @@ team_two:
   team_name: team_two
   affiliation: school2
 
+team_three:
+  team_name: team_three
+  affiliation: school3
+  team_captain: user_four
+
 full_team:
   team_name: full_team
   affiliation: school3
