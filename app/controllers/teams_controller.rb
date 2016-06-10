@@ -40,7 +40,7 @@ class TeamsController < ApplicationController
     if team.save
       redirect_to team, notice: 'Team member was successfully invited.'
     else
-      redirect_to team, alert: team.errors.full_messages.first
+      redirect_to team, alert: team.errors.messages[:"user_invites.base"].first
     end
   end
 
