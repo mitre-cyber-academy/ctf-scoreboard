@@ -5,11 +5,11 @@ class UserInvitesController < ApplicationController
   def accept
     @user_invite = current_user.user_invites.find(params[:id])
     if @user_invite.nil?
-      redirect_to :back, alert: 'You do not have permission to accept this invite.'
+      redirect_to :back, alert: I18n.t('invites.invalid_permissions')
     elsif @user_invite.accept
-      redirect_to team_path(@user_invite.team), notice: 'User invite was successfully accepted.'
+      redirect_to team_path(@user_invite.team), notice: I18n.t('invites.accepted_successful')
     else
-      redirect_to :back, alert: 'This team currently does not have any more open slots. Please try again later.'
+      redirect_to :back, alert: I18n.t('invites.full_team')
     end
   end
 
@@ -17,7 +17,7 @@ class UserInvitesController < ApplicationController
   def destroy
     @user_invite.status = :Rejected
     @user_invite.save
-    redirect_to :back, notice: 'User invitation was successfully rejected.'
+    redirect_to :back, notice: I18n.t('invites.rejected_successful')
   end
 
   private
