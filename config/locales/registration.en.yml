@@ -29,3 +29,8 @@ en:
     accepted_successful: 'User request was successfully accepted.'
     rejected_successful: 'User request was successfully rejected.'
     too_many_players: 'You must remove a different player in order to accept this request.'
+  invites:
+    invalid_permissions: 'You do not have permission to accept this invite.'
+    accepted_successful: 'User invite was successfully accepted.'
+    rejected_successful: 'User invitation was successfully rejected.'
+    full_team: 'This team currently does not have any more open slots. Please try again later.'
