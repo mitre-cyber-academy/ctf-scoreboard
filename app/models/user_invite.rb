@@ -9,7 +9,7 @@ class UserInvite < ActiveRecord::Base
 
   before_validation { self.email = email.downcase }
 
-  validate :uniqueness_of_pending_invite, on: :create
+  validate :uniqueness_of_invite, on: :create
 
   validates :email, :team, presence: true
 
@@ -21,7 +21,7 @@ class UserInvite < ActiveRecord::Base
   scope :pending, -> { where(status: 'Pending') }
 
   # Make sure a user cannot be invited to the same team over and over.
-  def uniqueness_of_pending_invite
+  def uniqueness_of_invite
     unless UserInvite.pending.where(team: team, email: email).empty? && team.users.where(email: email).empty?
       errors.add(:email, :uniqueness)
     end
