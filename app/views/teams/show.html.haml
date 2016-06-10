@@ -114,7 +114,7 @@
                   %i.icon-remove
               %td=current.created_at.strftime("%b %d %Y")
               %td
-                = link_to do
+                = link_to accept_team_user_request_path(@team,current) do
                   %i.icon-ok
                 = link_to method: :delete, data: {confirm: "Are you sure?"} do
                   %i.icon-remove

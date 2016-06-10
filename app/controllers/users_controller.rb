@@ -28,9 +28,9 @@ class UsersController < ApplicationController
     @team = current_user.team
     @team.users.delete(params[:user_id])
     if current_user.team_captain?
-      redirect_to @team, notice: 'Player was successfully removed.'
+      redirect_to @team, notice: I18n.t('teams.captain_removed_player')
     else
-      redirect_to join_team_users_path, notice: 'You have successfully left the team.'
+      redirect_to join_team_users_path, notice: I18n.t('teams.player_removed_self')
     end
   end
 
