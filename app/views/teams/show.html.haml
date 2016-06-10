@@ -22,7 +22,7 @@
           -else
             %i.icon-remove
         %td
-          - if current != @team.team_captain
+          - if current != @team.team_captain && (team_captain? || current_user == current)
             = link_to team_user_leave_team_path(current.team, current), method: :delete, data: {confirm: "Are you sure?"} do
               %i.icon-remove
 %hr
