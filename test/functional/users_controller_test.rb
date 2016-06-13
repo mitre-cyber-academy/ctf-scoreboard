@@ -35,9 +35,13 @@ class UsersControllerTest < ActionController::TestCase
   #   assert_equal
   # end
 
-  # test 'only team captain can remove' do
-  #   sign_in users(:full_team_user_five)
-  #   delete :leave_team, id: users(:full_team_user_four).id
-  #   assert_response :forbidden
-  # end
+  test 'only team captain can remove' do
+    sign_in users(:full_team_user_five)
+    team = users(:full_team_user_five).team
+    assert_no_difference 'team.users(:reload).size' do
+      assert_raise ActiveRecord::RecordNotFound do
+        delete :leave_team, user_id: users(:full_team_user_four).id, team_id: users(:full_team_user_five).team_id
+      end
+    end
+  end
 end
