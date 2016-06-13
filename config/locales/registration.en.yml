@@ -32,6 +32,10 @@ en:
   teams:
     captain_removed_player: 'Player was successfully removed.'
     player_removed_self: 'You have successfully left the team.'
+    already_on_team: 'You cannot create a new team while already being a member of one.'
+    full_team: 'You have added all the users you can to your team.'
+    create_successful: 'Team was successfully created.'
+    invalid_permissions: 'You must first be a member of a team in order to view it.'
   requests:
     sent_successful: 'Team join request was successfully sent.'
     accepted_another: 'User has accepted another teams invitation, sorry!'
@@ -39,6 +43,7 @@ en:
     rejected_successful: 'User request was successfully rejected.'
     too_many_players: 'You must remove a different player in order to accept this request.'
   invites:
+    invite_successful: 'Team invite successfully sent.'
     invalid_permissions: 'You do not have permission to accept this invite.'
     accepted_successful: 'User invite was successfully accepted.'
     rejected_successful: 'User invitation was successfully rejected.'

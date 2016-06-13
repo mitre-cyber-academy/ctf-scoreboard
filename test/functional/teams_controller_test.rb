@@ -36,7 +36,7 @@ class TeamsControllerTest < ActionController::TestCase
     sign_in user
     get :show, id: teams(:team_two)
     assert_redirected_to team_path(user.team)
-    assert_equal flash[:alert], 'You must first be a member of a team in order to view it.'
+    assert_equal flash[:alert], I18n.t('teams.invalid_permissions')
   end
 
   test 'authenticated users without a team cannot view other teams' do
@@ -77,6 +77,14 @@ class TeamsControllerTest < ActionController::TestCase
     user = users(:full_team_user_one)
     sign_in user
     get :show, id: user.team
-    assert_equal flash[:notice], 'You have added all the users you can to your team.'
+    assert_equal flash[:notice], I18n.t('teams.full_team')
+  end
+
+  test 'invite a team member' do
+    user = users(:user_one)
+    sign_in user
+    patch :update, team: { team_name: 'team_one', affiliation: 'school1' }, id: user.team
+    assert_redirected_to team_path(users(:user_one).team)
+    assert I18n.t('invites.invite_successful'), flash[:notice]
   end
 end

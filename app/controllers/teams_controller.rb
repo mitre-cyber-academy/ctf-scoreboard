@@ -11,7 +11,7 @@ class TeamsController < ApplicationController
     if !current_user.on_a_team?
       @team = Team.new
     else
-      redirect_to current_user.team, alert: 'You cannot create a new team while already being a member of one.'
+      redirect_to current_user.team, alert: I18n.t('teams.already_on_team')
     end
   end
 
@@ -20,7 +20,7 @@ class TeamsController < ApplicationController
     # Filter for only pending invites and requests.
     @pending_invites = @team.user_invites.pending
     @pending_requests = @team.user_requests.pending
-    flash.now[:notice] = 'You have added all the users you can to your team.' if team_captain? && !team_editable?
+    flash.now[:notice] = I18n.t('teams.full_team') if team_captain? && !team_editable?
   end
 
   def create
@@ -28,7 +28,7 @@ class TeamsController < ApplicationController
     if @team.save
       # Add current user to the team as team captain
       @team.users << current_user
-      redirect_to @team, notice: 'Team was successfully created.'
+      redirect_to @team, notice: I18n.t('teams.create_successful')
     else
       render :new
     end
@@ -38,7 +38,7 @@ class TeamsController < ApplicationController
     team = current_user.team
     team.update_attributes(team_params)
     if team.save
-      redirect_to team, notice: 'Team member was successfully invited.'
+      redirect_to team, notice: I18n.t('invites.invite_successful')
     else
       redirect_to team, alert: team.errors.map { |_, msg| msg }.join(', ')
     end
@@ -58,7 +58,7 @@ class TeamsController < ApplicationController
     # If the user is not signed in, not on a team, or not on the team they are trying to access
     # then deny them from accessing the team page.
     if !current_user.on_a_team? || (current_user.team_id != params[:id].to_i)
-      redirect_to user_root_path, alert: 'You must first be a member of a team in order to view it.'
+      redirect_to user_root_path, alert: I18n.t('teams.invalid_permissions')
     end
   end
 end
