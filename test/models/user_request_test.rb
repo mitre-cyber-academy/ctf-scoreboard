@@ -8,7 +8,7 @@ class UserRequestTest < ActiveSupport::TestCase
         user: users(:user_two)
     )
     assert !user_request.valid?
-    assert_equal true, user_requests(:request_one).errors.added?(:user, 'already has a pending request for this team.')
+    assert_equal true, user_request.errors.added?(:user, 'already has a pending request for this team.')
   end
 
   test 'user on a team' do
