@@ -19,7 +19,7 @@ class UserRequest < ActiveRecord::Base
   # Make sure a user cannot be invited to the same team over and over.
   def uniqueness_of_pending_request
     unless UserRequest.pending_requests.where(team: team, user: user).empty?
-      errors.add(:user, 'already has a pending request for this team.')
+      errors.add(:user, I18n.t('requests.already_pending'))
     end
   end
 

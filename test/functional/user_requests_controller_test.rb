@@ -7,10 +7,17 @@ class UserRequestsControllerTest < ActionController::TestCase
     @request.env["HTTP_REFERER"] = 'http://test.host/'
   end
 
-  test 'create request' do
+  test 'user cannot create a request with one already pending for same team' do
     sign_in users(:user_two)
     post :create, team_id: teams(:team_one)
-    assert_redirected_to user_root_path
+    assert_redirected_to @controller.user_root_path
+    assert_match I18n.t('requests.already_pending'), flash[:alert]
+  end
+
+  test 'user can create request when they do not have any pending requests for that team and are not on a team' do
+    sign_in users(:user_three)
+    post :create, team_id: teams(:team_one)
+    assert_redirected_to @controller.user_root_path
     assert_equal I18n.t('requests.sent_successful'), flash[:notice]
   end
 
@@ -30,10 +37,11 @@ class UserRequestsControllerTest < ActionController::TestCase
   end
 
   test 'user destroys own request' do
-    user = users(:user_two)
-    delete :destroy, team_id: user_requests(:request_one).team, id: users(:user_two).id
+    user_request = user_requests(:request_one)
+    sign_in users(:user_two)
+    delete :destroy, team_id: user_request.team, id: user_request
     assert_redirected_to @request.env["HTTP_REFERER"]
-    assert_equal I18n.t('requests.rejected_sucessful'), flash[:notice]
+    assert_equal I18n.t('requests.rejected_successful'), flash[:notice]
   end
 
   test 'captain destroys user request' do

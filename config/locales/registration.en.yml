@@ -37,13 +37,13 @@ en:
     full_team: 'You have added all the users you can to your team.'
     create_successful: 'Team was successfully created.'
     invalid_permissions: 'You must first be a member of a team in order to view it.'
-
   requests:
     sent_successful: 'Team join request was successfully sent.'
     accepted_another: 'User has accepted another teams invitation, sorry!'
     accepted_successful: 'User request was successfully accepted.'
     rejected_successful: 'User request was successfully rejected.'
     too_many_players: 'You must remove a different player in order to accept this request.'
+    already_pending: 'already has a pending request for this team.'
   invites:
     invite_successful: 'Team invite successfully sent.'
     invalid_permissions: 'You do not have permission to accept this invite.'

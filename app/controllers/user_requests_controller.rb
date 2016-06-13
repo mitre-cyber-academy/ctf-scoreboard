@@ -31,7 +31,7 @@ class UserRequestsController < ApplicationController
   def destroy
     @user_request.status = :Rejected
     if @user_request.save
-      redirect_to :back, notice: I18n.t('requests.rejected_sucessful')
+      redirect_to :back, notice: I18n.t('requests.rejected_successful')
     else
       redirect_to user_root_path, alert: @user_request.errors.full_messages.first
     end
