@@ -7,7 +7,7 @@ class TeamTest < ActiveSupport::TestCase
 
   test 'team without team captain is automatically assigned to first user' do
     team = teams(:team_two)
-    user = users(:user_two)
+    user = users(:user_three)
     team.users << user
     team.save
     assert_equal(user, team.team_captain)
