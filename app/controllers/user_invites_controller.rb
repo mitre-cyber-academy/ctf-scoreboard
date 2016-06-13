@@ -1,5 +1,5 @@
 class UserInvitesController < ApplicationController
-  include ApplicationHelper
+  include ApplicationModule
 
   before_action :user_logged_in?
   before_action :check_accept_access, only: [:accept]

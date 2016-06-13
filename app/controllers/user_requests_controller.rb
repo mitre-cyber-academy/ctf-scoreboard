@@ -1,5 +1,5 @@
 class UserRequestsController < ApplicationController
-  include ApplicationHelper, UserHelper
+  include ApplicationModule, UserModule
 
   before_action :user_logged_in?
   before_action :check_if_user_on_team, only: [:create]

@@ -1,8 +1,4 @@
 module UserHelper
-  def check_if_user_on_team
-    redirect_to current_user.team, alert: I18n.t('teams.already_on_team_join') if current_user.on_a_team?
-  end
-
   def years_in_school
     [
       %w(9 9), %w(10 10), %w(11 11), %w(12 12),

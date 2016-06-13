@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  include ApplicationHelper
+  include ApplicationModule
 
   helper_method :team_editable?
 
@@ -16,6 +16,7 @@ class TeamsController < ApplicationController
   end
 
   def show
+    @team_captain = team_captain?
     @team = current_user.team
     # Filter for only pending invites and requests.
     @pending_invites = @team.user_invites.pending

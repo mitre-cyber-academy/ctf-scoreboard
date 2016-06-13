@@ -24,7 +24,7 @@
           -else
             No
         %td
-          - if current != @team.team_captain && (team_captain? || current_user == current)
+          - if current != @team.team_captain && (@team_captain || current_user == current)
             = link_to team_user_leave_team_path(current.team, current), method: :delete, data: {confirm: "Are you sure?"} do
               %i.icon-remove
 %hr
@@ -62,7 +62,7 @@
             Prize Eligible?
           %th
             Division
-          - if team_captain?
+          - if @team_captain
             %th
               Cancel Invite
         - @pending_invites.each do |current|
@@ -86,7 +86,7 @@
                     %i.icon-question-sign
                 - else
                   = current.user.division
-              - if team_captain?
+              - if @team_captain
                 %td
                   = link_to team_user_invite_path(@team, current), method: :delete, data: {confirm: "Are you sure?"} do
                     %i.icon-remove
@@ -114,7 +114,7 @@
             Prize Eligible?
           %th
             Requested On
-          - if team_captain?
+          - if @team_captain
             %th
               Accept?
         - @pending_requests.each do |current|

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  include ApplicationHelper, UserHelper
+  include ApplicationModule, UserModule, UserHelper
 
   before_action :user_logged_in?
   before_action :check_removal_permissions, only: [:leave_team]
