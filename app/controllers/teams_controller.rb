@@ -11,7 +11,7 @@ class TeamsController < ApplicationController
     if !current_user.on_a_team?
       @team = Team.new
     else
-      redirect_to current_user.team, alert: I18n.t('teams.already_on_team')
+      redirect_to current_user.team, alert: I18n.t('teams.already_on_team_create')
     end
   end
 
