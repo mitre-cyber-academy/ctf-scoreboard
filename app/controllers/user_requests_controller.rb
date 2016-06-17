@@ -23,7 +23,7 @@ class UserRequestsController < ApplicationController
     elsif @user_request.accept
       redirect_to team_path(@user_request.team), notice: I18n.t('requests.accepted_successful')
     else
-      redirect_to :back, alert: I18n.t('request.too_many_players')
+      redirect_to :back, alert: I18n.t('requests.too_many_players')
     end
   end
 

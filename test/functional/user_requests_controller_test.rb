@@ -25,15 +25,35 @@ class UserRequestsControllerTest < ActionController::TestCase
   end
 
   test 'accept request' do
+    user_request = user_requests(:request_one)
+    sign_in users(:user_one)
+    get :accept, team_id: user_request.team, id: user_request
+    assert_redirected_to @controller.user_root_path
+    assert_equal I18n.t('requests.accepted_successful'), flash[:notice]
   end
 
   test 'accept request but user already on a team' do
+    user_request = user_requests(:request_three)
+    sign_in users(:user_one)
+    get :accept, team_id: user_request.team, id: user_request
+    assert_redirected_to @request.env["HTTP_REFERER"]
+    assert_equal I18n.t('requests.accepted_another'), flash[:alert]
   end
 
   test 'accept request but team now has too many members' do
+    user_request = user_requests(:request_two)
+    sign_in users(:full_team_user_one)
+    get :accept, team_id: user_request.team, id: user_request
+    assert_redirected_to @request.env["HTTP_REFERER"]
+    assert_equal I18n.t('requests.too_many_players'), flash[:alert]
   end
 
   test 'user not able to accept request' do
+    user_request = user_requests(:request_four)
+    sign_in users(:user_six)
+    assert_raise ActiveRecord::RecordNotFound do
+      get :accept, team_id: user_request.team, id: user_request
+    end
   end
 
   test 'user destroys own request' do
@@ -45,5 +65,18 @@ class UserRequestsControllerTest < ActionController::TestCase
   end
 
   test 'captain destroys user request' do
+    user_request = user_requests(:request_one)
+    sign_in users(:user_one)
+    delete :destroy, team_id: user_request.team, id: user_request
+    assert_redirected_to @request.env["HTTP_REFERER"]
+    assert_equal I18n.t('requests.rejected_successful'), flash[:notice]
+  end
+
+  test 'other user not allowed to destroy request' do
+    user_request = user_requests(:request_four)
+    sign_in users(:user_five)
+    assert_raise ActiveRecord::RecordNotFound do
+      delete :destroy, team_id: user_request.team, id: user_request
+    end
   end
 end
