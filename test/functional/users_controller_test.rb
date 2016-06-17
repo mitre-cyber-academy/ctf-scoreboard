@@ -56,4 +56,7 @@ class UsersControllerTest < ActionController::TestCase
       end
     end
   end
+
+  test 'captain is promoted' do
+  end
 end

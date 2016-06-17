@@ -23,4 +23,10 @@ class TeamTest < ActiveSupport::TestCase
     users(:user_one).compete_for_prizes = true
     assert_equal(false, teams(:team_one).eligible_for_prizes?)
   end
+
+  test 'team is removed after last user leaves' do
+  end
+
+  test 'captain is promoted' do
+  end
 end
