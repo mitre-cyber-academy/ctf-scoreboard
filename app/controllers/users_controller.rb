@@ -26,13 +26,34 @@ class UsersController < ApplicationController
 
   def leave_team
     @team = current_user.team
-    @team.users.delete(params[:user_id])
-    if current_user.team_captain?
-      redirect_to @team, notice: I18n.t('teams.captain_removed_player')
-    else
+    is_current_captain = @team.team_captain.id.eql?(params[:user_id].to_i)
+
+    # If captain wants to leave team
+    if is_current_captain && @team.users.size == 1
+      @team.users.delete(params[:user_id])
       redirect_to join_team_users_path, notice: I18n.t('teams.player_removed_self')
+    elsif is_current_captain && @team.users.size != 1
+      redirect_to @team, alert: I18n.t('teams.captain_must_promote')
+    # Captain removing player or player removing self
+    else
+      @team.users.delete(params[:user_id])
+      if current_user.team_captain?
+        redirect_to @team, notice: I18n.t('teams.captain_removed_player')
+      else
+        redirect_to join_team_users_path, notice: I18n.t('teams.player_removed_self')
+      end
     end
   end
+
+  # #   def leave_team
+  #   @team = current_user.team
+  #   @team.users.delete(params[:user_id])
+  #   if current_user.team_captain?
+  #     redirect_to @team, notice: I18n.t('teams.captain_removed_player')
+  #   else
+  #     redirect_to join_team_users_path, notice: I18n.t('teams.player_removed_self')
+  #   end
+  # end
 
   private
 
