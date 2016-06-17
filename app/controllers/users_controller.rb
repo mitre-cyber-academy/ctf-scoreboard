@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :user_logged_in?
   before_action :check_removal_permissions, only: [:leave_team]
   before_action :check_if_user_on_team, only: [:join_team]
+  before_action :check_promote_permissions, only: [:promote]
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable MethodLength
@@ -53,5 +54,9 @@ class UsersController < ApplicationController
   # Only allow the team captain or the current user to remove the current user from a team.
   def check_removal_permissions
     raise ActiveRecord::RecordNotFound unless team_captain? || current_user.id.eql?(params[:user_id].to_i)
+  end
+
+  def check_promote_permissions
+    raise ActiveRecord::RecordNotFound unless team_captain?
   end
 end

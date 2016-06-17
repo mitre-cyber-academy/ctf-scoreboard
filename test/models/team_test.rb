@@ -24,9 +24,17 @@ class TeamTest < ActiveSupport::TestCase
     assert_equal(false, teams(:team_one).eligible_for_prizes?)
   end
 
-  test 'team is removed after last user leaves' do
+  test 'promote' do
+    # These users are on the same team!
+    team = users(:full_team_user_one).team
+    team.promote(users(:full_team_user_five))
+    assert_equal team.team_captain, users(:full_team_user_five)
   end
 
-  test 'captain is promoted' do
+  test 'promote a user that is not on the same team' do
+    # These users are not on the same team!
+    team = users(:user_one).team
+    team.promote(users(:full_team_user_five))
+    assert_not_equal team.team_captain, users(:full_team_user_five)
   end
 end

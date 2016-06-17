@@ -58,5 +58,26 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'captain is promoted' do
+    sign_in users(:full_team_user_one)
+    team = users(:full_team_user_one).team
+    get :promote, user_id: users(:full_team_user_five), team_id: team
+    assert :success
+    assert_redirected_to team
+    assert_equal I18n.t('teams.promoted_captain'), flash[:notice]
+  end
+
+  test 'user cannot promote' do
+    sign_in users(:full_team_user_five)
+    team = users(:full_team_user_five).team
+    assert_raise ActiveRecord::RecordNotFound do
+      get :promote, user_id: users(:full_team_user_four), team_id: team
+    end
+  end
+
+  test 'captain cannot be from another team' do
+    sign_in users(:full_team_user_one)
+    team = users(:full_team_user_one).team
+    get :promote, user_id: users(:user_two), team_id: team
+    assert_not_equal team.team_captain, users(:user_two)
   end
 end

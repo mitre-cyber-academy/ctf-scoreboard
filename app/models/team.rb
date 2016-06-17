@@ -106,7 +106,7 @@ class Team < ActiveRecord::Base
   end
 
   def promote(user_id)
-    update_attribute(:team_captain, User.find_by_id(user_id))
+    update_attribute(:team_captain, users.find_by_id(user_id))
   end
 
   private
