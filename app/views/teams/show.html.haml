@@ -10,6 +10,7 @@
     %th Eligible Division
     %th.span2 Prize Eligible?
     %th Remove
+    %th Promote
   - @team.users.each do |current|
     %tbody
       %tr{:class=>'success'}
@@ -27,6 +28,9 @@
           - if current != (@team_captain || current_user == current)
             = link_to team_user_leave_team_path(current.team, current), method: :delete, data: {confirm: "Are you sure?"} do
               %i.icon-remove
+        %td
+          = link_to team_user_promote_path(current.team_id, current), method: :get, data: {confirm: "Are you sure?"} do
+            %i.icon-star
 %hr
 .row
   .span6

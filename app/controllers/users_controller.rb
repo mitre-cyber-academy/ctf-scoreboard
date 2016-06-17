@@ -42,6 +42,12 @@ class UsersController < ApplicationController
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable MethodLength
 
+  def promote
+    @team = current_user.team
+    @team.promote(params[:user_id])
+    redirect_to @team, notice: I18n.t('teams.promoted_captain')
+  end
+
   private
 
   # Only allow the team captain or the current user to remove the current user from a team.
