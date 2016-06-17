@@ -101,6 +101,10 @@ class Team < ActiveRecord::Base
   end
   # rubocop:enable Metrics/AbcSize
 
+  def cleanup
+    destroy if users.empty?
+  end
+
   private
 
   # If a team doesn't have a team captain but does have a user, set the team captain to the first user.
