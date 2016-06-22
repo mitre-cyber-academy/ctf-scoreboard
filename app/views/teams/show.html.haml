@@ -10,7 +10,8 @@
     %th Eligible Division
     %th.span2 Prize Eligible?
     %th Remove
-    %th Promote
+    - if @team_captain
+      %th Promote
   - @team.users.each do |current|
     %tbody
       %tr{:class=>'success'}
@@ -25,12 +26,14 @@
           -else
             No
         %td
-          - if current != (@team_captain || current_user == current)
+          - if current_user.can_remove?(current)
             = link_to team_user_leave_team_path(current.team, current), method: :delete, data: {confirm: "Are you sure?"} do
               %i.icon-remove
-        %td
-          = link_to team_user_promote_path(current.team_id, current), method: :get, data: {confirm: "Are you sure?"} do
-            %i.icon-star
+        - if @team_captain
+          %td
+            - if current_user.can_promote?(current)
+              = link_to team_user_promote_path(current.team_id, current), method: :get, data: {confirm: "Are you sure?"} do
+                %i.icon-star
 %hr
 .row
   .span6
@@ -45,7 +48,7 @@
     %h4 Team Division Status
     Your team is currently competing at the
     %b=@team.division_level
-    since it is the highest common denominator between the team members you currently have signed up. Note that your division level will change based on the users you accept or reject into your team.
+    level since it is the highest common denominator between the team members you currently have signed up. Note that your division level will change based on the users you accept onto your team.
 %hr
 .row
   .span12
@@ -133,8 +136,9 @@
                 -else
                   No
               %td=current.created_at.strftime("%b %d %Y")
-              %td
-                = link_to accept_team_user_request_path(@team,current) do
-                  %i.icon-ok
-                = link_to method: :delete, data: {confirm: "Are you sure?"} do
-                  %i.icon-remove
+              - if @team_captain
+                %td
+                  = link_to accept_team_user_request_path(@team,current) do
+                    %i.icon-ok
+                  = link_to method: :delete, data: {confirm: "Are you sure?"} do
+                    %i.icon-remove

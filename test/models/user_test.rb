@@ -53,4 +53,43 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(true, users(:user_one).team_captain?)
     assert_equal(false, users(:user_two).team_captain?)
   end
+
+  test 'user can promote a a team captain if they are currently captain' do
+    team_captain = users(:full_team_user_one)
+    user_on_team = users(:full_team_user_two)
+    assert_equal(true, team_captain.can_promote?(user_on_team))
+  end
+
+  test 'team captain cannot promote themselves team captain' do
+    team_captain = users(:full_team_user_one)
+    assert_equal(false, team_captain.can_promote?(team_captain))
+  end
+
+  test 'non team captain cannot promote a team captain' do
+    user_on_team = users(:full_team_user_two)
+    another_user = users(:full_team_user_three)
+    assert_equal(false, user_on_team.can_promote?(another_user))
+  end
+
+  test 'team captain can remove themselves from a team' do
+    team_captain = users(:full_team_user_one)
+    assert_equal(true, team_captain.can_remove?(team_captain))
+  end
+
+  test 'team captain can remove a member from his team' do
+    team_captain = users(:full_team_user_one)
+    user_on_team = users(:full_team_user_two)
+    assert_equal(true, team_captain.can_remove?(user_on_team))
+  end
+
+  test 'user can remove themselves from a team' do
+    user_on_team = users(:full_team_user_two)
+    assert_equal(true, user_on_team.can_remove?(user_on_team))
+  end
+
+  test 'non team captain cannot remove another user from a team' do
+    user_on_team = users(:full_team_user_two)
+    another_user = users(:full_team_user_three)
+    assert_equal(false, user_on_team.can_remove?(another_user))
+  end
 end

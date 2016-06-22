@@ -39,6 +39,17 @@ class User < ActiveRecord::Base
     'Unknown' # If user is not in any of the other three then fallback.
   end
 
+  # A user can only promote another user if they are the team captain. The user that they
+  # promote cannot be themselves.
+  def can_promote?(user)
+    (!eql? user) && (team.team_captain.eql? self)
+  end
+
+  # A user can only remove someone from a team if they are the team captain
+  def can_remove?(user)
+    (eql? user) || (team.team_captain.eql? self)
+  end
+
   private
 
   # If a user chooses to compete for prizes then they must be located in the US and be in school.
