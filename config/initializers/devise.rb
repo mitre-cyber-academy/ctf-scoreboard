@@ -4,7 +4,7 @@ Devise.setup do |config|
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.
-  config.mailer_sender = "do-not-reply@mitrecyberacademy.org"
+  config.mailer_sender = 'do-not-reply@mitrecyberacademy.org'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
@@ -23,7 +23,7 @@ Devise.setup do |config|
   # session. If you need permissions, you should implement that in a before filter.
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
-  config.authentication_keys = [ :email ]
+  config.authentication_keys = [:email]
 
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the
@@ -35,12 +35,12 @@ Devise.setup do |config|
   # Configure which authentication keys should be case-insensitive.
   # These keys will be downcased upon creating or modifying a user and when used
   # to authenticate or find a user. Default is :email.
-  config.case_insensitive_keys = [ :email ]
+  config.case_insensitive_keys = [:email]
 
   # Configure which authentication keys should have whitespace stripped.
   # These keys will have whitespace before and after removed upon creating or
   # modifying a user and when used to authenticate or find a user. Default is :email.
-  config.strip_whitespace_keys = [ :email ]
+  config.strip_whitespace_keys = [:email]
 
   # Tell if authentication through request.params is enabled. True by default.
   # It can be set to an array that will enable params authentication only for the
@@ -230,4 +230,47 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = "/my_engine/users/auth"
   config.secret_key = Rails.application.secrets.secret_key_base
+
+  # ==> Security Extension
+  # Configure security extension for devise
+
+  # Should the password expire (e.g 3.months)
+  # config.expire_password_after = 3.months
+
+  # Need 1 char of A-Z, a-z and 0-9
+  config.password_regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/
+
+  # Number of old passwords in archive
+  # config.password_archiving_count = 5
+
+  # Deny old password (true, false, count)
+  # config.deny_old_passwords = true
+
+  # captcha integration for recover form
+  # config.captcha_for_recover = true
+
+  # captcha integration for sign up form
+  # config.captcha_for_sign_up = true
+
+  # captcha integration for sign in form
+  # config.captcha_for_sign_in = true
+
+  # captcha integration for unlock form
+  # config.captcha_for_unlock = true
+
+  # security_question integration for recover form
+  # this automatically enables captchas (captcha_for_recover, as fallback)
+  # config.security_question_for_recover = false
+
+  # security_question integration for unlock form
+  # this automatically enables captchas (captcha_for_unlock, as fallback)
+  # config.security_question_for_unlock = false
+
+  # security_question integration for confirmation form
+  # this automatically enables captchas (captcha_for_confirmation, as fallback)
+  # config.security_question_for_confirmation = false
+
+  # ==> Configuration for :expirable
+  # Time period for account expiry from last_activity_at
+  # config.expire_after = 90.days
 end

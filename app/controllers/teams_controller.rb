@@ -1,53 +1,65 @@
 class TeamsController < ApplicationController
-  include ApplicationHelper
-  before_filter :user_confirmed, only: :show
-  helper_method :is_editable
+  include ApplicationModule
+
+  helper_method :team_editable?
+
+  before_action :user_logged_in?
+
+  before_action :check_membership, only: [:show, :update, :destroy]
+
   def new
-    @team = Team.new
-    @team.users.build
+    if !current_user.on_a_team?
+      @team = Team.new
+    else
+      redirect_to current_user.team, alert: I18n.t('teams.already_on_team_create')
+    end
   end
+
   def show
-    @team = Team.find(params[:id])
-    if is_team_captain and !is_editable
-      flash.now[:notice] = 'You have added all the users you can to your team.'
-    end
+    @team_captain = team_captain?
+    @team = current_user.team
+    # Filter for only pending invites and requests.
+    @pending_invites = @team.user_invites.pending
+    @pending_requests = @team.user_requests.pending
+    flash.now[:notice] = I18n.t('teams.full_team') if team_captain? && !team_editable?
   end
+
   def create
-    @team = Team.new(team_params)
-    logger.debug @team.to_yaml
-    @team.users.first.skip_confirmation_notification!
+    @team = Team.new(team_params.merge(team_captain_id: current_user.id))
     if @team.save
-      @team.team_captain = @team.users.first
-      if @team.save
-        @team.users.first.send_confirmation_instructions
-        redirect_to :root, :notice => 'Team was successfully created. Please check your email to finish your registration.'
-      else
-        render :action => "new"
-      end
+      # Add current user to the team as team captain
+      @team.users << current_user
+      redirect_to @team, notice: I18n.t('teams.create_successful')
     else
-      render :action => "new"
+      render :new
     end
   end
-  private
-  def user_confirmed
-    if !authenticate_user!
-      redirect_to :root, :alert => "You must be logged in to access this resource."
-    elsif !current_user.confirmed?
-      redirect_to :root, :alert => "Please confirm your account first"
-    elsif current_user.team_id.to_s != params[:id]
-      raise ActionController::RoutingError.new('Not Found')
+
+  def update
+    team = current_user.team
+    team.update_attributes(team_params)
+    if team.save
+      redirect_to team, notice: I18n.t('invites.invite_successful')
     else
-      return true
+      redirect_to team, alert: team.errors.map { |_, msg| msg }.join(', ')
     end
   end
-  def is_editable
-    if (authenticate_user! and is_team_captain) and @team.users.count < 5
-      return true
-    else
-      return false
-    end
+
+  def team_editable?
+    team_captain? && !@team.full?
   end
+
   def team_params
-    params.require(:team).permit(:team_name, :affiliation, users_attributes: [:email])
+    params.require(:team).permit(:team_name, :affiliation, user_invites_attributes: [:email])
+  end
+
+  private
+
+  def check_membership
+    # If the user is not signed in, not on a team, or not on the team they are trying to access
+    # then deny them from accessing the team page.
+    if !current_user.on_a_team? || (current_user.team_id != params[:id].to_i)
+      redirect_to user_root_path, alert: I18n.t('teams.invalid_permissions')
+    end
   end
 end

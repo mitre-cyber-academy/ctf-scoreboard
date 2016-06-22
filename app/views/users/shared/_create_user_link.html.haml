@@ -1,0 +1,2 @@
+- if devise_mapping.registerable? && controller_name != 'registrations'
+	= link_to "Register a new user", new_user_registration_path, :class => "space-text-from-input"

@@ -2,8 +2,6 @@
 # See github.com/sferik/rails_admin for more informations
 
 RailsAdmin.config do |config|
-
-
   ################  Global configuration  ################
 
   # Set the admin name here (optional second array element will appear in red). For example:
@@ -40,7 +38,6 @@ RailsAdmin.config do |config|
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
 
-
   ################  Model configuration  ################
 
   # Each model configuration can alternatively:
@@ -51,11 +48,8 @@ RailsAdmin.config do |config|
   #   - This initializer is loaded once at startup (modifications will show up when restarting the application) but all RailsAdmin configuration would stay in one place.
   #   - Models are reloaded at each request in development mode (when modified), which may smooth your RailsAdmin development workflow.
 
-
   # Now you probably need to tour the wiki a bit: https://github.com/sferik/rails_admin/wiki
   # Anyway, here is how RailsAdmin saw your application's models when you ran the initializer:
-
-
 
   ###  Team  ###
 
@@ -65,14 +59,14 @@ RailsAdmin.config do |config|
 
   #   # Found associations:
 
-  #     configure :users, :has_many_association 
+  #     configure :users, :has_many_association
 
   #   # Found columns:
 
-  #     configure :id, :integer 
-  #     configure :team_name, :string 
-  #     configure :created_at, :datetime 
-  #     configure :updated_at, :datetime 
+  #     configure :id, :integer
+  #     configure :team_name, :string
+  #     configure :created_at, :datetime
+  #     configure :updated_at, :datetime
 
   #   # Cross-section configuration:
 
@@ -98,7 +92,6 @@ RailsAdmin.config do |config|
   #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
   #     # using `field` instead of `configure` will exclude all other fields and force the ordering
   # end
-
 
   ###  User  ###
 
@@ -108,31 +101,31 @@ RailsAdmin.config do |config|
 
   #   # Found associations:
 
-  #     configure :team, :belongs_to_association 
+  #     configure :team, :belongs_to_association
 
   #   # Found columns:
 
-  #     configure :id, :integer 
-  #     configure :email, :string 
-  #     configure :password, :password         # Hidden 
-  #     configure :password_confirmation, :password         # Hidden 
-  #     configure :reset_password_token, :string         # Hidden 
-  #     configure :reset_password_sent_at, :datetime 
-  #     configure :remember_created_at, :datetime 
-  #     configure :sign_in_count, :integer 
-  #     configure :current_sign_in_at, :datetime 
-  #     configure :last_sign_in_at, :datetime 
-  #     configure :current_sign_in_ip, :string 
-  #     configure :last_sign_in_ip, :string 
-  #     configure :created_at, :datetime 
-  #     configure :updated_at, :datetime 
-  #     configure :confirmation_token, :string 
-  #     configure :confirmed_at, :datetime 
-  #     configure :confirmation_sent_at, :datetime 
-  #     configure :unconfirmed_email, :string 
-  #     configure :username, :string 
-  #     configure :team_id, :integer         # Hidden 
-  #     configure :team_captain, :boolean 
+  #     configure :id, :integer
+  #     configure :email, :string
+  #     configure :password, :password         # Hidden
+  #     configure :password_confirmation, :password         # Hidden
+  #     configure :reset_password_token, :string         # Hidden
+  #     configure :reset_password_sent_at, :datetime
+  #     configure :remember_created_at, :datetime
+  #     configure :sign_in_count, :integer
+  #     configure :current_sign_in_at, :datetime
+  #     configure :last_sign_in_at, :datetime
+  #     configure :current_sign_in_ip, :string
+  #     configure :last_sign_in_ip, :string
+  #     configure :created_at, :datetime
+  #     configure :updated_at, :datetime
+  #     configure :confirmation_token, :string
+  #     configure :confirmed_at, :datetime
+  #     configure :confirmation_sent_at, :datetime
+  #     configure :unconfirmed_email, :string
+  #     configure :username, :string
+  #     configure :team_id, :integer         # Hidden
+  #     configure :team_captain, :boolean
 
   #   # Cross-section configuration:
 
@@ -158,5 +151,4 @@ RailsAdmin.config do |config|
   #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
   #     # using `field` instead of `configure` will exclude all other fields and force the ordering
   # end
-
 end

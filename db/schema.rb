@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140702145602) do
+ActiveRecord::Schema.define(version: 20160622133041) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",              default: "", null: false
@@ -44,8 +47,8 @@ ActiveRecord::Schema.define(version: 20140702145602) do
     t.datetime "updated_at"
   end
 
-  add_index "models", ["email"], name: "index_models_on_email", unique: true
-  add_index "models", ["reset_password_token"], name: "index_models_on_reset_password_token", unique: true
+  add_index "models", ["email"], name: "index_models_on_email", unique: true, using: :btree
+  add_index "models", ["reset_password_token"], name: "index_models_on_reset_password_token", unique: true, using: :btree
 
   create_table "rails_admin_histories", force: :cascade do |t|
     t.text     "message"
@@ -53,12 +56,12 @@ ActiveRecord::Schema.define(version: 20140702145602) do
     t.integer  "item"
     t.string   "table"
     t.integer  "month",      limit: 2
-    t.integer  "year",       limit: 5
+    t.integer  "year",       limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "rails_admin_histories", ["item", "table", "month", "year"], name: "index_rails_admin_histories"
+  add_index "rails_admin_histories", ["item", "table", "month", "year"], name: "index_rails_admin_histories", using: :btree
 
   create_table "teams", force: :cascade do |t|
     t.string   "team_name"
@@ -68,9 +71,34 @@ ActiveRecord::Schema.define(version: 20140702145602) do
     t.integer  "team_captain_id"
   end
 
+  add_index "teams", ["team_captain_id"], name: "index_teams_on_team_captain_id", using: :btree
+
+  create_table "user_invites", force: :cascade do |t|
+    t.string   "email"
+    t.integer  "team_id"
+    t.integer  "user_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "status",     default: 0, null: false
+  end
+
+  add_index "user_invites", ["team_id"], name: "index_user_invites_on_team_id", using: :btree
+  add_index "user_invites", ["user_id"], name: "index_user_invites_on_user_id", using: :btree
+
+  create_table "user_requests", force: :cascade do |t|
+    t.integer  "team_id"
+    t.integer  "user_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "status",     default: 0, null: false
+  end
+
+  add_index "user_requests", ["team_id"], name: "index_user_requests_on_team_id", using: :btree
+  add_index "user_requests", ["user_id"], name: "index_user_requests_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
-    t.string   "email",                            default: "", null: false
-    t.string   "encrypted_password",               default: "", null: false
+    t.string   "email",                            default: "",    null: false
+    t.string   "encrypted_password",               default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -87,35 +115,21 @@ ActiveRecord::Schema.define(version: 20140702145602) do
     t.string   "unconfirmed_email"
     t.string   "username"
     t.integer  "team_id"
-    t.string   "name"
-    t.string   "school"
+    t.string   "full_name"
+    t.string   "affiliation"
     t.integer  "year_in_school",         limit: 2
-    t.string   "gender",                 limit: 1
+    t.integer  "gender",                 limit: 2
     t.integer  "age",                    limit: 2
     t.string   "area_of_study"
     t.string   "location"
     t.string   "personal_email"
-    t.string   "resume_file_name"
-    t.string   "resume_content_type"
-    t.integer  "resume_file_size"
-    t.datetime "resume_updated_at"
+    t.string   "state",                  limit: 2
+    t.boolean  "compete_for_prizes",               default: false
   end
 
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-
-  create_table "vips", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "company"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "confirmation_token"
-    t.boolean  "confirmed",          default: false
-    t.string   "phone"
-    t.boolean  "manually_approved"
-    t.text     "why_are_you_a_vip"
-  end
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["team_id"], name: "index_users_on_team_id", using: :btree
 
 end

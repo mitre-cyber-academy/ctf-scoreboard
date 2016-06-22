@@ -4,8 +4,120 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+# User with only the minimal required info to register
+user_one:
+  full_name: User one
+  email: user1@test.com
+  affiliation: School
+  year_in_school: 9
+  state: FL
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  confirmed_at: <%= Time.now %>
+  team: team_one
+
+# User with every possible piece of information provided
+user_two:
+  full_name: User two
+  email: user2@domain.com
+  affiliation: Industry
+  year_in_school: 0 # Not in school
+  state: FL
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  compete_for_prizes: true
+  gender: Male
+  age: 20
+  area_of_study: Computer Science
+  confirmed_at: <%= Time.now %>
+
+user_three:
+  full_name: User three
+  email: user@otherdomain.com
+  affiliation: Industry
+  year_in_school: 13
+  compete_for_prizes: false
+  state: AK
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  confirmed_at: <%= Time.now %>
+
+user_four:
+  full_name: User four
+  email: user4@domain.com
+  team: team_two
+  affiliation: Industry
+  year_in_school: 0
+  state: FL
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  confirmed_at: <%= Time.now %>
+  team: team_three
+
+user_five:
+  full_name: User five
+  email: user5@domain.com
+  affiliation: Industry
+  year_in_school: 13
+  compete_for_prizes: false
+  state: MI
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  confirmed_at: <%= Time.now %>
+  team: team_three
+
+user_six:
+  full_name: User six
+  email: user6@domain.com
+  affiliation: Industry
+  year_in_school: 13
+  compete_for_prizes: false
+  state: HI
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  confirmed_at: <%= Time.now %>
+  team: team_three
+
+full_team_user_one:
+  full_name: User four
+  email: user@user.com
+  affiliation: School
+  year_in_school: 9
+  state: FL
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  confirmed_at: <%= Time.now %>
+  team: full_team
+
+full_team_user_two:
+  full_name: User five
+  email: user2@user.com
+  affiliation: School
+  year_in_school: 10
+  state: FL
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  confirmed_at: <%= Time.now %>
+  team: full_team
+
+full_team_user_three:
+  full_name: User six
+  email: user3@user.com
+  affiliation: School
+  year_in_school: 10
+  state: FL
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  confirmed_at: <%= Time.now %>
+  team: full_team
+
+full_team_user_four:
+  full_name: User seven
+  email: user4@user.com
+  affiliation: School
+  year_in_school: 10
+  state: FL
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  confirmed_at: <%= Time.now %>
+  team: full_team
+
+full_team_user_five:
+  full_name: User eight
+  email: user5@user.com
+  affiliation: School
+  year_in_school: 10
+  state: FL
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  confirmed_at: <%= Time.now %>
+  team: full_team

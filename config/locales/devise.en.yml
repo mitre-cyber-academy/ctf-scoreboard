@@ -33,7 +33,7 @@ en:
     confirmations:
       send_instructions: 'You will receive an email with instructions about how to confirm your account in a few minutes.'
       send_paranoid_instructions: 'If your email address exists in our database, you will receive an email with instructions about how to confirm your account in a few minutes.'
-      confirmed: 'Your account was successfully confirmed. You are now signed in.'
+      confirmed: 'Your account was successfully confirmed. Please sign in.'
     registrations:
       signed_up: 'Welcome! You have signed up successfully.'
       signed_up_but_unconfirmed: 'A message with a confirmation link has been sent to your email address. Please open the link to activate your account.'
@@ -42,6 +42,8 @@ en:
       updated: 'You updated your account successfully.'
       update_needs_confirmation: "You updated your account successfully, but we need to verify your new email address. Please check your email and click on the confirm link to finalize confirming your new email address."
       destroyed: 'Bye! Your account was successfully cancelled. We hope to see you again soon.'
+      captain_tried_to_destroy: 'Team captains must promote a team member to team captain before deleting their account.'
+      password_needed_destroy: 'You need to provide your current password to delete your account.'
     unlocks:
       send_instructions: 'You will receive an email with instructions about how to unlock your account in a few minutes.'
       unlocked: 'Your account has been unlocked successfully. Please sign in to continue.'

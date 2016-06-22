@@ -5,33 +5,19 @@
   .catchphrase
     %h2 Registration is now open
   .maincontent.row-fluid.indent-40px-left
-    %p
-      %b
-        %u Forming a team
+    %h3 Step 1
     %ul
-      %li Team captains, register a team name and then invite your friends to join (five team members max).
-      %li Don’t have a team? Use our matchmaking service to find one.
-    %p
-      %b
-        %u Preparing the team
+      %li Team captains: Register a team name, complete your registration, then invite up to four of your friends to join.
+      %li Not a team captain? Use our matchmaking service to find one.
+    %h3 Step 2
     %ul
-      %li Sharpen your team’s skills on our practice range before you compete.
-      %li Questions about the event challenges? Chat with the organizers on IRC (channel #mitrectf on freenode).
-      %li Be sure to use Kali Linux 1.x 32-bit as your host operating system. Directions on setting it up and connecting to the competition can be found on our #{ link_to 'how to play page.', 'http://mitrecyberacademy.org/learn/play/' }
-    %p
-      %b
-        %u How to compete
+      %li Sharpen your team’s skills on our #{ link_to 'practice range', 'http://mitrecyberacademy.org/practice'} before you compete.
+      %li Be sure to use Kali Linux as your host operating system. Directions on setting it up and connecting to the competition can be found on our #{ link_to 'how to play page.', 'http://mitrecyberacademy.org/learn/play/' }
+    %h3 Step 3
     %ul
       %li
-        Read the rules. If you don't follow them, you could be disqualified.
-      %li The competition comprises 24 separate challenges in 6 categories.
-      %ul
-        %li Challenges open when any team completes the challenge previous in the category.
-        %li Open challenges can be worked in any order, but the challenges become more difficult as you progress within each category.
-        %li Each challenge has a flag of the form MCA-XXXXXXXX, where XXXXXXXX is a hexadecimal value (using uppercase characters), or in the form of a SHA1 hash.
-      %li Each challenge is worth 50 to 500 points.
-      %li Teams are awarded points after submitting the flag earned by completing a challenge successfully.
-      %li If multiple teams end the CTF with the same number of points, the team that reaches the total first is declared the winner.
+        Read the #{ link_to 'rules', 'https://xkcd.com/293/'}. If you don't follow them, you could be disqualified.
+    %hr
     %p
       %b
         %u When to compete
@@ -40,20 +26,20 @@
     %p
       %b
         %u Help, I'm Stuck!
-    %ul
-      %li We'd be happy to give you a hand if you shoot us an email through the #{ link_to 'contact form.', :controller => 'home', :action => 'contact'}
+    %p We'd be happy to give you a hand if you shoot us an email through the #{ link_to 'contact form', 'http://mitrecyberacademy.org/contact/'}, message us on IRC #mitrectf on freenode, or tweet #mitrectf.
   - if user_signed_in?
     .btn-toolbar
       .pagination-centered
-        - if !current_user.team_id.nil?
+        - if current_user.on_a_team?
           .btn-group
             = link_to "See your team", team_path(current_user.team_id), :class => "btn btn-large btn-primary"
-        .btn-group
-          = link_to "Log out", destroy_user_session_path, :method => :delete, :class => "btn btn-large btn-primary"
+        - else
+          .btn-group
+            = link_to "Join a Team", join_team_users_path, :class => "btn btn-large btn-primary"
+          .btn-group
+            = link_to "Create a Team", new_team_path, :class => "btn btn-large btn-primary"
   - else
     .btn-toolbar
       .pagination-centered
         .btn-group
-          = link_to "Register a team", new_team_path, :class => "btn btn-large btn-primary"
-        .btn-group
-          = link_to "Log in", new_user_session_path, :class => "btn btn-large btn-primary"
+          = link_to "Register", new_user_registration_path, :class => "btn btn-large btn-primary"

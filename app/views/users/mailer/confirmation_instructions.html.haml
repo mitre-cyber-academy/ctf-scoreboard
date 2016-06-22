@@ -1,11 +1,7 @@
 %p
-  Hello #{@resource.email}!
-- if @resource.team.team_captain == @resource
-  Thank you for registering the team #{@resource.team.team_name} for our upcoming CTF event.
+  Hello #{@resource.full_name}!
+  Thank you for registering for our upcoming CTF event.
   %p If you wish to finish this registration, please use the link below.
-- else
-  A request has been made for you to join the team #{@resource.team.team_name} for our upcoming CTF event. 
-  %p If you would like to join this team, please confirm your account below.
 
 %p= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @token)
 

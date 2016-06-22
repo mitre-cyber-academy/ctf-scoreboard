@@ -1,28 +1,36 @@
 CtfRegistration::Application.routes.draw do
-
-  resources :vips, :only => [:new, :create]
-  get '/vips/confirm/:confirmation_token', to: 'vips#confirm', as: 'vip_confirmation'
-
   devise_for :admins
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
-  get "home/index"
-  get "/home/about"
+  get 'home/index'
+  get '/home/about'
 
-  resources :teams, :only => [:new, :create, :show]
+  devise_for :users,
+             path_names: { sign_in: 'login', sign_out: 'logout', confirmation: 'confirm', sign_up: 'new' },
+             controllers: { registrations: 'registrations' }
 
-  devise_for :users, :controllers => {:confirmations => 'confirmations', :registrations => 'registrations'}, :path => '', :path_names => {:sign_in => 'login', :sign_out => 'logout', :confirmation => 'confirm'}
-  
-  devise_scope :user do
-    patch "/confirm" => "confirmations#confirm"
+  resource :users, only: [] do
+    get :join_team, on: :member
   end
 
-  resources :teams do
-    resources :users
+  # Saying resources :users do causes all routes for the team to be generated.
+  # By saying only: [] it keeps only the routes specified in the do block to be generated.
+  resources :teams, except: [:edit, :destroy, :index] do
+    # Custom route for accepting user invites.
+    resources :user_invites, only: [:destroy] do
+      get :accept, on: :member
+    end
+    resources :user_requests, only: [:create, :destroy] do
+      get :accept, on: :member
+    end
+    resources :users, only: [] do
+      delete :leave_team
+      get :promote
+    end
   end
 
-  root :to => "home#index"
+  root to: 'home#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

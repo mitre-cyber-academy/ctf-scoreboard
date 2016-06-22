@@ -1,0 +1,30 @@
+#filterrific_results
+  %div
+    .well.well-small
+      .pull-right
+        = link_to(                  |
+          'Reset filters',          |
+          reset_filterrific_url,    |
+          :class => "btn btn-small" |
+        )                           |
+      = page_entries_info teams # provided by kaminari
+    - if !teams.empty?
+      %hr/
+      %div
+        %table.table.table-hover.table-bordered
+          %thead
+            %tr
+              %th Name
+              %th Affiliation
+              %th Spots Available
+              %th Division
+              %th Request to Join
+          %tbody
+            - teams.each do |team|
+              %tr
+                %td= team.team_name
+                %td= team.affiliation
+                %td= team.slots_available
+                %td= team.division_level
+                %td= button_to 'Request', team_user_requests_path(team), :class => "btn btn-default"
+  = paginate teams # provided by kaminari

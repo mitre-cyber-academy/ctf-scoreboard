@@ -1,52 +1,37 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 4.2.3'
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-group :development do
-	gem 'sqlite3'
-end
-
-group :production do
-	gem 'pg'
-end
-
 gem 'devise'
+gem "haml-rails"
+gem "formtastic"
+gem "awesome_nested_fields"
+gem 'bootstrap-sass', '~> 2.3.2.2'
+gem 'rails_admin'
+gem "paperclip" , '~> 4.3.5'
+gem 'devise_security_extension'
+gem 'rails_email_validator'
+gem 'jquery-rails'
+gem 'filterrific'
+gem 'pg'
 
+
+group :test do
+  gem 'coveralls', require: false
+  gem 'brakeman', require: false
+  gem 'rubocop', require: false
+  gem 'bundler-audit', require: false
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
-
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platforms => :ruby
-
   gem 'uglifier'
 end
 
-gem 'jquery-rails'
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'
-gem "haml-rails"
-gem "formtastic"
-gem "awesome_nested_fields"
-gem 'bootstrap-sass', '~> 2.3.2.2'
-gem 'rails_admin'
-gem "paperclip"
+group :production do
+  gem 'passenger'
+end

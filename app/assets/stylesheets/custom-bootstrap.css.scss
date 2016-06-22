@@ -27,16 +27,17 @@ body { padding-top: 60px; }
 .disclaimer {
 	color: gray;
 }
+td form {
+  margin: 0 0 0 0;
+}
 .alert {
   ul, ol { margin: 5px 0 5px 12px;}
   li {list-style-type: none;}
   li:before {content: " - ";}
 }
-.user-reset-form .field_with_errors {
-	display:inline;
-}
 .field_with_errors {
   color: red;
+  display: inline;
 }
 .jumbotron {
   position: relative;
@@ -204,46 +205,6 @@ body { padding-top: 60px; }
 	color: #5A5A5A;
 	bottom:0;
 }
-#contactform label {
-	display:block;
-	font-weight:bold;
-	width:140px;
-	float:left;
-	margin-right:20px;
-	text-align:right;
-}
-#contactform .help-block {
-	color:#666666;
-	display:block;
-	font-weight:normal;
-	width:140px;
-}
-#contactform input,select{
-	height:26px;
-	width:220px;
-	box-sizing: border-box;
-}
-#contactform button {
-	margin:2px 0 20px 10px;
-
-}
-#contactform textarea{
-	margin-bottom:20px;
-	width:220px;
-	box-sizing: border-box;
-}
-#contactform button {
-	display:block;
-	margin-left:160px;
-}
-#contactform h2 {
-	padding-left:10px;
-	color: #5A5A5A;
-	margin-bottom: 10px;
-	padding-bottom: 10px;
-	text-align: left;
-	font-weight:bold;
-}
 #subpage {
 	  padding: 40px 0;
 }
@@ -294,10 +255,6 @@ body { padding-top: 60px; }
 	 font-size:16px;
 	 padding-left:22px;
 	 padding-right:22px;
-	}
-	#contactform button {
-	 display:block;
-	 margin-left:12px;
 	}
   .btn-large {
     padding: 4px 12px;
