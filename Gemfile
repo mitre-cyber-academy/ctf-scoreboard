@@ -12,14 +12,7 @@ gem 'devise_security_extension'
 gem 'rails_email_validator'
 gem 'jquery-rails'
 gem 'filterrific'
-
-group :development do
-	gem 'sqlite3'
-end
-
-group :production do
-	gem 'pg'
-end
+gem 'pg'
 
 group :test do
   gem 'coveralls', require: false
