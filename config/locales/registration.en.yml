@@ -37,6 +37,8 @@ en:
     full_team: 'You have added all the users you can to your team.'
     create_successful: 'Team was successfully created.'
     invalid_permissions: 'You must first be a member of a team in order to view it.'
+    captain_must_promote: 'You must promote another member of your team to captain before leaving.'
+    promoted_captain: 'A new team captain has been promoted'
   requests:
     sent_successful: 'Team join request was successfully sent.'
     accepted_another: 'User has accepted another teams invitation, sorry!'

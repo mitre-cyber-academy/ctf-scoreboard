@@ -26,6 +26,7 @@ CtfRegistration::Application.routes.draw do
     end
     resources :users, only: [] do
       delete :leave_team
+      get :promote
     end
   end
 

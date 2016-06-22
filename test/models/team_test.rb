@@ -23,4 +23,18 @@ class TeamTest < ActiveSupport::TestCase
     users(:user_one).compete_for_prizes = true
     assert_equal(false, teams(:team_one).eligible_for_prizes?)
   end
+
+  test 'promote' do
+    # These users are on the same team!
+    team = users(:full_team_user_one).team
+    team.promote(users(:full_team_user_five))
+    assert_equal team.team_captain, users(:full_team_user_five)
+  end
+
+  test 'promote a user that is not on the same team' do
+    # These users are not on the same team!
+    team = users(:user_one).team
+    team.promote(users(:full_team_user_five))
+    assert_not_equal team.team_captain, users(:full_team_user_five)
+  end
 end
