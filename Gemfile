@@ -14,6 +14,7 @@ gem 'jquery-rails'
 gem 'filterrific'
 gem 'pg'
 
+
 group :test do
   gem 'coveralls', require: false
   gem 'brakeman', require: false
@@ -31,3 +32,6 @@ group :assets do
   gem 'uglifier'
 end
 
+group :production do
+  gem 'passenger'
+end
