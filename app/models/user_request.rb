@@ -5,6 +5,8 @@ class UserRequest < ActiveRecord::Base
 
   enum status: [:Pending, :Accepted, :Rejected]
 
+  after_create :send_email
+
   validates :status, inclusion: { in: statuses.keys, allow_blank: true }
 
   validates :team, :user, presence: true
@@ -36,5 +38,11 @@ class UserRequest < ActiveRecord::Base
       update_attribute(:status, :Accepted)
       team.users << user
     end
+  end
+
+  private
+
+  def send_email
+    UserMailer.user_request(self).deliver_now
   end
 end
