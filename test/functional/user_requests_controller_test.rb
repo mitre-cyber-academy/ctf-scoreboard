@@ -10,14 +10,14 @@ class UserRequestsControllerTest < ActionController::TestCase
   test 'user cannot create a request with one already pending for same team' do
     sign_in users(:user_two)
     post :create, team_id: teams(:team_one)
-    assert_redirected_to @controller.user_root_path
+    assert_redirected_to join_team_users_path
     assert_match I18n.t('requests.already_pending'), flash[:alert]
   end
 
   test 'user can create request when they do not have any pending requests for that team and are not on a team' do
     sign_in users(:user_three)
     post :create, team_id: teams(:team_one)
-    assert_redirected_to @controller.user_root_path
+    assert_redirected_to join_team_users_path
     assert_equal I18n.t('requests.sent_successful'), flash[:notice]
   end
 

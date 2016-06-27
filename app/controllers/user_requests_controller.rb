@@ -10,9 +10,9 @@ class UserRequestsController < ApplicationController
   def create
     @request = UserRequest.new(user: current_user, team_id: params[:team_id])
     if @request.save
-      redirect_to user_root_path, notice: I18n.t('requests.sent_successful')
+      redirect_to join_team_users_path, notice: I18n.t('requests.sent_successful')
     else
-      redirect_to user_root_path, alert: @request.errors.full_messages.first
+      redirect_to join_team_users_path, alert: @request.errors.full_messages.first
     end
   end
 
