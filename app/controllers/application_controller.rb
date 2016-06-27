@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     if current_user.on_a_team?
       team_path(current_user.team_id)
     else
-      join_team_users_path
+      home_index_path
     end
   end
 

@@ -11,7 +11,7 @@
     %th.span2 Prize Eligible?
     %th Remove
     - if @team_captain
-      %th Promote
+      %th Change Captain
   - @team.users.each do |current|
     %tbody
       %tr{:class=>'success'}
@@ -27,12 +27,12 @@
             No
         %td
           - if current_user.can_remove?(current)
-            = link_to team_user_leave_team_path(current.team, current), method: :delete, data: {confirm: "Are you sure?"} do
+            = link_to team_user_leave_team_path(current.team, current), method: :delete, data: {confirm: "Are you sure you wish to remove this player from your team?"} do
               %i.icon-remove
         - if @team_captain
           %td
             - if current_user.can_promote?(current)
-              = link_to team_user_promote_path(current.team_id, current), method: :get, data: {confirm: "Are you sure?"} do
+              = link_to team_user_promote_path(current.team_id, current), method: :get, data: {confirm: "Are you sure you wish to promote a new team captain? You will lose all captain privileges on this team."} do
                 %i.icon-star
 %hr
 .row
@@ -95,7 +95,7 @@
                   = current.user.division
               - if @team_captain
                 %td
-                  = link_to team_user_invite_path(@team, current), method: :delete, data: {confirm: "Are you sure?"} do
+                  = link_to team_user_invite_path(@team, current), method: :delete, data: {confirm: "Are you sure you wish to cancel this invitation?"} do
                     %i.icon-remove
     - if team_editable?
       = form_for(@team) do |team|
@@ -140,5 +140,5 @@
                 %td
                   = link_to accept_team_user_request_path(@team,current) do
                     %i.icon-ok
-                  = link_to method: :delete, data: {confirm: "Are you sure?"} do
+                  = link_to method: :delete, data: {confirm: "Are you sure you wish to reject this request?"} do
                     %i.icon-remove

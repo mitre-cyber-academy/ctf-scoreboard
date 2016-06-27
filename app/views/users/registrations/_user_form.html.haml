@@ -35,9 +35,10 @@
       .controls
         = f.select :state, options_for_select(us_states, resource.state), { :include_blank => '' }, :onChange => "hidePrizesCheckbox()"
   .control-group
-    = f.label :password, :class => on_update_page ? "control-label" : "control-label-required"
-    .controls
-      = f.password_field :password, :input_html => {:autofocus => true}, :class => "textarea", :placeholder => "Minimum 10 characters"
+    .helpertext-wrapper{ 'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Passwords require a lowercase letter, uppercase letter, and a number. The minimum length is 10 characters." }
+      = f.label :password, :class => on_update_page ? "control-label" : "control-label-required"
+      .controls
+        = f.password_field :password, :input_html => {:autofocus => true}, :class => "textarea"
   .control-group
     = f.label :password_confirmation, "Confirm Password", :class => on_update_page ? "control-label" : "control-label-required"
     .controls
