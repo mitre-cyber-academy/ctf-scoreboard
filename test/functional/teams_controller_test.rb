@@ -43,7 +43,7 @@ class TeamsControllerTest < ActionController::TestCase
     user = users(:user_two)
     sign_in user
     get :show, id: teams(:team_two)
-    assert_response :redirect
+    assert_redirected_to @controller.user_root_path
   end
 
   test 'a team cannot be created with the same name as another team' do
