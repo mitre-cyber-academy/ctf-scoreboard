@@ -3,7 +3,7 @@ $btnPrimaryBackground: #5d8cb6;
 $btnPrimaryBackgroundHighlight: #39546c;
 @import "bootstrap";
 body { padding-top: 60px; }
-//@import "bootstrap-responsive";
+@import "bootstrap-responsive";
 
 .breadcrumb {
   text-align:left;
@@ -271,8 +271,15 @@ td form {
   	margin-right: -20px;
 		margin-left: -20px;
   }
+  #page-footer {
+    margin-left: -20px;
+  }
 }
 @media (max-width: 480px) {
+  .label-custom {
+    margin-left:0px;
+    margin-bottom:20px;
+  }
   .btn-large {
     padding: 3px 9px !important;
     font-size: 12px !important;
