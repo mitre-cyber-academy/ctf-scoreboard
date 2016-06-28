@@ -125,6 +125,7 @@ GEM
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
+    obscenity (1.0.2)
     orm_adapter (0.5.0)
     paperclip (4.3.6)
       activemodel (>= 3.2.0)
@@ -255,6 +256,7 @@ DEPENDENCIES
   formtastic
   haml-rails
   jquery-rails
+  obscenity
   paperclip (~> 4.3.5)
   passenger
   pg

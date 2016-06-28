@@ -13,6 +13,7 @@ gem 'rails_email_validator'
 gem 'jquery-rails'
 gem 'filterrific'
 gem 'pg'
+gem 'obscenity'
 
 
 group :test do

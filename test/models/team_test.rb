@@ -38,6 +38,11 @@ class TeamTest < ActiveSupport::TestCase
     assert_equal(false, teams(:team_one).eligible_for_prizes?)
   end
 
+  test 'team with profanity will not save' do
+    @team = Team.new(team_name: 'hell', affiliation: 'hell')
+    assert_equal(false, @team.save)
+  end
+
   test 'promote' do
     # These users are on the same team!
     team = users(:full_team_user_one).team

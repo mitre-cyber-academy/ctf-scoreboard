@@ -14,7 +14,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :recoverable,
          :rememberable, :trackable, :confirmable, :secure_validatable
 
-  validates :full_name, :affiliation, :state, presence: true
+  validates :full_name, :affiliation, presence: true, obscenity: true
+  validates :state, presence: true
   validates :age, numericality: { greater_than_or_equal_to: 0, less_than: 200 }, allow_blank: true
   validates :year_in_school, inclusion: { in: [0, 9, 10, 11, 12, 13, 14, 15, 16] }, presence: true
   validates :gender, inclusion: { in: genders.keys }, allow_blank: true

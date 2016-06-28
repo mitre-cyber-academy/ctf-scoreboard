@@ -5,7 +5,7 @@ class Team < ActiveRecord::Base
   has_many :user_requests
   belongs_to :team_captain, class_name: 'User'
   accepts_nested_attributes_for :user_invites
-  validates :team_name, :affiliation, presence: true
+  validates :team_name, :affiliation, presence: true, obscenity: true
   validates :team_name, uniqueness: { case_sensitive: false }
 
   after_save :set_team_captain
