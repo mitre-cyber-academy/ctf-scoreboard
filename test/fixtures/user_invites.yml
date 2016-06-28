@@ -1,17 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 invite_one:
-  email: user2@domain.com
+  email: mitrectf+user2@gmail.com
   team: team_one
 
 invite_two:
-  email: user@otherdomain.com
+  email: mitrectf+user3@gmail.com
   team: team_two
 
 invite_three:
-  email: user6@domain.com
+  email: mitrectf+user6@gmail.com
   team: team_three
 
 invite_four:
-  email: user2@domain.com
+  email: mitrectf+user2@gmail.com
   team: full_team

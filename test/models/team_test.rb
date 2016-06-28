@@ -13,6 +13,20 @@ class TeamTest < ActiveSupport::TestCase
     assert_equal(user, team.team_captain)
   end
 
+  test 'team with two high school students is a high school team' do
+    teams(:team_one).users << users(:full_team_user_one)
+    assert_equal('High School', teams(:team_one).division_level)
+  end
+
+  test 'team with one high school and one college student is a college team' do
+    teams(:team_one).users << users(:user_three)
+    assert_equal('College', teams(:team_one).division_level)
+  end
+
+  test 'team with one professional is professional level team' do
+    assert_equal('Professional', teams(:team_three).division_level)
+  end
+
   test 'team with one eligible user and one ineligible is ineligible for prizes' do
     teams(:team_one).users << users(:user_two)
     assert_equal(false, teams(:team_one).eligible_for_prizes?)

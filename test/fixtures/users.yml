@@ -7,7 +7,7 @@
 # User with only the minimal required info to register
 user_one:
   full_name: User one
-  email: user1@test.com
+  email: mitrectf+user1test@gmail.com
   affiliation: School
   year_in_school: 9
   state: FL
@@ -18,7 +18,7 @@ user_one:
 # User with every possible piece of information provided
 user_two:
   full_name: User two
-  email: user2@domain.com
+  email: mitrectf+user2@gmail.com
   affiliation: Industry
   year_in_school: 0 # Not in school
   state: FL
@@ -31,7 +31,7 @@ user_two:
 
 user_three:
   full_name: User three
-  email: user@otherdomain.com
+  email: mitrectf+user3@gmail.com
   affiliation: Industry
   year_in_school: 13
   compete_for_prizes: false
@@ -41,7 +41,7 @@ user_three:
 
 user_four:
   full_name: User four
-  email: user4@domain.com
+  email: mitrectf+user4@gmail.com
   team: team_two
   affiliation: Industry
   year_in_school: 0
@@ -52,7 +52,7 @@ user_four:
 
 user_five:
   full_name: User five
-  email: user5@domain.com
+  email: mitrectf+user5@gmail.com
   affiliation: Industry
   year_in_school: 13
   compete_for_prizes: false
@@ -63,7 +63,7 @@ user_five:
 
 user_six:
   full_name: User six
-  email: user6@domain.com
+  email: mitrectf+user6@gmail.com
   affiliation: Industry
   year_in_school: 13
   compete_for_prizes: false
@@ -74,7 +74,7 @@ user_six:
 
 full_team_user_one:
   full_name: User four
-  email: user@user.com
+  email: mitrectf+fulluser@gmail.com
   affiliation: School
   year_in_school: 9
   state: FL
@@ -84,7 +84,7 @@ full_team_user_one:
 
 full_team_user_two:
   full_name: User five
-  email: user2@user.com
+  email: mitrectf+fulluser2@gmail.com
   affiliation: School
   year_in_school: 10
   state: FL
@@ -94,7 +94,7 @@ full_team_user_two:
 
 full_team_user_three:
   full_name: User six
-  email: user3@user.com
+  email: mitrectf+fulluser3@gmail.com
   affiliation: School
   year_in_school: 10
   state: FL
@@ -104,7 +104,7 @@ full_team_user_three:
 
 full_team_user_four:
   full_name: User seven
-  email: user4@user.com
+  email: mitrectf+fulluser4@gmail.com
   affiliation: School
   year_in_school: 10
   state: FL
@@ -114,7 +114,7 @@ full_team_user_four:
 
 full_team_user_five:
   full_name: User eight
-  email: user5@user.com
+  email: mitrectf+fulluser5@gmail.com
   affiliation: School
   year_in_school: 10
   state: FL
