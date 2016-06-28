@@ -61,7 +61,7 @@ class Team < ActiveRecord::Base
 
   def division_level
     return 'Unknown' if users.empty?
-    return 'Industry' if users.minimum('year_in_school').eql? 0
+    return 'Professional' if users.minimum('year_in_school').eql? 0
     return 'High School' if users.maximum('year_in_school') <= 12
     'College' # If user is not in any of the other three then fallback.
   end
@@ -75,7 +75,7 @@ class Team < ActiveRecord::Base
     [
       ['High School', 'High School'],
       %w(College College),
-      %w(Industry Industry)
+      %w(Professional Professional)
     ]
   end
 

@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
 
   def division
     return 'College' if year_in_school >= 13
-    return 'Industry' if year_in_school.eql? 0
+    return 'Professional' if year_in_school.eql? 0
     return 'High School' if year_in_school <= 12
     'Unknown' # If user is not in any of the other three then fallback.
   end
