@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Every time a team captain invites a user to their team, a new user invite is created.
 class UserInvite < ActiveRecord::Base
   belongs_to :team

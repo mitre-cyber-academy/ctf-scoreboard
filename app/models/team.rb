@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Team model for holding the main user list and all invites and requests to a team.
 class Team < ActiveRecord::Base
   has_many :users

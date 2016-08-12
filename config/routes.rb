@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 CtfRegistration::Application.routes.draw do
   devise_for :admins
 

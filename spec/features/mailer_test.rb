@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # feature "CTF event" do
 # 	scenario "Thank you for registering the team" do
 # 		Given "for our upcoming CTF event"

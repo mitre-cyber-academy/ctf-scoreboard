@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # User model, uses devise to manage registrations. Each user has a team reference which is
 # set to nil until they are added to a team.
 class User < ActiveRecord::Base

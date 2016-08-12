@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Main controller for the application, handles redirects for the user login to the correct pages
 # and sets devise parameters.
 class ApplicationController < ActionController::Base

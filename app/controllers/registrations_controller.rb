@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RegistrationsController < Devise::RegistrationsController
   # DELETE /resource
   def destroy
