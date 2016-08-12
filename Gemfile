@@ -10,7 +10,7 @@ gem "awesome_nested_fields"
 gem 'bootstrap-sass', '~> 2.3.2.2'
 gem 'rails_admin'
 gem "paperclip" , '~> 4.3.5'
-gem 'devise_security_extension'
+gem 'devise_security_extension', '~> 0.9.2' # Can update whenever they loosen their dependency on devise.
 gem 'rails_email_validator'
 gem 'jquery-rails'
 gem 'filterrific'
