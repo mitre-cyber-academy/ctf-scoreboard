@@ -43,6 +43,16 @@ class TeamTest < ActiveSupport::TestCase
     assert_equal(false, @team.save)
   end
 
+  test 'deleting a team will not leave any orphaned invites or requests' do
+    teams(:team_one).destroy
+    # Get all user invites and requests where the associated team no longer exists. The call to compact
+    # is in order to get rid of the nil's that the collect method leaves in for teams which are not nil.
+    orphaned_invites = UserInvite.all.collect{ |user_invite| user_invite if user_invite.team.nil? }.compact
+    orphaned_requests = UserRequest.all.collect{ |user_request| user_request if user_request.team.nil? }.compact
+    assert_equal 0, orphaned_invites.count
+    assert_equal 0, orphaned_requests.count
+  end
+
   test 'promote' do
     # These users are on the same team!
     team = users(:full_team_user_one).team

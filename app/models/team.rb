@@ -2,8 +2,8 @@
 # Team model for holding the main user list and all invites and requests to a team.
 class Team < ActiveRecord::Base
   has_many :users
-  has_many :user_invites
-  has_many :user_requests
+  has_many :user_invites, dependent: :destroy
+  has_many :user_requests, dependent: :destroy
   belongs_to :team_captain, class_name: 'User'
   accepts_nested_attributes_for :user_invites
   validates :team_name, :affiliation, presence: true, obscenity: true
