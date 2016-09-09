@@ -107,7 +107,7 @@ full_team_user_four:
   email: mitrectf+fulluser4@gmail.com
   affiliation: School
   year_in_school: 10
-  state: FL
+  state: AL
   encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
   confirmed_at: <%= Time.now %>
   team: full_team
@@ -117,7 +117,17 @@ full_team_user_five:
   email: mitrectf+fulluser5@gmail.com
   affiliation: School
   year_in_school: 10
-  state: FL
+  state: AK
   encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
   confirmed_at: <%= Time.now %>
   team: full_team
+
+user_on_team_with_special_chars:
+  full_name: Special chars
+  email: mitrectf+special@gmail.com
+  affiliation: School
+  year_in_school: 10
+  state: FL
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  confirmed_at: <%= Time.now %>
+  team: team_with_special_chars

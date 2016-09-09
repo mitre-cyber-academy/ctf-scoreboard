@@ -18,3 +18,8 @@ full_team:
   team_name: full_team
   affiliation: school3
   team_captain: full_team_user_one
+
+team_with_special_chars:
+  team_name: $0m3Thing @mazing
+  affiliation: school10
+  team_captain: user_on_team_with_special_chars

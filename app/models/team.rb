@@ -110,6 +110,17 @@ class Team < ActiveRecord::Base
     update_attribute(:team_captain, users.find_by_id(user_id))
   end
 
+  # Uses the teams team_name but removes extra characters in order to make it easier
+  # for the team to login.
+  def scoreboard_login_name
+    team_name.downcase.tr(' @$', '_as').gsub(/[^a-z0-9_]/, '')
+  end
+
+  # Group user states and then get the largest one.
+  def common_team_location
+    users.map(&:state).group_by(&:itself).values.max_by(&:size).first
+  end
+
   private
 
   # If a team doesn't have a team captain but does have a user, set the team captain to the first user.

@@ -66,4 +66,20 @@ class TeamTest < ActiveSupport::TestCase
     team.promote(users(:full_team_user_five))
     assert_not_equal team.team_captain, users(:full_team_user_five)
   end
+
+  test 'special characters in team name will be removed when converting to scoreboard' do
+    team = teams(:team_with_special_chars)
+    assert_equal team.scoreboard_login_name, "s0m3thing_amazing"
+  end
+
+  test 'team most common location is calculated properly on a full team' do
+    team = teams(:full_team)
+    # 3 out of 5 players on this team have their location set to FL.
+    assert_equal team.common_team_location, 'FL'
+  end
+
+  test 'team with only one player has the common location calculated properly' do
+    team = teams(:team_one)
+    assert_equal team.common_team_location, 'FL'
+  end
 end
