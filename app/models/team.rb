@@ -118,7 +118,12 @@ class Team < ActiveRecord::Base
 
   # Group user states and then get the largest one.
   def common_team_location
-    users.map(&:state).group_by(&:itself).values.max_by(&:size).first
+    locations_array = users.map(&:state).group_by(&:itself).values.max_by(&:size)
+    if !locations_array.nil?
+      locations_array.first
+    else
+      'NA'
+    end
   end
 
   private
