@@ -132,4 +132,17 @@ ActiveRecord::Schema.define(version: 20160622133041) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["team_id"], name: "index_users_on_team_id", using: :btree
 
+  create_table "vips", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "company"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "confirmation_token"
+    t.boolean  "confirmed",          default: false
+    t.string   "phone"
+    t.boolean  "manually_approved"
+    t.text     "why_are_you_a_vip"
+  end
+
 end
