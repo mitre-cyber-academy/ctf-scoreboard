@@ -21,9 +21,8 @@ class UserRequest < ActiveRecord::Base
 
   # Make sure a user cannot be invited to the same team over and over.
   def uniqueness_of_pending_request
-    unless UserRequest.pending_requests.where(team: team, user: user).empty?
-      errors.add(:user, I18n.t('requests.already_pending'))
-    end
+    return true if UserRequest.pending_requests.where(team: team, user: user).empty?
+    errors.add(:user, I18n.t('requests.already_pending'))
   end
 
   def user_on_team?
@@ -36,7 +35,7 @@ class UserRequest < ActiveRecord::Base
     elsif user_on_team? # Check to make sure user isn't already on a team.
       false
     else
-      update_attribute(:status, :Accepted)
+      update_attributes(status: :Accepted)
       team.users << user
     end
   end

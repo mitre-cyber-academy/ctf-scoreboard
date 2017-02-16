@@ -50,8 +50,7 @@ class UserRequestsController < ApplicationController
   # Only allow team captain and the user requesting to delete a user request.
   def check_if_able_to_reject
     @user_request = UserRequest.find(params[:id])
-    unless @user_request.user.eql?(current_user) || @user_request.team.team_captain.eql?(current_user)
-      raise ActiveRecord::RecordNotFound
-    end
+    return true if @user_request.user.eql?(current_user) || @user_request.team.team_captain.eql?(current_user)
+    raise ActiveRecord::RecordNotFound
   end
 end

@@ -33,8 +33,7 @@ class UserInvitesController < ApplicationController
   # Only allow team captain and the user invited to delete a user invite.
   def check_destroy_access
     @user_invite = UserInvite.find_by id: params[:id]
-    unless @user_invite.user.eql?(current_user) || @user_invite.team.team_captain.eql?(current_user)
-      raise ActiveRecord::RecordNotFound
-    end
+    return true if @user_invite.user.eql?(current_user) || @user_invite.team.team_captain.eql?(current_user)
+    raise ActiveRecord::RecordNotFound
   end
 end

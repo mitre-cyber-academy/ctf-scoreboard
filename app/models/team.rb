@@ -107,7 +107,7 @@ class Team < ActiveRecord::Base
   end
 
   def promote(user_id)
-    update_attribute(:team_captain, users.find_by(id: user_id))
+    update_attributes(team_captain: users.find_by(id: user_id))
   end
 
   # Uses the teams team_name but removes extra characters in order to make it easier
@@ -131,6 +131,6 @@ class Team < ActiveRecord::Base
   # If a team doesn't have a team captain but does have a user, set the team captain to the first user.
   def set_team_captain
     return unless team_captain.nil? && !users.empty?
-    update_attribute(:team_captain, users.first)
+    update_attributes(team_captain: users.first)
   end
 end
