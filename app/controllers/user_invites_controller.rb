@@ -11,7 +11,7 @@ class UserInvitesController < ApplicationController
     if @user_invite.accept
       redirect_to team_path(@user_invite.team), notice: I18n.t('invites.accepted_successful')
     else
-      redirect_to :back, alert: I18n.t('invites.full_team')
+      redirect_back(fallback_location: join_team_users_path, alert: I18n.t('invites.full_team'))
     end
   end
 
@@ -19,20 +19,20 @@ class UserInvitesController < ApplicationController
   def destroy
     @user_invite.status = :Rejected
     @user_invite.save
-    redirect_to :back, notice: I18n.t('invites.rejected_successful')
+    redirect_back(fallback_location: user_root_path, notice: I18n.t('invites.rejected_successful'))
   end
 
   private
 
   # Only allow user invited to accept a user invite.
   def check_accept_access
-    @user_invite = current_user.user_invites.find(params[:id])
-    redirect_to :back, alert: I18n.t('invites.invalid_permissions') if @user_invite.nil?
+    @user_invite = current_user.user_invites.find_by id: params[:id]
+    redirect_back(fallback_location: user_root_path, alert: I18n.t('invites.invalid_permissions')) if @user_invite.nil?
   end
 
   # Only allow team captain and the user invited to delete a user invite.
   def check_destroy_access
-    @user_invite = UserInvite.find(params[:id])
+    @user_invite = UserInvite.find_by id: params[:id]
     unless @user_invite.user.eql?(current_user) || @user_invite.team.team_captain.eql?(current_user)
       raise ActiveRecord::RecordNotFound
     end

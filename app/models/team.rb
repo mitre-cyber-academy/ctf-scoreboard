@@ -107,7 +107,7 @@ class Team < ActiveRecord::Base
   end
 
   def promote(user_id)
-    update_attribute(:team_captain, users.find_by_id(user_id))
+    update_attribute(:team_captain, users.find_by(id: user_id))
   end
 
   # Uses the teams team_name but removes extra characters in order to make it easier

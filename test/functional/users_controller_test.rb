@@ -14,7 +14,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'user removes self from a team' do
     sign_in users(:full_team_user_five)
-    delete :leave_team, user_id: users(:full_team_user_five).id, team_id: users(:full_team_user_five).team_id
+    delete :leave_team, params: { user_id: users(:full_team_user_five).id, team_id: users(:full_team_user_five).team_id }
     assert_redirected_to join_team_users_path
     assert_equal I18n.t('teams.player_removed_self'), flash[:notice]
   end
@@ -23,8 +23,8 @@ class UsersControllerTest < ActionController::TestCase
   test 'captain removes another team member from team' do
     sign_in users(:full_team_user_one)
     team = users(:full_team_user_one).team
-    assert_difference 'team.users(:relaod).size', -1 do
-      delete :leave_team, user_id: users(:full_team_user_five).id, team_id: users(:full_team_user_one).team_id
+    assert_difference 'team.users.reload.size', -1 do
+      delete :leave_team, params: { user_id: users(:full_team_user_five).id, team_id: users(:full_team_user_one).team_id }
     end
     assert_equal I18n.t('teams.captain_removed_player'), flash[:notice]
   end
@@ -32,8 +32,8 @@ class UsersControllerTest < ActionController::TestCase
   test 'captain removes self' do
     sign_in users(:user_one)
     team = users(:user_one).team
-    assert_difference 'team.users(:reload).size', -1 do
-      delete :leave_team, user_id: users(:user_one).id, team_id: team
+    assert_difference 'team.users.reload.size', -1 do
+      delete :leave_team, params: { user_id: users(:user_one).id, team_id: team }
     end
     assert_equal I18n.t('teams.player_removed_self'), flash[:notice]
   end
@@ -41,8 +41,8 @@ class UsersControllerTest < ActionController::TestCase
   test 'captain tries to remove self with other users on team' do
     sign_in users(:full_team_user_one)
     team = users(:full_team_user_one).team
-    assert_no_difference 'team.users(:reload).size' do
-      delete :leave_team, user_id: users(:full_team_user_one).id, team_id: team
+    assert_no_difference 'team.users.reload.size' do
+      delete :leave_team, params: { user_id: users(:full_team_user_one).id, team_id: team }
     end
     assert_equal I18n.t('teams.captain_must_promote'), flash[:alert]
   end
@@ -50,9 +50,9 @@ class UsersControllerTest < ActionController::TestCase
   test 'only team captain can remove' do
     sign_in users(:full_team_user_five)
     team = users(:full_team_user_five).team
-    assert_no_difference 'team.users(:reload).size' do
+    assert_no_difference 'team.users.reload.size' do
       assert_raise ActiveRecord::RecordNotFound do
-        delete :leave_team, user_id: users(:full_team_user_four).id, team_id: users(:full_team_user_five).team_id
+        delete :leave_team, params: { user_id: users(:full_team_user_four).id, team_id: users(:full_team_user_five).team_id }
       end
     end
   end
@@ -60,7 +60,7 @@ class UsersControllerTest < ActionController::TestCase
   test 'captain is promoted' do
     sign_in users(:full_team_user_one)
     team = users(:full_team_user_one).team
-    get :promote, user_id: users(:full_team_user_five), team_id: team
+    get :promote, params: { user_id: users(:full_team_user_five), team_id: team }
     assert :success
     assert_redirected_to team
     assert_equal I18n.t('teams.promoted_captain'), flash[:notice]
@@ -70,14 +70,14 @@ class UsersControllerTest < ActionController::TestCase
     sign_in users(:full_team_user_five)
     team = users(:full_team_user_five).team
     assert_raise ActiveRecord::RecordNotFound do
-      get :promote, user_id: users(:full_team_user_four), team_id: team
+      get :promote, params: { user_id: users(:full_team_user_four), team_id: team }
     end
   end
 
   test 'captain cannot be from another team' do
     sign_in users(:full_team_user_one)
     team = users(:full_team_user_one).team
-    get :promote, user_id: users(:user_two), team_id: team
+    get :promote, params: { user_id: users(:user_two), team_id: team }
     assert_not_equal team.team_captain, users(:user_two)
   end
 end

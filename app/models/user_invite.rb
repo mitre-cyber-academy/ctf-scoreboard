@@ -46,6 +46,6 @@ class UserInvite < ActiveRecord::Base
   end
 
   def link_to_user
-    update_attribute(:user, User.find_by_email(email))
+    update_attribute(:user, User.find_by(email: email))
   end
 end

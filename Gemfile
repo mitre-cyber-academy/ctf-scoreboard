@@ -1,15 +1,15 @@
 source 'https://rubygems.org'
 
-ruby '2.3.1'
+ruby '2.3.3'
 
-gem 'rails', '~> 4.2.3'
+gem 'rails', '~> 5.0.0'
 gem 'devise'
 gem "haml-rails"
 gem "formtastic"
 gem "awesome_nested_fields"
 gem 'bootstrap-sass', '~> 2.3.2.2'
 gem 'rails_admin'
-gem "paperclip" , '~> 4.3.5'
+gem "paperclip"
 gem 'devise_security_extension', '~> 0.9.2' # Can update whenever they loosen their dependency on devise.
 gem 'rails_email_validator'
 gem 'jquery-rails'
@@ -17,12 +17,18 @@ gem 'filterrific'
 gem 'pg'
 gem 'obscenity'
 
+gem 'letter_opener', :group => :development
+
+group :development, :test do
+  gem 'pry'
+end
 
 group :test do
   gem 'coveralls', require: false
   gem 'brakeman', require: false
   gem 'rubocop', require: false
   gem 'bundler-audit', require: false
+  gem 'rails-controller-testing'
 end
 
 # Gems used only for assets and not required

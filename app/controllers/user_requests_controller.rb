@@ -20,11 +20,11 @@ class UserRequestsController < ApplicationController
   # Allows the captain of a team to accept a request to join a team.
   def accept
     if @user_request.user_on_team?
-      redirect_to :back, alert: I18n.t('requests.accepted_another')
+      redirect_back(fallback_location: user_root_path, alert: I18n.t('requests.accepted_another'))
     elsif @user_request.accept
-      redirect_to team_path(@user_request.team), notice: I18n.t('requests.accepted_successful')
+      redirect_to user_root_path, notice: I18n.t('requests.accepted_successful')
     else
-      redirect_to :back, alert: I18n.t('requests.too_many_players')
+      redirect_back(fallback_location: user_root_path, alert: I18n.t('requests.too_many_players'))
     end
   end
 
@@ -32,7 +32,7 @@ class UserRequestsController < ApplicationController
   def destroy
     @user_request.status = :Rejected
     if @user_request.save
-      redirect_to :back, notice: I18n.t('requests.rejected_successful')
+      redirect_back(fallback_location: user_root_path, notice: I18n.t('requests.rejected_successful'))
     else
       redirect_to user_root_path, alert: @user_request.errors.full_messages.first
     end

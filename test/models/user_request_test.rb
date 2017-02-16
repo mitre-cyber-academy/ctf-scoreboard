@@ -17,21 +17,21 @@ class UserRequestTest < ActiveSupport::TestCase
 
   test 'accept a request' do
     team = users(:user_one).team
-    assert_difference 'team.users(:reload).size', +1 do
+    assert_difference 'team.users.reload.size', +1 do
       user_requests(:request_one).accept
     end
   end
 
   test 'accept full team request' do
     team = users(:full_team_user_one).team
-    assert_no_difference 'team.users(:reload).size' do
+    assert_no_difference 'team.users.reload.size' do
       user_requests(:request_two).accept
     end
   end
 
   test 'accept request from user on a team' do
     team = users(:user_one).team
-    assert_no_difference 'team.users(:reload).size' do
+    assert_no_difference 'team.users.reload.size' do
       user_requests(:request_three).accept
     end
   end
