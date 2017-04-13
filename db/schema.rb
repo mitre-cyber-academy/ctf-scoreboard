@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160622133041) do
+ActiveRecord::Schema.define(version: 20170216155955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +30,46 @@ ActiveRecord::Schema.define(version: 20160622133041) do
     t.datetime "updated_at"
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "challenges", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "point_value"
+    t.integer  "starting_state"
+    t.integer  "category_id"
+    t.string   "achievement_name"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "start"
+    t.datetime "stop"
+    t.text     "description"
+    t.text     "terms_of_service"
+    t.string   "irc"
+    t.boolean  "disable_vpn"
+    t.boolean  "disable_flags_an_hour_graph", default: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "game_id"
+    t.text     "text"
+    t.string   "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "models", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -45,10 +84,9 @@ ActiveRecord::Schema.define(version: 20160622133041) do
     t.string   "User"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["email"], name: "index_models_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_models_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "models", ["email"], name: "index_models_on_email", unique: true, using: :btree
-  add_index "models", ["reset_password_token"], name: "index_models_on_reset_password_token", unique: true, using: :btree
 
   create_table "rails_admin_histories", force: :cascade do |t|
     t.text     "message"
@@ -56,12 +94,11 @@ ActiveRecord::Schema.define(version: 20160622133041) do
     t.integer  "item"
     t.string   "table"
     t.integer  "month",      limit: 2
-    t.integer  "year",       limit: 8
+    t.bigint   "year"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["item", "table", "month", "year"], name: "index_rails_admin_histories", using: :btree
   end
-
-  add_index "rails_admin_histories", ["item", "table", "month", "year"], name: "index_rails_admin_histories", using: :btree
 
   create_table "teams", force: :cascade do |t|
     t.string   "team_name"
@@ -69,9 +106,8 @@ ActiveRecord::Schema.define(version: 20160622133041) do
     t.datetime "updated_at"
     t.string   "affiliation"
     t.integer  "team_captain_id"
+    t.index ["team_captain_id"], name: "index_teams_on_team_captain_id", using: :btree
   end
-
-  add_index "teams", ["team_captain_id"], name: "index_teams_on_team_captain_id", using: :btree
 
   create_table "user_invites", force: :cascade do |t|
     t.string   "email"
@@ -80,10 +116,9 @@ ActiveRecord::Schema.define(version: 20160622133041) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "status",     default: 0, null: false
+    t.index ["team_id"], name: "index_user_invites_on_team_id", using: :btree
+    t.index ["user_id"], name: "index_user_invites_on_user_id", using: :btree
   end
-
-  add_index "user_invites", ["team_id"], name: "index_user_invites_on_team_id", using: :btree
-  add_index "user_invites", ["user_id"], name: "index_user_invites_on_user_id", using: :btree
 
   create_table "user_requests", force: :cascade do |t|
     t.integer  "team_id"
@@ -91,10 +126,9 @@ ActiveRecord::Schema.define(version: 20160622133041) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "status",     default: 0, null: false
+    t.index ["team_id"], name: "index_user_requests_on_team_id", using: :btree
+    t.index ["user_id"], name: "index_user_requests_on_user_id", using: :btree
   end
-
-  add_index "user_requests", ["team_id"], name: "index_user_requests_on_team_id", using: :btree
-  add_index "user_requests", ["user_id"], name: "index_user_requests_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                            default: "",    null: false
@@ -125,12 +159,11 @@ ActiveRecord::Schema.define(version: 20160622133041) do
     t.string   "personal_email"
     t.string   "state",                  limit: 2
     t.boolean  "compete_for_prizes",               default: false
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["team_id"], name: "index_users_on_team_id", using: :btree
   end
-
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["team_id"], name: "index_users_on_team_id", using: :btree
 
   create_table "vips", force: :cascade do |t|
     t.string   "name"

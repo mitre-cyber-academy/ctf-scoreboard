@@ -1,4 +1,4 @@
-class AddConfirmableToDeviseV1 < ActiveRecord::Migration
+class AddConfirmableToDeviseV1 < ActiveRecord::Migration[4.2]
   # Note: You can't use change, as User.update_all with fail in the down migration
   def up
     add_column :users, :confirmation_token, :string

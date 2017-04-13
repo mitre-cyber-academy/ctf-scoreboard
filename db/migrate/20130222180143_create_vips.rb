@@ -1,4 +1,4 @@
-class CreateVips < ActiveRecord::Migration
+class CreateVips < ActiveRecord::Migration[4.2]
   def change
     create_table :vips do |t|
       t.string :name

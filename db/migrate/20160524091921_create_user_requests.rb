@@ -1,4 +1,4 @@
-class CreateUserRequests < ActiveRecord::Migration
+class CreateUserRequests < ActiveRecord::Migration[4.2]
   def change
     create_table :user_requests do |t|
       t.boolean :pending
