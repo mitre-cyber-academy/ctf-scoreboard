@@ -9,7 +9,7 @@ class RegistrationsControllerTest < ActionController::TestCase
 
   test 'unable to destroy team captain' do
     sign_in users(:user_one)
-    delete :destroy, id: users(:user_one).id
+    delete :destroy, params: { id: users(:user_one).id }
     assert :success
     assert_equal I18n.t("devise.registrations.captain_tried_to_destroy"), flash[:alert]
   end
@@ -17,8 +17,8 @@ class RegistrationsControllerTest < ActionController::TestCase
   test 'destroy user on a team' do
     sign_in users(:full_team_user_five)
     team = users(:full_team_user_five).team
-    assert_difference 'team.users(:reload).size', -1 do
-      delete :destroy, id: users(:full_team_user_five).id, user: { current_password: @password }
+    assert_difference 'team.users.reload.size', -1 do
+      delete :destroy, params: { id: users(:full_team_user_five).id, user: { current_password: @password } }
     end
     assert :success
     assert_equal I18n.t("devise.registrations.destroyed"), flash[:notice]
@@ -27,7 +27,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   test 'destroy user not on a team' do
     sign_in users(:user_three)
     assert_difference 'User.count', -1 do
-      delete :destroy, id: users(:user_three).id, user: { current_password: @password }
+      delete :destroy, params: { id: users(:user_three).id, user: { current_password: @password } }
     end
     assert :success
     assert_equal I18n.t("devise.registrations.destroyed"), flash[:notice]
@@ -36,7 +36,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   test 'user unable to delete account without password' do
     sign_in users(:user_three)
     assert_no_difference 'User.count' do
-      delete :destroy, id: users(:user_three).id
+      delete :destroy, params: { id: users(:user_three).id }
     end
     assert_equal I18n.t("devise.registrations.password_needed_destroy"), flash[:alert]
   end

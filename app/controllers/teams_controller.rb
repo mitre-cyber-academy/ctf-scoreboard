@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class TeamsController < ApplicationController
   include ApplicationModule
 
@@ -6,7 +7,7 @@ class TeamsController < ApplicationController
 
   before_action :user_logged_in?
 
-  before_action :check_membership, only: [:show, :update, :destroy]
+  before_action :check_membership, only: %i[show update destroy]
 
   def new
     if !current_user.on_a_team?
@@ -59,8 +60,7 @@ class TeamsController < ApplicationController
   def check_membership
     # If the user is not signed in, not on a team, or not on the team they are trying to access
     # then deny them from accessing the team page.
-    if !current_user.on_a_team? || (current_user.team_id != params[:id].to_i)
-      redirect_to user_root_path, alert: I18n.t('teams.invalid_permissions')
-    end
+    return true unless !current_user.on_a_team? || (current_user.team_id != params[:id].to_i)
+    redirect_to user_root_path, alert: I18n.t('teams.invalid_permissions')
   end
 end

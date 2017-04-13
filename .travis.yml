@@ -11,6 +11,9 @@ notifications:
     on_failure: always
 services:
   - postgresql
+before_install:
+  - gem update --system
+  - gem --version
 before_script:
   - psql -c 'create database registration_test;' -U postgres
 script:

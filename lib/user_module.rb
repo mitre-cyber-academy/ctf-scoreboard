@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # We have this module because it was relying on devise methods in a
 # helper, which cannot be tested. Helpers do not extend active controller
 # and do not have access to devise variables in tests.

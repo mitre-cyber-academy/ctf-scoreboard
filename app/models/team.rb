@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Team model for holding the main user list and all invites and requests to a team.
 class Team < ActiveRecord::Base
   has_many :users
@@ -12,11 +13,11 @@ class Team < ActiveRecord::Base
   after_save :set_team_captain
 
   filterrific(
-    available_filters: [
-      :filter_team_name,
-      :filter_affiliation,
-      :location,
-      :hs_college
+    available_filters: %i[
+      filter_team_name
+      filter_affiliation
+      location
+      hs_college
     ]
   )
 
@@ -75,8 +76,8 @@ class Team < ActiveRecord::Base
   def self.options_for_school_level
     [
       ['High School', 'High School'],
-      %w(College College),
-      %w(Professional Professional)
+      %w[College College],
+      %w[Professional Professional]
     ]
   end
 
@@ -107,7 +108,7 @@ class Team < ActiveRecord::Base
   end
 
   def promote(user_id)
-    update_attribute(:team_captain, users.find_by_id(user_id))
+    update_attributes(team_captain: users.find_by(id: user_id))
   end
 
   # Uses the teams team_name but removes extra characters in order to make it easier
@@ -131,6 +132,6 @@ class Team < ActiveRecord::Base
   # If a team doesn't have a team captain but does have a user, set the team captain to the first user.
   def set_team_captain
     return unless team_captain.nil? && !users.empty?
-    update_attribute(:team_captain, users.first)
+    update_attributes(team_captain: users.first)
   end
 end
