@@ -1,4 +1,4 @@
-class DeviseCreateTeams < ActiveRecord::Migration
+class DeviseCreateTeams < ActiveRecord::Migration[4.2]
   def change
     create_table(:teams) do |t|
       ## Database authenticatable

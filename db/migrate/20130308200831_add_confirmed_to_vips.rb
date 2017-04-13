@@ -1,4 +1,4 @@
-class AddConfirmedToVips < ActiveRecord::Migration
+class AddConfirmedToVips < ActiveRecord::Migration[4.2]
   def change
     add_column :vips, :confirmed, :boolean, :default => false
   end
