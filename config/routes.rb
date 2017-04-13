@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 CtfRegistration::Application.routes.draw do
   devise_for :admins
 
@@ -17,12 +18,12 @@ CtfRegistration::Application.routes.draw do
 
   # Saying resources :users do causes all routes for the team to be generated.
   # By saying only: [] it keeps only the routes specified in the do block to be generated.
-  resources :teams, except: [:edit, :destroy, :index] do
+  resources :teams, except: %i[edit destroy index] do
     # Custom route for accepting user invites.
     resources :user_invites, only: [:destroy] do
       get :accept, on: :member
     end
-    resources :user_requests, only: [:create, :destroy] do
+    resources :user_requests, only: %i[create destroy] do
       get :accept, on: :member
     end
     resources :users, only: [] do

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Team model for holding the main user list and all invites and requests to a team.
 class Team < ActiveRecord::Base
   has_many :users
@@ -12,11 +13,11 @@ class Team < ActiveRecord::Base
   after_save :set_team_captain
 
   filterrific(
-    available_filters: [
-      :filter_team_name,
-      :filter_affiliation,
-      :location,
-      :hs_college
+    available_filters: %i[
+      filter_team_name
+      filter_affiliation
+      location
+      hs_college
     ]
   )
 
@@ -75,8 +76,8 @@ class Team < ActiveRecord::Base
   def self.options_for_school_level
     [
       ['High School', 'High School'],
-      %w(College College),
-      %w(Professional Professional)
+      %w[College College],
+      %w[Professional Professional]
     ]
   end
 

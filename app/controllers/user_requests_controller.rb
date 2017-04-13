@@ -1,6 +1,8 @@
 # frozen_string_literal: true
+
 class UserRequestsController < ApplicationController
-  include ApplicationModule, UserModule
+  include ApplicationModule
+  include UserModule
 
   before_action :user_logged_in?
   before_action :check_if_user_on_team, only: [:create]

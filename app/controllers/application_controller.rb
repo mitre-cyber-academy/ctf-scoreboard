@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Main controller for the application, handles redirects for the user login to the correct pages
 # and sets devise parameters.
 class ApplicationController < ActionController::Base
@@ -25,11 +26,11 @@ class ApplicationController < ActionController::Base
     # Be sure to update this in the confirmations controller as well if you need to add parameters.
     devise_parameter_sanitizer.permit(
       :sign_up,
-      keys: [:full_name, :affiliation, :year_in_school, :state, :compete_for_prizes, :gender, :age, :area_of_study]
+      keys: %i[full_name affiliation year_in_school state compete_for_prizes gender age area_of_study]
     )
     devise_parameter_sanitizer.permit(
       :account_update,
-      keys: [:full_name, :affiliation, :year_in_school, :state, :compete_for_prizes, :gender, :age, :area_of_study]
+      keys: %i[full_name affiliation year_in_school state compete_for_prizes gender age area_of_study]
     )
   end
 end

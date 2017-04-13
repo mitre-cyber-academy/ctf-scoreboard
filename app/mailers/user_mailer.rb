@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class UserMailer < ApplicationMailer
   def invite_user(user_invite)
     @invite = user_invite

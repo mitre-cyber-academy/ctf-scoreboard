@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 # Whenever a user requests to join a team a new user request is created.
 class UserRequest < ActiveRecord::Base
   belongs_to :team
   belongs_to :user
 
-  enum status: [:Pending, :Accepted, :Rejected]
+  enum status: %i[Pending Accepted Rejected]
 
   after_create :send_email
 

@@ -1,6 +1,9 @@
 # frozen_string_literal: true
+
 class UsersController < ApplicationController
-  include ApplicationModule, UserModule, UserHelper
+  include ApplicationModule
+  include UserModule
+  include UserHelper
 
   before_action :user_logged_in?
   before_action :check_removal_permissions, only: [:leave_team]

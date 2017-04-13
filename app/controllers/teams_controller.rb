@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class TeamsController < ApplicationController
   include ApplicationModule
 
@@ -6,7 +7,7 @@ class TeamsController < ApplicationController
 
   before_action :user_logged_in?
 
-  before_action :check_membership, only: [:show, :update, :destroy]
+  before_action :check_membership, only: %i[show update destroy]
 
   def new
     if !current_user.on_a_team?

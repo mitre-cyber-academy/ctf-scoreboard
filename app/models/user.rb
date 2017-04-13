@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # User model, uses devise to manage registrations. Each user has a team reference which is
 # set to nil until they are added to a team.
 class User < ActiveRecord::Base
@@ -7,7 +8,7 @@ class User < ActiveRecord::Base
   has_many :user_requests
   before_save :clear_compete_for_prizes
   after_create :link_to_invitations
-  enum gender: [:Male, :Female]
+  enum gender: %i[Male Female]
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
