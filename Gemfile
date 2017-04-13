@@ -10,6 +10,7 @@ gem "awesome_nested_fields"
 gem 'bootstrap-sass', '~> 2.3.2.2'
 gem 'rails_admin'
 gem "paperclip"
+# The devise_security_extension gem is most likely the one causing all the depreciation warning on startup.
 gem 'devise_security_extension', '~> 0.9.2' # Can update whenever they loosen their dependency on devise.
 gem 'rails_email_validator'
 gem 'jquery-rails'
