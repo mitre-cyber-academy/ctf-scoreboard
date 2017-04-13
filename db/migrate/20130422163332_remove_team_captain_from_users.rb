@@ -1,4 +1,4 @@
-class RemoveTeamCaptainFromUsers < ActiveRecord::Migration
+class RemoveTeamCaptainFromUsers < ActiveRecord::Migration[4.2]
   def up
   	remove_column :users, :team_captain
   end
