@@ -4,6 +4,7 @@
 # set to nil until they are added to a team.
 class User < ActiveRecord::Base
   belongs_to :team
+  has_many :feed_items
   has_many :user_invites
   has_many :user_requests
   before_save :clear_compete_for_prizes
