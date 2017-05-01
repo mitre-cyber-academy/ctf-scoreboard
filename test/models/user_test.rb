@@ -92,4 +92,14 @@ class UserTest < ActiveSupport::TestCase
     another_user = users(:full_team_user_three)
     assert_equal(false, user_on_team.can_remove?(another_user))
   end
+
+  test 'set password' do
+    assert_nil users(:user_one).change_password
+  end
+
+  test 'set password with value' do
+    password = 'NewTestPassword123'
+    assert_nil users(:user_one).change_password
+    assert_equal password, users(:user_one).change_password = password
+  end
 end

@@ -1,0 +1,7 @@
+division_one:
+  name: division one
+  game: game_one
+
+division_two:
+  name: division two
+  game: game_one

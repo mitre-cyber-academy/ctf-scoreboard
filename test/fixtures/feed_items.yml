@@ -1,0 +1,41 @@
+feed_item_one:
+  player: player_one
+  point_value: 200
+  text: test
+  type: Achievement
+
+feed_item_two:
+  player: player_two
+  point_value: -100
+  text: test
+  type: Achievement
+
+feed_item_three:
+  player: player_one
+  point_value: 400
+  text: test
+  type: Achievement
+
+score_adjustment_one:
+  player: player_one
+  point_value: 200
+  text: Helped us fix a bug in a challenge
+  type: ScoreAdjustment
+
+score_adjustment_two:
+  player: player_two
+  point_value: -100
+  text: Broke a challenge
+  type: ScoreAdjustment
+
+solved_challenge_one:
+  player: player_two
+  challenge: challenge_three_cat_one
+  flag: flag_three
+  type: SolvedChallenge
+
+solved_challenge_two:
+  player: player_two
+  challenge: challenge_four_cat_two
+  flag: flag_four
+  type: SolvedChallenge
