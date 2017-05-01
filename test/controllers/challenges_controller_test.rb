@@ -1,9 +1,16 @@
 require 'test_helper'
 
 class ChallengesControllerTest < ActionController::TestCase
-  test "should get index" do
+
+  def setup
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+  end
+
+  test 'index' do
+    sign_in users(:player_one)
+    # Render
     get :index
-    assert_response :success
+    assert :success
   end
 
   test "should get show" do
@@ -21,4 +28,9 @@ class ChallengesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'submit correct flag' do
+  end
+
+  test 'submit incorrect flag' do
+  end
 end
