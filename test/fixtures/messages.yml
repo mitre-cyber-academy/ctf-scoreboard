@@ -1,11 +1,4 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  user_id: 1
-  game_id: 1
-  text: MyText
-
-two:
-  user_id: 1
-  game_id: 1
-  text: MyText
+message_one:
+  game: game_one
+  text: message one text
+  title: message one title

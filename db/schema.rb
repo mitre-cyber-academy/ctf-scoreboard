@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170419185848) do
+ActiveRecord::Schema.define(version: 20170419193302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,12 @@ ActiveRecord::Schema.define(version: 20170419185848) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "challenge_states", force: :cascade do |t|
+    t.integer "state"
+    t.integer "challenge_id"
+    t.integer "division_id"
+  end
+
   create_table "challenges", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
@@ -46,6 +52,28 @@ ActiveRecord::Schema.define(version: 20170419185848) do
     t.string   "achievement_name"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+  end
+
+  create_table "divisions", force: :cascade do |t|
+    t.string  "name"
+    t.integer "game_id"
+  end
+
+  create_table "feed_items", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "team_id"
+    t.integer "division_id"
+    t.string  "text"
+    t.integer "challenge_id"
+    t.integer "point_value"
+    t.integer "flag_id"
+  end
+
+  create_table "flagsses", force: :cascade do |t|
+    t.integer "challenge_id"
+    t.string  "flag"
+    t.string  "api_url"
+    t.string  "video_url"
   end
 
   create_table "games", force: :cascade do |t|
@@ -98,6 +126,12 @@ ActiveRecord::Schema.define(version: 20170419185848) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["item", "table", "month", "year"], name: "index_rails_admin_histories", using: :btree
+  end
+
+  create_table "submitted_flags", force: :cascade do |t|
+    t.integer "challenge_id"
+    t.integer "user_id"
+    t.string  "text"
   end
 
   create_table "teams", force: :cascade do |t|

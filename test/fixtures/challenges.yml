@@ -1,15 +1,44 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+challenge_one_cat_one:
+  name: challenge_one
+  description: challenge one description
+  point_value: 100
+  state: :open
+  category: category_one
 
-one:
-  name: MyString
-  description: MyText
-  point_value: 1
-  flag: MyString
-  state: MyString
+challenge_two_cat_one:
+  name: challenge_two
+  description: challenge two description
+  point_value: 200
+  state: :force_closed
+  category: category_one
 
-two:
-  name: MyString
-  description: MyText
-  point_value: 1
-  flag: MyString
-  state: MyString
+challenge_three_cat_one:
+  name: challenge_three
+  description: challenge three description
+  point_value: 300
+  state: :closed
+  category: category_one
+
+challenge_four_cat_two:
+  name: challenge_four_cat_two
+  description: challenge one description
+  point_value: 200
+  category: category_two
+  state: :force_closed
+  achievement_name: challenge three achievement
+
+challenge_five_cat_two:
+  name: challenge_five_cat_two
+  description: challenge two description
+  point_value: 300
+  state: :open
+  category: category_two
+  achievement_name: challenge four achievement
+
+challenge_six_cat_two:
+  name: challenge_six_cat_two
+  description: challenge two description
+  point_value: 300
+  state: :open
+  category: category_two
+  achievement_name: challenge four achievement
