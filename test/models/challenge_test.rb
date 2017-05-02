@@ -23,7 +23,7 @@ class ChallengeTest < ActiveSupport::TestCase
   end
 
   test 'get current solved challenge' do
-    assert_equal nil, challenges(:challenge_one_cat_one).get_current_solved_challenge(users(:user_one))
+    assert_nil challenges(:challenge_one_cat_one).get_current_solved_challenge(users(:user_one))
     assert_equal feed_items(:solved_challenge_one), challenges(:challenge_three_cat_one).get_current_solved_challenge(users(:player_two))
   end
 
@@ -34,18 +34,18 @@ class ChallengeTest < ActiveSupport::TestCase
 
   test 'get video url for flag' do
     # current challenge nil
-    assert_equal nil, challenges(:challenge_one_cat_one).get_video_url_for_flag(users(:user_one))
+    assert_nil challenges(:challenge_one_cat_one).get_video_url_for_flag(users(:user_one))
     # current challenge flag nil
-    assert_equal nil, challenges(:challenge_two_cat_one).get_video_url_for_flag(users(:user_one))
+    assert_nil challenges(:challenge_two_cat_one).get_video_url_for_flag(users(:user_one))
     # current challenge solved
     assert_equal flags(:flag_three).video_url, challenges(:challenge_three_cat_one).get_video_url_for_flag(users(:player_two))
   end
 
   test 'get api request for flag' do
     # current challenge nil
-    assert_equal nil, challenges(:challenge_one_cat_one).get_api_request_for_flag(users(:user_one))
+    assert_nil challenges(:challenge_one_cat_one).get_api_request_for_flag(users(:user_one))
     # current challenge flag nil
-    assert_equal nil, challenges(:challenge_two_cat_one).get_api_request_for_flag(users(:user_one))
+    assert_nil challenges(:challenge_two_cat_one).get_api_request_for_flag(users(:user_one))
     # current challenge solved
     assert_equal flags(:flag_three).api_request, challenges(:challenge_three_cat_one).get_api_request_for_flag(users(:player_two))
   end

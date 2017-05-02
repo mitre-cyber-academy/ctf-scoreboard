@@ -52,3 +52,13 @@ en:
     accepted_successful: 'User invite was successfully accepted.'
     rejected_successful: 'User invitation was successfully rejected.'
     full_team: 'This team currently does not have any more open slots. Please try again later.'
+  game:
+    closed: 'The game is currently closed.'
+    too_many: 'You may not create more than one game.'
+    date_mismatch: 'The start date must be before the end date.'
+  flag:
+    accepted: 'Flag accepted!'
+  challenge:
+    not_open: 'must be open.'
+    game_not_open: 'The game must be open.'
+    already_solved: 'This player has already solved this challenge.'
