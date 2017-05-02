@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170502001124) do
+ActiveRecord::Schema.define(version: 20170502015437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20170502001124) do
     t.string  "type"
   end
 
-  create_table "flagsses", force: :cascade do |t|
+  create_table "flags", force: :cascade do |t|
     t.integer "challenge_id"
     t.string  "flag"
     t.string  "api_url"
