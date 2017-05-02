@@ -8,7 +8,7 @@ class Challenge < ActiveRecord::Base
 
   validates :name, :point_value, :flags, presence: true
 
-  accepts_nested_attributes_for :flag, allow_destroy: true
+  accepts_nested_attributes_for :flags, allow_destroy: true
 
   # Handles the ordering of all returned challenge objects.
   default_scope -> { order(:point_value, :name) }
