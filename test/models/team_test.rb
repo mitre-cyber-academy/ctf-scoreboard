@@ -82,4 +82,17 @@ class TeamTest < ActiveSupport::TestCase
     team = teams(:team_one)
     assert_equal team.common_team_location, 'FL'
   end
+
+  test 'score method returns proper value' do
+    team_one = users(:user_one)
+    # Player 1 has a 200 point score adjustment added from the fixtures
+    assert_equal 200, team_one.score
+  end
+
+  test 'display name' do
+    # Eligible
+    assert_equal users(:user_one).display_name, users(:user_one).display_name
+    # Ineligible
+    assert_equal users(:player_three).display_name, users(:player_three).display_name
+  end
 end
