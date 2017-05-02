@@ -7,7 +7,7 @@ class ChallengesControllerTest < ActionController::TestCase
   end
 
   test 'index' do
-    sign_in users(:player_one)
+    sign_in users(:user_one)
     # Render
     get :index
     assert :success

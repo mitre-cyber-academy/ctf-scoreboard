@@ -102,4 +102,9 @@ class UserTest < ActiveSupport::TestCase
     assert_nil users(:user_one).change_password
     assert_equal password, users(:user_one).change_password = password
   end
+
+  test 'key file name' do
+    key_file_name = 'playeronete' + users(:user_one).id.to_s
+    assert_equal key_file_name, users(:user_one).key_file_name
+  end
 end

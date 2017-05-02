@@ -7,7 +7,7 @@ class MessagesControllerTest < ActionController::TestCase
   end
 
   test 'index' do
-    sign_in users(:player_one)
+    sign_in users(:user_one)
     get :index
     assert :success
   end

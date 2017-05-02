@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170502000305) do
+ActiveRecord::Schema.define(version: 20170502001124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20170502000305) do
     t.integer "challenge_id"
     t.integer "point_value"
     t.integer "flag_id"
+    t.string  "type"
   end
 
   create_table "flagsses", force: :cascade do |t|
