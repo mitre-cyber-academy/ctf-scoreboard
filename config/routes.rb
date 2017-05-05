@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 CtfRegistration::Application.routes.draw do
-  devise_for :admins
-
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   get 'home/index'
@@ -33,13 +31,15 @@ CtfRegistration::Application.routes.draw do
   end
 
   # game
-  resources :game, only: [:index] do
+resource :game, only: [:show] do
     resources :messages, only: [:index]
     resources :achievements, only: [:index]
     resources :challenges, only: [:index] do
       post :submit_flag, on: :member
     end
   end
+
+  get '/game/summary' => 'games#summary'
 
   resources :users, only: [:index, :show] do
     get :download, on: :member

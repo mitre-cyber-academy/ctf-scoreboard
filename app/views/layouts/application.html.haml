@@ -13,16 +13,19 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand{:href => "/"} MITRE Cyber Academy
+          %a.brand{:href => "/"} MITRE STEM CTF
           .nav-collapse.collapse
             %ul.nav
-              %li
-                %a{:href => home_about_path}
-                  %i.icon-info-sign.icon-white
-                  About
+              %li{:class => "#{'active' if current_page? game_path}"}
+                %a{:href => game_path} Gameboard
+              %li{:class => "#{'active' if current_page? game_messages_path}"}
+                %a{:href => game_messages_path} Messages
+              %li{:class => "#{'active' if current_page? game_achievements_path}"}
+                %a{:href => game_achievements_path} Achievements
+              %li{:class => "#{'active' if current_page? game_summary_path}"}
+                %a{:href => game_summary_path} Summary
               %li
                 %a{:href => "http://mitrecyberacademy.org/contact", :target => "_blank"}
-                  %i.icon-globe.icon-white
                   Contact
             %ul.nav.pull-right
               - if user_signed_in?
@@ -32,7 +35,9 @@
                     %b.caret
                   %ul.dropdown-menu
                     %li
-                      - if current_user.on_a_team?
+                      - if current_user.admin?
+                        = link_to "Admin", rails_admin_path
+                      - elsif current_user.on_a_team?
                         = link_to "See your team", team_path(current_user.team_id)
                       - else
                         = link_to "Join a team", join_team_users_path
