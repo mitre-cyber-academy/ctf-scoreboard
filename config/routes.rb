@@ -16,7 +16,7 @@ CtfRegistration::Application.routes.draw do
 
   # Saying resources :users do causes all routes for the team to be generated.
   # By saying only: [] it keeps only the routes specified in the do block to be generated.
-  resources :teams, except: %i[edit destroy index] do
+  resources :teams, except: %i[edit destroy] do
     # Custom route for accepting user invites.
     resources :user_invites, only: [:destroy] do
       get :accept, on: :member
@@ -34,7 +34,9 @@ CtfRegistration::Application.routes.draw do
 resource :game, only: [:show] do
     resources :messages, only: [:index]
     resources :achievements, only: [:index]
-    resources :challenges, only: [:index] do
+    resources :divisions, only: [:index]
+    resources :flags, only: [:index] # Prank route!
+    resources :challenges, only: [:index, :show] do
       post :submit_flag, on: :member
     end
   end
