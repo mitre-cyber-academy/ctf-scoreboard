@@ -1,13 +1,11 @@
+# frozen_string_literal: true
+
 class ChallengesController < ApplicationController
-  def index
-  end
+  def index; end
 
-  def show
-  end
+  def show; end
 
-  def submit_flag
-  end
+  def submit_flag; end
 
-  def find_challenge
-  end
+  def find_challenge; end
 end

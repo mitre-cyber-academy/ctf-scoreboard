@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/BlockLength
 CtfRegistration::Application.routes.draw do
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
@@ -31,21 +32,22 @@ CtfRegistration::Application.routes.draw do
   end
 
   # game
-resource :game, only: [:show] do
+  resource :game, only: [:show] do
     resources :messages, only: [:index]
     resources :achievements, only: [:index]
     resources :divisions, only: [:index]
     resources :flags, only: [:index] # Prank route!
-    resources :challenges, only: [:index, :show] do
+    resources :challenges, only: %i[index show] do
       post :submit_flag, on: :member
     end
   end
 
   get '/game/summary' => 'games#summary'
 
-  resources :users, only: [:index, :show] do
+  resources :users, only: %i[index show] do
     get :download, on: :member
   end
 
   root to: 'home#index'
 end
+# rubocop:enable Metrics/BlockLength

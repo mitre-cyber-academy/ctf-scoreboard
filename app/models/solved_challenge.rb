@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class SolvedChallenge < FeedItem
   validate :user_has_not_solved_challenge, :challenge_is_open, :game_is_open
 
@@ -24,9 +25,8 @@ class SolvedChallenge < FeedItem
   end
 
   def user_has_not_solved_challenge
-    if player.solved_challenges.where('challenge_id = ?', challenge.id).count.positive?
-      errors.add(:base, I18n.t('challenge.already_solved'))
-    end
+    challenge_is_solved = player.solved_challenges.where('challenge_id = ?', challenge.id).count.positive?
+    errors.add(:base, I18n.t('challenge.already_solved')) if challenge_is_solved
   end
 
   def award_achievement
@@ -34,7 +34,7 @@ class SolvedChallenge < FeedItem
       Achievement.create(player: player, text: 'First Blood!')
     end
     name = challenge.achievement_name
-    Achievement.create(player: player, text: name) unless name.blank?
+    Achievement.create(player: player, text: name) if name.present?
   end
 
   def open_next_challenge

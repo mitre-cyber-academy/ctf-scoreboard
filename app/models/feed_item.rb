@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class FeedItem < ActiveRecord::Base
   belongs_to :team
   belongs_to :user
   belongs_to :challenge
   belongs_to :division
 
-  validates :type, inclusion: %w(SolvedChallenge Achievement ScoreAdjustment)
+  validates :type, inclusion: %w[SolvedChallenge Achievement ScoreAdjustment]
 
   def description
     self.class

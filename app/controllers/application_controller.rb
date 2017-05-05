@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   before_action :set_mailer_host
   helper :all
 
-#TODO if game started and user on a team show scoreboard home
+  # TODO: if game started and user on a team show scoreboard home
   def user_root_path
     if current_user.on_a_team?
       team_path(current_user.team_id)
