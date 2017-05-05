@@ -25,7 +25,7 @@ class ScoreAdjustmentTest < ActiveSupport::TestCase
   end
 
   test 'score adjustment add points to team' do
-    team_one = users(:user_one)
+    team_one = teams(:team_one)
     # Player 1 has a 200 point score adjustment added from the fixtures
     assert_equal 200, team_one.score
     ScoreAdjustment.create!(player: team_one, point_value: 100, text: 'Did real good on a challenge')
