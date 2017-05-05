@@ -128,6 +128,19 @@ class Team < ActiveRecord::Base
     end
   end
 
+  def score
+    feed_items.where(type: [SolvedChallenge, ScoreAdjustment])
+              .joins(
+                'LEFT JOIN challenges ON challenges.id = feed_items.challenge_id'
+              )
+              .pluck(:point_value, :'challenges.point_value').flatten.compact.sum
+  end
+
+  def display_name
+    return self[:team_name] if eligible_for_prizes?
+    return self[:team_name] + ' (ineligible)' unless eligible_for_prizes?
+  end
+
   private
 
   # If a team doesn't have a team captain but does have a user, set the team captain to the first user.

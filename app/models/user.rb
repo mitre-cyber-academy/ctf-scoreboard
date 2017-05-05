@@ -57,6 +57,10 @@ class User < ActiveRecord::Base
     (eql? user) || (team.team_captain.eql? self)
   end
 
+  def key_file_name
+    email.tr('^A-Za-z', '')[0..10] + id.to_s
+  end
+
   private
 
   # If a user chooses to compete for prizes then they must be located in the US and be in school.
