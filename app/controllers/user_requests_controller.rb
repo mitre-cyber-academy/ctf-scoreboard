@@ -5,6 +5,7 @@ class UserRequestsController < ApplicationController
   include UserModule
 
   before_action :user_logged_in?
+  before_action :block_admin_action, only: [:create]
   before_action :check_if_user_on_team, only: [:create]
   before_action :captain_of_team_requested, only: [:accept]
   before_action :check_if_able_to_reject, only: [:destroy]

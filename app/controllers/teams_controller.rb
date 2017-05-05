@@ -4,9 +4,8 @@ class TeamsController < ApplicationController
   include ApplicationModule
 
   helper_method :team_editable?
-
   before_action :user_logged_in?
-
+  before_action :block_admin_action, only: [:create]
   before_action :check_membership, only: %i[show update destroy]
 
   def new

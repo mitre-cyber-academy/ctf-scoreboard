@@ -14,4 +14,10 @@ module ApplicationModule
   def team_captain?
     !current_user.nil? && current_user.on_a_team? && current_user == current_user.team.team_captain
   end
+
+  # This blocks admins from doing tasks that could leave the application in an inconsistent state, such as creating a team
+  # or joining a team
+  def block_admin_action
+    redirect_back(fallback_location: root_path, alert: I18n.t('admin.cannot_perform_action_here')) if current_user.admin?
+  end
 end
