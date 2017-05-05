@@ -18,12 +18,12 @@ class Challenge < ActiveRecord::Base
   attr_accessor :submitted_flag
 
   # This bypasses game open check and only looks at the challenge state
-  def challenge_open?(division)
-    get_state(division).eql? 'open'
+  def challenge_open?
+    state.eql? 'open'
   end
 
-  def open?(division)
-    (challenge_open?(division) && category.game.open?)
+  def open?
+    challenge_open? && category.game.open?
   end
 
   def solved?
@@ -31,12 +31,12 @@ class Challenge < ActiveRecord::Base
   end
 
   # Returns whether or not challenge is available to be opened.
-  def available?(division)
-    get_state(division).eql? 'closed'
+  def available?
+    state.eql? 'closed'
   end
 
-  def force_closed?(division)
-    get_state(division).eql? 'force_closed'
+  def force_closed?
+    state.eql? 'force_closed'
   end
 
   def get_current_solved_challenge(user)
@@ -59,26 +59,10 @@ class Challenge < ActiveRecord::Base
     current_challenge.flag.api_request unless current_challenge.nil? || current_challenge.flag.nil?
   end
 
-  def set_state(division, new_state)
-    challenge_state = challenge_states.find_by(division: division)
+  def set_state(new_state)
     challenge_state.state = new_state
     challenge_state.save
   end
 
   private
-
-  # Gets the state using a division context
-  def get_state(division)
-    current_state = challenge_states.find_by(division: division)
-    # If we somehow manage to not have a current state for this division then make one with the
-    # default starting state
-    current_state = challenge_states.create!(division: division, state: starting_state) unless current_state
-    current_state.state
-  end
-
-  def add_states_to_challenges
-    Division.all.find_each do |d|
-      ChallengeState.create!(challenge: self, division: d, state: starting_state)
-    end
-  end
 end
