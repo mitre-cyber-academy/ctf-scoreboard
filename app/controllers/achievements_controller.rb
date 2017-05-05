@@ -1,5 +1,5 @@
 # frozen_string_literal: true
+
 class AchievementsController < ApplicationController
-  def index
-  end
+  def index; end
 end

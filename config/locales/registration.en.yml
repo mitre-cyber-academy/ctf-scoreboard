@@ -63,4 +63,4 @@ en:
     game_not_open: 'The game must be open.'
     already_solved: 'This player has already solved this challenge.'
   admin:
-    cannot_perform_action_here: 'Admins should use the Rails Admin console to perform administrative actions'
+    should_not_do_action: 'Admins should use the Rails Admin console to perform administrative actions'

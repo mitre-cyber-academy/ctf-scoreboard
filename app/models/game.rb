@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Game < ActiveRecord::Base
   has_many :divisions
   has_many :teams, through: :divisions

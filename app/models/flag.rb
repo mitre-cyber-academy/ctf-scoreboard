@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Flag < ActiveRecord::Base
   belongs_to :challenge, inverse_of: :flags
 
