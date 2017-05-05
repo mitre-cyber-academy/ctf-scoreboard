@@ -2,6 +2,7 @@ flag_one:
   challenge: challenge_one_cat_one
   flag: flag one
 
+
 flag_two:
   challenge: challenge_two_cat_one
   flag:
