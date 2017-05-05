@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class Challenge < ActiveRecord::Base
   belongs_to :category
   has_many :flags, inverse_of: :challenge
   has_many :solved_challenges
   has_many :submitted_flags
 
-  enum state: [ :closed, :open, :force_closed ]
+  enum state: %i[closed open force_closed]
 
   validates :name, :point_value, :flags, presence: true
 
@@ -40,7 +42,7 @@ class Challenge < ActiveRecord::Base
   def get_current_solved_challenge(user)
     solved_challenge = SolvedChallenge.where('challenge_id = :challenge and user_id = :user',
                                              challenge: self, user: user)
-    solved_challenge.first unless solved_challenge.nil?
+    solved_challenge&.first
   end
 
   def solved_by_user?(user)
