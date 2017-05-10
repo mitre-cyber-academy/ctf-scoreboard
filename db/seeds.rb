@@ -8,3 +8,40 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 User.create(email: 'rbclark@mitre.org', password: 'ChangeMe123', admin: true)
+
+# default game
+game = Game.create!(name: 'Test Game', start: Time.now, stop: Time.now + 2.days)
+
+division1 = Division.create!(name: "High School", game: game)
+division2 = Division.create!(name: "College", game: game)
+
+# players
+team1 = Team.create!(team_name: 'pwnies', affiliation: 'PwnPwnPwn')
+User.create!(
+  email: 'ctf@mitre.org',
+  username: 'pwn',
+  password: 'Test123456',
+  team: team1,
+  full_name: 'I Pwn',
+  affiliation: 'PwnPwnPwn',
+  year_in_school: 12,
+  gender: 'Male',
+  age: 16,
+  area_of_study: 'Robotics',
+  state: 'FL'
+)
+
+team2 = Team.create!(team_name: 'n00bs', affiliation: "We're n00bs")
+
+# crypto
+category = Category.create!(name: 'Crypto', game: game)
+Challenge.create!(name: 'Challenge A', point_value: 100, flags: [ Flag.create(flag: "flag") ], state: 'open', category: category)
+Challenge.create!(name: 'Challenge B', point_value: 200, flags: [ Flag.create(flag: "flag") ], state: 'closed', category: category)
+Challenge.create!(name: 'Challenge C', point_value: 300, flags: [ Flag.create(flag: "flag") ], state: 'closed', category: category)
+Challenge.create!(name: 'Challenge D', point_value: 400, flags: [ Flag.create(flag: "flag") ], state: 'closed', category: category)
+
+category = Category.create!(name: 'Forensics', game: game)
+Challenge.create!(name: 'Challenge E', point_value: 100, flags: [ Flag.create(flag: "flag") ], state: 'open', category: category)
+Challenge.create!(name: 'Challenge F', point_value: 200, flags: [ Flag.create(flag: "flag") ], state: 'closed', category: category)
+Challenge.create!(name: 'Challenge G', point_value: 300, flags: [ Flag.create(flag: "flag") ], state: 'closed', category: category)
+Challenge.create!(name: 'Challenge H', point_value: 400, flags: [ Flag.create(flag: "flag") ], state: 'closed', category: category)
