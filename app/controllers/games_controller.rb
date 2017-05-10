@@ -5,7 +5,7 @@ class GamesController < ApplicationController
     @game = Game.includes(:categories).includes(:challenges).instance
     @challenges = @game&.challenges
     @categories = @game&.categories
-    @solved_challenges = current_user&.team&.solved_challenges
+    @solved_challenges = current_user&.team&.solved_challenges.map(&:challenge_id)
   end
 
   def summary; end

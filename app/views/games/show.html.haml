@@ -18,12 +18,11 @@
             - challenges = @categories[column].challenges
             - if row < @challenges.size
               - challenge = challenges[row]
-              - is_solved = false
               - style = "text-align:center;"
               - if is_admin
                 - is_solved = challenge.solved?
               - else
-                - is_solved = @solved_challenges&.include?(challenge)
+                - is_solved = @solved_challenges&.include?(challenge.id)
               - if challenge.force_closed? && challenge.solved?
                 - style << "color:DarkOrange;"
               - elsif challenge.force_closed?
