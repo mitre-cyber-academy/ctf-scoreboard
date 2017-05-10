@@ -1,4 +1,6 @@
 class ScoreAdjustment < FeedItem
+  include ActionView::Helpers::TextHelper
+
   validates :point_value, :text, presence: true
   validate :point_value_is_not_zero
 
