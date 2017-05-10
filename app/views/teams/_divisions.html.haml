@@ -1,0 +1,14 @@
+- if divisions.size > 1
+  .panel.panel-default
+    -# Generate tabs for each division with a name
+    %ul.nav.nav-tabs
+      -divisions.each do |d|
+        %li{ :class => ('active' if active_division.eql? d) }
+          = link_to "#{d.name}", "#division-#{d.id}-tab", "data-toggle"=>"tab"
+    .tab-content
+      -divisions.each do |d|
+        .tab-pane{ :class => ('active' if active_division.eql? d), :id => "division-#{d.id}-tab" }
+          = render partial: "users/list", locals: { players: d.ordered_teams(only_top_five) }
+- else
+  .container-fluid
+    = render partial: "users/list", locals: { players: divisions.first.ordered_teams(only_top_five) }

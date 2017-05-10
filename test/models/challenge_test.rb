@@ -23,15 +23,6 @@ class ChallengeTest < ActiveSupport::TestCase
     assert_equal true, challenges(:challenge_two_cat_one).force_closed?
   end
 
-  test 'get video url for flag' do
-    # current challenge nil
-    assert_nil challenges(:challenge_one_cat_one).get_video_url_for_flag(teams(:team_one))
-    # current challenge flag nil
-    assert_nil challenges(:challenge_two_cat_one).get_video_url_for_flag(teams(:team_one))
-    # current challenge solved
-    assert_equal flags(:flag_three).video_url, challenges(:challenge_three_cat_one).get_video_url_for_flag(teams(:team_two))
-  end
-
   test 'set state' do
     challenges(:challenge_one_cat_one).set_state('force_closed')
     assert_equal 'force_closed', challenges(:challenge_one_cat_one).state
