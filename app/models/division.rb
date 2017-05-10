@@ -10,7 +10,7 @@ class Division < ActiveRecord::Base
 
   validates :name, presence: true
 
-  def ordered_players(only_top_five = false)
+  def ordered_teams(only_top_five = false)
     # They are eligible if the boolean is true
     teams = filter_and_sort_teams(eligible: true)
     # They are ineligible if the boolean is false
