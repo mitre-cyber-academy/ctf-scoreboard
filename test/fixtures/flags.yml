@@ -10,6 +10,7 @@ flag_two:
 flag_three:
   challenge: challenge_three_cat_one
   flag: flag three
+  video_url: flag_three_video_url
 
 flag_four:
   challenge: challenge_four_cat_two
