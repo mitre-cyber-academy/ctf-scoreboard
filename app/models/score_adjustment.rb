@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ScoreAdjustment < FeedItem
   include ActionView::Helpers::TextHelper
 
