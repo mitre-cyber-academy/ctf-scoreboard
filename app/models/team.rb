@@ -132,7 +132,7 @@ class Team < ActiveRecord::Base
 
   def display_name
     return self[:team_name] if eligible?
-    return self[:team_name] + ' (ineligible)'
+    self[:team_name] + ' (ineligible)'
   end
 
   private

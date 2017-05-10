@@ -36,19 +36,19 @@ class Division < ActiveRecord::Base
   # SolvedChallenge.
   def filter_and_sort_teams(filters)
     teams.includes(:achievements).where(filters)
-           .joins(
-             "LEFT JOIN feed_items
-               ON feed_items.team_id = teams.id
-               AND feed_items.type IN ('SolvedChallenge', 'ScoreAdjustment')
-             LEFT JOIN challenges ON challenges.id = feed_items.challenge_id"
-           )
-           .group('teams.id')
-           .select(
-             'COALESCE(sum(challenges.point_value), 0) + COALESCE(sum(feed_items.point_value), 0)
-               as current_score,
-             MAX(feed_items.created_at) as last_solved_date, teams.*'
-           )
-           .order('current_score desc', 'last_solved_date asc', 'team_name asc').to_a
+         .joins(
+           "LEFT JOIN feed_items
+             ON feed_items.team_id = teams.id
+             AND feed_items.type IN ('SolvedChallenge', 'ScoreAdjustment')
+           LEFT JOIN challenges ON challenges.id = feed_items.challenge_id"
+         )
+         .group('teams.id')
+         .select(
+           'COALESCE(sum(challenges.point_value), 0) + COALESCE(sum(feed_items.point_value), 0)
+             as current_score,
+           MAX(feed_items.created_at) as last_solved_date, teams.*'
+         )
+         .order('current_score desc', 'last_solved_date asc', 'team_name asc').to_a
   end
   # rubocop:enable MethodLength
 end

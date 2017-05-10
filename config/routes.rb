@@ -37,7 +37,7 @@ CtfRegistration::Application.routes.draw do
     resources :achievements, only: [:index]
     resources :divisions, only: [:index]
     resources :flags, only: [:index] # Prank route!
-    resources :challenges, only: [:show, :update] do
+    resources :challenges, only: %i[show update] do
     end
   end
 

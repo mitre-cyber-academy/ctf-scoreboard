@@ -10,8 +10,7 @@ class Flag < ActiveRecord::Base
   def save_solved_challenge(user)
     invoke_api_request
 
-    # solved_challenges.create(user: user, team: user.team, challenge: challenge, division: user.team.division) unless user.admin?
-    solved_challenges.create(user: user, team: user.team, challenge: challenge) unless user.admin?
+    solved_challenges.create(user: user, team: user.team, challenge: challenge, division: user.team.division) unless user.admin?
   end
 
   def invoke_api_request
