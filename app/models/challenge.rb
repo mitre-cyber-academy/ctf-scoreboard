@@ -27,7 +27,11 @@ class Challenge < ActiveRecord::Base
   end
 
   def solved?
-    SolvedChallenge.where('challenge_id = :challenge', challenge: self).count.positive?
+    solved_challenges.count.positive?
+  end
+
+  def solved_by_user?(user)
+    !solved_challenges.find_by(user: user).nil?
   end
 
   # Returns whether or not challenge is available to be opened.
@@ -46,6 +50,10 @@ class Challenge < ActiveRecord::Base
 
   def set_state(new_state)
     update(:state => new_state)
+  end
+
+  def find_flag(flag_str)
+    flags.find { |flag_obj| flag_obj.flag.casecmp(flag_str).zero? }
   end
 
   private

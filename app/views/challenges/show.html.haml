@@ -1,2 +1,28 @@
-%h1 Challenges#show
-%p Find me in app/views/challenges/show.html.haml
+- content_for :header do
+  -
+
+- if !@solved_challenge
+  = form_for @challenge, url: game_challenge_path(@challenge), method: "put", html: { class: "well", style: "margin-bottom:40px;" } do |f|
+    .control-group
+      %p Submit Flag
+    .control-group
+      .controls
+        = f.text_field :submitted_flag, :class => "span5"
+    .control-group
+      = button_tag "Submit", :class => "btn btn-primary"
+
+- if @solved_by.size > 0
+  %table.table.table-bordered.table-striped
+    %thead
+      %tr
+        %th #
+        %th Team
+        %th Division
+        %th When
+    %tbody
+      - @solved_by.each_with_index do |e, i|
+        %tr
+          %td= i + 1
+          %td= link_to e.team.display_name, e.team
+          %td= e.team.division.name
+          %td= e.created_at.strftime("%b %e %y, %R %Z")

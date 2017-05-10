@@ -45,7 +45,7 @@ class Team < ActiveRecord::Base
   # this we get just the id's from the teams and then query for just those teams which returns
   # an activerecord relation.
   scope :hs_college, lambda { |query|
-    appropriate_teams = select { |team| team if team.division_level.eql? query }
+    appropriate_teams = select { |team| team if team.appropriate_division_level.eql? query }
     appropriate_teams.collect!(&:id)
     where(id: appropriate_teams)
   }

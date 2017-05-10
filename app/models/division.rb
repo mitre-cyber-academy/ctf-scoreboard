@@ -6,6 +6,7 @@ class Division < ActiveRecord::Base
   has_many :feed_items
   has_many :achievements
   has_many :teams
+  has_many :solved_challenges
 
   validates :name, presence: true
 
