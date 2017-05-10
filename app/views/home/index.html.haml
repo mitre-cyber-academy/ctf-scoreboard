@@ -3,7 +3,12 @@
 
 .container
   .catchphrase
-    %h2 Registration is now open
+    - if @game.before_competition?
+      %h2 Register for the CTF
+    - elsif @game.open?
+      %h2 Competition in Progress
+    - else
+      %h2 Competition has Completed
   .maincontent.row-fluid.indent-40px-left
     %h3 Step 1
     %ul

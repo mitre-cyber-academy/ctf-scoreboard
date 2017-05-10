@@ -1,10 +1,16 @@
 - content_for :header do
   - @game.name
+
+.catchphrase
+  %h2
+    Challenges
+    &nbsp;
+    %small= %(#{pluralize(@challenges.size, 'challenge')} in #{pluralize(@categories.size, 'category')})
 - if @challenges.size == 0
   .zero-items-text No Challenges
 - else
   - max = 0
-  %table.table.table-bordered
+  %table.table.table-bordered.table-bolded
     %thead
       %tr
         - @categories.each do |c|
