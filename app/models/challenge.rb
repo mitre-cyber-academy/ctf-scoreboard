@@ -44,12 +44,10 @@ class Challenge < ActiveRecord::Base
   end
 
   def set_state(new_state)
-    update(:state => new_state)
+    update(state: new_state)
   end
 
   def find_flag(flag_str)
     flags.find { |flag_obj| flag_obj.flag.casecmp(flag_str).zero? }
   end
-
-  private
 end

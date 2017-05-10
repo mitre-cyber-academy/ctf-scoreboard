@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module SessionsHelper
   def deny_access
     store_location
