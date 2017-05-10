@@ -1,3 +1,40 @@
 - content_for :header do
-  Challenges
-%p Find me in app/views/games/show.html.haml
+  - @game.name
+- if @challenges.size == 0
+  .zero-items-text No Challenges
+- else
+  - max = 0
+  %table.table.table-bordered
+    %thead
+      %tr
+        - @categories.each do |c|
+          %th{ :style => "text-align:center;width:#{1.0 / @categories.size.to_f * 100.0}%;" }= c.name
+          - max = [max, c.challenges.size].max
+    %tbody
+      - is_admin = current_user&.admin?
+      - max.times do |row|
+        %tr
+          - @categories.size.times do |column|
+            - challenges = @categories[column].challenges
+            - if row < @challenges.size
+              - challenge = @challenges[row]
+              - is_solved = false
+              - style = "text-align:center;"
+              - if is_admin
+                - is_solved = challenge.solved?
+              - else
+                - is_solved = @solved_challenges&.include?(challenge)
+              - if challenge.force_closed? && challenge.solved?
+                - style << "color:DarkOrange;"
+              - elsif challenge.force_closed?
+                - style << "color:red;"
+              - elsif is_solved
+                - style << "color:#08C;"
+              - elsif challenge.open? || (is_admin && challenge.challenge_open?)
+                - style << "color:green;"
+              - else
+                - style << "color:gray;"
+              %td{ style: style }= link_to_if (is_admin || challenge.open?), challenge.point_value, game_challenge_path(challenge), style: "color:inherit;"
+            - else
+              %td &nbsp;
+

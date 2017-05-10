@@ -3,6 +3,7 @@
 # Team model for holding the main user list and all invites and requests to a team.
 class Team < ActiveRecord::Base
   has_many :feed_items
+  has_many :solved_challenges
   has_many :users
   has_many :user_invites, dependent: :destroy
   has_many :user_requests, dependent: :destroy
