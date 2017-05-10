@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170510055551) do
+ActiveRecord::Schema.define(version: 20170510191907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,7 +123,7 @@ ActiveRecord::Schema.define(version: 20170510055551) do
     t.string   "affiliation"
     t.integer  "team_captain_id"
     t.integer  "division_id"
-    t.boolean  "eligible"
+    t.boolean  "eligible",        default: false
     t.index ["division_id"], name: "index_teams_on_division_id", using: :btree
     t.index ["team_captain_id"], name: "index_teams_on_team_captain_id", using: :btree
   end

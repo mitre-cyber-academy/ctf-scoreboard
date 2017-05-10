@@ -4,22 +4,27 @@ team_one:
   team_name: team_one
   affiliation: school1
   team_captain: user_one
+  eligible: false
 
 team_two:
   team_name: team_two
   affiliation: school2
+  eligible: false
 
 team_three:
   team_name: team_three
   affiliation: school3
   team_captain: user_four
+  eligible: true
 
 full_team:
   team_name: full_team
   affiliation: school3
   team_captain: full_team_user_one
+  eligible: true
 
 team_with_special_chars:
   team_name: $0m3Thing @mazing
   affiliation: school10
   team_captain: user_on_team_with_special_chars
+  eligible: true
