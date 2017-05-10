@@ -131,8 +131,8 @@ class Team < ActiveRecord::Base
   end
 
   def display_name
-    return self[:team_name] if eligible_for_prizes?
-    return self[:team_name] + ' (ineligible)' unless eligible_for_prizes?
+    return self[:team_name] if eligible?
+    return self[:team_name] + ' (ineligible)'
   end
 
   private

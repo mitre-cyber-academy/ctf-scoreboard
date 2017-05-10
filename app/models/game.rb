@@ -31,4 +31,9 @@ class Game < ActiveRecord::Base
     time = Time.zone.now
     (start < time && time < stop)
   end
+
+  def before_competition?
+    time = Time.zone.now
+    time < start
+  end
 end
