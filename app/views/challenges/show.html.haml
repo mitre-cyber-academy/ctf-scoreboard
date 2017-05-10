@@ -1,5 +1,19 @@
 - content_for :header do
-  -
+  - @challenge.name
+
+- content_for :subheading do
+  - "#{@challenge.category.name} - #{@challenge.point_value} points"
+
+%div{ :style => "margin-bottom:40px;" }
+  %h3
+    Description
+  - if @challenge.description.blank?
+    No description
+  - else
+    = raw(BlueCloth.new(@challenge.description).to_html)
+- if !@solved_video_url.blank?
+  .embed-container
+    = embed(@solved_video_url)
 
 - if !@solved_challenge
   = form_for @challenge, url: game_challenge_path(@challenge), method: "put", html: { class: "well", style: "margin-bottom:40px;" } do |f|
