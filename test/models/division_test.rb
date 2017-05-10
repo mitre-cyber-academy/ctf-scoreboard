@@ -2,12 +2,12 @@ require 'test_helper'
 
 class DivisionTest < ActiveSupport::TestCase
   test 'all eligible players' do
-    ordered_players = divisions(:division_one).ordered_players
-    assert_equal divisions(:division_one).players.size, ordered_players.size
+    ordered_teams = divisions(:division_one).ordered_teams
+    assert_equal divisions(:division_one).teams.size, ordered_teams.size
   end
 
   test 'top five eligible players' do
-    ordered_players = divisions(:division_one).ordered_players(true)
-    assert_operator 5, :>=, ordered_players.size
+    ordered_teams = divisions(:division_one).ordered_teams(true)
+    assert_operator 5, :>=, ordered_teams.size
   end
 end
