@@ -17,7 +17,7 @@
           - @categories.size.times do |column|
             - challenges = @categories[column].challenges
             - if row < @challenges.size
-              - challenge = @challenges[row]
+              - challenge = challenges[row]
               - is_solved = false
               - style = "text-align:center;"
               - if is_admin

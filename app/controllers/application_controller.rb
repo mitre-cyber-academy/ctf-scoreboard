@@ -3,6 +3,8 @@
 # Main controller for the application, handles redirects for the user login to the correct pages
 # and sets devise parameters.
 class ApplicationController < ActionController::Base
+  include SessionsHelper
+
   before_action :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery with: :exception
   before_action :set_mailer_host
@@ -33,5 +35,9 @@ class ApplicationController < ActionController::Base
       :account_update,
       keys: %i[full_name affiliation year_in_school state compete_for_prizes gender age area_of_study]
     )
+  end
+
+  def enforce_access
+    deny_access unless current_user
   end
 end
