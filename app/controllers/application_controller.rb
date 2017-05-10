@@ -19,6 +19,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def load_game
+    @game = Game.instance
+  end
+
   def set_mailer_host
     ActionMailer::Base.default_url_options[:host] = request.host_with_port
   end
