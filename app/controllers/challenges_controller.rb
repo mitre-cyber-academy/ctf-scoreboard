@@ -4,6 +4,7 @@ class ChallengesController < ApplicationController
   include ChallengesHelper
 
   before_action :enforce_access
+  before_action :load_game
   before_action :find_challenge
 
   def show
@@ -33,7 +34,7 @@ class ChallengesController < ApplicationController
   private
 
   def find_challenge
-    @challenge = Game.instance.challenges.find(params[:id])
+    @challenge = @game.challenges.find(params[:id])
     raise ActiveRecord::RecordNotFound if !current_user.admin? && !@challenge.open?
   end
 end

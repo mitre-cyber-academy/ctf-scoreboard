@@ -4,6 +4,7 @@ class UserInvitesController < ApplicationController
   include ApplicationModule
 
   before_action :user_logged_in?
+  before_action :load_game
   before_action :block_admin_action, only: [:accept]
   before_action :check_accept_access, only: [:accept]
   before_action :check_destroy_access, only: [:destroy]
