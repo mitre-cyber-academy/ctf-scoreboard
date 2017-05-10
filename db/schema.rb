@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170510032234) do
+ActiveRecord::Schema.define(version: 20170510052137) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,14 +39,16 @@ ActiveRecord::Schema.define(version: 20170510032234) do
   end
 
   create_table "feed_items", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "team_id"
-    t.integer "division_id"
-    t.string  "text"
-    t.integer "challenge_id"
-    t.integer "point_value"
-    t.integer "flag_id"
-    t.string  "type"
+    t.integer  "user_id"
+    t.integer  "team_id"
+    t.integer  "division_id"
+    t.string   "text"
+    t.integer  "challenge_id"
+    t.integer  "point_value"
+    t.integer  "flag_id"
+    t.string   "type"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "flags", force: :cascade do |t|
@@ -120,6 +122,8 @@ ActiveRecord::Schema.define(version: 20170510032234) do
     t.datetime "updated_at"
     t.string   "affiliation"
     t.integer  "team_captain_id"
+    t.integer  "division_id"
+    t.index ["division_id"], name: "index_teams_on_division_id", using: :btree
     t.index ["team_captain_id"], name: "index_teams_on_team_captain_id", using: :btree
   end
 
@@ -203,4 +207,5 @@ ActiveRecord::Schema.define(version: 20170510032234) do
     t.text     "why_are_you_a_vip"
   end
 
+  add_foreign_key "teams", "divisions"
 end

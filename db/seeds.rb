@@ -16,7 +16,7 @@ division1 = Division.create!(name: "High School", game: game)
 division2 = Division.create!(name: "College", game: game)
 
 # players
-team1 = Team.create!(team_name: 'pwnies', affiliation: 'PwnPwnPwn')
+team1 = Team.create!(team_name: 'pwnies', affiliation: 'PwnPwnPwn', division: division1)
 User.create!(
   email: 'ctf@mitre.org',
   username: 'pwn',
@@ -31,7 +31,7 @@ User.create!(
   state: 'FL'
 )
 
-team2 = Team.create!(team_name: 'n00bs', affiliation: "We're n00bs")
+team2 = Team.create!(team_name: 'n00bs', affiliation: "We're n00bs", division: division2)
 
 # crypto
 category = Category.create!(name: 'Crypto', game: game)
