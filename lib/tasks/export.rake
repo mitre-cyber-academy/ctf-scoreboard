@@ -11,7 +11,7 @@ namespace :export do
     Team.all.each do |team|
       team_username = team.scoreboard_login_name
       team_passwd = SecureRandom.uuid.delete('-')[0..32]
-      division = team.division_level.downcase.tr(' ', '_')
+      division = team.appropriate_division_level.downcase.tr(' ', '_')
       # Put any team with an unknown division in the highest possible division.
       division = 'professional' if division.eql? 'unknown'
       puts %(player = game.players.new)

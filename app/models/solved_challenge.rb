@@ -7,6 +7,7 @@ class SolvedChallenge < FeedItem
 
   belongs_to :flag
   belongs_to :division
+  belongs_to :challenge
   belongs_to :team
 
   def description
@@ -26,7 +27,7 @@ class SolvedChallenge < FeedItem
   end
 
   def team_has_not_solved_challenge
-    challenge_is_solved = team.solved_challenges.where('challenge_id = ?', challenge.id).count.positive?
+    challenge_is_solved = team.solved_challenges.find_by(challenge: challenge)
     errors.add(:base, I18n.t('challenge.already_solved')) if challenge_is_solved
   end
 
@@ -42,6 +43,6 @@ class SolvedChallenge < FeedItem
     challenge = self.challenge
     category = challenge.category
     challenge = category.next_challenge(challenge)
-    challenge.set_state(player.division, 'open') if challenge && challenge.available?(player.division)
+    challenge.set_state('open') if challenge && challenge.available?
   end
 end

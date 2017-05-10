@@ -3,7 +3,16 @@
 class Flag < ActiveRecord::Base
   belongs_to :challenge, inverse_of: :flags
 
+  has_many :solved_challenges
+
   validates :flag, presence: true
+
+  def save_solved_challenge(user)
+    invoke_api_request
+
+    # solved_challenges.create(user: user, team: user.team, challenge: challenge, division: user.team.division) unless user.admin?
+    solved_challenges.create(user: user, team: user.team, challenge: challenge) unless user.admin?
+  end
 
   def invoke_api_request
     # Make API call if one is specified. This throws away any failed requests
