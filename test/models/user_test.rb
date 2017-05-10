@@ -94,7 +94,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'key file name' do
-    key_file_name = 'playeronete' + users(:user_one).id.to_s
+    key_file_name = 'mitrectfuse' + users(:user_one).id.to_s
     assert_equal key_file_name, users(:user_one).key_file_name
   end
 end

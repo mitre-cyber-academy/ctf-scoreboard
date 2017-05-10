@@ -10,18 +10,18 @@ class Division < ActiveRecord::Base
 
   def ordered_players(only_top_five = false)
     # They are eligible if the boolean is true
-    players = filter_and_sort_players(eligible: true)
+    teams = filter_and_sort_teams(eligible: true)
     # They are ineligible if the boolean is false
-    ineligible_players = filter_and_sort_players(eligible: false)
-    # Take the eligible players [in whole competition] and appends
-    # the ineligible players to the end of the array of eligible players
-    players.concat(ineligible_players)
+    ineligible_teams = filter_and_sort_teams(eligible: false)
+    # Take the eligible teams [in whole competition] and appends
+    # the ineligible teams to the end of the array of eligible teams
+    teams.concat(ineligible_teams)
     # if true return the first five in array
     if only_top_five
       # Then take the first 5 elements in array
-      players[0..4]
+      teams[0..4]
     else
-      players
+      teams
     end
   end
 
@@ -38,19 +38,19 @@ class Division < ActiveRecord::Base
   # data out of the database and sorting in rails. It gets all feed items of type ScoreAdjustment
   # and SolvedChallenge and sums up their values or the value of the challenge in the case of a
   # SolvedChallenge.
-  def filter_and_sort_players(filters)
-    players.includes(:achievements).where(filters)
+  def filter_and_sort_teams(filters)
+    teams.includes(:achievements).where(filters)
            .joins(
              "LEFT JOIN feed_items
-               ON feed_items.user_id = users.id
+               ON feed_items.team_id = teams.id
                AND feed_items.type IN ('SolvedChallenge', 'ScoreAdjustment')
              LEFT JOIN challenges ON challenges.id = feed_items.challenge_id"
            )
-           .group('users.id')
+           .group('teams.id')
            .select(
              'COALESCE(sum(challenges.point_value), 0) + COALESCE(sum(feed_items.point_value), 0)
                as current_score,
-             MAX(feed_items.created_at) as last_solved_date, users.*'
+             MAX(feed_items.created_at) as last_solved_date, teams.*'
            )
            .order('current_score desc', 'last_solved_date asc', 'display_name asc')
   end
