@@ -12,6 +12,6 @@ class Category < ActiveRecord::Base
   def next_challenge(challenge)
     # Order of challenges is handled by default scope in challenge.rb
     index = challenges.find_index(challenge)
-    challenges.at(index + 1) unless index.nil?
+    challenges[index + 1] unless index.nil?
   end
 end
