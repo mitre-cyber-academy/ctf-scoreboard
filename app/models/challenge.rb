@@ -30,8 +30,8 @@ class Challenge < ActiveRecord::Base
     solved_challenges.count.positive?
   end
 
-  def solved_by_user?(user)
-    !solved_challenges.find_by(user: user).nil?
+  def get_solved_challenge_for(team)
+    solved_challenges.find_by(team: team)
   end
 
   # Returns whether or not challenge is available to be opened.
@@ -41,11 +41,6 @@ class Challenge < ActiveRecord::Base
 
   def force_closed?
     state.eql? 'force_closed'
-  end
-
-  def get_video_url_for_flag(team)
-    current_challenge = solved_challenges.find_by(team: team)
-    current_challenge.flag.video_url unless current_challenge.nil? || current_challenge.flag.nil?
   end
 
   def set_state(new_state)
