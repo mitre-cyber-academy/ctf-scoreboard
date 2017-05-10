@@ -50,15 +50,6 @@ class Team < ActiveRecord::Base
     where(id: appropriate_teams)
   }
 
-  # Returns whether everyone on the team is currently eligible for prize money.
-  def eligible_for_prizes?
-    eligible = true
-    users.each do |user|
-      eligible = false unless user.compete_for_prizes
-    end
-    eligible
-  end
-
   # A team can only consist of 5 users.
   def slots_available
     5 - users.count
