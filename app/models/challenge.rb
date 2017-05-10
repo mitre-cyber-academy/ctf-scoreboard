@@ -39,29 +39,13 @@ class Challenge < ActiveRecord::Base
     state.eql? 'force_closed'
   end
 
-  def get_current_solved_challenge(user)
-    solved_challenge = SolvedChallenge.where('challenge_id = :challenge and user_id = :user',
-                                             challenge: self, user: user)
-    solved_challenge&.first
-  end
-
-  def solved_by_user?(user)
-    !get_current_solved_challenge(user).nil?
-  end
-
-  def get_video_url_for_flag(user)
-    current_challenge = get_current_solved_challenge(user)
+  def get_video_url_for_flag(team)
+    current_challenge = solved_challenges.find_by(team: team)
     current_challenge.flag.video_url unless current_challenge.nil? || current_challenge.flag.nil?
   end
 
-  def get_api_request_for_flag(user)
-    current_challenge = get_current_solved_challenge(user)
-    current_challenge.flag.api_request unless current_challenge.nil? || current_challenge.flag.nil?
-  end
-
   def set_state(new_state)
-    challenge_state.state = new_state
-    challenge_state.save
+    update(:state => new_state)
   end
 
   private
