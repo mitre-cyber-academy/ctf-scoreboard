@@ -7,8 +7,8 @@ class ChallengesController < ApplicationController
   before_action :find_challenge
 
   def show
-    @solved_challenge = @challenge.solved_by_user?(current_user)
-    @solved_video_url = @challenge.get_video_url_for_flag(current_user)
+    @solved_challenge = @challenge.get_solved_challenge_for(current_user.team_id)
+    @solved_video_url = @solved_challenge.flag.video_url if @solved_challenge
     @solved_by = @challenge.solved_challenges.order(:created_at).reverse_order
     flash.now[:notice] = I18n.t('flag.accepted') if @solved_challenge
   end
@@ -23,7 +23,7 @@ class ChallengesController < ApplicationController
       @solved_video_url = flag_found.video_url
       flash.now[:notice] = I18n.t('flag.accepted')
     else
-      flash.now[:error] = wrong_flag_messages.sample
+      flash.now[:alert] = wrong_flag_messages.sample
     end
     @solved_by = @challenge.solved_challenges.order(:created_at).reverse_order
 
