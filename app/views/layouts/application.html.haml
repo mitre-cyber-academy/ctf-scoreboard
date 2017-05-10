@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title MITRE Cyber Academy CTF Registration
+    %title MITRE STEM CTF
     = stylesheet_link_tag    "application"
     = javascript_include_tag "application"
     = csrf_meta_tags
@@ -61,6 +61,8 @@
       .container
         %h1
           = yield :header
+        %p
+          = yield :subheading
     .colored-divider
     .container
       - if !flash[:notice].blank?
