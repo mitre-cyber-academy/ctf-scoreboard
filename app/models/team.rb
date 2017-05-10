@@ -7,6 +7,7 @@ class Team < ActiveRecord::Base
   has_many :users
   has_many :user_invites, dependent: :destroy
   has_many :user_requests, dependent: :destroy
+  belongs_to :division
   belongs_to :team_captain, class_name: 'User'
   accepts_nested_attributes_for :user_invites
   validates :team_name, :affiliation, presence: true, obscenity: true
@@ -63,7 +64,7 @@ class Team < ActiveRecord::Base
     5 - users.count
   end
 
-  def division_level
+  def appropriate_division_level
     return 'Unknown' if users.empty?
     return 'Professional' if users.minimum('year_in_school').eql? 0
     return 'High School' if users.maximum('year_in_school') <= 12
