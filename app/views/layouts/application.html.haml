@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title MITRE STEM CTF
+    %title= @game.name
     = stylesheet_link_tag    "application"
     = javascript_include_tag "application"
     = csrf_meta_tags
@@ -13,7 +13,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand{:href => "/"} MITRE STEM CTF
+          %a.brand{:href => "/"} MITRE CTF
           .nav-collapse.collapse
             %ul.nav
               %li{:class => "#{'active' if current_page? game_path}"}
@@ -61,8 +61,6 @@
       .container
         %h1
           = yield :header
-          / Try to reuse game instance, unless it isn't set
-          - @game = Game.instance unless @game
           - if Time.now > @game.start && Time.now < @game.stop
             = render partial: "games/countdown", locals: {endTime: @game.stop}
 

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class RegistrationsController < Devise::RegistrationsController
+  before_action :load_game
+
   # DELETE /resource
   def destroy
     if resource.team_captain?
