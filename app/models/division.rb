@@ -5,6 +5,7 @@ class Division < ActiveRecord::Base
   has_many :teams, dependent: :destroy
   has_many :feed_items
   has_many :achievements
+  has_many :teams
 
   validates :name, presence: true
 

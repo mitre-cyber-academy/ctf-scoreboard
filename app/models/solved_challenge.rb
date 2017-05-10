@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class SolvedChallenge < FeedItem
-  validate :user_has_not_solved_challenge, :challenge_is_open, :game_is_open
+  validate :team_has_not_solved_challenge, :challenge_is_open, :game_is_open
 
   after_save :award_achievement, :open_next_challenge
 
   belongs_to :flag
   belongs_to :division
+  belongs_to :team
 
   def description
     %(Solved challenge "#{challenge.category.name} #{challenge.point_value}")
@@ -17,24 +18,24 @@ class SolvedChallenge < FeedItem
   end
 
   def challenge_is_open
-    errors.add(:challenge, I18n.t('challenge.not_open')) unless challenge.open?(player.division)
+    errors.add(:challenge, I18n.t('challenge.not_open')) unless challenge.open?
   end
 
   def game_is_open
     errors.add(:base, I18n.t('challenge.game_not_open')) unless challenge.category.game.open?
   end
 
-  def user_has_not_solved_challenge
-    challenge_is_solved = player.solved_challenges.where('challenge_id = ?', challenge.id).count.positive?
+  def team_has_not_solved_challenge
+    challenge_is_solved = team.solved_challenges.where('challenge_id = ?', challenge.id).count.positive?
     errors.add(:base, I18n.t('challenge.already_solved')) if challenge_is_solved
   end
 
   def award_achievement
     if Game.instance.solved_challenges.all.count == 1 # if this is the first solved challenge
-      Achievement.create(player: player, text: 'First Blood!')
+      Achievement.create(team: team, text: 'First Blood!')
     end
     name = challenge.achievement_name
-    Achievement.create(player: player, text: name) if name.present?
+    Achievement.create(team: team, text: name) if name.present?
   end
 
   def open_next_challenge
