@@ -27,12 +27,6 @@ class Division < ActiveRecord::Base
 
   private
 
-  def add_states_to_challenges
-    Challenge.all.find_each do |c|
-      ChallengeState.create!(challenge: c, division: self, state: c.starting_state)
-    end
-  end
-
   # rubocop:disable MethodLength
   # Sorts the provided list of players. This sorts directly in the database instead of getting the
   # data out of the database and sorting in rails. It gets all feed items of type ScoreAdjustment
