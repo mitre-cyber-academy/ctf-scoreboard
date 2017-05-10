@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170505002744) do
+ActiveRecord::Schema.define(version: 20170510032234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 20170505002744) do
     t.string   "name"
     t.text     "description"
     t.integer  "point_value"
-    t.integer  "starting_state"
     t.integer  "category_id"
     t.string   "achievement_name"
     t.datetime "created_at",       null: false
