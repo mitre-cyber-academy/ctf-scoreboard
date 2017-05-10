@@ -48,7 +48,7 @@ class Division < ActiveRecord::Base
                as current_score,
              MAX(feed_items.created_at) as last_solved_date, teams.*'
            )
-           .order('current_score desc', 'last_solved_date asc', 'display_name asc')
+           .order('current_score desc', 'last_solved_date asc', 'team_name asc').to_a
   end
   # rubocop:enable MethodLength
 end
