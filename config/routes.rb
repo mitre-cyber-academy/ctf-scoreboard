@@ -9,7 +9,7 @@ CtfRegistration::Application.routes.draw do
 
   devise_for :users,
              path_names: { sign_in: 'login', sign_out: 'logout', confirmation: 'confirm', sign_up: 'new' },
-             controllers: { registrations: 'registrations' }
+             controllers: { registrations: 'registrations', sessions: 'sessions' }
 
   resource :users, only: [] do
     get :join_team, on: :member
