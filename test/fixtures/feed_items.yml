@@ -17,7 +17,7 @@ feed_item_three:
   type: Achievement
 
 score_adjustment_one:
-  team: team_two
+  team: team_one
   point_value: 200
   text: Helped us fix a bug in a challenge
   type: ScoreAdjustment
