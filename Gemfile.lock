@@ -45,6 +45,7 @@ GEM
     awesome_nested_fields (0.6.4)
       rails (>= 3.0.0)
     bcrypt (3.1.11)
+    bluecloth (2.2.0)
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
     brakeman (3.6.1)
@@ -266,6 +267,7 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_nested_fields
+  bluecloth
   bootstrap-sass (~> 2.3.2.2)
   brakeman
   bundler-audit

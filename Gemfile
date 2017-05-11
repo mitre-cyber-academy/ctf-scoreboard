@@ -20,6 +20,7 @@ gem 'jquery-rails'
 gem 'obscenity'
 gem 'pg'
 gem 'rails_email_validator'
+gem 'bluecloth'
 
 gem 'letter_opener', group: :development
 
