@@ -71,7 +71,7 @@ class TeamTest < ActiveSupport::TestCase
 
   test 'score method returns proper value' do
     team_one = teams(:team_one)
-    # Player 1 has a 200 point score adjustment added from the fixtures
+    # Team 1 has a 200 point score adjustment added from the fixtures
     assert_equal 200, team_one.score
   end
 
