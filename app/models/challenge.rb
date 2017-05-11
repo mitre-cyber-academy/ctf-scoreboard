@@ -43,7 +43,7 @@ class Challenge < ActiveRecord::Base
     state.eql? 'force_closed'
   end
 
-  def set_state(new_state)
+  def state(new_state)
     update(state: new_state)
   end
 
