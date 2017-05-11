@@ -6,6 +6,7 @@ class ChallengesController < ApplicationController
   before_action :enforce_access
   before_action :load_game
   before_action :find_challenge
+  before_action :find_and_log_flag, only: [:update]
 
   def show
     @solved_challenge = @challenge.get_solved_challenge_for(current_user.team_id)
@@ -15,13 +16,9 @@ class ChallengesController < ApplicationController
   end
 
   def update
-    flag = params[:challenge][:submitted_flag]
-    SubmittedFlag.create(user: current_user, challenge: @challenge, text: flag) unless current_user.admin?
-    flag_found = @challenge.find_flag(flag)
-
-    if flag_found
-      @solved_challenge = flag_found.save_solved_challenge(current_user)
-      @solved_video_url = flag_found.video_url
+    if @flag_found
+      @solved_challenge = @flag_found.save_solved_challenge(current_user)
+      @solved_video_url = @flag_found.video_url
       flash.now[:notice] = I18n.t('flag.accepted')
     else
       flash.now[:alert] = wrong_flag_messages.sample
@@ -36,5 +33,11 @@ class ChallengesController < ApplicationController
   def find_challenge
     @challenge = @game.challenges.find(params[:id])
     raise ActiveRecord::RecordNotFound if !current_user.admin? && !@challenge.open?
+  end
+
+  def find_and_log_flag
+    flag = params[:challenge][:submitted_flag]
+    SubmittedFlag.create(user: current_user, challenge: @challenge, text: flag) unless current_user.admin?
+    @flag_found = @challenge.find_flag(flag)
   end
 end

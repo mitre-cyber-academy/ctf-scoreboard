@@ -24,7 +24,7 @@ class ChallengeTest < ActiveSupport::TestCase
   end
 
   test 'set state' do
-    challenges(:challenge_one_cat_one).set_state('force_closed')
+    challenges(:challenge_one_cat_one).state('force_closed')
     assert_equal 'force_closed', challenges(:challenge_one_cat_one).state
   end
 end
