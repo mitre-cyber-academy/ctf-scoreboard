@@ -5,11 +5,13 @@ team_one:
   affiliation: school1
   team_captain: user_one
   eligible: false
+  division: division_one
 
 team_two:
   team_name: team_two
   affiliation: school2
   eligible: false
+  division: division_two
 
 team_three:
   team_name: team_three
