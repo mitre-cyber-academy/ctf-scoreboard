@@ -39,7 +39,7 @@
   .span6
     %h4 Team Prize Eligibility Status
     Your team is currently
-    - if @team.eligible_for_prizes?
+    - if @team.eligible?
       competing for prizes. This will change for your whole team if you add any users to you team that are not eligible to receive prizes.
     - else
       %b NOT

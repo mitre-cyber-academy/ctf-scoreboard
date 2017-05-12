@@ -1,3 +1,8 @@
 - content_for :header do
   Game Summary
-%p Find me in app/views/games/summary.html.haml
+
+%h3{:class=>"muted"}
+  Top 5 Teams
+%br/
+= render partial: "games/divisions", locals: {divisions: @divisions, active_division: @active_division, only_top_five: true}
+%hr

@@ -1,0 +1,33 @@
+- if teams.size.eql? 0
+  .zero-items-text No Teams
+- else
+  - max = 0
+  %table.table.table-bordered.table-striped
+    %thead
+      %tr
+        %th{ :style => "width:50px;" } #
+        %th Name
+        %th{ :style => "width:100px;" } Achievements
+        %th{ :style => "width:100px;" } Points
+        %th{ :style => "width:50%;" }
+    %tbody
+      - teams.each_with_index do |t, i|
+      / Current score only exists due to the division.rb model creating it inside of
+      / filter_and_sort_teams, it is used here since it saves us from doing a costly
+      / score recalculation for each user.
+      - score = t.current_score
+      - if score > max
+        - max = score
+      - percent = score.to_f / max.to_f * 100.0
+        %tr
+          %td= i + 1
+          %td= link_to t.display_name, p
+          %td= t.achievements.size
+          %td= score
+          %td
+            .progress{ :style => "margin:0;" }
+              .bar{ :style => "width:#{percent}%;" }
+    - if @view_all_teams_link
+      %tr
+        %td{align: 'center', colspan: '5', style: 'text-align: center;'}
+          = link_to 'View all Teams', game_teams_path
