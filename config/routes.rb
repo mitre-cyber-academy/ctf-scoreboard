@@ -42,6 +42,7 @@ CtfRegistration::Application.routes.draw do
   end
 
   get '/game/summary' => 'games#summary'
+  get '/game/teams' => 'games#teams'
 
   resources :users, only: %i[index show] do
     get :download, on: :member

@@ -14,13 +14,13 @@ gem 'paperclip'
 gem 'rails', '~> 5.0.0'
 gem 'rails_admin'
 # The devise_security_extension gem is most likely the one causing all the depreciation warning on startup.
+gem 'bluecloth'
 gem 'devise_security_extension', '~> 0.9.2' # Can update whenever they loosen their dependency on devise.
 gem 'filterrific'
 gem 'jquery-rails'
 gem 'obscenity'
 gem 'pg'
 gem 'rails_email_validator'
-gem 'bluecloth'
 
 gem 'letter_opener', group: :development
 
