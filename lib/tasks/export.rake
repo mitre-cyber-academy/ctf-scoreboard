@@ -19,7 +19,7 @@ namespace :export do
       puts %(player.display_name = "#{team.team_name}")
       puts %(player.password = "#{team_passwd}")
       puts %(player.division = #{division})
-      puts %(player.eligible = #{team.eligible_for_prizes?})
+      puts %(player.eligible = #{team.eligible?})
       puts %(player.affiliation = "#{team.affiliation}")
       puts %(player.city = "#{team.common_team_location}")
       puts %(player.save)

@@ -30,12 +30,12 @@ class Division < ActiveRecord::Base
   private
 
   # rubocop:disable MethodLength
-  # Sorts the provided list of players. This sorts directly in the database instead of getting the
+  # Sorts the provided list of teams. This sorts directly in the database instead of getting the
   # data out of the database and sorting in rails. It gets all feed items of type ScoreAdjustment
   # and SolvedChallenge and sums up their values or the value of the challenge in the case of a
   # SolvedChallenge.
   def filter_and_sort_teams(filters)
-    teams.includes(:achievements).where(filters)
+    teams.where(filters)
          .joins(
            "LEFT JOIN feed_items
              ON feed_items.team_id = teams.id
