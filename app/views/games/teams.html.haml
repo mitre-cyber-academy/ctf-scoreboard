@@ -1,0 +1,4 @@
+- content_for :header do
+  Team List
+
+= render partial: "games/divisions", locals: {divisions: @divisions, active_division: @active_division, only_top_five: false}
