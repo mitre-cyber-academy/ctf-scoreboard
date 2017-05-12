@@ -16,6 +16,16 @@ RailsAdmin.config do |config|
     redirect_to main_app.root_path unless current_user.try(:admin?)
   end
 
+  config.model 'Game' do
+    edit do
+      [:start, :stop].each do |f|
+        configure f do
+          help "Required - Must be in UTC. Current time is #{Time.now.utc}"
+        end
+      end
+    end
+  end
+
   # If you want to track changes on your models:
   # config.audit_with :history, 'User'
 
