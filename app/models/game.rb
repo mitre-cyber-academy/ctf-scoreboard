@@ -28,12 +28,12 @@ class Game < ActiveRecord::Base
   end
 
   def open?
-    time = Time.zone.now
+    time = Time.now.utc
     (start < time && time < stop)
   end
 
   def before_competition?
-    time = Time.zone.now
+    time = Time.now.utc
     time < start
   end
 end
