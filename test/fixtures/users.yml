@@ -79,6 +79,7 @@ full_team_user_one:
   year_in_school: 9
   state: FL
   encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  current_sign_in_ip: 3.1.1.1
   confirmed_at: <%= Time.now %>
   team: full_team
 

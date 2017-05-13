@@ -17,6 +17,7 @@
 // Loads all Bootstrap javascripts
 //= require bootstrap
 //= require filterrific/filterrific-jquery
+//= require chartkick
 
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()

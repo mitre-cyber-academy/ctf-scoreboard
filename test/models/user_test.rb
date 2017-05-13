@@ -97,4 +97,12 @@ class UserTest < ActiveSupport::TestCase
     key_file_name = 'mitrectfuse' + users(:user_one).id.to_s
     assert_equal key_file_name, users(:user_one).key_file_name
   end
+
+  test 'users country is calculated on save' do
+    # Users current_sign_in_ip is set to a US held IP
+    user = users(:full_team_user_one)
+    user.save
+    assert user.geocoded?
+    assert_equal "US", user.country
+  end
 end
