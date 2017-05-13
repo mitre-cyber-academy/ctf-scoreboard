@@ -1,7 +1,25 @@
 {
   "ignored_warnings": [
-
+    {
+      "warning_type": "Cross Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "15d2fa31f6a4a43c789b55fc2adb9322e57323aa9568f3b4cefc5778d58f1105",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/challenges/show.html.haml",
+      "line": 13,
+      "link": "http://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "BlueCloth.new(Game.instance.challenges.find(params[:id]).description).to_html",
+      "render_path": [{"type":"controller","class":"ChallengesController","method":"show","line":16,"file":"app/controllers/challenges_controller.rb"}],
+      "location": {
+        "type": "template",
+        "template": "challenges/show"
+      },
+      "user_input": "Game.instance.challenges",
+      "confidence": "Weak",
+      "note": ""
+    }
   ],
-  "updated": "2017-05-12 09:48:48 -0400",
+  "updated": "2017-05-13 14:35:03 -0500",
   "brakeman_version": "3.6.1"
 }
