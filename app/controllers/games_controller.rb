@@ -13,6 +13,9 @@ class GamesController < ApplicationController
   def teams; end
 
   def summary
+    @user_locations = User.where('country IS NOT NULL').group(:country).count
+    @flags_per_hour = SubmittedFlag.group_by_hour(:created_at).count
+    @page_requires_gcharts = true
     @view_all_teams_link = true
   end
 

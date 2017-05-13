@@ -103,6 +103,6 @@ class UserTest < ActiveSupport::TestCase
     user = users(:full_team_user_one)
     user.save
     assert user.geocoded?
-    assert_equal "US", user.country
+    assert_equal 'United States', user.country
   end
 end

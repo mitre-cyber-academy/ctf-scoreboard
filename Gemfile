@@ -13,6 +13,7 @@ gem 'devise_security_extension', '~> 0.9.2' # Update when this loosens its depen
 gem 'filterrific'
 gem 'formtastic'
 gem 'geocoder'
+gem 'groupdate'
 gem 'haml-rails'
 gem 'jquery-rails'
 gem 'obscenity'
