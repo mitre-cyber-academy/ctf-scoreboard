@@ -5,21 +5,22 @@ source 'https://rubygems.org'
 ruby '2.3.4'
 
 gem 'awesome_nested_fields'
+gem 'bluecloth'
 gem 'bootstrap-sass', '~> 2.3.2.2'
+gem 'chartkick'
+gem 'geocoder'
 gem 'devise'
+gem 'devise_security_extension', '~> 0.9.2' # Update when this loosens its dependency on devise. Also causes load errors
+gem 'filterrific'
 gem 'formtastic'
 gem 'haml-rails'
-gem 'paper_trail'
-gem 'paperclip'
-gem 'rails', '~> 5.0.0'
-gem 'rails_admin'
-# The devise_security_extension gem is most likely the one causing all the depreciation warning on startup.
-gem 'bluecloth'
-gem 'devise_security_extension', '~> 0.9.2' # Can update whenever they loosen their dependency on devise.
-gem 'filterrific'
 gem 'jquery-rails'
 gem 'obscenity'
+gem 'paper_trail'
+gem 'paperclip'
 gem 'pg'
+gem 'rails', '~> 5.0.0'
+gem 'rails_admin'
 gem 'rails_email_validator'
 
 gem 'letter_opener', group: :development

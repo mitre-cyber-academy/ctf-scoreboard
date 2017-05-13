@@ -53,6 +53,7 @@ GEM
     bundler-audit (0.5.0)
       bundler (~> 1.2)
       thor (~> 0.18)
+    chartkick (2.2.3)
     climate_control (0.1.0)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
@@ -88,6 +89,7 @@ GEM
       railties (>= 3.2, < 5.1)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
+    geocoder (1.4.3)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     haml (4.0.7)
@@ -271,12 +273,14 @@ DEPENDENCIES
   bootstrap-sass (~> 2.3.2.2)
   brakeman
   bundler-audit
+  chartkick
   coffee-rails
   coveralls
   devise
   devise_security_extension (~> 0.9.2)
   filterrific
   formtastic
+  geocoder
   haml-rails
   jquery-rails
   letter_opener

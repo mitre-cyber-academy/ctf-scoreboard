@@ -3,7 +3,6 @@
   %head
     %title= @game.name
     = stylesheet_link_tag    "application"
-    = javascript_include_tag "application"
     = csrf_meta_tags
   %body
     .navbar.navbar-fixed-top.navbar-inverse
@@ -92,3 +91,6 @@
           Copyright &copy
           = Time.now.year
           The MITRE Corporation
+
+    = javascript_include_tag "https://www.gstatic.com/charts/loader.js"
+    = javascript_include_tag "application"
