@@ -92,6 +92,8 @@ GEM
     geocoder (1.4.3)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    groupdate (3.2.0)
+      activesupport (>= 3)
     haml (4.0.7)
       tilt
     haml-rails (0.9.0)
@@ -281,6 +283,7 @@ DEPENDENCIES
   filterrific
   formtastic
   geocoder
+  groupdate
   haml-rails
   jquery-rails
   letter_opener
