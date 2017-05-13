@@ -12,12 +12,12 @@ class User < ActiveRecord::Base
   geocoded_by :current_sign_in_ip
   after_validation :geocode, unless: :geocoded?
 
-  reverse_geocoded_by :latitude, :longitude do |obj,results|
-  if geo = results.first
-    obj.country = geo.country_code
+  reverse_geocoded_by :latitude, :longitude do |obj, results|
+    if (geo = results.first)
+      obj.country = geo.country_code
+    end
   end
-end
-  after_validation :reverse_geocode, if: ->(obj){ obj.latitude_changed? || obj.longitude_changed? }
+  after_validation :reverse_geocode, if: ->(obj) { obj.latitude_changed? || obj.longitude_changed? }
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
