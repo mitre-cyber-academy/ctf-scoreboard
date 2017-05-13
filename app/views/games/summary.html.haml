@@ -6,3 +6,13 @@
 %br/
 = render partial: "games/divisions", locals: {divisions: @divisions, active_division: @active_division, only_top_five: true}
 %hr
+/ Only show the flags per hour count when we have more than 1 datapoint to show
+- if @flags_per_hour.count > 1
+  %h3{:class=>"muted"}
+    Submitted Flags/Hour
+    = line_chart @flags_per_hour, colors: ["#5d8cb6", '#446582']
+  %hr
+%h3{:class=>"muted"}
+  Competition Map
+= geo_chart @user_locations, colors: ["#5d8cb6", '#446582']
+%hr
