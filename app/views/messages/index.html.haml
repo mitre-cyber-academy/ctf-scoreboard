@@ -1,3 +1,12 @@
 - content_for :header do
   Messages
-%p Find me in app/views/messages/index.html.haml
+- if @messages.count == 0
+  .zero-items-text No Messages
+- else
+  - @messages.each do |m|
+    %div.message
+      %h2
+        = m.title
+        %small= m.updated_at.strftime("%b %e, %R %Z")
+      = raw(BlueCloth.new(m.text).to_html)
+  = paginate @messages

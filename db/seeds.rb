@@ -93,3 +93,9 @@ Challenge.create!(
   state: 'closed',
   category: category
 )
+
+Message.create!(
+  game: game,
+  text: "Message",
+  title: "Neat message",
+)
