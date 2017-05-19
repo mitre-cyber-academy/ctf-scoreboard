@@ -7,11 +7,7 @@ class MessagesControllerTest < ActionController::TestCase
   end
 
   test 'index' do
-    sign_in users(:user_one)
     get :index
-    assert :success
-  end
-
-  test 'users messages are updated' do
+    assert_response :success
   end
 end
