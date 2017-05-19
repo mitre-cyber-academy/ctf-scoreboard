@@ -28,6 +28,12 @@ score_adjustment_two:
   text: Broke a challenge
   type: ScoreAdjustment
 
+score_adjustment_three:
+  team: last_team
+  point_value: -10000
+  text: Last Team on Last Forever
+  type: ScoreAdjustment
+
 solved_challenge_one:
   team: team_two
   challenge: challenge_three_cat_one
@@ -42,3 +48,6 @@ solved_challenge_two:
 
 feed_item_standard:
   text: text
+
+
+
