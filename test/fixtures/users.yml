@@ -132,3 +132,15 @@ user_on_team_with_special_chars:
   encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
   confirmed_at: <%= Time.now %>
   team: team_with_special_chars
+
+user_on_last_team:
+  full_name: Last Team
+  email: mitrectf+lastteam@gmail.com
+  affiliation: School
+  year_in_school: 10
+  state: FL
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  confirmed_at: <%= Time.now %>
+  team: last_team
+
+

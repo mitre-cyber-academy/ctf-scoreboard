@@ -27,6 +27,60 @@ full_team:
 
 team_with_special_chars:
   team_name: $0m3Thing @mazing
-  affiliation: school10
+  affiliation: school!
   team_captain: user_on_team_with_special_chars
+  eligible: true
+
+last_team:
+  team_name: Last Team
+  affiliation: lastschool
+  team_captain: user_on_last_team
+  eligible: true
+
+team_four:
+  team_name: team_four
+  affiliation: school4
+  team_captain: user_four
+  eligible: true
+
+team_five:
+  team_name: team_five
+  affiliation: school5
+  team_captain: user_four
+  eligible: true
+
+team_six:
+  team_name: team_six
+  affiliation: school6
+  team_captain: user_four
+  eligible: true
+
+team_seven:
+  team_name: team_seven
+  affiliation: school7
+  team_captain: user_four
+  eligible: true
+
+team_eight:
+  team_name: team_eight
+  affiliation: school8
+  team_captain: user_four
+  eligible: true
+
+team_nine:
+  team_name: team_nine
+  affiliation: school9
+  team_captain: user_four
+  eligible: true
+
+team_ten:
+  team_name: team_ten
+  affiliation: school10
+  team_captain: user_four
+  eligible: true
+
+team_eleven:
+  team_name: team_eleven
+  affiliation: school11
+  team_captain: user_eleven
   eligible: true
