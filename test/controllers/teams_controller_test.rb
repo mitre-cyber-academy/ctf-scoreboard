@@ -35,7 +35,7 @@ class TeamsControllerTest < ActionController::TestCase
     user = users(:user_one)
     sign_in user
     get :show, params: { id: teams(:team_two) }
-    assert_redirected_to team_path(user.team)
+    assert_redirected_to game_summary_path
     assert_equal flash[:alert], I18n.t('teams.invalid_permissions')
   end
 
