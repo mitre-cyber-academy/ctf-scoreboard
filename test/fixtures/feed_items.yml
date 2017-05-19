@@ -39,3 +39,6 @@ solved_challenge_two:
   challenge: challenge_four_cat_two
   flag: flag_four
   type: SolvedChallenge
+
+feed_item_standard:
+  text: text
