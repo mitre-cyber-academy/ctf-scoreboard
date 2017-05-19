@@ -1,3 +1,17 @@
 - content_for :header do
   Achievements
-%p Find me in app/views/achievements/index.html.haml
+- if @achievements.count == 0
+  .zero-items-text No Achievements
+- else
+  %table.table.table-bordered.table-striped
+    %thead
+      %tr
+        %th Name
+        %th Unlocked By
+        %th When
+    %tbody
+      - @achievements.each do |a|
+        %tr
+          %td= a.text
+          %td= link_to_unless current_user.nil?, a.team.display_name, a.team
+          %td= a.created_at.strftime("%b %e %y, %R %Z")

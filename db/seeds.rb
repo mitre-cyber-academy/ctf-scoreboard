@@ -17,7 +17,7 @@ division2 = Division.create!(name: 'College', game: game)
 
 # players
 team1 = Team.create!(team_name: 'pwnies', affiliation: 'PwnPwnPwn', division: division1, eligible: false)
-User.create!(
+user = User.create!(
   email: 'ctf@mitre.org',
   username: 'pwn',
   password: 'Test123456',
@@ -96,6 +96,15 @@ Challenge.create!(
 
 Message.create!(
   game: game,
-  text: "Message",
-  title: "Neat message",
+  text: 'Message',
+  title: 'Neat message'
+)
+
+FeedItem.create!(
+  team: team1,
+  user: user,
+  division: division1,
+  challenge: Challenge.first,
+  text: 'Achievement',
+  type: Achievement
 )
