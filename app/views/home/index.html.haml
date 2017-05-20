@@ -27,7 +27,7 @@
       %b
         %u When to compete
     %ul
-      %li Information about the time and date of the competition can be found on our #{ link_to 'competitions page.', 'http://mitrecyberacademy.org/competitions/'}
+      %li This competition will run from #{@game.start.strftime('%B %e at %l:%M %p %Z')} until #{@game.stop.strftime('%B %e at %l:%M %p %Z')}. More information about or competition can be found on our #{ link_to 'competitions page.', 'http://mitrecyberacademy.org/competitions/'}
     %p
       %b
         %u Help, I'm Stuck!
