@@ -18,4 +18,23 @@ class ApplicationControllerTest < ActionController::TestCase
 
   test 'after sign in path' do
   end
+
+  test 'users unread message count is calculated correctly when there is a new message' do
+    sign_in users(:user_one)
+    @controller.load_game
+    assert_equal 1, @controller.load_message_count
+  end
+
+  test 'users unread message count is calculated correctly when there are no new messages' do
+    user = users(:user_one)
+    sign_in user
+    user.update_messages_stamp
+    @controller.load_game
+    assert_equal 0, @controller.load_message_count
+  end
+
+  test 'users unread message count is calculated correctly when user is not signed in' do
+    @controller.load_game
+    assert_nil @controller.load_message_count
+  end
 end

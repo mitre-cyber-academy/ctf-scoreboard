@@ -71,6 +71,10 @@ class User < ActiveRecord::Base
     email.tr('^A-Za-z', '')[0..10] + id.to_s
   end
 
+  def update_messages_stamp
+    update_attributes(messages_stamp: Time.now.utc)
+  end
+
   private
 
   # If a user chooses to compete for prizes then they must be located in the US and be in school.

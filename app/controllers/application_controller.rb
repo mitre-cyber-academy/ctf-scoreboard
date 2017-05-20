@@ -24,6 +24,11 @@ class ApplicationController < ActionController::Base
     @game = Game.instance
   end
 
+  def load_message_count
+    return if current_user.nil?
+    @unread_message_count = @game.messages.where('updated_at >= :time', time: current_user.messages_stamp).count
+  end
+
   def set_mailer_host
     ActionMailer::Base.default_url_options[:host] = request.host_with_port
   end
