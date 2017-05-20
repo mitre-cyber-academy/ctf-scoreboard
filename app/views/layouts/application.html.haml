@@ -17,17 +17,19 @@
           %a.brand{:href => "/"} MITRE CTF
           .nav-collapse.collapse
             %ul.nav
-              %li{:class => "#{'active' if current_page? game_path}"}
-                %a{:href => game_path} Gameboard
+              - if !@game.before_competition? || current_user&.admin?
+                %li{:class => "#{'active' if current_page? game_path}"}
+                  %a{:href => game_path} Gameboard
               %li{:class => "#{'active' if current_page? game_messages_path}"}
                 %a{:href => game_messages_path}
                   Messages
                   - if !@unread_message_count&.eql? 0
                     %span.badge.badge-important= @unread_message_count
-              %li{:class => "#{'active' if current_page? game_achievements_path}"}
-                %a{:href => game_achievements_path} Achievements
-              %li{:class => "#{'active' if current_page? game_summary_path}"}
-                %a{:href => game_summary_path} Summary
+              - if !@game.before_competition? || current_user&.admin?
+                %li{:class => "#{'active' if current_page? game_achievements_path}"}
+                  %a{:href => game_achievements_path} Achievements
+                %li{:class => "#{'active' if current_page? game_summary_path}"}
+                  %a{:href => game_summary_path} Summary
               %li
                 %a{:href => "http://mitrecyberacademy.org/contact", :target => "_blank"}
                   Contact
