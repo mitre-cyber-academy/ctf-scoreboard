@@ -41,6 +41,14 @@
                     %li
                       - if current_user.admin?
                         = link_to "Admin", rails_admin_path
+                        %li.divider
+                        %li= link_to "Post a new Message", rails_admin.new_path("message")
+                        %li= link_to "View Submitted Flags", rails_admin.index_path("submitted_flag")
+                        %li= link_to "Award an Achievement", rails_admin.new_path("achievement")
+                        %li= link_to "New score adjustment", rails_admin.new_path("score_adjustment")
+                        - if content_for?(:admin_menu)
+                          %li.divider
+                          = yield :admin_menu
                       - elsif current_user.on_a_team?
                         = link_to "See your team", team_path(current_user.team_id)
                       - else
