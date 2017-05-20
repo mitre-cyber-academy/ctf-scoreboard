@@ -19,7 +19,6 @@ division2 = Division.create!(name: 'College', game: game)
 team1 = Team.create(team_name: 'pwnies', affiliation: 'PwnPwnPwn', division: division1, eligible: false)
 user = User.create!(
   email: 'ctf@mitre.org',
-  username: 'pwn',
   password: 'Test123456',
   team: team1,
   full_name: 'I Pwn',
