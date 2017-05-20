@@ -4,7 +4,7 @@ class ChallengesController < ApplicationController
   include ChallengesHelper
 
   before_action :enforce_access
-  before_action :load_game
+  before_action :load_game, :load_message_count
   before_action :find_challenge
   before_action :find_and_log_flag, only: [:update]
 

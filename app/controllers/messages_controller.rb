@@ -6,7 +6,6 @@ class MessagesController < ApplicationController
 
   def index
     @messages = @game.messages.order(:updated_at).reverse_order.page(params[:page]).per(10)
-    @title = 'Messages'
-    @subtitle = pluralize(@messages.size, 'message')
+    current_user&.update_messages_stamp
   end
 end
