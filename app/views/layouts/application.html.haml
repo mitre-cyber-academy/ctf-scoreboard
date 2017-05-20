@@ -20,7 +20,10 @@
               %li{:class => "#{'active' if current_page? game_path}"}
                 %a{:href => game_path} Gameboard
               %li{:class => "#{'active' if current_page? game_messages_path}"}
-                %a{:href => game_messages_path} Messages
+                %a{:href => game_messages_path}
+                  Messages
+                  - if !@unread_message_count&.eql? 0
+                    %span.badge.badge-important= @unread_message_count
               %li{:class => "#{'active' if current_page? game_achievements_path}"}
                 %a{:href => game_achievements_path} Achievements
               %li{:class => "#{'active' if current_page? game_summary_path}"}

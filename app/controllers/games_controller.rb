@@ -5,6 +5,7 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.includes(:categories).includes(:challenges).instance
+    load_message_count
     @challenges = @game&.challenges
     @categories = @game&.categories
     @solved_challenges = current_user&.team&.solved_challenges&.map(&:challenge_id)
@@ -21,6 +22,7 @@ class GamesController < ApplicationController
 
   def load_users_and_divisions
     @game = Game.includes(:divisions).instance
+    load_message_count
     @divisions = @game.divisions
     signed_in_not_admin = current_user && !current_user.admin?
     @active_division = signed_in_not_admin && current_user.team ? current_user.team.division : @divisions.first

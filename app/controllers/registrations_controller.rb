@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class RegistrationsController < Devise::RegistrationsController
-  before_action :load_game
+  before_action :load_game, :load_message_count
 
   # DELETE /resource
   def destroy
