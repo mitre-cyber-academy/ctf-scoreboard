@@ -1,3 +1,6 @@
+- content_for :admin_menu do
+  %li= link_to %[Edit "#{@challenge.name}"], rails_admin.edit_path("challenge", @challenge.id)
+
 - content_for :header do
   - @challenge.name
 
