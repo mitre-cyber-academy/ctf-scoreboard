@@ -21,7 +21,7 @@
       - percent = score.to_f / max.to_f * 100.0
         %tr
           %td= i + 1
-          %td= link_to t.display_name, p
+          %td= link_to t.display_name, summary_team_path(t)
           %td= t.achievements.size
           %td= score
           %td
