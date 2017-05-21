@@ -6,7 +6,7 @@ class UserInvitesController < ApplicationController
   before_action :user_logged_in?
   before_action :load_game, :load_message_count
   before_action :block_admin_action, only: [:accept]
-  before_action :check_accept_access, only: [:accept]
+  before_action :check_accept_access, :deny_team_in_top_ten, only: [:accept]
   before_action :check_destroy_access, only: [:destroy]
 
   # Method for a free agent user to accept a team invitation.
@@ -30,6 +30,7 @@ class UserInvitesController < ApplicationController
   # Only allow user invited to accept a user invite.
   def check_accept_access
     @user_invite = current_user.user_invites.find_by id: params[:id]
+    @team = @user_invite&.team
     redirect_back(fallback_location: user_root_path, alert: I18n.t('invites.invalid_permissions')) if @user_invite.nil?
   end
 

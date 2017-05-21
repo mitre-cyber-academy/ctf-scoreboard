@@ -58,6 +58,10 @@ class Team < ActiveRecord::Base
     5 - users.count
   end
 
+  def in_top_ten?
+    !solved_challenges.empty? && (division.ordered_teams[0..9].include? self)
+  end
+
   def appropriate_division_level?
     # Make sure all the users years in school fall within the acceptable years in school
     # for the division.
