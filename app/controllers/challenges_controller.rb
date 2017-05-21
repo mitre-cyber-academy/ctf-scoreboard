@@ -6,7 +6,7 @@ class ChallengesController < ApplicationController
   before_action :enforce_access
   before_action :load_game, :load_message_count
   before_action :find_challenge
-  before_action :find_and_log_flag, only: [:update]
+  before_action :find_and_log_flag, :on_team?, only: [:update]
 
   def show
     @solved_challenge = @challenge.get_solved_challenge_for(current_user.team_id)
@@ -39,5 +39,10 @@ class ChallengesController < ApplicationController
     flag = params[:challenge][:submitted_flag]
     SubmittedFlag.create(user: current_user, challenge: @challenge, text: flag) unless current_user.admin?
     @flag_found = @challenge.find_flag(flag)
+  end
+
+  def on_team?
+    return true unless !current_user.on_a_team?
+    redirect_to user_root_path, alert: I18n.t('challenge.must_be_on_team')
   end
 end
