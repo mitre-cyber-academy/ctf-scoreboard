@@ -8,6 +8,7 @@ class Team < ActiveRecord::Base
   has_many :users
   has_many :user_invites, dependent: :destroy
   has_many :user_requests, dependent: :destroy
+  has_many :submitted_flags, through: :users
   belongs_to :division
   belongs_to :team_captain, class_name: 'User'
   accepts_nested_attributes_for :user_invites

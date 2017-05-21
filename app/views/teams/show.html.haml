@@ -1,144 +1,176 @@
 - content_for :header do
   See your Team
-
-%h2 #{@team.team_name} - Team Information
-%table.table.table-condensed.table-striped
-  %thead
-  %tr
-    %th.span1 Lead
-    %th Email
-    %th Eligible Division
-    %th.span2 Prize Eligible?
-    %th Remove
-    - if @team_captain
-      %th Change Captain
-  - @team.users.each do |current|
-    %tbody
-      %tr{:class=>'success'}
-        %td
-          -if current == @team.team_captain
-            %i.icon-ok
-        %td=current.email
-        %td=current.division
-        %td
-          -if current.compete_for_prizes
-            Yes
-          -else
-            No
-        %td
-          - if current_user.can_remove?(current)
-            = link_to team_user_leave_team_path(current.team, current), method: :delete, data: {confirm: "Are you sure you wish to remove this player from your team?"} do
-              %i.icon-remove
-        - if @team_captain
+%h2 #{@team.display_name} - Team Information
+%h3 Affiliation: #{@team.affiliation}
+- if @membership
+  %table.table.table-condensed.table-striped
+    %thead
+    %tr
+      %th.span1 Lead
+      %th Email
+      %th Eligible Division
+      %th.span2 Prize Eligible?
+      %th Remove
+      - if @team_captain
+        %th Change Captain
+    - @team.users.each do |current|
+      %tbody
+        %tr{:class=>'success'}
           %td
-            - if current_user.can_promote?(current)
-              = link_to team_user_promote_path(current.team_id, current), method: :get, data: {confirm: "Are you sure you wish to promote a new team captain? You will lose all captain privileges on this team."} do
-                %i.icon-star
-%hr
-.row
-  .span6
-    %h4 Team Prize Eligibility Status
-    Your team is currently
-    - if @team.eligible?
-      competing for prizes. This will change for your whole team if you add any users to you team that are not eligible to receive prizes.
-    - else
-      %b NOT
-      competing for prizes since one or more team members is not eligible to do so or has chosen to not compete for prizes in their profile. Please contact the users marked as ineligible above for more information.
-  .span6
-    %h4 Team Division Status
-    Your team is currently competing at the
-    %b=@team.appropriate_division_level
-    level since it is the highest common denominator between the team members you currently have signed up. Note that your division level will change based on the users you accept onto your team.
-%hr
-.row
-  .span12
-    Only US Citizens enrolled in a US High School or Undergraduate College are eligible for prizes and consideration for internships. Verification of enrollment and citizenship will be required post-competition from all members of the winning teams.
-%hr
-.row
-  .span6
-    %h3 Pending User Invites
-    - if @pending_invites.empty?
-      No pending invites at this time.
-    - else
-      %table.table.table-condensed.table-striped.table-overflow
-        %thead
-        %tr
-          %th.span2
-            Email
-          %th
-            Prize Eligible?
-          %th
-            Division
+            -if current == @team.team_captain
+              %i.icon-ok
+          %td=current.email
+          %td=current.division
+          %td
+            -if current.compete_for_prizes
+              Yes
+            -else
+              No
+          %td
+            - if current_user.can_remove?(current)
+              = link_to team_user_leave_team_path(current.team, current), method: :delete, data: {confirm: "Are you sure you wish to remove this player from your team?"} do
+                %i.icon-remove
           - if @team_captain
+            %td
+              - if current_user.can_promote?(current)
+                = link_to team_user_promote_path(current.team_id, current), method: :get, data: {confirm: "Are you sure you wish to promote a new team captain? You will lose all captain privileges on this team."} do
+                  %i.icon-star
+  %hr
+  .row
+    .span6
+      %h4 Team Prize Eligibility Status
+      Your team is currently
+      - if @team.eligible?
+        competing for prizes. This will change for your whole team if you add any users to you team that are not eligible to receive prizes.
+      - else
+        %b NOT
+        competing for prizes since one or more team members is not eligible to do so or has chosen to not compete for prizes in their profile. Please contact the users marked as ineligible above for more information.
+    .span6
+      %h4 Team Division Status
+      Your team is currently competing at the
+      %b=@team.appropriate_division_level
+      level since it is the highest common denominator between the team members you currently have signed up. Note that your division level will change based on the users you accept onto your team.
+  %hr
+  .row
+    .span12
+      Only US Citizens enrolled in a US High School or Undergraduate College are eligible for prizes and consideration for internships. Verification of enrollment and citizenship will be required post-competition from all members of the winning teams.
+  %hr
+  .row
+    .span6
+      %h3 Pending User Invites
+      - if @pending_invites.empty?
+        No pending invites at this time.
+      - else
+        %table.table.table-condensed.table-striped.table-overflow
+          %thead
+          %tr
+            %th.span2
+              Email
             %th
-              Cancel Invite
-        - @pending_invites.each do |current|
-          %tbody
-            %tr{:class=>'warning'}
-              %td
-                .helpertext-wrapper-overflow{ 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', :title => current.email }
-                  = current.email
-              %td
-                - if current.user.nil?
-                  .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "This user has not yet registered and therefore we cannot determine their eligibility status at this time." }
-                    %i.icon-question-sign
-                - elsif current.user.compete_for_prizes
-                  Yes
-                - else
-                  No
+              Prize Eligible?
+            %th
+              Division
+            - if @team_captain
+              %th
+                Cancel Invite
+          - @pending_invites.each do |current|
+            %tbody
+              %tr{:class=>'warning'}
+                %td
+                  .helpertext-wrapper-overflow{ 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', :title => current.email }
+                    = current.email
+                %td
+                  - if current.user.nil?
+                    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "This user has not yet registered and therefore we cannot determine their eligibility status at this time." }
+                      %i.icon-question-sign
+                  - elsif current.user.compete_for_prizes
+                    Yes
+                  - else
+                    No
 
-              %td
-                - if current.user.nil?
-                  .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "This user has not yet registered and therefore we cannot determine their division at this time." }
-                    %i.icon-question-sign
-                - else
-                  = current.user.division
-              - if @team_captain
                 %td
-                  = link_to team_user_invite_path(@team, current), method: :delete, data: {confirm: "Are you sure you wish to cancel this invitation?"} do
-                    %i.icon-remove
-    - if team_editable?
-      = form_for(@team) do |team|
-        %h4 Invite a Team Member
-        = team.fields_for :user_invites, @team.user_invites.build do |invite_fields|
-          .control-group
-            = invite_fields.label :email, :class => "control-label"
-            .controls
-              = invite_fields.text_field :email, :class => "textarea"
-        .controls
-          = team.submit "Invite Member", :class => "btn"
-  .span6
-    %h3 Pending User Requests
-    - if @pending_requests.empty?
-      No pending join requests at this time.
-    - else
-      %table.table.table-condensed.table-striped.table-overflow
-        %thead
-        %tr
-          %th.span2
-            Email
-          %th
-            Prize Eligible?
-          %th
-            Requested On
-          - if @team_captain
+                  - if current.user.nil?
+                    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "This user has not yet registered and therefore we cannot determine their division at this time." }
+                      %i.icon-question-sign
+                  - else
+                    = current.user.division
+                - if @team_captain
+                  %td
+                    = link_to team_user_invite_path(@team, current), method: :delete, data: {confirm: "Are you sure you wish to cancel this invitation?"} do
+                      %i.icon-remove
+      - if team_editable?
+        = form_for(@team) do |team|
+          %h4 Invite a Team Member
+          = team.fields_for :user_invites, @team.user_invites.build do |invite_fields|
+            .control-group
+              = invite_fields.label :email, :class => "control-label"
+              .controls
+                = invite_fields.text_field :email, :class => "textarea"
+          .controls
+            = team.submit "Invite Member", :class => "btn"
+    .span6
+      %h3 Pending User Requests
+      - if @pending_requests.empty?
+        No pending join requests at this time.
+      - else
+        %table.table.table-condensed.table-striped.table-overflow
+          %thead
+          %tr
+            %th.span2
+              Email
             %th
-              Accept?
-        - @pending_requests.each do |current|
-          %tbody
-            %tr{:class=>'warning'}
-              %td
-                .helpertext-wrapper-overflow{  'data-toggle' => 'tooltip', 'data-placement' => 'bottom', :title => current.user.email }
-                  =current.user.email
-              %td
-                -if current.user.compete_for_prizes
-                  Yes
-                -else
-                  No
-              %td=current.created_at.strftime("%b %d %Y")
-              - if @team_captain
+              Prize Eligible?
+            %th
+              Requested On
+            - if @team_captain
+              %th
+                Accept?
+          - @pending_requests.each do |current|
+            %tbody
+              %tr{:class=>'warning'}
                 %td
-                  = link_to accept_team_user_request_path(@team,current) do
-                    %i.icon-ok
-                  = link_to method: :delete, data: {confirm: "Are you sure you wish to reject this request?"} do
-                    %i.icon-remove
+                  .helpertext-wrapper-overflow{  'data-toggle' => 'tooltip', 'data-placement' => 'bottom', :title => current.user.email }
+                    =current.user.email
+                %td
+                  -if current.user.compete_for_prizes
+                    Yes
+                  -else
+                    No
+                %td=current.created_at.strftime("%b %d %Y")
+                - if @team_captain
+                  %td
+                    = link_to accept_team_user_request_path(@team,current) do
+                      %i.icon-ok
+                    = link_to method: :delete, data: {confirm: "Are you sure you wish to reject this request?"} do
+                      %i.icon-remove
+%hr
+%h3.muted Submitted Flags/Hour
+- if @flags_per_hour.count > 1
+  = line_chart @flags_per_hour, colors: ["#5d8cb6", '#446582']
+- else
+  %p No Solved Challenges
+%hr
+%h3.muted Solved Challenges
+%div.row
+  %div.span5
+    - if @solved_challenges.size == 0
+      .zero-items-text No Solved Challenges
+    - else
+      %table.table.table-bordered.table-striped
+        %thead
+          %tr
+            %th #
+            %th Category
+            %th Points
+            %th When
+        %tbody
+          - @solved_challenges.each_with_index do |s, i|
+            %tr
+              %td= i + 1
+              %td= s.challenge.category.name
+              %td= s.challenge.point_value
+              %td= s.created_at.strftime("%b %e %y, %R %Z")
+%hr
+%h3.muted Team Map
+= geo_chart @user_locations, colors: ["#5d8cb6", '#446582']
+%br
