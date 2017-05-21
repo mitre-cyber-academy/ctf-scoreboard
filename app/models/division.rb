@@ -40,7 +40,7 @@ class Division < ActiveRecord::Base
   # and SolvedChallenge and sums up their values or the value of the challenge in the case of a
   # SolvedChallenge.
   def filter_and_sort_teams(filters)
-    teams.where(filters)
+    teams.includes(:achievements).where(filters)
          .joins(
            "LEFT JOIN feed_items
              ON feed_items.team_id = teams.id
