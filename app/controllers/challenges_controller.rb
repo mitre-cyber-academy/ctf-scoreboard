@@ -42,7 +42,7 @@ class ChallengesController < ApplicationController
   end
 
   def on_team?
-    return true unless !current_user.on_a_team?
+    return true if current_user.on_a_team?
     redirect_to user_root_path, alert: I18n.t('challenge.must_be_on_team')
   end
 end

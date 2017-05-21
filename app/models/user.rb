@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :feed_items
   has_many :user_invites
   has_many :user_requests
+  has_many :submitted_flags
   enum gender: %i[Male Female]
 
   geocoded_by :current_sign_in_ip
