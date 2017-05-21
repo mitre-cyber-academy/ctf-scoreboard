@@ -48,20 +48,4 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal "MITRE CTF: Request from #{user_requests(:request_one).user.full_name} to join #{user_requests(:request_one).team.team_name}", email.subject
     assert_equal @reg_email_body, strip_tags(email.body.to_s).squish
   end
-
-  test 'send_credentials' do
-    team = teams(:full_team)
-    password = "test_password123456"
-    email = UserMailer.send_credentials(team, team.scoreboard_login_name, password).deliver_now
-    email_stripped_body = strip_tags(email.body.to_s)
-
-    assert_not ActionMailer::Base.deliveries.empty?
-
-    assert_equal ['do-not-reply@mitrecyberacademy.org'], email.from
-    assert_equal team.users.collect(&:email), email.to
-    assert_equal 'MITRE CTF: Login Credentials for the upcoming CTF', email.subject
-    assert email_stripped_body.include? "Username:\n\n#{team.scoreboard_login_name}"
-    assert email_stripped_body.include? "Password:\n\n#{password}"
-    assert email_stripped_body.include? team.team_name
-  end
 end

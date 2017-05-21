@@ -108,24 +108,6 @@ class Team < ActiveRecord::Base
     update_attributes(eligible: new_eligibility) unless new_eligibility.eql? eligible?
   end
 
-  # Uses the teams team_name but removes extra characters in order to make it easier
-  # for the team to login.
-  # CAN PROBABLY BE REMOVED SINCE THIS WAS ONLY NECESSARY FOR OLD SCOREBOARD
-  def scoreboard_login_name
-    team_name.downcase.tr(' @$', '_as').gsub(/[^a-z0-9_]/, '')
-  end
-
-  # Group user states and then get the largest one.
-  # CAN PROBABLY BE REMOVED SINCE THIS WAS ONLY NECESSARY FOR OLD SCOREBOARD
-  def common_team_location
-    locations_array = users.map(&:state).group_by(&:itself).values.max_by(&:size)
-    if !locations_array.nil?
-      locations_array.first
-    else
-      'NA'
-    end
-  end
-
   def score
     feed_items.where(type: [SolvedChallenge, ScoreAdjustment])
               .joins(
