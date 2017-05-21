@@ -38,7 +38,8 @@ en:
     create_successful: 'Team was successfully created.'
     invalid_permissions: 'You must first be a member of a team in order to view it.'
     captain_must_promote: 'You must promote another member of your team to captain before leaving.'
-    promoted_captain: 'A new team captain has been promoted'
+    promoted_captain: 'A new team captain has been promoted.'
+    must_be_on_team: 'You must be on a team to view other teams.'
   requests:
     sent_successful: 'Team join request was successfully sent.'
     accepted_another: 'User has accepted another teams invitation, sorry!'
@@ -66,4 +67,4 @@ en:
   users:
     login_required: 'You must login in order to perform this action.'
   admin:
-    should_not_do_action: 'Admins should use the Rails Admin console to perform administrative actions'
+    should_not_do_action: 'Admins should use the Rails Admin console to perform administrative actions.'
