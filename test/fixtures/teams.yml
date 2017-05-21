@@ -5,82 +5,94 @@ team_one:
   affiliation: school1
   team_captain: user_one
   eligible: false
-  division: division_one
+  division: high_school
 
 team_two:
   team_name: team_two
   affiliation: school2
   eligible: false
-  division: division_two
+  division: college
 
 team_three:
   team_name: team_three
   affiliation: school3
   team_captain: user_four
   eligible: true
+  division: professional
 
 full_team:
   team_name: full_team
   affiliation: school3
   team_captain: full_team_user_one
   eligible: true
+  division: high_school
 
 team_with_special_chars:
   team_name: $0m3Thing @mazing
   affiliation: school!
   team_captain: user_on_team_with_special_chars
   eligible: true
+  division: high_school
 
 last_team:
   team_name: Last Team
   affiliation: lastschool
   team_captain: user_on_last_team
   eligible: true
+  division: high_school
 
 team_four:
   team_name: team_four
   affiliation: school4
   team_captain: user_four
   eligible: true
+  division: high_school
 
 team_five:
   team_name: team_five
   affiliation: school5
   team_captain: user_four
   eligible: true
+  division: high_school
 
 team_six:
   team_name: team_six
   affiliation: school6
   team_captain: user_four
   eligible: true
+  division: high_school
 
 team_seven:
   team_name: team_seven
   affiliation: school7
   team_captain: user_four
   eligible: true
+  division: high_school
 
 team_eight:
   team_name: team_eight
   affiliation: school8
   team_captain: user_four
   eligible: true
+  division: high_school
 
 team_nine:
   team_name: team_nine
   affiliation: school9
   team_captain: user_four
   eligible: true
+  division: high_school
 
 team_ten:
   team_name: team_ten
   affiliation: school10
   team_captain: user_four
   eligible: true
+  division: high_school
 
 team_eleven:
   team_name: team_eleven
   affiliation: school11
   team_captain: user_eleven
   eligible: true
+  division: high_school

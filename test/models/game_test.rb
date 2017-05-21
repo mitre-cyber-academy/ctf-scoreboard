@@ -27,6 +27,6 @@ class GameTest < ActiveSupport::TestCase
   end
 
   test 'open' do
-    assert_equal true, games(:game_one).open?
+    assert_equal true, games(:mitre_ctf_game).open?
   end
 end

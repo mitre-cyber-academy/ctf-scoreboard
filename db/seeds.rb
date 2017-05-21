@@ -12,11 +12,12 @@ User.create(email: 'root@root.com', password: 'ChangeMe123', admin: true)
 # default game
 game = Game.create!(name: 'Test Game', start: Time.now.utc + 3.months, stop: Time.now.utc + 3.months + 2.days)
 
-division1 = Division.create!(name: 'High School', game: game)
-division2 = Division.create!(name: 'College', game: game)
+high_school = Division.create!(name: 'High School', game: game, min_year_in_school: 9, max_year_in_school: 12)
+college = Division.create!(name: 'College', game: game, min_year_in_school: 9, max_year_in_school: 16)
+Division.create!(name: 'Professional', game: game, min_year_in_school: 0, max_year_in_school: 16)
 
 # players
-team1 = Team.create(team_name: 'pwnies', affiliation: 'PwnPwnPwn', division: division1, eligible: false)
+team1 = Team.create(team_name: 'pwnies', affiliation: 'PwnPwnPwn', division: high_school, eligible: false)
 user = User.create!(
   email: 'ctf@mitre.org',
   password: 'Test123456',
@@ -32,7 +33,7 @@ user = User.create!(
 
 team1.save! # This will trigger set_team_captain so that the user declared above will become team captain
 
-Team.create!(team_name: 'n00bs', affiliation: "We're n00bs", division: division2, eligible: true)
+Team.create!(team_name: 'n00bs', affiliation: "We're n00bs", division: college, eligible: true)
 
 # crypto
 category = Category.create!(name: 'Crypto', game: game)
@@ -104,7 +105,7 @@ Message.create!(
 FeedItem.create!(
   team: team1,
   user: user,
-  division: division1,
+  division: high_school,
   challenge: Challenge.first,
   text: 'Achievement',
   type: Achievement

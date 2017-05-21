@@ -9,6 +9,7 @@ class TeamsController < ApplicationController
   before_action :block_admin_action, only: [:create]
   before_action :check_membership, only: %i[update destroy]
   before_action :check_membership_show, only: [:show]
+  before_action :update_team, only: %i[update invite]
 
   def new
     if !current_user.on_a_team?
@@ -43,13 +44,23 @@ class TeamsController < ApplicationController
     end
   end
 
+  def edit
+    @team = current_user.team
+  end
+
   def update
-    team = current_user.team
-    team.update_attributes(team_params)
-    if team.save
-      redirect_to team, notice: I18n.t('invites.invite_successful')
+    if @team.save
+      redirect_to @team, notice: I18n.t('teams.update_successful')
     else
-      redirect_to team, alert: team.errors.map { |_, msg| msg }.join(', ')
+      redirect_to edit_team_path(@team), alert: @team.errors.full_messages.map { |msg| msg }.join(', ')
+    end
+  end
+
+  def invite
+    if @team.save
+      redirect_to @team, notice: I18n.t('invites.invite_successful')
+    else
+      redirect_to team_path(@team), alert: @team.errors.messages.map { |_, msg| msg }.join(', ')
     end
   end
 
@@ -58,7 +69,7 @@ class TeamsController < ApplicationController
   end
 
   def team_params
-    params.require(:team).permit(:team_name, :affiliation, user_invites_attributes: [:email])
+    params.require(:team).permit(:team_name, :affiliation, :division_id, user_invites_attributes: [:email])
   end
 
   private
@@ -73,5 +84,13 @@ class TeamsController < ApplicationController
     # then deny them from accessing the update and create actions on a team page.
     return true unless !current_user.on_a_team? || (current_user.team_id != params[:id].to_i)
     redirect_to user_root_path, alert: I18n.t('teams.invalid_permissions')
+  end
+
+  # The code for inviting a user and updating a team is exactly the same, except for the actual
+  # notice displayed. This allows us to wrap both those methods and do the exact same thing,
+  # only yield a different success message.
+  def update_team
+    @team = current_user.team
+    @team.update_attributes(team_params)
   end
 end

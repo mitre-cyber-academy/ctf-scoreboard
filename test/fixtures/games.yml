@@ -1,6 +1,6 @@
-game_one:
-  name: game one
+mitre_ctf_game:
+  name: MITRE CTF
   start: <%= Time.now %>
   stop: <%= Time.now + 10.hours %>
-  description: game one description
+  description: MITRE CTF Game
   irc: game one irc

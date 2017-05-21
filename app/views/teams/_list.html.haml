@@ -25,6 +25,6 @@
                 %td= team.team_name
                 %td= team.affiliation
                 %td= team.slots_available
-                %td= team.appropriate_division_level
+                %td= team.division.name
                 %td= button_to 'Request', team_user_requests_path(team), :class => "btn btn-default"
   = paginate teams # provided by kaminari
