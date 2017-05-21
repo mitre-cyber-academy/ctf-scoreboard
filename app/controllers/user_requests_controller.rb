@@ -8,7 +8,7 @@ class UserRequestsController < ApplicationController
   before_action :load_game, :load_message_count
   before_action :block_admin_action, only: [:create]
   before_action :check_if_user_on_team, only: [:create]
-  before_action :captain_of_team_requested, only: [:accept]
+  before_action :captain_of_team_requested, :deny_team_in_top_ten, only: [:accept]
   before_action :check_if_able_to_reject, only: [:destroy]
 
   # Allows a user to create a new request to join a team.
@@ -48,6 +48,7 @@ class UserRequestsController < ApplicationController
   # accept the users request.
   def captain_of_team_requested
     @user_request = current_user.team.user_requests.find(params[:id])
+    @team = @user_request.team
     raise ActiveRecord::RecordNotFound unless @user_request.team.team_captain.eql?(current_user)
   end
 
