@@ -16,6 +16,15 @@ class TeamsControllerTest < ActionController::TestCase
     assert_redirected_to root_path
   end
 
+  test 'team captain should be able to access team edit page' do
+    user = users(:user_one)
+    sign_in user
+    get :edit, params: { id: user.team }
+    assert_response :success
+    assert_select 'h1', /Edit your Team/
+    assert_select "legend", "New Team Information"
+  end
+
   test 'authenticated users with no team should be able to access new team page' do
     sign_in users(:user_three)
     get :new
