@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   geocoded_by :current_sign_in_ip
   after_validation :geocode, unless: :geocoded?
 
+  after_create :create_vpn_key_request
+
   reverse_geocoded_by :latitude, :longitude do |obj, results|
     if (geo = results.first)
       obj.country = geo.country
@@ -77,6 +79,11 @@ class User < ActiveRecord::Base
 
   def update_messages_stamp
     update_attributes(messages_stamp: Time.now.utc)
+  end
+
+  def create_vpn_key_request
+    save_dir = '/opt/keys'
+    File.write("#{save_dir}/#{key_file_name}", "") if File.directory?(save_dir)
   end
 
   private
