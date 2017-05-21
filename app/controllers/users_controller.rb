@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   before_action :check_removal_permissions, only: [:leave_team]
   before_action :check_if_user_on_team, only: [:join_team]
   before_action :check_promote_permissions, only: [:promote]
+  before_action :fetch_user_team, :deny_team_in_top_ten, only: %i[leave_team promote]
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable MethodLength
@@ -29,7 +30,6 @@ class UsersController < ApplicationController
   end
 
   def leave_team
-    @team = current_user.team
     is_current_captain = @team.team_captain&.id.eql?(params[:user_id].to_i)
 
     if is_current_captain && @team.users.size > 1
@@ -49,7 +49,6 @@ class UsersController < ApplicationController
   # rubocop:enable MethodLength
 
   def promote
-    @team = current_user.team
     @team.promote(params[:user_id])
     redirect_to @team, notice: I18n.t('teams.promoted_captain')
   end
@@ -63,5 +62,9 @@ class UsersController < ApplicationController
 
   def check_promote_permissions
     raise ActiveRecord::RecordNotFound unless team_captain?
+  end
+
+  def fetch_user_team
+    @team = current_user.team
   end
 end

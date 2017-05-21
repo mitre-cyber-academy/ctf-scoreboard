@@ -9,7 +9,7 @@ class TeamsController < ApplicationController
   before_action :block_admin_action, only: [:create]
   before_action :check_membership, only: %i[show update destroy]
   before_action :check_team_captain, only: %i[update edit invite]
-  before_action :update_team, only: %i[update invite]
+  before_action :update_team, :deny_team_in_top_ten, only: %i[update invite]
 
   def new
     if !current_user.on_a_team?

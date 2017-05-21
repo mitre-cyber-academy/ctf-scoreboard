@@ -42,6 +42,7 @@ en:
     promoted_captain: 'A new team captain has been promoted.'
     must_be_team_captain: 'You must be the team captain to perform this action.'
     must_be_on_team: 'You must be on a team to view other teams.'
+    in_top_ten: 'This team is currently locked since it is in the top ten for its division.'
   requests:
     sent_successful: 'Team join request was successfully sent.'
     accepted_another: 'User has accepted another teams invitation, sorry!'
