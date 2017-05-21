@@ -44,12 +44,16 @@
         competing for prizes. This will change for your whole team if you add any users to you team that are not eligible to receive prizes.
       - else
         %b NOT
-        competing for prizes since one or more team members is not eligible to do so or has chosen to not compete for prizes in their profile. Please contact the users marked as ineligible above for more information.
+        competing for prizes since one or more team members is not eligible to do so or has chosen to not compete for prizes in their profile. Please contact the users marked as ineligible above for more information if this is incorrect.
     .span6
       %h4 Team Division Status
-      Your team is currently competing at the
-      %b=@team.appropriate_division_level
-      level since it is the highest common denominator between the team members you currently have signed up. Note that your division level will change based on the users you accept onto your team.
+      You have currently selected the
+      %b=@team.division.name
+      division for your team.
+      - if @team.appropriate_division_level?
+        This division is appropriate for your team.
+      - else
+        Your team is not eligible to compete at this level. Consider changing your division to match the division of the most senior member of your team or removing the member(s) causing your division to be incorrect.
   %hr
   .row
     .span12
@@ -99,7 +103,7 @@
                     = link_to team_user_invite_path(@team, current), method: :delete, data: {confirm: "Are you sure you wish to cancel this invitation?"} do
                       %i.icon-remove
       - if team_editable?
-        = form_for(@team) do |team|
+        = form_for(@team, url: invite_team_path) do |team|
           %h4 Invite a Team Member
           = team.fields_for :user_invites, @team.user_invites.build do |invite_fields|
             .control-group

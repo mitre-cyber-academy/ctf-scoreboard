@@ -64,7 +64,7 @@ class TeamsControllerTest < ActionController::TestCase
   test 'a team cannot be created with the same name as another team' do
     sign_in users(:user_two)
     assert_no_difference 'Team.count', 'A Team should not be created' do
-      post :create, params: { team: { team_name: 'team_one', affiliation: 'school1' } }
+      post :create, params: { team: { team_name: 'team_one', affiliation: 'school1', division_id: divisions(:high_school) } }
     end
     assert_template :new
   end
@@ -72,7 +72,7 @@ class TeamsControllerTest < ActionController::TestCase
   test 'a team cannot be created with the same name as another team in any case' do
     sign_in users(:user_two)
     assert_no_difference 'Team.count', 'A Team should not be created' do
-      post :create, params: { team: { team_name: 'TeAm_OnE', affiliation: 'school1' } }
+      post :create, params: { team: { team_name: 'TeAm_OnE', affiliation: 'school1', division_id: divisions(:high_school) } }
     end
     assert_template :new
   end
@@ -81,7 +81,7 @@ class TeamsControllerTest < ActionController::TestCase
     user = users(:user_two)
     sign_in user
     assert_difference 'Team.count' do
-      post :create, params: { team: { team_name: 'another_team', affiliation: 'school1' } }
+      post :create, params: { team: { team_name: 'another_team', affiliation: 'school1', division_id: divisions(:high_school) } }
     end
     user.reload
     assert_redirected_to team_path(user.team)
@@ -98,8 +98,28 @@ class TeamsControllerTest < ActionController::TestCase
   test 'invite a team member' do
     user = users(:user_one)
     sign_in user
-    patch :update, params: { team: { team_name: 'team_one', affiliation: 'school1' }, id: user.team }
+    assert_difference 'user.team.user_invites.count', +1, 'A user invite should be created' do
+      patch :invite, params: { team: { user_invites_attributes: { '0': {email: 'mitrectf+user3@gmail.com'} } }, id: user.team }
+    end
     assert_redirected_to team_path(users(:user_one).team)
     assert I18n.t('invites.invite_successful'), flash[:notice]
+  end
+
+  test 'invite a team member who has already been invited' do
+    user = users(:user_one)
+    sign_in user
+    assert_no_difference 'user.team.user_invites.count', 'A user invite should not be created' do
+      patch :invite, params: { team: { user_invites_attributes: { '0': {email: 'mitrectf+user2@gmail.com'}} }, id: user.team }
+    end
+    assert_redirected_to team_path(users(:user_one).team)
+    assert I18n.t('en.activerecord.errors.models.user_invite.attributes.email.uniqueness'), flash[:alert]
+  end
+
+  test 'update a team' do
+    user = users(:user_one)
+    sign_in user
+    patch :update, params: { team: { team_name: 'team_one_newname', affiliation: 'school1' }, id: user.team }
+    assert_redirected_to team_path(users(:user_one).team)
+    assert I18n.t('teams.update_successful'), flash[:notice]
   end
 end

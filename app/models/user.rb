@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
   # These are things we require user to have but do not require of admins.
   with_options unless: :admin? do |user|
     user.before_save :clear_compete_for_prizes
+    user.after_save :update_team_eligibility
     user.after_create :link_to_invitations
     user.validates :full_name, :affiliation, presence: true, obscenity: true
     user.validates :state, presence: true
@@ -93,5 +94,11 @@ class User < ActiveRecord::Base
       invite.user = self
       invite.save
     end
+  end
+
+  # This happens after a user is saved in order to refresh the overall team eligibility based on
+  # the users choice.
+  def update_team_eligibility
+    team&.update_eligibility
   end
 end

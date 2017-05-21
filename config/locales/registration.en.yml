@@ -36,6 +36,7 @@ en:
     already_on_team_join: 'You cannot join another team while already being a member of one.'
     full_team: 'You have added all the users you can to your team.'
     create_successful: 'Team was successfully created.'
+    update_successful: 'Team was successfully updated.'
     invalid_permissions: 'You must first be a member of a team in order to view it.'
     captain_must_promote: 'You must promote another member of your team to captain before leaving.'
     promoted_captain: 'A new team captain has been promoted.'
