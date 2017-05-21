@@ -2,6 +2,8 @@
 
 # Team model for holding the main user list and all invites and requests to a team.
 class Team < ActiveRecord::Base
+  has_paper_trail
+
   has_many :feed_items
   has_many :achievements
   has_many :solved_challenges
@@ -125,7 +127,6 @@ class Team < ActiveRecord::Base
 
   # If a team doesn't have a team captain but does have a user, set the team captain to the first user.
   def set_team_captain
-    return unless team_captain.nil? && !users.empty?
-    update_attributes(team_captain: users.first)
+    update_attributes(team_captain: users.first) if team_captain.nil? && !users.empty?
   end
 end
