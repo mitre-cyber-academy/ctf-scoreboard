@@ -5,8 +5,10 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
 
-  before_action :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery with: :exception
+
+  before_action :set_paper_trail_whodunnit
+  before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_mailer_host
   helper :all
 

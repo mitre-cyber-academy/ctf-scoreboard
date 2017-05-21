@@ -30,8 +30,7 @@ user = User.create!(
   area_of_study: 'Robotics',
   state: 'FL'
 )
-
-team1.save! # This will trigger set_team_captain so that the user declared above will become team captain
+team1.reload.save! # This will trigger set_team_captain so that the user declared above will become team captain
 
 Team.create!(team_name: 'n00bs', affiliation: "We're n00bs", division: college, eligible: true)
 

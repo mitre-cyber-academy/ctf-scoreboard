@@ -25,7 +25,7 @@ class TeamsController < ApplicationController
     # Filter for only pending invites and requests.
     @pending_invites = @team.user_invites.pending
     @pending_requests = @team.user_requests.pending
-    flash.now[:notice] = I18n.t('teams.full_team') unless team_editable?
+    flash.now[:notice] = I18n.t('teams.full_team') if @team.full?
     summary
   end
 
