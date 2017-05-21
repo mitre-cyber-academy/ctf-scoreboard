@@ -11,9 +11,9 @@ class ApplicationController < ActionController::Base
   helper :all
 
   def user_root_path
-    if Game.instance.open? && current_user.on_a_team?
+    if @game&.open? && current_user&.on_a_team?
       game_summary_path
-    elsif current_user.on_a_team?
+    elsif current_user&.on_a_team?
       team_path(current_user.team_id)
     else
       home_index_path
@@ -31,6 +31,12 @@ class ApplicationController < ActionController::Base
 
   def set_mailer_host
     ActionMailer::Base.default_url_options[:host] = request.host_with_port
+  end
+
+  # Only allow access to information specific to the game when the game is actually open
+  def filter_access_before_game_open
+    return if current_user&.admin? || !@game.before_competition?
+    redirect_to user_root_path, alert: I18n.t('game.not_available')
   end
 
   private
