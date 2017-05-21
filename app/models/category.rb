@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Category < ActiveRecord::Base
-  belongs_to :game
+  belongs_to :game, required: true
   has_many :challenges
 
   validates :name, presence: true

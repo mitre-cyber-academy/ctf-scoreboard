@@ -2,7 +2,7 @@
 
 # Every time a team captain invites a user to their team, a new user invite is created.
 class UserInvite < ActiveRecord::Base
-  belongs_to :team
+  belongs_to :team, required: true
   belongs_to :user
 
   enum status: %i[Pending Accepted Rejected]
