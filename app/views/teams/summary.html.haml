@@ -2,6 +2,6 @@
   #{@team.display_name}
 
 - content_for :subheading do
-  #{@team.division.name} - #{@solved_challenges.count} solved challenges
+  #{@team.division.name} - #{@solved_challenges.size} solved #{pluralize(@solved_challenges.size, 'challenge')}
 
 = render partial: 'team_summary'
