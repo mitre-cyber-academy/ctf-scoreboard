@@ -7,8 +7,7 @@ class GameTest < ActiveSupport::TestCase
       name: 'game',
       start: Time.now,
       stop: Time.now - 10.hours,
-      description: 'game description',
-      irc: 'game irc'
+      description: 'game description'
     )
     assert_not game.valid?
     assert_equal true, game.errors.added?(:base, I18n.t('game.too_many'))
@@ -19,8 +18,7 @@ class GameTest < ActiveSupport::TestCase
       name: 'game',
       start: Time.now,
       stop: Time.now - 10.hours,
-      description: 'game description',
-      irc: 'game irc'
+      description: 'game description'
     )
     assert_not game.valid?
     assert_equal true, game.errors.added?(:base, I18n.t('game.date_mismatch'))
