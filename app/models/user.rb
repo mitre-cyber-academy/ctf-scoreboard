@@ -83,7 +83,7 @@ class User < ActiveRecord::Base
 
   def create_vpn_key_request
     save_dir = '/opt/keys'
-    File.write("#{save_dir}/#{key_file_name}", "") if File.directory?(save_dir)
+    File.write("#{save_dir}/#{key_file_name}", '') if File.directory?(save_dir)
   end
 
   private
