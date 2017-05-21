@@ -30,7 +30,7 @@ class TeamsController < ApplicationController
     @solved_challenges = @team&.solved_challenges
     @flags_per_hour = @team.submitted_flags.group_by_hour('submitted_flags.created_at').count
     @user_locations = @team.users.where('country IS NOT NULL').group(:country).count
-    flash.now[:notice] = I18n.t('teams.full_team') if team_captain? && !team_editable?
+    flash.now[:notice] = I18n.t('teams.full_team') if @team_captain && !team_editable?
   end
 
   def create
