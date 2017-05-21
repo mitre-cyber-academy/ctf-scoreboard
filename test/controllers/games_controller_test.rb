@@ -18,4 +18,14 @@ class GamesControllerTest < ActionController::TestCase
     get :summary
     assert_response :success
   end
+
+  test 'should not get summary when game is not open' do
+    game = games(:mitre_ctf_game)
+    game.start = Time.now + 9.hours
+    game.save
+
+    get :summary
+    assert_redirected_to @controller.user_root_path
+    assert_equal flash[:alert], I18n.t('game.not_available')
+  end
 end
