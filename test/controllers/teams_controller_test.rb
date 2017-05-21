@@ -123,6 +123,20 @@ class TeamsControllerTest < ActionController::TestCase
     assert_equal flash[:notice], I18n.t('teams.full_team')
   end
 
+  test 'a team member of a full team sees a message informing them that their team is full' do
+    user = users(:full_team_user_two)
+    sign_in user
+    get :show, params: { id: user.team }
+    assert_equal flash[:notice], I18n.t('teams.full_team')
+  end
+
+  test 'a team captain of a non-full team does not see a message stating that their team is full' do
+    user = users(:user_one)
+    sign_in user
+    get :show, params: { id: user.team }
+    assert_not_equal flash[:notice], I18n.t('teams.full_team')
+  end
+
   test 'invite a team member' do
     user = users(:user_one)
     sign_in user

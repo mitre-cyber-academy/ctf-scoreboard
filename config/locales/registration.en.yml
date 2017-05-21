@@ -34,7 +34,7 @@ en:
     player_removed_self: 'You have successfully left the team.'
     already_on_team_create: 'You cannot create a new team while already being a member of one.'
     already_on_team_join: 'You cannot join another team while already being a member of one.'
-    full_team: 'You have added all the users you can to your team.'
+    full_team: 'Your team currently has the max number of players allowed for our competition.'
     create_successful: 'Team was successfully created.'
     update_successful: 'Team was successfully updated.'
     invalid_permissions: 'You must first be a member of a team in order to view it.'
