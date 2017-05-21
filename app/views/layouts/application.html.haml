@@ -53,6 +53,8 @@
                           = yield :admin_menu
                       - elsif current_user.on_a_team?
                         = link_to "See your team", team_path(current_user.team_id)
+                        - if current_user.team_captain?
+                          = link_to "Edit your team", edit_team_path(current_user.team_id)
                       - else
                         = link_to "Join a team", join_team_users_path
                         = link_to "Create a team", new_team_path

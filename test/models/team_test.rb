@@ -10,18 +10,18 @@ class TeamTest < ActiveSupport::TestCase
     assert_equal(user, team.team_captain)
   end
 
-  test 'team with two high school students is a high school team' do
+  test 'high school team with two high school students is allowed' do
     teams(:team_one).users << users(:full_team_user_one)
-    assert_equal('High School', teams(:team_one).appropriate_division_level)
+    assert_equal(true, teams(:team_one).appropriate_division_level?)
   end
 
-  test 'team with one high school and one college student is a college team' do
+  test 'high school team with one high school and one college student is not allowed' do
     teams(:team_one).users << users(:user_three)
-    assert_equal('College', teams(:team_one).appropriate_division_level)
+    assert_equal(false, teams(:team_one).appropriate_division_level?)
   end
 
-  test 'team with one professional is professional level team' do
-    assert_equal('Professional', teams(:team_three).appropriate_division_level)
+  test 'professional team with one professional is allowed' do
+    assert_equal(true, teams(:team_three).appropriate_division_level?)
   end
 
   test 'team with profanity will not save' do

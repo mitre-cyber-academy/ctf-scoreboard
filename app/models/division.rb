@@ -27,6 +27,11 @@ class Division < ActiveRecord::Base
     end
   end
 
+  # Returns an array of the appropriate years in school for the current division
+  def acceptable_years_in_school
+    Array(min_year_in_school..max_year_in_school)
+  end
+
   private
 
   # rubocop:disable MethodLength

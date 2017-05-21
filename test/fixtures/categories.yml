@@ -1,6 +1,6 @@
 category_one:
   name: binary
-  game: game_one
+  game: mitre_ctf_game
 category_two:
   name: forensics
-  game: game_one
+  game: mitre_ctf_game
