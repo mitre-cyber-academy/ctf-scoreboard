@@ -9,6 +9,7 @@ class TeamsController < ApplicationController
   before_action :block_admin_action, only: [:create]
   before_action :check_membership, only: %i[update destroy]
   before_action :check_membership_show, only: [:show]
+  before_action :check_team_captain, only: %i[update edit invite]
   before_action :update_team, only: %i[update invite]
 
   def new
@@ -79,6 +80,10 @@ class TeamsController < ApplicationController
     @membership = current_user.team_id == params[:id].to_i
   end
 
+  def check_team_captain
+    redirect_to user_root_path, alert: I18n.t('teams.must_be_team_captain') unless current_user.team_captain?
+  end
+
   def check_membership
     # If the user is not signed in, not on a team, or not on the team they are trying to access
     # then deny them from accessing the update and create actions on a team page.
@@ -87,8 +92,7 @@ class TeamsController < ApplicationController
   end
 
   # The code for inviting a user and updating a team is exactly the same, except for the actual
-  # notice displayed. This allows us to wrap both those methods and do the exact same thing,
-  # only yield a different success message.
+  # notice displayed. This allows us to preload some information for both methods without duplication.
   def update_team
     @team = current_user.team
     @team.update_attributes(team_params)
