@@ -22,6 +22,7 @@ CtfRegistration::Application.routes.draw do
     member do
       patch :invite
       put :invite
+      get :summary
     end
     # Custom route for accepting user invites.
     resources :user_invites, only: [:destroy] do
