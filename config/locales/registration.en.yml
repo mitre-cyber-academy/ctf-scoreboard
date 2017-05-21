@@ -40,6 +40,7 @@ en:
     invalid_permissions: 'You must first be a member of a team in order to view it.'
     captain_must_promote: 'You must promote another member of your team to captain before leaving.'
     promoted_captain: 'A new team captain has been promoted.'
+    must_be_team_captain: 'You must be the team captain to perform this action.'
     must_be_on_team: 'You must be on a team to view other teams.'
   requests:
     sent_successful: 'Team join request was successfully sent.'

@@ -11,6 +11,11 @@ class TeamsControllerTest < ActionController::TestCase
     assert_redirected_to root_path
   end
 
+  test 'unauthenticated users should not be able to access team edit page' do
+    get :edit, params: { id: teams(:team_one) }
+    assert_redirected_to root_path
+  end
+
   test 'authenticated users with no team should be able to access new team page' do
     sign_in users(:user_three)
     get :new
@@ -29,6 +34,14 @@ class TeamsControllerTest < ActionController::TestCase
     sign_in user
     get :show, params: { id: user.team }
     assert_response :success
+  end
+
+  test 'authenticated users with a team cannot edit their team unless they are a team captain' do
+    user = users(:full_team_user_two)
+    sign_in user
+    get :edit, params: { id: user.team }
+    assert_redirected_to @controller.user_root_path
+    assert I18n.t('teams.must_be_team_captain'), flash[:alert]
   end
 
   test 'authenticated users with a team cannot view other teams management' do
@@ -121,5 +134,13 @@ class TeamsControllerTest < ActionController::TestCase
     patch :update, params: { team: { team_name: 'team_one_newname', affiliation: 'school1' }, id: user.team }
     assert_redirected_to team_path(users(:user_one).team)
     assert I18n.t('teams.update_successful'), flash[:notice]
+  end
+
+  test 'update a team without permission' do
+    user = users(:user_two)
+    sign_in user
+    patch :update, params: { team: { team_name: 'team_one_newname', affiliation: 'school1' }, id: users(:user_one).team }
+    assert_redirected_to @controller.user_root_path
+    assert I18n.t('teams.invalid_permissions'), flash[:alert]
   end
 end
