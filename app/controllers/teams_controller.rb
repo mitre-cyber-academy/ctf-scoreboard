@@ -8,6 +8,7 @@ class TeamsController < ApplicationController
   before_action :load_game, :load_message_count
   before_action :block_admin_action, only: [:create]
   before_action :check_membership, only: %i[update destroy]
+  before_action :check_membership_show, only: [:show]
 
   def new
     if !current_user.on_a_team?
@@ -23,11 +24,12 @@ class TeamsController < ApplicationController
     # Filter for only pending invites and requests.
     @pending_invites = @team.user_invites.pending
     @pending_requests = @team.user_requests.pending
-    flash.now[:notice] = I18n.t('teams.full_team') if team_captain? && !team_editable?
+    # Show this information if the user is not a member
     @page_requires_gcharts = true
-    @solved_challenges = @team&.solved_challenges&.map(&:challenge_id)
+    @solved_challenges = @team&.solved_challenges
     @flags_per_hour = @team.submitted_flags.group_by_hour('submitted_flags.created_at').count
     @user_locations = @team.users.where('country IS NOT NULL').group(:country).count
+    flash.now[:notice] = I18n.t('teams.full_team') if team_captain? && !team_editable?
   end
 
   def create
@@ -61,11 +63,15 @@ class TeamsController < ApplicationController
 
   private
 
+  def check_membership_show
+    redirect_to user_root_path, alert: I18n.t('teams.must_be_on_team') unless current_user.on_a_team?
+    @membership = current_user.team_id == params[:id].to_i
+  end
+
   def check_membership
     # If the user is not signed in, not on a team, or not on the team they are trying to access
-    # then deny them from accessing the team page.
-    @membership = !current_user.on_a_team? || (current_user.team_id != params[:id].to_i)
-    return true unless @membership
+    # then deny them from accessing the update and create actions on a team page.
+    return true unless !current_user.on_a_team? || (current_user.team_id != params[:id].to_i)
     redirect_to user_root_path, alert: I18n.t('teams.invalid_permissions')
   end
 end
