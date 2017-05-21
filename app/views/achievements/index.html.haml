@@ -13,5 +13,5 @@
       - @achievements.each do |a|
         %tr
           %td= a.text
-          %td= link_to_unless current_user.nil?, a.team.display_name, a.team
+          %td= link_to a.team.display_name, summary_team_path(a.team)
           %td= a.created_at.strftime("%b %e %y, %R %Z")
