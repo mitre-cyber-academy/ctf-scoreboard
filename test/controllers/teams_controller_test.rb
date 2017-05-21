@@ -53,15 +53,11 @@ class TeamsControllerTest < ActionController::TestCase
     assert I18n.t('teams.must_be_team_captain'), flash[:alert]
   end
 
-  test 'authenticated users with a team cannot view other teams management' do
+  test 'users cannot view other teams management' do
     user = users(:user_one)
     sign_in user
     get :show, params: { id: teams(:team_two) }
-    assert_response :success
-    assert_select "h4", {count: 0, text: "Team Prize Eligibility Status"}, "This page must not contain team management elements"
-    assert_select "h4", {count: 0, text: "Team Division Status"}, "This page must not contain team management elements"
-    assert_select "h3", {count: 0, text: "Pending User Invites"}, "This page must not contain team management elements"
-    assert_select "h4", {count: 0, text: "Invite a Team Member"}, "This page must not contain team management elements"
+    assert_redirected_to @controller.user_root_path
   end
 
   test 'members of a team can view their team management' do
@@ -75,12 +71,22 @@ class TeamsControllerTest < ActionController::TestCase
     assert_select "h4", "Invite a Team Member"
   end
 
-  test 'authenticated users without a team cannot view teams' do
+  test 'authenticated users without a team cannot view teams show page' do
     user = users(:user_two)
     sign_in user
     get :show, params: { id: teams(:team_two) }
     assert_redirected_to @controller.user_root_path
-    assert_equal I18n.t('teams.must_be_on_team'), flash[:alert]
+    assert_equal I18n.t('teams.invalid_permissions'), flash[:alert]
+  end
+
+  test 'authenticated users without a team can view teams summary page' do
+    user = users(:user_two)
+    sign_in user
+    get :summary, params: { id: teams(:team_two) }
+    assert_response :success
+    assert_select 'h3', 'Submitted Flags/Hour'
+    assert_select 'h3', 'Solved Challenges'
+    assert_select 'h3', 'Team Map'
   end
 
   test 'a team cannot be created with the same name as another team' do
