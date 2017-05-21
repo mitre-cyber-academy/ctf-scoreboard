@@ -3,4 +3,3 @@ mitre_ctf_game:
   start: <%= Time.now %>
   stop: <%= Time.now + 10.hours %>
   description: MITRE CTF Game
-  irc: game one irc
