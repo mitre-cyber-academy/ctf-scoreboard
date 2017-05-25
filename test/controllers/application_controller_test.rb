@@ -37,4 +37,9 @@ class ApplicationControllerTest < ActionController::TestCase
     @controller.load_game
     assert_nil @controller.load_message_count
   end
+
+  test 'deny team in top ten' do
+    # test with game active and inactive
+    # Check for alert to see if it worked
+  end
 end
