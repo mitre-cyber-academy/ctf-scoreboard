@@ -172,4 +172,15 @@ class TeamsControllerTest < ActionController::TestCase
     assert_redirected_to @controller.user_root_path
     assert I18n.t('teams.invalid_permissions'), flash[:alert]
   end
+
+  test 'team captain can not send invites while in top ten' do
+    assert_redirected_to @controller.user_root_path
+    assert I18n.t(''), flash[]
+  end
+
+  test 'team captain can not accept requests while in top ten' do
+  end
+
+  test 'team member can not leave team while in top ten' do
+  end
 end

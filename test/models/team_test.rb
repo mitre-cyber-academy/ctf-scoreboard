@@ -65,4 +65,8 @@ class TeamTest < ActiveSupport::TestCase
     # Ineligible
     assert_equal teams(:team_three).display_name, teams(:team_three).display_name
   end
+
+  test 'in top ten' do
+    # Make sure to test with and without a solved challenge attached to a team
+  end
 end
