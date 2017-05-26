@@ -174,13 +174,12 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'team captain can not send invites while in top ten' do
+    team = teams(:team_three)
+    sign_in team.team_captain
+    patch :invite, params: { team: { user_invites_attributes: { '0': {email: 'mitrectfnewuserfake@mail.google.com'}}}, id: team}
     assert_redirected_to @controller.user_root_path
-    assert I18n.t(''), flash[]
+    assert_equal I18n.t('teams.in_top_ten'), flash[:alert]
   end
 
-  test 'team captain can not accept requests while in top ten' do
-  end
 
-  test 'team member can not leave team while in top ten' do
-  end
 end
