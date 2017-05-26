@@ -115,4 +115,12 @@ class UserRequestsControllerTest < ActionController::TestCase
       delete :destroy, params: { team_id: user_request.team, id: user_request }
     end
   end
+
+  test 'team captain can not accept requests while in top ten' do
+    user_request = user_requests(:request_five)
+    sign_in user_request.team.team_captain
+    get :accept, params: { team_id: user_request.team, id: user_request }
+    assert :success
+    assert_equal I18n.t('teams.in_top_ten'), flash[:alert]
+  end
 end
