@@ -69,15 +69,9 @@ class TeamTest < ActiveSupport::TestCase
   test 'in top ten' do
     # Make sure to test with and without a solved challenge attached to a team
     team = teams(:team_two)
-    #feed_items(:solved_challenge_five)
-    expected = true
-
-    if expected != team.in_top_ten?
-      assert_equal true, false, 'Team with solved challenge and in first place is not in top ten'
-    end
+    assert_equal true, team.in_top_ten?, 'Team with solved challenge and in first place is not in top ten'
 
     team2 = teams(:team_with_special_chars)
-    expected = false
-    assert_equal expected, team2.in_top_ten?, "Team is in top ten when it shouldn't be"
+    assert_equal false, team2.in_top_ten?, "Team is in top ten when it hasn't solved a challenge"
   end
 end
