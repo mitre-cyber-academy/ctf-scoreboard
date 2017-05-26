@@ -16,7 +16,7 @@ user_one:
   team: team_one
 
 # User with every possible piece of information provided
-user_two:
+user_two: # except team?
   full_name: User two
   email: mitrectf+user2@gmail.com
   affiliation: Industry
@@ -42,7 +42,6 @@ user_three:
 user_four:
   full_name: User four
   email: mitrectf+user4@gmail.com
-  team: team_two
   affiliation: Industry
   year_in_school: 0
   state: FL
@@ -143,4 +142,12 @@ user_on_last_team:
   confirmed_at: <%= Time.now %>
   team: last_team
 
+user_for_top_ten:
+  full_name: Top Ten
+  email: mitrectftestuser@gmail.com
+  affiliation: Industry
+  year_in_school: 0
+  state: FL
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+  confirmed_at: <%= Time.now %>
 

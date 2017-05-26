@@ -46,6 +46,12 @@ solved_challenge_two:
   flag: flag_four
   type: SolvedChallenge
 
+solved_challenge_five:
+  team: team_three
+  challenge: challenge_five_cat_two
+  flag: flag_five
+  type: SolvedChallenge
+
 feed_item_standard:
   text: text
 

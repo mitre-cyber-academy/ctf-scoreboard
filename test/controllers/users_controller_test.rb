@@ -80,4 +80,12 @@ class UsersControllerTest < ActionController::TestCase
     get :promote, params: { user_id: users(:user_two), team_id: team }
     assert_not_equal team.team_captain, users(:user_two)
   end
+
+  test 'team member can not leave team while in top ten' do
+    user = users(:user_four)
+    sign_in user
+    delete :leave_team, params: { user_id: user.id, team_id: user.team.id }
+    assert_redirected_to @controller.user_root_path
+    assert_equal I18n.t('teams.in_top_ten'), flash[:alert]
+  end
 end
