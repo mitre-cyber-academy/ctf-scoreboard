@@ -15,8 +15,8 @@ user_one:
   confirmed_at: <%= Time.now %>
   team: team_one
 
-# User with every possible piece of information provided
-user_two: # except team?
+# User with every possible piece of information provided except team
+user_two:
   full_name: User two
   email: mitrectf+user2@gmail.com
   affiliation: Industry
