@@ -7,7 +7,7 @@
   %tr
     %th.span1 Lead
     %th Email
-    %th Eligible Division
+    %th Appropriate Division
     %th.span2 Prize Eligible?
     %th Remove
     - if @team_captain
@@ -50,7 +50,7 @@
     %b=@team.division.name
     division for your team.
     - if @team.appropriate_division_level?
-      This division is appropriate for your team.
+      This division is acceptable for your team.
     - else
       Your team is not eligible to compete at this level. Consider changing your division to match the division of the most senior member of your team or removing the member(s) causing your division to be incorrect.
 %hr

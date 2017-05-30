@@ -108,6 +108,7 @@ class Team < ActiveRecord::Base
   end
 
   def update_eligibility
+    reload # SQL caching causing users to be empty when creating team making all teams ineligible
     new_eligibility = team_competing_for_prizes? && appropriate_division_level?
     # Check if eligibility is different from what is saved on the team object and
     # if it is update the team model.
