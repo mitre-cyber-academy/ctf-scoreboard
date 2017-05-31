@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
   end
 
   def deny_team_in_top_ten
-    return unless @game.before_competition? || @team&.in_top_ten?
+    return if @game.before_competition? || !@team&.in_top_ten?
     redirect_back fallback_location: user_root_path, alert: I18n.t('teams.in_top_ten')
   end
 
