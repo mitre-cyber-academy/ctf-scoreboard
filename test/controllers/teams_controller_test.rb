@@ -157,7 +157,7 @@ class TeamsControllerTest < ActionController::TestCase
     assert I18n.t('en.activerecord.errors.models.user_invite.attributes.email.uniqueness'), flash[:alert]
   end
 
-  test 'update a team' do
+  test 'update a team when game is open and team is not in top ten' do
     user = users(:user_one)
     sign_in user
     patch :update, params: { team: { team_name: 'team_one_newname', affiliation: 'school1' }, id: user.team }
@@ -181,5 +181,32 @@ class TeamsControllerTest < ActionController::TestCase
     assert_equal I18n.t('teams.in_top_ten'), flash[:alert]
   end
 
+  test 'can not update team when game is open and team is in top ten' do
+    team = teams(:team_three)
+    old_data = team.affiliation
+    sign_in team.team_captain
+    patch :update, params: { team: { team_name: 'team_three_newname', affiliation: 'i do not know' }, id: team }
+    assert_equal old_data, team.affiliation
+    assert_redirected_to @controller.user_root_path
+    assert_equal I18n.t('teams.in_top_ten'), flash[:alert]
+  end
+
+  test 'update a team when game is closed' do
+    games(:mitre_ctf_game).update_attributes( start: Time.now + 9.hours)
+    user = users(:user_one)
+    sign_in user
+    patch :update, params: { team: { team_name: 'team_one_newname', affiliation: 'school1' }, id: user.team }
+    assert_redirected_to team_path(users(:user_one).team)
+    assert I18n.t('teams.update_successful'), flash[:notice]
+  end
+
+  test 'update a team after game is closed' do
+    games(:mitre_ctf_game).update_attributes( {start: Time.now - 9.hours, stop: Time.now - 1.hours})
+    user = users(:user_one)
+    sign_in user
+    patch :update, params: { team: { team_name: 'team_one_newname', affiliation: 'school1' }, id: user.team }
+    assert_redirected_to team_path(users(:user_one).team)
+    assert I18n.t('teams.update_successful'), flash[:notice]
+  end
 
 end
