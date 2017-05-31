@@ -66,6 +66,15 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal I18n.t('teams.promoted_captain'), flash[:notice]
   end
 
+  test 'captain is not promoted' do
+    sign_in users(:full_team_user_one)
+    team = users(:full_team_user_one).team
+    get :promote, params: { user_id: users(:user_five), team_id: team } # User 5 is not on full_team
+    assert :success
+    assert_redirected_to team
+    assert_equal I18n.t('teams.cannot_promote_captain'), flash[:alert]
+  end
+
   test 'user cannot promote' do
     sign_in users(:full_team_user_five)
     team = users(:full_team_user_five).team

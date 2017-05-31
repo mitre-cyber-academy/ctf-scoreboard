@@ -40,6 +40,7 @@ en:
     invalid_permissions: 'You must first be a member of a team in order to view it.'
     captain_must_promote: 'You must promote another member of your team to captain before leaving.'
     promoted_captain: 'A new team captain has been promoted.'
+    cannot_promote_captain: 'You cannot promote this user to be the captain.'
     must_be_team_captain: 'You must be the team captain to perform this action.'
     must_be_on_team: 'You must be on a team to view other teams.'
     in_top_ten: 'This team is currently locked since it is in the top ten for its division.'

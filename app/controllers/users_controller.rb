@@ -49,8 +49,11 @@ class UsersController < ApplicationController
   # rubocop:enable MethodLength
 
   def promote
-    @team.promote(params[:user_id])
-    redirect_to @team, notice: I18n.t('teams.promoted_captain')
+    if @team.promote(params[:user_id])
+      redirect_to @team, notice: I18n.t('teams.promoted_captain')
+    else
+      redirect_to @team, alert: I18n.t('teams.cannot_promote_captain')
+    end
   end
 
   private
