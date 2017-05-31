@@ -8,8 +8,8 @@ class TeamsController < ApplicationController
   before_action :load_game, :load_message_count
   before_action :block_admin_action, only: [:create]
   before_action :check_membership, only: %i[show update destroy]
-  before_action :check_team_captain, only: %i[update edit invite]
-  before_action :update_team, :deny_team_in_top_ten, only: %i[update invite]
+  before_action :check_team_captain, :load_user_team, only: %i[update edit invite]
+  before_action :deny_team_in_top_ten, :update_team, only: %i[update invite]
 
   def new
     if !current_user.on_a_team?
@@ -46,10 +46,6 @@ class TeamsController < ApplicationController
     else
       render :new
     end
-  end
-
-  def edit
-    @team = current_user.team
   end
 
   def update
@@ -92,7 +88,10 @@ class TeamsController < ApplicationController
   # The code for inviting a user and updating a team is exactly the same, except for the actual
   # notice displayed. This allows us to preload some information for both methods without duplication.
   def update_team
-    @team = current_user.team
     @team.update_attributes(team_params)
+  end
+
+  def load_user_team
+    @team = current_user.team
   end
 end
