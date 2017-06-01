@@ -104,7 +104,9 @@ class Team < ActiveRecord::Base
   end
 
   def promote(user_id)
-    update_attributes(team_captain: users.find_by(id: user_id))
+    new_captain = users.find_by(id: user_id)
+    update_attributes(team_captain: new_captain) if new_captain
+    !new_captain.nil?
   end
 
   def update_eligibility
