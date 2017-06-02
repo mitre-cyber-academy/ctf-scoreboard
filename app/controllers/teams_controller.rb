@@ -7,16 +7,13 @@ class TeamsController < ApplicationController
   before_action :user_logged_in?, except: %i[summary]
   before_action :load_game, :load_message_count
   before_action :block_admin_action, only: [:create]
+  before_action :check_user_on_team, only: %i[new create]
   before_action :check_membership, only: %i[show update destroy]
   before_action :check_team_captain, :load_user_team, only: %i[update edit invite]
   before_action :deny_team_in_top_ten, :update_team, only: %i[update invite]
 
   def new
-    if !current_user.on_a_team?
-      @team = Team.new
-    else
-      redirect_to current_user.team, alert: I18n.t('teams.already_on_team_create')
-    end
+    @team = Team.new
   end
 
   def show
@@ -76,6 +73,10 @@ class TeamsController < ApplicationController
 
   def check_team_captain
     redirect_to user_root_path, alert: I18n.t('teams.must_be_team_captain') unless current_user.team_captain?
+  end
+
+  def check_user_on_team
+    redirect_to current_user.team, alert: I18n.t('teams.already_on_team_create') if current_user.on_a_team?
   end
 
   def check_membership
