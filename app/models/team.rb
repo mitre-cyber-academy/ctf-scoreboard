@@ -131,6 +131,8 @@ class Team < ActiveRecord::Base
     self[:team_name] + ' (ineligible)'
   end
 
+  # After remove callback passes a parameter which is the object that was just removed, we don't need it
+  # so we just throw it away
   def update_captain_and_eligibility(*)
     set_team_captain
     update_eligibility
