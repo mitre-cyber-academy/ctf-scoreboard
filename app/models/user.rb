@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
 
   after_create :create_vpn_key_request
 
+  before_destroy :leave_team_before_delete
+
+  after_update :update_team
+
   reverse_geocoded_by :latitude, :longitude do |obj, results|
     if (geo = results.first)
       obj.country = geo.country
@@ -33,7 +37,6 @@ class User < ActiveRecord::Base
   # These are things we require user to have but do not require of admins.
   with_options unless: :admin? do |user|
     user.before_save :clear_compete_for_prizes
-    user.after_save :update_team_eligibility
     user.after_create :link_to_invitations
     user.validates :full_name, :affiliation, presence: true, obscenity: true
     user.validates :state, presence: true
@@ -86,6 +89,10 @@ class User < ActiveRecord::Base
     File.write("#{save_dir}/#{key_file_name}", '') if File.directory?(save_dir)
   end
 
+  def update_team
+    team&.update_captain_and_eligibility
+  end
+
   private
 
   # If a user chooses to compete for prizes then they must be located in the US and be in school.
@@ -105,9 +112,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  # This happens after a user is saved in order to refresh the overall team eligibility based on
-  # the users choice.
-  def update_team_eligibility
-    team&.update_eligibility
+  # This should only be used when an account is being deleted, it allows the team to update internal information
+  def leave_team_before_delete
+    team&.users&.delete(self)
   end
 end

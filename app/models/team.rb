@@ -7,7 +7,8 @@ class Team < ActiveRecord::Base
   has_many :feed_items
   has_many :achievements
   has_many :solved_challenges
-  has_many :users
+  has_many :users,
+           after_remove: :update_captain_and_eligibility
   has_many :user_invites, dependent: :destroy
   has_many :user_requests, dependent: :destroy
   has_many :submitted_flags, through: :users
@@ -17,7 +18,7 @@ class Team < ActiveRecord::Base
   validates :team_name, :affiliation, presence: true, obscenity: true
   validates :team_name, uniqueness: { case_sensitive: false }
 
-  after_save :set_team_captain, :update_eligibility
+  after_save :update_captain_and_eligibility
 
   filterrific(
     available_filters: %i[
@@ -128,6 +129,11 @@ class Team < ActiveRecord::Base
   def display_name
     return self[:team_name] if eligible?
     self[:team_name] + ' (ineligible)'
+  end
+
+  def update_captain_and_eligibility(*)
+    set_team_captain
+    update_eligibility
   end
 
   private
