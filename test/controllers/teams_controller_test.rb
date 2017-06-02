@@ -36,6 +36,7 @@ class TeamsControllerTest < ActionController::TestCase
     sign_in user
     get :new
     assert_redirected_to team_path(user.team)
+    assert_equal I18n.t('teams.already_on_team_create'), flash[:alert]
   end
 
   test 'authenticated users with a team can view their team' do
@@ -95,6 +96,16 @@ class TeamsControllerTest < ActionController::TestCase
       post :create, params: { team: { team_name: 'team_one', affiliation: 'school1', division_id: divisions(:high_school) } }
     end
     assert_template :new
+  end
+
+  test 'authenticated users with a team should not be able to create new team' do
+    user = users(:user_one)
+    sign_in user
+    assert_no_difference 'Team.count', 'A Team should not be created' do
+      post :create, params: { team: { team_name: 'random_team_name', affiliation: 'school1', division_id: divisions(:high_school) } }
+    end
+    assert_redirected_to team_path(user.team)
+    assert_equal I18n.t('teams.already_on_team_create'), flash[:alert]
   end
 
   test 'a team cannot be created with the same name as another team in any case' do
