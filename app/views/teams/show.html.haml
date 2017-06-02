@@ -144,7 +144,7 @@
                 %td
                   = link_to accept_team_user_request_path(@team,current) do
                     %i.icon-ok
-                  = link_to method: :delete, data: {confirm: "Are you sure you wish to reject this request?"} do
+                  = link_to team_user_request_path(@team, current), method: :delete, data: {confirm: "Are you sure you wish to reject this request?"} do
                     %i.icon-remove
 %hr
 = render partial: 'team_summary'
