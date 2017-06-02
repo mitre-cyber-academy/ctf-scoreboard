@@ -17,10 +17,6 @@ class User < ActiveRecord::Base
 
   after_create :create_vpn_key_request
 
-  before_destroy :leave_team_before_delete
-
-  after_update :update_team
-
   reverse_geocoded_by :latitude, :longitude do |obj, results|
     if (geo = results.first)
       obj.country = geo.country
@@ -37,7 +33,9 @@ class User < ActiveRecord::Base
   # These are things we require user to have but do not require of admins.
   with_options unless: :admin? do |user|
     user.before_save :clear_compete_for_prizes
+    user.before_destroy :leave_team_before_delete
     user.after_create :link_to_invitations
+    user.after_update :update_team
     user.validates :full_name, :affiliation, presence: true, obscenity: true
     user.validates :state, presence: true
     user.validates :age, numericality: { greater_than_or_equal_to: 0, less_than: 200 }, allow_blank: true
