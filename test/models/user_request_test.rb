@@ -1,6 +1,9 @@
 require 'test_helper'
 
 class UserRequestTest < ActiveSupport::TestCase
+  def setup
+    Team.find_each{|team| Team.reset_counters team.id, :users}
+  end
 
   test 'uniqueness of pending request' do
     user_request = UserRequest.new(

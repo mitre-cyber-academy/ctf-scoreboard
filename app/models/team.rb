@@ -56,7 +56,7 @@ class Team < ApplicationRecord
 
   # A team can only consist of 5 users.
   def slots_available
-    5 - users.count
+    5 - users_count
   end
 
   def in_top_ten?

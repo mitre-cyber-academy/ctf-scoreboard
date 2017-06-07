@@ -5,6 +5,7 @@ class UserInvitesControllerTest < ActionController::TestCase
   def setup
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @request.env["HTTP_REFERER"] = 'http://test.com/'
+    Team.find_each{|team| Team.reset_counters team.id, :users}
   end
 
   test 'accept invite' do

@@ -5,6 +5,7 @@ class UserRequestsControllerTest < ActionController::TestCase
   def setup
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @request.env["HTTP_REFERER"] = 'http://test.host/'
+    Team.find_each{|team| Team.reset_counters team.id, :users}
   end
 
   test 'user cannot create a request with one already pending for same team' do
