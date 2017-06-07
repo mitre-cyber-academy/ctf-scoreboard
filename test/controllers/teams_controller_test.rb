@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class TeamsControllerTest < ActionController::TestCase
+  def setup
+    Team.find_each{|team| Team.reset_counters team.id, :users}
+  end
+
   test 'unauthenticated users should not be able to access new team page' do
     get :new
     assert_redirected_to root_path

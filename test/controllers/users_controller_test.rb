@@ -4,6 +4,7 @@ class UsersControllerTest < ActionController::TestCase
 
   def setup
     @request.env["devise.mapping"] = Devise.mappings[:user]
+    Team.find_each{|team| Team.reset_counters team.id, :users}
   end
 
   test 'can load join a team' do
