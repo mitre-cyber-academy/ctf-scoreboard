@@ -21,10 +21,11 @@
               %th Request to Join
           %tbody
             - teams.each do |team|
-              %tr
-                %td= team.team_name
-                %td= team.affiliation
-                %td= team.slots_available
-                %td= team.division.name
-                %td= button_to 'Request', team_user_requests_path(team), :class => "btn btn-default"
+              - if team.users_count != 0
+                %tr
+                  %td= team.team_name
+                  %td= team.affiliation
+                  %td= team.slots_available
+                  %td= team.division.name
+                  %td= button_to 'Request', team_user_requests_path(team), :class => "btn btn-default"
   = paginate teams # provided by kaminari
