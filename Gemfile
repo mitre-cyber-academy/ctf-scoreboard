@@ -24,6 +24,7 @@ gem 'rails', '~> 5.0.0'
 gem 'rails_admin'
 gem 'rails_email_validator'
 gem 'sentry-raven'
+gem 'whenever', '~> 0.9.7'
 
 gem 'letter_opener', group: :development
 

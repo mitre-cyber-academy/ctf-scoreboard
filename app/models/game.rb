@@ -36,4 +36,27 @@ class Game < ApplicationRecord
     time = Time.now.utc
     time < start
   end
+
+  def remind_all
+    User.all.find_each do |usr|
+      UserMailer.competition_reminder(usr).deliver_now
+    end
+  end
+
+  def send_rankings
+    teams.each do |team|
+      team.users.each do |usr|
+        UserMailer.ranking(usr).deliver_now
+      end
+    end
+  end
+
+  def request_resumes
+    teams.each do |team|
+      next unless team.in_top_ten? && !team.division.acceptable_years_in_school.include?(0)
+      team.users.each do |usr|
+        UserMailer.resume(usr).deliver_now
+      end
+    end
+  end
 end
