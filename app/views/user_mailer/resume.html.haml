@@ -1,0 +1,34 @@
+%p
+  Hello #{@user.full_name}!
+%p
+  Congratulations! Since your team was one of the top ten teams in the MITRE CTF we are requesting your resume and transcript.
+%p
+  If you are interested please send your resume and transcript to
+  = link_to 'ctf@mitre.org', 'mailto:ctf@mitre.org'
+- if @first
+  %p.pull-right#clock
+    %h4
+      #time_remaining
+  :coffeescript
+    countdown = (endTime) ->
+      diff = endTime - new Date()
+      diff = 0 if diff < 0
+      days = Math.floor(diff/1000/60/60/24)
+      diff -= days * 1000*60*60*24
+      hours = Math.floor(diff/1000/60/60)
+      diff -= hours * 1000*60*60
+      minutes = Math.floor(diff/1000/60)
+      diff -= minutes * 1000*60
+      seconds = Math.floor(diff/1000)
+      return {"days": days, "hours": hours, "minutes":minutes, "seconds":seconds}
+
+    updateClock = (clock_elem) ->
+      t = countdown(new Date(#{@end_time.to_f * 1000}))
+      clock_elem.innerHTML = 'Time Remaining: ' + t.days + 'd ' + t.hours + 'h ' + t.minutes + 'm ' + t.seconds + 's'
+      if t.total <= 0
+        clearInterval timeinterval
+      return
+
+    clock = document.getElementById('time_remaining')
+    updateClock(clock)
+    setInterval(updateClock, 1000, clock)
