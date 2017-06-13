@@ -31,6 +31,7 @@ class UserMailer < ApplicationMailer
   # Assumes user is in top ten
   def resume(user)
     @user = user
+    @first = user.team.division.ordered_teams[0].eql? user.team
     @end_time = Game.instance.stop + 2.weeks
     mail(to: @user.email, subject: 'MITRE CTF: Resume Request')
   end
