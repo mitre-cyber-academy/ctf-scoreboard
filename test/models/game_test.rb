@@ -27,4 +27,38 @@ class GameTest < ActiveSupport::TestCase
   test 'open' do
     assert_equal true, games(:mitre_ctf_game).open?
   end
+
+  test 'send reminder emails' do
+    game = games(:mitre_ctf_game)
+    before = ActionMailer::Base.deliveries.size
+    game.remind_all
+    assert_equal before + User.all.size, ActionMailer::Base.deliveries.size
+  end
+
+  test 'send ranking emails' do
+    game = games(:mitre_ctf_game)
+    before = ActionMailer::Base.deliveries.size
+    game.send_rankings
+    user_count = 0
+    Team.all.each do |team|
+      team.users.each do |*|
+        user_count = user_count + 1
+      end
+    end
+    assert_equal before + user_count, ActionMailer::Base.deliveries.size
+  end
+
+  test 'send resume emails' do
+    game = games(:mitre_ctf_game)
+    before = ActionMailer::Base.deliveries.size
+    game.request_resumes
+    user_count = 0
+    Team.all.each do |team|
+      next unless team.in_top_ten? && !team.division.acceptable_years_in_school.include?(0)
+      team.users.each do |usr|
+        user_count = user_count + 1
+      end
+    end
+    assert_equal before + user_count, ActionMailer::Base.deliveries.size
+  end
 end
