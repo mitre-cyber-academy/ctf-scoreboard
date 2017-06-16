@@ -47,18 +47,4 @@ class GameTest < ActiveSupport::TestCase
     end
     assert_equal before + user_count, ActionMailer::Base.deliveries.size
   end
-
-  test 'send resume emails' do
-    game = games(:mitre_ctf_game)
-    before = ActionMailer::Base.deliveries.size
-    game.request_resumes
-    user_count = 0
-    Team.all.each do |team|
-      next unless team.in_top_ten? && !team.division.acceptable_years_in_school.include?(0)
-      team.users.each do |usr|
-        user_count = user_count + 1
-      end
-    end
-    assert_equal before + user_count, ActionMailer::Base.deliveries.size
-  end
 end
