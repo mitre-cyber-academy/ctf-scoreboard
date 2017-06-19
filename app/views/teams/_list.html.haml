@@ -21,7 +21,7 @@
               %th Request to Join
           %tbody
             - teams.each do |team|
-              - if team.users_count != 0
+              - unless team.users.size.zero?
                 %tr
                   %td= team.team_name
                   %td= team.affiliation
