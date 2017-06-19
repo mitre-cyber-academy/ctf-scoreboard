@@ -15,7 +15,7 @@
       / Current score only exists due to the division.rb model creating it inside of
       / filter_and_sort_teams, it is used here since it saves us from doing a costly
       / score recalculation for each user.
-      - unless t.users.size.eql? 0
+      - unless t.users.size.zero?
         - score = t.current_score
         - if score > max
           - max = score

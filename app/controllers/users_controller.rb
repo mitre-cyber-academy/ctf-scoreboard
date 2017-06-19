@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   def leave_team
     is_current_captain = @team.team_captain&.id.eql?(params[:user_id].to_i)
 
-    if is_current_captain && @team.users_count > 1
+    if is_current_captain && @team.users.size > 1
       redirect_to @team, alert: I18n.t('teams.captain_must_promote')
     else
       @team.users.delete(params[:user_id])
