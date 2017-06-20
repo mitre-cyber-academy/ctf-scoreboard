@@ -159,8 +159,12 @@ GEM
     passenger (5.1.4)
       rack
       rake (>= 0.8.1)
+    pdf-core (0.7.0)
     pg (0.20.0)
     powerpack (0.1.1)
+    prawn (2.2.2)
+      pdf-core (~> 0.7.0)
+      ttfunk (~> 1.5)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -265,6 +269,7 @@ GEM
     thread_safe (0.3.6)
     tilt (2.0.7)
     tins (1.14.0)
+    ttfunk (1.5.1)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
     uglifier (3.2.0)
@@ -304,6 +309,7 @@ DEPENDENCIES
   paperclip
   passenger
   pg
+  prawn
   pry
   rails (~> 5.0.0)
   rails-controller-testing
