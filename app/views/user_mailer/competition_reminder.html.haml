@@ -1,10 +1,9 @@
 %p
   Hello #{@user.full_name}!
-%p
-  This is a reminder for the upcoming MITRE CTF which will start at #{@game.start}
 %p.pull-right#clock
-  %h4
+  %aS
     #time_remaining
+      This is a reminder for the upcoming MITRE CTF which will start at #{@game.start}, which is in
 %p Click the link below to login and check your account
 %p #{link_to 'MITRE CTF', home_index_url}.
 :coffeescript
@@ -22,7 +21,7 @@
 
   updateClock = (clock_elem) ->
     t = countdown(new Date(#{@game.start.to_f * 1000}))
-    clock_elem.innerHTML = 'Time Remaining: ' + t.days + 'd ' + t.hours + 'h ' + t.minutes + 'm ' + t.seconds + 's'
+    clock_elem.innerHTML = 'This is a reminder for the upcoming MITRE CTF which will start at #{@game.start}, which is in <b>' + t.days + 'd ' + t.hours + 'h ' + t.minutes + 'm ' + t.seconds + 's</b>'
     if t.total <= 0
       clearInterval timeinterval
     return

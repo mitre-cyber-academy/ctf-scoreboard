@@ -23,16 +23,11 @@ class UserMailer < ApplicationMailer
   # Assumes user is on a team
   def ranking(user)
     @user = user
+    @team = @user.team
     @div = user.team.division
-    @rank = 1 + (@div.ordered_teams.index user.team)
-    mail(to: @user.email, subject: 'MITRE CTF: Competition Ranking')
-  end
+    @rank = 1 + (@div.ordered_teams.index @team)
 
-  # Assumes user is in top ten
-  def resume(user)
-    @user = user
-    @first = user.team.division.ordered_teams[0].eql? user.team
-    @end_time = Game.instance.stop + 2.weeks
-    mail(to: @user.email, subject: 'MITRE CTF: Resume Request')
+    attachments['Competition Certificate.pdf'] = File.read((CertificateGenerator.new.path_generator user))
+    mail(to: @user.email, subject: 'MITRE CTF: Congratulations!')
   end
 end
