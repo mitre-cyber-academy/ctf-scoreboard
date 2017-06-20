@@ -12,6 +12,7 @@ class UserMailerTest < ActionMailer::TestCase
   def setup
     # Is there a sane way to check to see if the URL provided is right without
     # typing the whole email in HTML?
+    CertificateGenerator.new.generate_all_certs
     @inv_email_body = strip_tags("Hello #{user_invites(:invite_one).email}! You have been
                    invited to join the team #{user_invites(:invite_one).team.team_name}
                    for the upcoming MITRE CTF Click the link below to register
@@ -23,15 +24,10 @@ class UserMailerTest < ActionMailer::TestCase
                    Click the link below to view and accept or reject the request.
                    #{link_to 'View Team Dashboard', team_url(user_requests(:request_one).team)}").squish
     @remind_email_body = strip_tags("Hello #{users(:user_one).full_name}! This is a reminder for the
-                   upcoming MITRE CTF which will start at #{games(:mitre_ctf_game).start}
+                   upcoming MITRE CTF which will start at #{games(:mitre_ctf_game).start}, which is in
                    Click the link below to login and check your account #{link_to 'MITRE CTF', home_index_url}.").squish
-    @rank_email_body = strip_tags("Hello #{users(:user_one).full_name}! Congratulations on completing the MITRE CTF.
-                   Your team came ranked #{1 + (divisions(:high_school).ordered_teams.index users(:user_one).team)}
-                   in the #{divisions(:high_school).name} division.").squish
-    @resume_email_body = strip_tags("Hello #{users(:user_one).full_name}! Congratulations!
-                   Since your team was one of the top ten teams in the MITRE CTF we are requesting your resume and transcript.
-                   If you are interested please send your resume and transcript to
-                   #{link_to 'ctf@mitre.org', 'mailto:ctf@mitre.org'}").squish
+    @rank_email_body = strip_tags("Hello #{users(:user_one).full_name}! Congratulations on completing the MITRE CTF!
+                   Your team, #{users(:user_one).team.team_name} came ranked #{1 + (divisions(:high_school).ordered_teams.index users(:user_one).team)}.").squish
   end
 
   test 'invite' do
@@ -77,18 +73,7 @@ class UserMailerTest < ActionMailer::TestCase
 
     assert_equal ['do-not-reply@mitrecyberacademy.org'], email.from
     assert_equal ['mitrectf+user1test@gmail.com'], email.to
-    assert_equal 'MITRE CTF: Competition Ranking', email.subject
-    assert_equal @rank_email_body, strip_tags(email.body.to_s).squish
-  end
-
-  test 'resume' do
-    email = UserMailer.resume(users(:user_one)).deliver_now
-
-    assert_not ActionMailer::Base.deliveries.empty?
-
-    assert_equal ['do-not-reply@mitrecyberacademy.org'], email.from
-    assert_equal ['mitrectf+user1test@gmail.com'], email.to
-    assert_equal 'MITRE CTF: Resume Request', email.subject
-    assert_equal @resume_email_body, strip_tags(email.body.to_s).squish
+    assert_equal 'MITRE CTF: Congratulations!', email.subject
+    assert_includes (strip_tags(email.body.parts[0].to_s).squish.to_s), @rank_email_body
   end
 end
