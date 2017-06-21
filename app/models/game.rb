@@ -45,9 +45,9 @@ class Game < ApplicationRecord
 
   def send_rankings
     CertificateGenerator.new.generate_all_certs
-    teams.each do |team|
+    teams.each_with_index do |team, index|
       team.users.each do |usr|
-        UserMailer.ranking(usr).deliver_now
+        UserMailer.ranking(usr, index + 1).deliver_now
       end
     end
   end

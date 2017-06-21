@@ -61,8 +61,8 @@ achieving #{@score} points and finishing #{@rank} out of #{division_team_count} 
 
   def generate_all_certs
     Division.all.find_each do |division|
-      division.ordered_teams.each do |team|
-        help = Helper.new team, 1 + (division.ordered_teams.index team)
+      division.ordered_teams.each_with_index do |team, index|
+        help = Helper.new team, 1 + index
         help.generate_user_certificates(division.teams.size)
       end
     end

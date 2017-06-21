@@ -21,11 +21,12 @@ class UserMailer < ApplicationMailer
   end
 
   # Assumes user is on a team
-  def ranking(user)
+  def ranking(user, rank = nil)
     @user = user
     @team = @user.team
     @div = user.team.division
-    @rank = 1 + (@div.ordered_teams.index @team)
+    rank = 1 + (@div.ordered_teams.index @team) if rank.nil?
+    @rank = rank
 
     attachments['Competition Certificate.pdf'] = File.read((CertificateGenerator.new.path_generator user))
     mail(to: @user.email, subject: 'MITRE CTF: Congratulations!')
