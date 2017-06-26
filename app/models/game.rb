@@ -43,12 +43,20 @@ class Game < ApplicationRecord
     end
   end
 
-  def send_rankings
-    CertificateGenerator.new.generate_all_certs
-    teams.each_with_index do |team, index|
-      team.users.each do |usr|
-        UserMailer.ranking(usr, index + 1).deliver_now
+  def generate_completion_certs(send_email = true) # hit all divisions and iterate over all teams to create certs
+    divisions.each do |div|
+      size = div.teams.size
+      div.ordered_teams.each_with_index do |team, index|
+        team.generate_certs index + 1, size, send_email unless team.users.size.zero?
       end
+    end
+  end
+
+  def generate_certificate_header(doc) # generates the top of the certificate when given a Prawn Document
+    doc.font('Helvetica', size: 28, style: :bold) do
+      doc.text name.to_s, color: '005BA1', align: :center, leading: 8
+      doc.text "#{start.day}-#{stop.day} #{I18n.t('date.month_names')[start.month]} #{start.year}",
+               color: '005BA1', align: :center
     end
   end
 end

@@ -91,6 +91,16 @@ class User < ApplicationRecord
     team&.update_captain_and_eligibility
   end
 
+  def transform(display_name = full_name)
+    temp = display_name.dup
+    temp.downcase!
+    temp.tr! ' ', '_'
+    temp.tr! '@', 'a'
+    temp.tr! '$', 's'
+    temp.gsub!(/[^a-z0-9_]/, '')
+    temp
+  end
+
   private
 
   # If a user chooses to compete for prizes then they must be located in the US and be in school.
