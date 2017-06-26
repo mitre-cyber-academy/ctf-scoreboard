@@ -105,4 +105,8 @@ class UserTest < ActiveSupport::TestCase
     assert user.geocoded?
     assert_equal 'United States', user.country
   end
+
+  test 'transform replaces bad characters' do
+    assert_equal 'abcs_123_', (users(:user_one).transform'@Bc$_#123!%^&*()] [')
+  end
 end

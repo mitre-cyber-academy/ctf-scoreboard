@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TeamsControllerTest < ActionController::TestCase
   def setup
-    Team.find_each{|team| Team.reset_counters team.id, :users}
+    Game.instance.reload_user_count
   end
 
   test 'unauthenticated users should not be able to access new team page' do

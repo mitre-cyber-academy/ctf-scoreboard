@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserInviteTest < ActiveSupport::TestCase
   def setup
-    Team.find_each{|team| Team.reset_counters team.id, :users}
+    Game.instance.reload_user_count
   end
 
   test 'send email' do

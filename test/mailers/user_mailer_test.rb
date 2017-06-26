@@ -12,7 +12,8 @@ class UserMailerTest < ActionMailer::TestCase
   def setup
     # Is there a sane way to check to see if the URL provided is right without
     # typing the whole email in HTML?
-    CertificateGenerator.new.generate_all_certs
+    Game.instance.reload_user_count
+    Game.instance.generate_completion_certs false
     @inv_email_body = strip_tags("Hello #{user_invites(:invite_one).email}! You have been
                    invited to join the team #{user_invites(:invite_one).team.team_name}
                    for the upcoming MITRE CTF Click the link below to register
@@ -67,13 +68,16 @@ class UserMailerTest < ActionMailer::TestCase
   end
 
   test 'ranking' do
-    email = UserMailer.ranking(users(:user_one)).deliver_now
+    user = users(:user_one)
+    email = UserMailer.ranking(user, path:
+                               Rails.root.to_s + '/tmp/high_school-certificates/team_one/user_one.pdf').deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
 
     assert_equal ['do-not-reply@mitrecyberacademy.org'], email.from
     assert_equal ['mitrectf+user1test@gmail.com'], email.to
     assert_equal 'MITRE CTF: Congratulations!', email.subject
+    assert_equal true, email.has_attachments?
     assert_includes (strip_tags(email.body.parts[0].to_s).squish.to_s), @rank_email_body
   end
 end
