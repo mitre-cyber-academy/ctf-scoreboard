@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Whenever a user requests to join a team a new user request is created.
-class UserRequest < ActiveRecord::Base
+class UserRequest < ApplicationRecord
   belongs_to :team, required: true
   belongs_to :user, required: true
 

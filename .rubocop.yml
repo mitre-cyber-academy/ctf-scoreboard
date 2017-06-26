@@ -12,7 +12,5 @@ Metrics/LineLength:
   Max: 120
 # Disable AmbiguousBlockAssociation since it is causing a bunch of irrelevant errors on
 # rubocop 0.48.1, this can be re-enabled once we are on a newer version of rubocop
-Lint/AmbiguousBlockAssociation:
-  Enabled: false
 Documentation:
   Enabled: false

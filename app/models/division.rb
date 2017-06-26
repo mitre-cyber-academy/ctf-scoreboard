@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Division < ActiveRecord::Base
+class Division < ApplicationRecord
   belongs_to :game, required: true
   has_many :teams, dependent: :destroy
   has_many :feed_items

@@ -2,7 +2,7 @@
 
 # User model, uses devise to manage registrations. Each user has a team reference which is
 # set to nil until they are added to a team.
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   has_paper_trail
 
   belongs_to :team

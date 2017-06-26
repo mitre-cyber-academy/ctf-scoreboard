@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Team model for holding the main user list and all invites and requests to a team.
-class Team < ActiveRecord::Base
+class Team < ApplicationRecord
   has_paper_trail
 
   has_many :feed_items

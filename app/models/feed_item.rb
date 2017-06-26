@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FeedItem < ActiveRecord::Base
+class FeedItem < ApplicationRecord
   belongs_to :team, required: true
   belongs_to :user
   belongs_to :challenge

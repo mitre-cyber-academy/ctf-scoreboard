@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Game < ActiveRecord::Base
+class Game < ApplicationRecord
   has_many :divisions
   has_many :teams, through: :divisions
   has_many :feed_items, through: :divisions

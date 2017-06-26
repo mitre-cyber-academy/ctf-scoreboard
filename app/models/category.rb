@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Category < ActiveRecord::Base
+class Category < ApplicationRecord
   belongs_to :game, required: true
   has_many :challenges
 
