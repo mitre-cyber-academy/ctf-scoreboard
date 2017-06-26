@@ -138,6 +138,55 @@ class Team < ApplicationRecord
     update_eligibility
   end
 
+  def generate_certs(rank, total, send_email) # iterate over all users to create certs and send ranking email
+    @template_file = Rails.root.to_s + '/templates/ctf-certificate-template.jpg'
+    team_cert_directory = make_directories
+    users.each do |user|
+      path = generate_certificate(user, team_cert_directory, rank, total)
+      UserMailer.ranking(user, rank: rank, path: path).deliver_now if send_email
+    end
+  end
+
+  def generate_certificate(user, directory, rank, total) # generate cert for specific user
+    dimensions = [720, 540]
+    file_name = "#{directory}/#{user.transform(user.full_name)}.pdf"
+    Prawn::Document.generate(file_name, background: @template_file, page_size: dimensions, margin: 0) do |doc|
+      doc.image @template_file, at: [0, dimensions[1]], fit: dimensions
+      doc.bounding_box([55, 450], width: 640, height: 200) do
+        Game.instance.generate_certificate_header doc
+      end
+      generate_certificate_body doc, user.full_name, rank, total
+    end
+    file_name
+  end
+
+  def generate_certificate_body(doc, username, rank, total) # generates the body of the certificate
+    doc.bounding_box([55, 200], width: 640, height: 200) do
+      doc.font('Helvetica', size: 18, style: :bold) do
+        doc.text "This is to certify that #{username}", color: '005BA1', align: :center, leading: 8
+        doc.text "successfully competed as a member of Team #{team_name},
+achieving #{score} points and finishing #{rank} out of #{total} teams.", color: '005BA1', align: :center
+      end
+    end
+  end
+
+  def make_directories # creates division and team directories unless they already exist
+    make_team_directory make_division_directory
+  end
+
+  def make_division_directory
+    certs_directory = Rails.root.to_s + "/tmp/#{users[0].transform division.name}-certificates"
+    Dir.mkdir(certs_directory) unless Dir.exist?(certs_directory)
+    certs_directory
+  end
+
+  def make_team_directory(certs_directory)
+    team_name_rmslashes = (users[0].transform team_name).delete("\/")
+    team_cert_directory = "#{certs_directory}/#{team_name_rmslashes}"
+    Dir.mkdir(team_cert_directory) unless Dir.exist?(team_cert_directory)
+    team_cert_directory
+  end
+
   private
 
   # If a team doesn't have a team captain but does have a user, set the team captain to the first user.
