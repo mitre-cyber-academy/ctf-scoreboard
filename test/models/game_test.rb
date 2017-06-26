@@ -2,6 +2,10 @@ require 'test_helper'
 
 class GameTest < ActiveSupport::TestCase
 
+  def setup
+    Game.instance.reload_user_count
+  end
+
   test 'instance is singleton' do
     game = Game.new(
       name: 'game',
@@ -38,7 +42,7 @@ class GameTest < ActiveSupport::TestCase
   test 'send ranking emails' do
     game = games(:mitre_ctf_game)
     before = ActionMailer::Base.deliveries.size
-    game.send_rankings
+    game.generate_completion_certs
     user_count = 0
     Team.all.each do |team|
       team.users.each do |*|
@@ -46,5 +50,19 @@ class GameTest < ActiveSupport::TestCase
       end
     end
     assert_equal before + user_count, ActionMailer::Base.deliveries.size
+  end
+
+  test 'generate all certs' do
+    game = games(:mitre_ctf_game)
+    game.generate_completion_certs false
+    Division.all.find_each do |division|
+      division.ordered_teams.each do |team|
+        team.users.each do |user|
+          user.reload
+          assert_equal true, (File.exist? (Rails.root.to_s +
+              "/tmp/#{user.transform division.name}-certificates/#{(user.transform team.team_name).delete("\/")}/#{user.transform}.pdf"))
+        end
+      end
+    end
   end
 end
