@@ -8,6 +8,8 @@ AllCops:
     - 'vendor/**/*'
 Rails:
   Enabled: true
+ClassLength:
+  Max: 150
 Metrics/LineLength:
   Max: 120
 # Disable AmbiguousBlockAssociation since it is causing a bunch of irrelevant errors on
