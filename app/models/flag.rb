@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Flag < ActiveRecord::Base
+class Flag < ApplicationRecord
   belongs_to :challenge, inverse_of: :flags
 
   has_many :solved_challenges
