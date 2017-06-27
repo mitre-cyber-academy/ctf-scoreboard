@@ -55,12 +55,11 @@ class GameTest < ActiveSupport::TestCase
   test 'generate all certs' do
     game = games(:mitre_ctf_game)
     game.generate_completion_certs false
-    Division.all.find_each do |division|
+    game.divisions.each do |division|
       division.ordered_teams.each do |team|
         team.users.each do |user|
           user.reload
-          assert_equal true, (File.exist? (Rails.root.to_s +
-              "/tmp/#{user.transform division.name}-certificates/#{(user.transform team.team_name).delete("\/")}/#{user.transform}.pdf"))
+          assert_equal true, (File.exist? (Rails.root.join 'tmp', game.transform( division.name) + '-certificates', game.transform(team.team_name), game.transform( user.full_name) + '.pdf'))
         end
       end
     end

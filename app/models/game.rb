@@ -61,7 +61,7 @@ class Game < ApplicationRecord
   end
 
   def reload_user_count # reload user_count counter_cache in team
-    Team.find_each do |team|
+    teams.each do |team|
       Team.reset_counters team.id, :users
     end
   end
