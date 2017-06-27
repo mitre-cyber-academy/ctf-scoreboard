@@ -3,7 +3,7 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
-  def transform(name)
+  def self.transform(name)
     temp = name.dup
     temp.downcase!
     temp.tr! ' ', '_'
