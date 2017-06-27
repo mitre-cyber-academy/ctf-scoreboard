@@ -4,7 +4,6 @@ class UsersControllerTest < ActionController::TestCase
 
   def setup
     @request.env["devise.mapping"] = Devise.mappings[:user]
-    Game.instance.reload_user_count
   end
 
   test 'can load join a team' do

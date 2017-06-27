@@ -1,11 +1,6 @@
 require 'test_helper'
 
 class GameTest < ActiveSupport::TestCase
-
-  def setup
-    Game.instance.reload_user_count
-  end
-
   test 'instance is singleton' do
     game = Game.new(
       name: 'game',

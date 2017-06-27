@@ -5,7 +5,6 @@ class UserInvitesControllerTest < ActionController::TestCase
   def setup
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @request.env["HTTP_REFERER"] = 'http://test.com/'
-    Game.instance.reload_user_count
   end
 
   test 'accept invite' do

@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class UserRequestTest < ActiveSupport::TestCase
-  def setup
-    Game.instance.reload_user_count
-  end
-
   test 'uniqueness of pending request' do
     user_request = UserRequest.new(
         team: teams(:team_one),

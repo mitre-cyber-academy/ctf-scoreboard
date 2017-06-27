@@ -73,9 +73,9 @@ class Team < ApplicationRecord
     users.collect(&:compete_for_prizes).uniq.eql? [true]
   end
 
-  # If no slots are available then mark the team as full.
+  # If no slots are available then mark the team as full.  Makes new query to make sure result is accurate
   def full?
-    slots_available.eql? 0
+    users.count.eql? 5
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -138,9 +138,10 @@ class Team < ApplicationRecord
     update_eligibility
   end
 
-  def generate_certs(rank, total, send_email) # iterate over all users to create certs and send ranking email
+  # iterate over all users to create completion certs and maybe send ranking email
+  def generate_completion_certificates(rank, total, send_email)
     @template_file = Rails.root.join 'templates', 'ctf-certificate-template.jpg'
-    team_cert_directory = make_directories
+    team_cert_directory = make_completion_cert_directories
     users.each do |user|
       path = generate_certificate(user, team_cert_directory, rank, total)
       UserMailer.ranking(user, rank, path).deliver_now if send_email
@@ -170,16 +171,17 @@ achieving #{score} points and finishing #{rank} out of #{total} teams.", color: 
     end
   end
 
-  def make_directories # creates division and team directories unless they already exist
+  def make_completion_cert_directories # creates division and team directories unless they already exist
     make_team_directory make_division_directory
   end
 
-  def make_division_directory
+  def make_division_directory # creates division directory for storing completion certificates if it does not exist
     certs_directory = Rails.root.join 'tmp', self.class.transform(division.name) + '-certificates'
     Dir.mkdir(certs_directory) unless Dir.exist?(certs_directory)
     certs_directory
   end
 
+  # creates team directory for storing completion certificates if it does not exist
   def make_team_directory(certs_directory)
     team_cert_directory = certs_directory.join self.class.transform team_name
     Dir.mkdir(team_cert_directory) unless Dir.exist?(team_cert_directory)

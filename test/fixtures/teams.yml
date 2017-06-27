@@ -6,12 +6,14 @@ team_one:
   team_captain: user_one
   eligible: false
   division: high_school
+  users_count: 1
 
 team_two:
   team_name: team_two
   affiliation: school2
   eligible: false
   division: college
+  users_count: 0
 
 team_three:
   team_name: team_three
@@ -19,6 +21,7 @@ team_three:
   team_captain: user_four
   eligible: true
   division: professional
+  users_count: 3
 
 full_team:
   team_name: full_team
@@ -26,6 +29,7 @@ full_team:
   team_captain: full_team_user_one
   eligible: true
   division: high_school
+  users_count: 5
 
 team_with_special_chars:
   team_name: $0m3Thing @mazing
@@ -33,6 +37,7 @@ team_with_special_chars:
   team_captain: user_on_team_with_special_chars
   eligible: true
   division: high_school
+  users_count: 1
 
 last_team:
   team_name: Last Team
@@ -40,6 +45,7 @@ last_team:
   team_captain: user_on_last_team
   eligible: true
   division: high_school
+  users_count: 1
 
 team_four:
   team_name: team_four
@@ -47,6 +53,7 @@ team_four:
   team_captain: user_four
   eligible: true
   division: high_school
+  users_count: 0
 
 team_five:
   team_name: team_five
@@ -54,6 +61,7 @@ team_five:
   team_captain: user_four
   eligible: true
   division: high_school
+  users_count: 0
 
 team_six:
   team_name: team_six
@@ -61,6 +69,7 @@ team_six:
   team_captain: user_four
   eligible: true
   division: high_school
+  users_count: 0
 
 team_seven:
   team_name: team_seven
@@ -68,6 +77,7 @@ team_seven:
   team_captain: user_four
   eligible: true
   division: high_school
+  users_count: 0
 
 team_eight:
   team_name: team_eight
@@ -75,6 +85,7 @@ team_eight:
   team_captain: user_four
   eligible: true
   division: high_school
+  users_count: 0
 
 team_nine:
   team_name: team_nine
@@ -82,6 +93,7 @@ team_nine:
   team_captain: user_four
   eligible: true
   division: high_school
+  users_count: 0
 
 team_ten:
   team_name: team_ten
@@ -89,6 +101,7 @@ team_ten:
   team_captain: user_four
   eligible: true
   division: high_school
+  users_count: 0
 
 team_eleven:
   team_name: team_eleven
@@ -96,3 +109,4 @@ team_eleven:
   team_captain: user_eleven
   eligible: true
   division: high_school
+  users_count: 0

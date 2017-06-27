@@ -47,7 +47,7 @@ class Game < ApplicationRecord
     divisions.each do |div|
       size = div.teams.size
       div.ordered_teams.each_with_index do |team, index|
-        team.generate_certs index + 1, size, send_email unless team.users.size.zero?
+        team.generate_completion_certificates index + 1, size, send_email unless team.users.size.zero?
       end
     end
   end
