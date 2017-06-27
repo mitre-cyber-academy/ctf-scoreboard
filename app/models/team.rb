@@ -139,17 +139,17 @@ class Team < ApplicationRecord
   end
 
   def generate_certs(rank, total, send_email) # iterate over all users to create certs and send ranking email
-    @template_file = Rails.root.to_s + '/templates/ctf-certificate-template.jpg'
+    @template_file = Rails.root.join 'templates', 'ctf-certificate-template.jpg'
     team_cert_directory = make_directories
     users.each do |user|
       path = generate_certificate(user, team_cert_directory, rank, total)
-      UserMailer.ranking(user, rank: rank, path: path).deliver_now if send_email
+      UserMailer.ranking(user, rank, path).deliver_now if send_email
     end
   end
 
   def generate_certificate(user, directory, rank, total) # generate cert for specific user
     dimensions = [720, 540]
-    file_name = "#{directory}/#{user.transform(user.full_name)}.pdf"
+    file_name = directory.join transform(user.full_name) + '.pdf'
     Prawn::Document.generate(file_name, background: @template_file, page_size: dimensions, margin: 0) do |doc|
       doc.image @template_file, at: [0, dimensions[1]], fit: dimensions
       doc.bounding_box([55, 450], width: 640, height: 200) do
@@ -175,14 +175,13 @@ achieving #{score} points and finishing #{rank} out of #{total} teams.", color: 
   end
 
   def make_division_directory
-    certs_directory = Rails.root.to_s + "/tmp/#{users[0].transform division.name}-certificates"
+    certs_directory = Rails.root.join 'tmp', (transform division.name) + '-certificates'
     Dir.mkdir(certs_directory) unless Dir.exist?(certs_directory)
     certs_directory
   end
 
   def make_team_directory(certs_directory)
-    team_name_rmslashes = (users[0].transform team_name).delete("\/")
-    team_cert_directory = "#{certs_directory}/#{team_name_rmslashes}"
+    team_cert_directory = certs_directory.join transform team_name
     Dir.mkdir(team_cert_directory) unless Dir.exist?(team_cert_directory)
     team_cert_directory
   end

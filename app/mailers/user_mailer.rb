@@ -21,7 +21,7 @@ class UserMailer < ApplicationMailer
   end
 
   # Assumes user is on a team
-  def ranking(user, rank: nil, path: nil)
+  def ranking(user, rank, path)
     @user = user
     @team = @user.team
     @div = user.team.division

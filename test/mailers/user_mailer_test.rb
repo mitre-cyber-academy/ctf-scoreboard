@@ -69,8 +69,8 @@ class UserMailerTest < ActionMailer::TestCase
 
   test 'ranking' do
     user = users(:user_one)
-    email = UserMailer.ranking(user, path:
-                               Rails.root.to_s + '/tmp/high_school-certificates/team_one/user_one.pdf').deliver_now
+    email = UserMailer.ranking(user, 1 + (divisions(:high_school).ordered_teams.index users(:user_one).team),
+                               Rails.root.join( 'tmp', 'high_school-certificates', 'team_one', 'user_one.pdf')).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
 
@@ -78,6 +78,6 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal ['mitrectf+user1test@gmail.com'], email.to
     assert_equal 'MITRE CTF: Congratulations!', email.subject
     assert_equal true, email.has_attachments?
-    assert_includes (strip_tags(email.body.parts[0].to_s).squish.to_s), @rank_email_body
+    assert_includes (strip_tags(email.body.parts.first.to_s).squish.to_s), @rank_email_body
   end
 end
