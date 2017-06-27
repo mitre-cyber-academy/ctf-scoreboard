@@ -107,6 +107,6 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'transform replaces bad characters' do
-    assert_equal 'abcs_123_', (users(:user_one).transform'@Bc$_#123!%^&*()] [/\\')
+    assert_equal 'abcs_123_', (ApplicationRecord.transform'@Bc$_#123!%^&*()] [/\\')
   end
 end

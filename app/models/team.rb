@@ -149,7 +149,7 @@ class Team < ApplicationRecord
 
   def generate_certificate(user, directory, rank, total) # generate cert for specific user
     dimensions = [720, 540]
-    file_name = directory.join transform(user.full_name) + '.pdf'
+    file_name = directory.join self.class.transform(user.full_name) + '.pdf'
     Prawn::Document.generate(file_name, background: @template_file, page_size: dimensions, margin: 0) do |doc|
       doc.image @template_file, at: [0, dimensions[1]], fit: dimensions
       doc.bounding_box([55, 450], width: 640, height: 200) do
@@ -175,13 +175,13 @@ achieving #{score} points and finishing #{rank} out of #{total} teams.", color: 
   end
 
   def make_division_directory
-    certs_directory = Rails.root.join 'tmp', (transform division.name) + '-certificates'
+    certs_directory = Rails.root.join 'tmp', self.class.transform(division.name) + '-certificates'
     Dir.mkdir(certs_directory) unless Dir.exist?(certs_directory)
     certs_directory
   end
 
   def make_team_directory(certs_directory)
-    team_cert_directory = certs_directory.join transform team_name
+    team_cert_directory = certs_directory.join self.class.transform team_name
     Dir.mkdir(team_cert_directory) unless Dir.exist?(team_cert_directory)
     team_cert_directory
   end
