@@ -32,6 +32,7 @@ class UsersController < ApplicationController
   def leave_team
     is_current_captain = @team.team_captain&.id.eql?(params[:user_id].to_i)
 
+    # Uses count to query database and get the most accurate count so user can't make a team empty
     if is_current_captain && @team.users.count > 1
       redirect_to @team, alert: I18n.t('teams.captain_must_promote')
     else
