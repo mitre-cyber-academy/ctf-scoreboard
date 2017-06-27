@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class UserInviteTest < ActiveSupport::TestCase
-  def setup
-    Game.instance.reload_user_count
-  end
-
   test 'send email' do
     assert_difference 'ActionMailer::Base.deliveries.size', +1 do
       user_invites(:invite_one).send(:send_email)

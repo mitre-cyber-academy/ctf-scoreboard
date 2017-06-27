@@ -12,7 +12,6 @@ class UserMailerTest < ActionMailer::TestCase
   def setup
     # Is there a sane way to check to see if the URL provided is right without
     # typing the whole email in HTML?
-    Game.instance.reload_user_count
     Game.instance.generate_completion_certs false
     @inv_email_body = strip_tags("Hello #{user_invites(:invite_one).email}! You have been
                    invited to join the team #{user_invites(:invite_one).team.team_name}
