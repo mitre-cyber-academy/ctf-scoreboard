@@ -177,14 +177,14 @@ class Team < ApplicationRecord
 
   def make_division_directory # creates division directory for storing completion certificates if it does not exist
     certs_directory = Rails.root.join 'tmp', self.class.transform(division.name) + '-certificates'
-    Dir.mkdir_p(certs_directory) unless Dir.exist?(certs_directory)
+    FileUtils.mkdir_p(certs_directory) unless Dir.exist?(certs_directory)
     certs_directory
   end
 
   # creates team directory for storing completion certificates if it does not exist
   def make_team_directory(certs_directory)
     team_cert_directory = certs_directory.join self.class.transform team_name
-    Dir.mkdir_p(team_cert_directory) unless Dir.exist?(team_cert_directory)
+    FileUtils.mkdir_p(team_cert_directory) unless Dir.exist?(team_cert_directory)
     team_cert_directory
   end
 
