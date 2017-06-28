@@ -166,7 +166,7 @@ class Team < ApplicationRecord
       doc.font('Helvetica', size: 18, style: :bold) do
         doc.text "This is to certify that #{username}", color: '005BA1', align: :center, leading: 8
         doc.text "successfully competed as a member of Team #{team_name},
-achieving #{score} points and finishing #{rank} out of #{total} teams.", color: '005BA1', align: :center
+          achieving #{score} points and finishing #{rank} out of #{total} teams.", color: '005BA1', align: :center
       end
     end
   end
