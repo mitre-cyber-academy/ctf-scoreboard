@@ -50,7 +50,6 @@ last_team:
 team_four:
   team_name: team_four
   affiliation: school4
-  team_captain: user_four
   eligible: true
   division: high_school
   users_count: 0
@@ -58,7 +57,6 @@ team_four:
 team_five:
   team_name: team_five
   affiliation: school5
-  team_captain: user_four
   eligible: true
   division: high_school
   users_count: 0
@@ -66,7 +64,6 @@ team_five:
 team_six:
   team_name: team_six
   affiliation: school6
-  team_captain: user_four
   eligible: true
   division: high_school
   users_count: 0
@@ -74,7 +71,6 @@ team_six:
 team_seven:
   team_name: team_seven
   affiliation: school7
-  team_captain: user_four
   eligible: true
   division: high_school
   users_count: 0
@@ -82,7 +78,6 @@ team_seven:
 team_eight:
   team_name: team_eight
   affiliation: school8
-  team_captain: user_four
   eligible: true
   division: high_school
   users_count: 0
@@ -90,7 +85,6 @@ team_eight:
 team_nine:
   team_name: team_nine
   affiliation: school9
-  team_captain: user_four
   eligible: true
   division: high_school
   users_count: 0
@@ -98,7 +92,6 @@ team_nine:
 team_ten:
   team_name: team_ten
   affiliation: school10
-  team_captain: user_four
   eligible: true
   division: high_school
   users_count: 0
@@ -106,7 +99,6 @@ team_ten:
 team_eleven:
   team_name: team_eleven
   affiliation: school11
-  team_captain: user_eleven
   eligible: true
   division: high_school
   users_count: 0
