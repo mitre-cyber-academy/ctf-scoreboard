@@ -164,8 +164,8 @@ class Team < ApplicationRecord
   def generate_certificate_body(doc, username, rank, total) # generates the body of the certificate
     doc.bounding_box([55, 200], width: 640, height: 200) do
       doc.font('Helvetica', size: 18, style: :bold) do
-        doc.text "This is to certify that #{username}", color: '005BA1', align: :center, leading: 8
-        doc.text "successfully competed as a member of Team #{team_name},
+        doc.text "This is to certify that #{username}
+          successfully competed as a member of Team #{team_name},
           achieving #{score} points and finishing #{rank} out of #{total} teams.", color: '005BA1', align: :center
       end
     end
@@ -177,14 +177,14 @@ class Team < ApplicationRecord
 
   def make_division_directory # creates division directory for storing completion certificates if it does not exist
     certs_directory = Rails.root.join 'tmp', self.class.transform(division.name) + '-certificates'
-    Dir.mkdir(certs_directory) unless Dir.exist?(certs_directory)
+    Dir.mkdir_p(certs_directory) unless Dir.exist?(certs_directory)
     certs_directory
   end
 
   # creates team directory for storing completion certificates if it does not exist
   def make_team_directory(certs_directory)
     team_cert_directory = certs_directory.join self.class.transform team_name
-    Dir.mkdir(team_cert_directory) unless Dir.exist?(team_cert_directory)
+    Dir.mkdir_p(team_cert_directory) unless Dir.exist?(team_cert_directory)
     team_cert_directory
   end
 
