@@ -36,7 +36,7 @@ class Team < ApplicationRecord
 
   scope :filter_affiliation, lambda { |query|
     return nil if query.blank?
-    search_by(query, 'affiliation')
+    search_by(query, 'teams.affiliation')
   }
 
   scope :location, lambda { |query|
