@@ -1,7 +1,7 @@
 %p
   Hello #{@user.full_name}!
 %p
-  Congratulations on completing the MITRE CTF! Your team, #{@user.team.team_name} came ranked #{@rank}.
+  Congratulations on completing the MITRE CTF! Your team, #{@user.team.team_name} came ranked #{@rank.ordinalize}.
 - if @rank.eql? 1
   %p
     Because you finished on the first-place team in the #{@div.name} Division, you could be eligible for a scholarship and

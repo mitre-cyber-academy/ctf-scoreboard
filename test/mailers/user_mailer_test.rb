@@ -24,10 +24,10 @@ class UserMailerTest < ActionMailer::TestCase
                    Click the link below to view and accept or reject the request.
                    #{link_to 'View Team Dashboard', team_url(user_requests(:request_one).team)}").squish
     @remind_email_body = strip_tags("Hello #{users(:user_one).full_name}! This is a reminder for the
-                   upcoming MITRE CTF which will start at #{games(:mitre_ctf_game).start}, which is in
+                   upcoming MITRE CTF which will start at #{games(:mitre_ctf_game).start}.
                    Click the link below to login and check your account #{link_to 'MITRE CTF', home_index_url}.").squish
     @rank_email_body = strip_tags("Hello #{users(:user_one).full_name}! Congratulations on completing the MITRE CTF!
-                   Your team, #{users(:user_one).team.team_name} came ranked #{1 + (divisions(:high_school).ordered_teams.index users(:user_one).team)}.").squish
+                   Your team, #{users(:user_one).team.team_name} came ranked #{(1 + (divisions(:high_school).ordered_teams.index users(:user_one).team)).ordinalize}.").squish
   end
 
   test 'invite' do
