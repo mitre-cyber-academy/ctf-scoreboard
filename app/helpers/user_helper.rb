@@ -70,5 +70,12 @@ module UserHelper
       ['Outside US', 'NA']
     ]
   end
+
+  def genders
+    [
+      %w[Male Male],
+      %w[Female Female]
+    ]
+  end
   # rubocop:enable Metrics/MethodLength
 end
