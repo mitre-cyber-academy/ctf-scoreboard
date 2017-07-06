@@ -7,7 +7,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-User.create(email: 'root@example.com', password: 'ChangeMe123', admin: true)
+User.create(email: 'root@root.com', password: 'ChangeMe123', admin: true)
 
 # default game
 game = Game.create!(name: 'Test Game', start: Time.now.utc + 3.months, stop: Time.now.utc + 3.months + 2.days)
