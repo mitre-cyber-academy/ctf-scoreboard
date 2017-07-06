@@ -52,4 +52,5 @@ end
 
 group :production do
   gem 'passenger'
+  gem 'scout_apm'
 end
