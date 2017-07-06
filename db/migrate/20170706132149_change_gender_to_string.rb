@@ -3,10 +3,10 @@ class ChangeGenderToString < ActiveRecord::Migration[5.0]
     change_column :users, :gender, :string
     User.all.each do |user|
       if user.gender == '0'
-        user.update(:gender, 'Male')
+        user.update(gender: 'Male')
       end
       if user.gender == '1'
-        user.update(:gender, 'Female')
+        user.update(gender: 'Female')
       end
     end
   end
