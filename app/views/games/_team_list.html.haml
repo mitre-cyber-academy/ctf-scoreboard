@@ -15,19 +15,18 @@
       / Current score only exists due to the division.rb model creating it inside of
       / filter_and_sort_teams, it is used here since it saves us from doing a costly
       / score recalculation for each user.
-      - unless t.users.size.zero?
-        - score = t.current_score
-        - if score > max
-          - max = score
-        - percent = score.to_f / max.to_f * 100.0
-          %tr
-            %td= i + 1
-            %td= link_to t.display_name, summary_team_path(t)
-            %td= t.achievements.size
-            %td= score
-            %td
-              .progress{ :style => "margin:0;" }
-                .bar{ :style => "width:#{percent}%;" }
+      - score = t.current_score
+      - if score > max
+        - max = score
+      - percent = score.to_f / max.to_f * 100.0
+        %tr
+          %td= i + 1
+          %td= link_to t.display_name, summary_team_path(t)
+          %td= t.achievements.size
+          %td= score
+          %td
+            .progress{ :style => "margin:0;" }
+              .bar{ :style => "width:#{percent}%;" }
     - if @view_all_teams_link
       %tr
         %td{align: 'center', colspan: '5', style: 'text-align: center;'}
