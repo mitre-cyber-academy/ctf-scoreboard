@@ -10,7 +10,6 @@ class User < ApplicationRecord
   has_many :user_invites
   has_many :user_requests
   has_many :submitted_flags
-  enum gender: %i[Male Female]
 
   geocoded_by :current_sign_in_ip
   after_validation :geocode, unless: :geocoded?
@@ -40,7 +39,7 @@ class User < ApplicationRecord
     user.validates :state, presence: true
     user.validates :age, numericality: { greater_than_or_equal_to: 0, less_than: 200 }, allow_blank: true
     user.validates :year_in_school, inclusion: { in: [0, 9, 10, 11, 12, 13, 14, 15, 16] }, presence: true
-    user.validates :gender, inclusion: { in: genders.keys }, allow_blank: true
+    user.validates :gender, inclusion: { in: %w[Male Female] }, allow_blank: true
   end
 
   # Returns whether a user is currently on a team or not.
