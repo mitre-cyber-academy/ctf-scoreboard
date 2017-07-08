@@ -19,6 +19,7 @@ gem 'jquery-rails'
 gem 'obscenity'
 gem 'paper_trail'
 gem 'paperclip'
+gem 'passenger', require: 'phusion_passenger/rack_handler'
 gem 'pg'
 gem 'prawn'
 gem 'rails', '~> 5.0.0'
@@ -51,6 +52,5 @@ group :assets do
 end
 
 group :production do
-  gem 'passenger'
   gem 'scout_apm'
 end
