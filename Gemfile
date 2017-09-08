@@ -5,6 +5,7 @@ source 'https://rubygems.org'
 ruby '2.3.4'
 
 gem 'awesome_nested_fields'
+gem 'aws-sdk-s3'
 gem 'bluecloth'
 gem 'bootstrap-sass', '~> 2.3.2.2'
 gem 'chartkick'
@@ -30,7 +31,7 @@ gem 'sentry-raven'
 gem 'letter_opener', group: :development
 
 group :development, :test do
-  gem 'pry'
+  gem 'pry-remote'
 end
 
 group :test do

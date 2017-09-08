@@ -3,6 +3,8 @@
 # User model, uses devise to manage registrations. Each user has a team reference which is
 # set to nil until they are added to a team.
 class User < ApplicationRecord
+  include VpnModule
+
   has_paper_trail
 
   belongs_to :team, counter_cache: true
@@ -14,7 +16,7 @@ class User < ApplicationRecord
   geocoded_by :current_sign_in_ip
   after_validation :geocode, unless: :geocoded?
 
-  after_create :create_vpn_key_request
+  after_create :create_vpn_cert_request
 
   reverse_geocoded_by :latitude, :longitude do |obj, results|
     if (geo = results.first)
@@ -73,17 +75,31 @@ class User < ApplicationRecord
     (eql? user) || (team.team_captain.eql? self)
   end
 
-  def key_file_name
-    email.tr('^A-Za-z', '')[0..10] + id.to_s
+  def vpn_cert_file_name
+    full_name&.tr('^A-Za-z', '').to_s[0..10] + id.to_s
   end
 
   def update_messages_stamp
     update_attributes(messages_stamp: Time.now.utc)
   end
 
-  def create_vpn_key_request
-    save_dir = '/opt/keys'
-    File.write("#{save_dir}/#{key_file_name}", '') if File.directory?(save_dir)
+  def create_vpn_cert_request
+    S3Certificates.instance.create_certificate_for(vpn_cert_file_name)
+  end
+
+  # Returns nil if the user does not currently have a certificate generated for them
+  # Returns a URL that is valid for 10 minutes for the user to download their vpn
+  # certificate file if their certificate is already generated
+  def vpn_cert_url
+    S3Certificates.instance.find_or_create_cert_for(vpn_cert_file_name)
+  end
+
+  def vpn_cert_request_created?
+    S3Certificates.instance.bucket_file_exists?(vpn_cert_file_name)
+  end
+
+  def vpn_cert_available?
+    S3Certificates.instance.cert_ready_for?(vpn_cert_file_name)
   end
 
   def update_team

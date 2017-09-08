@@ -97,4 +97,12 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to @controller.user_root_path
     assert_equal I18n.t('teams.in_top_ten'), flash[:alert]
   end
+
+  test 'vpn_cert_downloaded is properly updated when the user downloads their certificate' do
+    user = users(:full_team_user_one)
+    sign_in user
+    get :download_vpn_cert
+    assert_redirected_to %r(\Ahttps://.*\.s3\.amazonaws\.com)
+    assert user.reload.vpn_cert_downloaded
+  end
 end

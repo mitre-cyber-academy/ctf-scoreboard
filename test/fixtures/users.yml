@@ -15,6 +15,10 @@ user_one:
   confirmed_at: <%= Time.now %>
   team: team_one
 
+admin_user:
+  email: mitrectf+admin@gmail.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
+
 # User with every possible piece of information provided except team
 user_two:
   full_name: User two
