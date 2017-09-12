@@ -71,5 +71,6 @@ en:
     must_be_on_team: 'You must be on a team to submit a flag.'
   users:
     login_required: 'You must login in order to perform this action.'
+    certificate_not_ready: 'Your VPN Certificate is not yet ready for download, please try again in a few minutes.'
   admin:
     should_not_do_action: 'Admins should use the Rails Admin console to perform administrative actions.'

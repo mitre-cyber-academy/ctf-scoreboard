@@ -44,4 +44,8 @@ Rails.application.configure do
 
   # Set default URL for mailer to mimic production
   config.action_mailer.default_url_options = { host: 'test.mitrecyberacademy.org' }
+
+  ENV['S3_KEY'] = 'fakekey'
+  ENV['S3_SECRET'] = 'fakesecret'
+  ENV['S3_BUCKET'] = 'ctfbucket'
 end

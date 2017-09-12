@@ -46,6 +46,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def download_vpn_cert
+    certificate_url = current_user.vpn_cert_url
+    if certificate_url
+      current_user.update_attributes(vpn_cert_downloaded: true)
+      redirect_to certificate_url
+    else
+      redirect_back fallback_location: user_root_path, alert: I18n.t('users.certificate_not_ready')
+    end
+  end
+
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable MethodLength
 

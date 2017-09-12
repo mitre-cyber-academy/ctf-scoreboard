@@ -92,6 +92,10 @@
         .alert.alert-error
           %a.close{"data-dismiss" => "alert", :href => "#"} ×
           = alert
+      - if content_for? :vpn_cert_download
+        = yield :vpn_cert_download
+      - elsif !current_user&.vpn_cert_downloaded? && current_user&.vpn_cert_available?
+        = render partial: "users/vpn_cert_alert"
     .container
       = yield
   %footer#page-footer.well.footer

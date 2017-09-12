@@ -25,6 +25,7 @@
 
 # Ignore sensitive files
 .gmail_env
+.dev_vars
 
 # Ignore simplecov output.
 coverage
