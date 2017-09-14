@@ -34,11 +34,11 @@
               - elsif challenge.force_closed?
                 - style << "color:red;"
               - elsif is_solved
-                - style << "color:#08C;"
+                - style << "color:#00abca;"
               - elsif challenge.open? || (is_admin && challenge.challenge_open?)
-                - style << "color:green;"
+                - style << "color:#b8d12f;"
               - else
-                - style << "color:gray;"
+                - style << "color:#999999;"
               %td{ style: style }= link_to_if (is_admin || challenge.open?), challenge.point_value, game_challenge_path(challenge), style: "color:inherit;"
             - else
               %td &nbsp;

@@ -5,7 +5,17 @@
 class User < ApplicationRecord
   include VpnModule
 
-  has_paper_trail
+  has_paper_trail only: %i[
+    email
+    team_id
+    full_name
+    affiliation
+    year_in_school
+    age
+    state
+    compete_for_prizes
+    admin
+  ]
 
   belongs_to :team, counter_cache: true
   has_many :feed_items

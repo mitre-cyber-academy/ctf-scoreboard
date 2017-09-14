@@ -6,7 +6,7 @@ class Challenge < ApplicationRecord
   has_many :solved_challenges
   has_many :submitted_flags
 
-  enum state: %i[closed open force_closed]
+  enum state: { closed: 0, open: 1, force_closed: 2 }
 
   validates :name, :point_value, :flags, presence: true
 
