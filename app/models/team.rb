@@ -2,7 +2,7 @@
 
 # Team model for holding the main user list and all invites and requests to a team.
 class Team < ApplicationRecord
-  has_paper_trail
+  has_paper_trail ignore: %i[created_at updated_at]
 
   has_many :feed_items
   has_many :achievements
