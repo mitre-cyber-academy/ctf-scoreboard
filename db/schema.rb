@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170908134724) do
+ActiveRecord::Schema.define(version: 20170914173818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,9 +28,9 @@ ActiveRecord::Schema.define(version: 20170908134724) do
     t.integer  "point_value"
     t.integer  "category_id"
     t.string   "achievement_name"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.integer  "state"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "state",            default: 0, null: false
   end
 
   create_table "divisions", force: :cascade do |t|
@@ -126,8 +126,8 @@ ActiveRecord::Schema.define(version: 20170908134724) do
     t.string   "affiliation"
     t.integer  "team_captain_id"
     t.integer  "division_id"
-    t.integer  "users_count",     default: 0
     t.boolean  "eligible",        default: false
+    t.integer  "users_count",     default: 0
     t.index ["division_id"], name: "index_teams_on_division_id", using: :btree
     t.index ["team_captain_id"], name: "index_teams_on_team_captain_id", using: :btree
   end
