@@ -20,9 +20,9 @@
       - is_admin = current_user&.admin?
       - max.times do |row|
         %tr
-          - @categories.size.times do |column|
-            - challenges = @categories[column].challenges
-            - if row < @challenges.size
+          - @categories.size.times do |column_num|
+            - challenges = @categories[column_num].challenges
+            - if row < challenges.size
               - challenge = challenges[row]
               - style = "text-align:center;"
               - if is_admin
