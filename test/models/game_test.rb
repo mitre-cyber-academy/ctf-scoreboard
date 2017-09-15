@@ -58,4 +58,11 @@ class GameTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test 'send open source emails' do
+    game = games(:mitre_ctf_game)
+    before = ActionMailer::Base.deliveries.size
+    game.open_source
+    assert_equal before + User.all.size, ActionMailer::Base.deliveries.size
+  end
 end
