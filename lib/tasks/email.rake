@@ -19,7 +19,8 @@ namespace :email do
   desc 'Send email depending on date in relation to game start and end'
   task automated_email: :environment do
     game = Game.instance
-    if game.start.middle_of_day.eql?(Time.now.utc.middle_of_day + 1.week)
+    if game.start.middle_of_day.eql?(Time.now.utc.middle_of_day + 1.week) ||
+       game.start.middle_of_day.eql?(Time.now.utc.middle_of_day)
       Rake::Task['email:reminder_email'].invoke
     elsif game.stop.middle_of_day.eql?(Time.now.utc.middle_of_day - 1.day)
       Rake::Task['email:completion_email'].invoke
