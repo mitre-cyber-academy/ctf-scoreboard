@@ -60,6 +60,12 @@ class Game < ApplicationRecord
     end
   end
 
+  def open_source
+    User.all.find_each do |usr|
+      UserMailer.open_source(usr).deliver_now
+    end
+  end
+
   def reload_user_count # reload user_count counter_cache in team
     teams.each do |team|
       Team.reset_counters team.id, :users

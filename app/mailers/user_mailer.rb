@@ -32,4 +32,9 @@ class UserMailer < ApplicationMailer
 
     mail(to: @user.email, subject: 'MITRE CTF: Congratulations!')
   end
+
+  def open_source(user)
+    @user = user
+    mail(to: @user.email, subject: 'MITRE CTF: Challenges Released')
+  end
 end
