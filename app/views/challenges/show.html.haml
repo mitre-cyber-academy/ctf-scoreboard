@@ -40,6 +40,6 @@
       - @solved_by.each_with_index do |e, i|
         %tr
           %td= i + 1
-          %td= link_to e.team.display_name, e.team
+          %td= link_to e.team.display_name, summary_team_path(e.team)
           %td= e.team.division.name
           %td= e.created_at.strftime("%b %e %y, %R %Z")
