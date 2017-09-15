@@ -86,7 +86,7 @@ class User < ApplicationRecord
   end
 
   def vpn_cert_file_name
-    full_name&.tr('^A-Za-z', '').to_s[0..10] + id.to_s
+    id.to_s
   end
 
   def update_messages_stamp
