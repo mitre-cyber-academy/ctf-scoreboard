@@ -4,11 +4,10 @@
 class Team < ApplicationRecord
   has_paper_trail ignore: %i[created_at updated_at]
 
-  has_many :feed_items
+  has_many :feed_items, dependent: :destroy
   has_many :achievements
   has_many :solved_challenges
-  has_many :users,
-           after_remove: :update_captain_and_eligibility
+  has_many :users, after_remove: :update_captain_and_eligibility
   has_many :user_invites, dependent: :destroy
   has_many :user_requests, dependent: :destroy
   has_many :submitted_flags, through: :users
