@@ -11,6 +11,7 @@ class TeamsController < ApplicationController
   before_action :check_membership, only: %i[show update destroy]
   before_action :check_team_captain, :load_user_team, only: %i[update edit invite]
   before_action :deny_team_in_top_ten, :update_team, only: %i[update invite]
+  before_action :load_team_by_id, :load_summary_info, only: %i[show summary]
 
   def new
     @team = Team.new
@@ -23,15 +24,6 @@ class TeamsController < ApplicationController
     @pending_invites = @team.user_invites.pending
     @pending_requests = @team.user_requests.pending
     flash.now[:notice] = I18n.t('teams.full_team') if @team.full?
-    summary
-  end
-
-  def summary
-    @team = Team.find_by(id: params[:id].to_i) unless @team
-    @solved_challenges = @team&.solved_challenges
-    @flags_per_hour = @team.submitted_flags.group_by_hour('submitted_flags.created_at').count
-    @user_locations = @team.users.where('country IS NOT NULL').group(:country).count
-    @page_requires_gcharts = true
   end
 
   def create
@@ -90,6 +82,35 @@ class TeamsController < ApplicationController
   # notice displayed. This allows us to preload some information for both methods without duplication.
   def update_team
     @team.update_attributes(team_params)
+  end
+
+  def load_team_by_id
+    @team = Team.find_by(id: params[:id].to_i)
+  end
+
+  def load_summary_info
+    @solved_challenges = @team&.solved_challenges
+    load_team_flag_stats
+    @flags_per_hour = @team.submitted_flags.group_by_hour('submitted_flags.created_at').count
+    @team_flag_submissions = [
+      { name: 'Flag Submissions', data: @flags_per_hour },
+      { name: 'Challenges Solved', data: @solved_challenges.group_by_hour('feed_items.created_at').count }
+    ]
+    @user_locations = @team.users.where('country IS NOT NULL').group(:country).count
+    @page_requires_gcharts = true
+  end
+
+  def load_team_flag_stats
+    @per_user_stats = [
+      {
+        name: 'Flag Submissions',
+        data: @team.submitted_flags.group(:user_id).count
+      },
+      {
+        name: 'Challenges Solved',
+        data: @team.solved_challenges.group(:user_id).count
+      }
+    ]
   end
 
   def load_user_team

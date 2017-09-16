@@ -85,7 +85,7 @@ class TeamsControllerTest < ActionController::TestCase
     sign_in user
     get :summary, params: { id: teams(:team_two) }
     assert_response :success
-    assert_select 'h3', 'Submitted Flags/Hour'
+    assert_select 'h3', 'Per User Statistics'
     assert_select 'h3', 'Solved Challenges'
     assert_select 'h3', 'Team Map'
   end

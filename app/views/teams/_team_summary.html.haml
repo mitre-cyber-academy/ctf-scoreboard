@@ -1,12 +1,10 @@
-%h3.muted Submitted Flags/Hour
 - if @flags_per_hour.count > 1
-  = line_chart @flags_per_hour, colors: ["#5d8cb6", '#446582']
-- else
-  %p No Solved Challenges
+  %h3.muted Team Flag Submissions
+  = line_chart @team_flag_submissions, colors: ['#b8d12f', '#00abca']
 %hr
-%h3.muted Solved Challenges
 %div.row
   %div.span5
+    %h3.muted Solved Challenges
     - if @solved_challenges.size == 0
       .zero-items-text No Solved Challenges
     - else
@@ -24,6 +22,27 @@
               %td= s.challenge.category.name
               %td= s.challenge.point_value
               %td= s.created_at.strftime("%b %e %y, %R %Z")
+  %div.span7
+    %h3.muted Per User Statistics
+    - if @solved_challenges.size == 0
+      .zero-items-text Nothing to Report
+    - else
+      = column_chart @per_user_stats, legend: 'bottom', xtitle: "User ID", stacked: true, colors: ['#b8d12f', '#00abca']
+      - if current_user&.admin?
+        %br/
+        %div.span7
+          %table.table.table-bordered.table-striped
+            %thead
+              %tr
+                %th User ID
+                %th Name
+                %th Email
+            %tbody
+              - @team.users.each do |user|
+                %tr
+                  %td=link_to user.id, rails_admin.show_path("user", user)
+                  %td= user.full_name
+                  %td= user.email
 %hr
 %h3.muted Team Map
 = geo_chart @user_locations, colors: ["#5d8cb6", '#446582']
