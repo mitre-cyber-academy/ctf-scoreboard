@@ -30,7 +30,7 @@ class GamesController < ApplicationController
   def load_users_and_divisions
     @game = Game.includes(:divisions).instance
     @divisions = @game.divisions
-    signed_in_not_admin = current_user && !current_user.admin?
-    @active_division = signed_in_not_admin && current_user.team ? current_user.team.division : @divisions.first
+    signed_in_not_admin = !current_user&.admin?
+    @active_division = signed_in_not_admin && current_user&.team ? current_user&.team.division : @divisions.first
   end
 end

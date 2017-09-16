@@ -2,9 +2,9 @@
 
 class Challenge < ApplicationRecord
   belongs_to :category, required: true
-  has_many :flags, inverse_of: :challenge
-  has_many :solved_challenges
-  has_many :submitted_flags
+  has_many :flags, inverse_of: :challenge, dependent: :destroy
+  has_many :solved_challenges, dependent: :destroy
+  has_many :submitted_flags, dependent: :destroy
 
   enum state: { closed: 0, open: 1, force_closed: 2 }
 

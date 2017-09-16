@@ -43,6 +43,6 @@ class SolvedChallenge < FeedItem
     challenge = self.challenge
     category = challenge.category
     challenge = category.next_challenge(challenge)
-    challenge.state!('open') if challenge && challenge.available?
+    challenge.state!('open') if challenge&.available?
   end
 end

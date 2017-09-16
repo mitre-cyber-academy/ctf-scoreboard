@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 class Game < ApplicationRecord
-  has_many :divisions
-  has_many :teams, through: :divisions
-  has_many :feed_items, through: :divisions
-  has_many :achievements, through: :divisions
-  has_many :solved_challenges, through: :divisions
-  has_many :messages
-  has_many :categories
-  has_many :challenges, through: :categories
+  has_many :divisions, dependent: :destroy
+  has_many :teams, through: :divisions, dependent: :destroy
+  has_many :feed_items, through: :divisions, dependent: :destroy
+  has_many :achievements, through: :divisions, dependent: :destroy
+  has_many :solved_challenges, through: :divisions, dependent: :destroy
+  has_many :messages, dependent: :destroy
+  has_many :categories, dependent: :destroy
+  has_many :challenges, through: :categories, dependent: :destroy
 
   validates :name, :start, :stop, presence: true
 
