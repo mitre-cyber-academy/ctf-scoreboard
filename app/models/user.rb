@@ -18,10 +18,10 @@ class User < ApplicationRecord
   ]
 
   belongs_to :team, counter_cache: true
-  has_many :feed_items
-  has_many :user_invites
-  has_many :user_requests
-  has_many :submitted_flags
+  has_many :feed_items, dependent: :destroy
+  has_many :user_invites, dependent: :destroy
+  has_many :user_requests, dependent: :destroy
+  has_many :submitted_flags, dependent: :destroy
 
   geocoded_by :current_sign_in_ip
   after_validation :geocode, unless: :geocoded?

@@ -3,7 +3,7 @@
 class Flag < ApplicationRecord
   belongs_to :challenge, inverse_of: :flags
 
-  has_many :solved_challenges
+  has_many :solved_challenges, dependent: :destroy
 
   validates :flag, presence: true
 

@@ -5,12 +5,12 @@ class Team < ApplicationRecord
   has_paper_trail ignore: %i[created_at updated_at]
 
   has_many :feed_items, dependent: :destroy
-  has_many :achievements
-  has_many :solved_challenges
-  has_many :users, after_remove: :update_captain_and_eligibility
+  has_many :achievements, dependent: :destroy
+  has_many :solved_challenges, dependent: :destroy
+  has_many :users, after_remove: :update_captain_and_eligibility, dependent: :nullify
   has_many :user_invites, dependent: :destroy
   has_many :user_requests, dependent: :destroy
-  has_many :submitted_flags, through: :users
+  has_many :submitted_flags, through: :users, dependent: :destroy
   belongs_to :division, required: true
   belongs_to :team_captain, class_name: 'User'
   accepts_nested_attributes_for :user_invites

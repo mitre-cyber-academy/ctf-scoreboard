@@ -3,10 +3,9 @@
 class Division < ApplicationRecord
   belongs_to :game, required: true
   has_many :teams, dependent: :destroy
-  has_many :feed_items
-  has_many :achievements
-  has_many :teams
-  has_many :solved_challenges
+  has_many :feed_items, dependent: :destroy
+  has_many :achievements, dependent: :destroy
+  has_many :solved_challenges, dependent: :destroy
 
   validates :name, presence: true
 

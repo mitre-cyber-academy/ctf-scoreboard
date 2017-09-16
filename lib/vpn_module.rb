@@ -24,7 +24,7 @@ module VpnModule
       return certificate_bundle.presigned_url(:get, expires_in: 10.minutes.to_i) if certificate_bundle.exists?
       create_certificate_for(filename)
       nil
-    rescue # If S3 errors for any reason then we return nil so that the application does not error
+    rescue StandardError # If S3 errors for any reason then we return nil so that the application does not error
       nil
     end
 
@@ -36,13 +36,13 @@ module VpnModule
 
     def bucket_file_exists?(filename)
       @bucket_connection.object(filename).exists?
-    rescue
+    rescue StandardError
       false
     end
 
     def create_certificate_for(filename)
       @bucket_connection.object(filename).put
-    rescue
+    rescue StandardError
       false
     end
   end
