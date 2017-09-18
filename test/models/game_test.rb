@@ -53,7 +53,7 @@ class GameTest < ActiveSupport::TestCase
     game.divisions.each do |division|
       division.teams.each do |team|
         team.users.each do |user|
-          assert_equal true, (File.exist? (Rails.root.join 'tmp', Division.transform(division.name) + '-certificates', Team.transform(team.team_name), User.transform(user.full_name) + '.pdf'))
+          assert_equal true, (File.exist? (Rails.root.join 'tmp', Division.transform(division.name) + '-certificates', team.id.to_s, user.id.to_s + '.pdf'))
         end
       end
     end

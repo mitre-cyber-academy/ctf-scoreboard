@@ -126,8 +126,8 @@ ActiveRecord::Schema.define(version: 20170915202443) do
     t.string   "affiliation"
     t.integer  "team_captain_id"
     t.integer  "division_id"
-    t.integer  "users_count",     default: 0
     t.boolean  "eligible",        default: false
+    t.integer  "users_count",     default: 0
     t.index ["division_id"], name: "index_teams_on_division_id", using: :btree
     t.index ["team_captain_id"], name: "index_teams_on_team_captain_id", using: :btree
   end
