@@ -149,8 +149,8 @@ class Team < ApplicationRecord
 
   def generate_certificate(user, directory, rank, total) # generate cert for specific user
     dimensions = [720, 540]
-    file_name = directory.join self.class.transform(user.full_name) + '.pdf'
-    Prawn::Document.generate(file_name, background: @template_file, page_size: dimensions, margin: 0) do |doc|
+    file_name = directory.join user.id.to_s + '.pdf'
+    CertModule::CompletionPdf.generate(file_name, background: @template_file, page_size: dimensions, margin: 0) do |doc|
       doc.image @template_file, at: [0, dimensions[1]], fit: dimensions
       doc.bounding_box([55, 450], width: 640, height: 200) do
         Game.instance.generate_certificate_header doc
@@ -162,12 +162,16 @@ class Team < ApplicationRecord
 
   def generate_certificate_body(doc, username, rank, total) # generates the body of the certificate
     doc.bounding_box([55, 200], width: 640, height: 200) do
-      doc.font('Helvetica', size: 18, style: :bold) do
-        doc.text "This is to certify that #{username}
-          successfully competed as a member of Team #{team_name},
-          achieving #{score} points and finishing #{rank} out of #{total} teams.", color: '005BA1', align: :center
+      doc.font('Helvetica-Bold', size: 18) do
+        doc.text team_completion_cert_string(username, rank, total), color: '005BA1', align: :center, leading: 4
       end
     end
+  end
+
+  def team_completion_cert_string(username, rank, total)
+    "This is to certify that #{username}
+     successfully competed as a member of Team #{team_name},
+     achieving #{score} points and finishing #{rank} out of #{total} teams."
   end
 
   def make_completion_cert_directories # creates division and team directories unless they already exist
@@ -182,7 +186,7 @@ class Team < ApplicationRecord
 
   # creates team directory for storing completion certificates if it does not exist
   def make_team_directory(certs_directory)
-    team_cert_directory = certs_directory.join self.class.transform team_name
+    team_cert_directory = certs_directory.join id.to_s
     FileUtils.mkdir_p(team_cert_directory) unless Dir.exist?(team_cert_directory)
     team_cert_directory
   end

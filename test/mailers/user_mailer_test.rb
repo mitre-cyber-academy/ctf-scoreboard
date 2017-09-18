@@ -69,7 +69,7 @@ class UserMailerTest < ActionMailer::TestCase
   test 'ranking' do
     user = users(:user_one)
     email = UserMailer.ranking(user, 1 + (divisions(:high_school).ordered_teams.index users(:user_one).team),
-                               Rails.root.join( 'tmp', 'high_school-certificates', 'team_one', 'user_one.pdf')).deliver_now
+                               Rails.root.join( 'tmp', 'high_school-certificates', user.team.id.to_s, "#{user.id.to_s}.pdf")).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
 

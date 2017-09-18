@@ -54,9 +54,9 @@ class Game < ApplicationRecord
 
   def generate_certificate_header(doc) # generates the top of the certificate when given a Prawn Document
     doc.font('Helvetica', size: 28, style: :bold) do
-      doc.text name.to_s, color: '005BA1', align: :center, leading: 8
+      doc.text name.to_s, color: '005BA1', size: 28, align: :center, leading: 8
       doc.text "#{start.day}-#{stop.day} #{I18n.t('date.month_names')[start.month]} #{start.year}",
-               color: '005BA1', align: :center
+               color: '005BA1', align: :center, size: 20
     end
   end
 
