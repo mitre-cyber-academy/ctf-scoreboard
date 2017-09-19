@@ -94,7 +94,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'cert file name is property created' do
-    cert_file_name = users(:user_one).full_name.tr('^A-Za-z', '')[0..10] + users(:user_one).id.to_s
+    cert_file_name = users(:user_one).id.to_s
     assert_equal cert_file_name, users(:user_one).vpn_cert_file_name
   end
 

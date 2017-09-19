@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170914173818) do
+ActiveRecord::Schema.define(version: 20170915202443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,8 +126,8 @@ ActiveRecord::Schema.define(version: 20170914173818) do
     t.string   "affiliation"
     t.integer  "team_captain_id"
     t.integer  "division_id"
-    t.boolean  "eligible",        default: false
     t.integer  "users_count",     default: 0
+    t.boolean  "eligible",        default: false
     t.index ["division_id"], name: "index_teams_on_division_id", using: :btree
     t.index ["team_captain_id"], name: "index_teams_on_team_captain_id", using: :btree
   end
@@ -212,19 +212,6 @@ ActiveRecord::Schema.define(version: 20170914173818) do
     t.integer  "transaction_id"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
     t.index ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
-  end
-
-  create_table "vips", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "company"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "confirmation_token"
-    t.boolean  "confirmed",          default: false
-    t.string   "phone"
-    t.boolean  "manually_approved"
-    t.text     "why_are_you_a_vip"
   end
 
   add_foreign_key "teams", "divisions"
