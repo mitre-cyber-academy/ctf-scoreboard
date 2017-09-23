@@ -9,14 +9,13 @@ module VpnModule
     @bucket_connection = nil
 
     def initialize
-      credential_stub = Aws::Credentials.new(ENV['S3_KEY'], ENV['S3_SECRET'])
-      client_stub = Aws::S3::Client.new(
-        region: 'us-east-1',
-        credentials: credential_stub,
-        stub_responses: Rails.env.test?
-      )
-      s3 = Aws::S3::Resource.new(client: client_stub)
-      @bucket_connection = s3.bucket(ENV['S3_BUCKET'])
+      # If S3_KEY, S3_SECRET, and S3_BUCKET ENV variables are not found then skip
+      # setup of the environment.
+      if (%w[S3_KEY S3_SECRET S3_BUCKET] - ENV.keys).empty? || Rails.env.test?
+        connect_to_s3
+      else
+        Rails.logger.warn 'No S3 credentials found, S3 syncing functionality will not work.'
+      end
     end
 
     def find_or_create_cert_for(filename)
@@ -44,6 +43,19 @@ module VpnModule
       @bucket_connection.object(filename).put
     rescue StandardError
       false
+    end
+
+    private
+
+    def connect_to_s3
+      credential_stub = Aws::Credentials.new(ENV['S3_KEY'], ENV['S3_SECRET'])
+      client_stub = Aws::S3::Client.new(
+        region: 'us-east-1',
+        credentials: credential_stub,
+        stub_responses: Rails.env.test?
+      )
+      s3 = Aws::S3::Resource.new(client: client_stub)
+      @bucket_connection = s3.bucket(ENV['S3_BUCKET'])
     end
   end
 end
