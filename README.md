@@ -10,23 +10,24 @@ MITRE CTF Scoreboard is a fully featured CTF platform with scoreboard and regist
 ### Deployment ###
 
 + Install ruby.
-+ In your terminal run `gem install bundle`
++ In your terminal run `gem install bundler`
++ Install postgres to your system (and create a role with your system username). This can be done on mac using Homebrew by running `brew install postgresql`.
 + Run `bundle install`
-+ Install postgres to your system (and create a role with your system username)
 + Run `bundle exec rake db:create`
 + Run `bundle exec rake db:schema:load`
 + Run `bundle exec rake db:seed`
 + Run `bundle exec rails s`
 + Open the webpage shown in your terminal from the last command in your browser.
-+ Login to the registration app `http://localhost:3000/admin` as email: `root@root.com`, password: `ChangeMe123` or email: `ctf@mitre.org`, password: `Test123456` and change the password.
++ Login to the registration app `http://localhost:3000` as email: `root@root.com`, password: `ChangeMe123` or email: `ctf@mitre.org`, password: `Test123456` and change the password.
++ Access the administration panel at `http://localhost:3000` to configure the application.
 
-**Note**: for specific deployment steps check the [wiki](https://github.com/mitre-cyber-academy/registration-app/wiki/Installation).
+**Note**: for specific deployment steps check the [wiki](https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Installation).
 
 ### Automated Emails ###
 
 Automated emails can be setup by adding
-`min hour * * * /bin/bash -l -c 'cd /path/to/registration-app && RAILS_ENV=production bundle exec rake email:automated_email --silent'`
-where `min`, `hour`, and `path/to/registration-app` are replaced with the values you prefer. 
+`min hour * * * /bin/bash -l -c 'cd /path/to/ctf-scoreboard && RAILS_ENV=production bundle exec rake email:automated_email --silent'`
+where `min`, `hour`, and `path/to/ctf-scoreboard` are replaced with the values you prefer. 
 If the project is being hosted on Heroku a daily task can be created using the Heroku Scheduler to run `rake email:automated_email`
 
 ### License ###
