@@ -91,10 +91,11 @@ class TeamsController < ApplicationController
   def load_summary_info
     @solved_challenges = @team&.solved_challenges
     load_team_flag_stats
-    @flags_per_hour = @team.submitted_flags.group_by_hour('submitted_flags.created_at').count
+    @flags_per_hour = @team.submitted_flags.group_by_hour('submitted_flags.created_at', format: '%l:%M %p').count
     @team_flag_submissions = [
       { name: 'Flag Submissions', data: @flags_per_hour },
-      { name: 'Challenges Solved', data: @solved_challenges.group_by_hour('feed_items.created_at').count }
+      { name: 'Challenges Solved', data: @solved_challenges.group_by_hour('feed_items.created_at',
+                                                                          format: '%l:%M %p').count }
     ]
     @user_locations = @team.users.where('country IS NOT NULL').group(:country).count
     @page_requires_gcharts = true
