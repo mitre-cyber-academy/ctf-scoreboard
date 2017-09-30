@@ -28,6 +28,19 @@ class UserMailerTest < ActionMailer::TestCase
                    Click the link below to login and check your account #{link_to 'MITRE CTF', home_index_url}.").squish
     @rank_email_body = strip_tags("Hello #{users(:user_one).full_name}! Congratulations on completing the MITRE CTF!
                    Your team, #{users(:user_one).team.team_name} came ranked #{(1 + (divisions(:high_school).ordered_teams.index users(:user_one).team)).ordinalize}.").squish
+    @first_place_email_body = strip_tags("Hello #{users(:user_four).full_name}! Congratulations on completing the MITRE CTF!
+                   Your team, #{users(:user_four).team.team_name} came ranked #{(1 + (divisions(:professional).ordered_teams.index users(:user_four).team)).ordinalize}.
+                   Because you finished on the first-place team in the #{divisions(:professional).name} Division, you could be eligible for a scholarship and
+                   consideration for an internship at MITRE or an industry partner.  Please email #{link_to 'ctf@mitre.org', 'mailto:ctf@mitre.org'}
+                   with your official college, university, or high school transcript AND an up-to-date resume to verify your eligibility.
+                   Both a transcript and a resume are required for the award of any scholarship prize.").squish
+    @top_ten_email_body = strip_tags("Hello #{users(:full_team_user_two).full_name}! Congratulations on completing the MITRE CTF!
+                   Your team, #{users(:full_team_user_two).team.team_name} came ranked #{(1 + (divisions(:high_school).ordered_teams.index users(:full_team_user_two).team)).ordinalize}.
+                   Because you finished in the top ten, we are requesting your resume and transcript. If you’re interested, please
+                   email #{link_to 'ctf@mitre.org', 'mailto:ctf@mitre.org'} with your official or unofficial college, university, or
+                   high school transcript AND an up-to-date resume.").squish
+    @open_source_email_body = strip_tags("Hello #{users(:user_one).full_name}! All solved challenges from the last competition have been released with solutions on
+                   #{link_to 'GitHub', 'https://github.com/mitre-cyber-academy'} Have a great day!").squish
   end
 
   test 'invite' do
@@ -78,5 +91,44 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal 'MITRE CTF: Congratulations!', email.subject
     assert_equal true, email.has_attachments?
     assert_includes (strip_tags(email.body.parts.first.to_s).squish.to_s), @rank_email_body
+  end
+
+  test 'ranking email for first' do
+    user = users(:user_four)
+    email = UserMailer.ranking(user, 1 + (divisions(:professional).ordered_teams.index user.team),
+                               Rails.root.join( 'tmp', 'professional-certificates', user.team.id.to_s, "#{user.id.to_s}.pdf")).deliver_now
+
+    assert_not ActionMailer::Base.deliveries.empty?
+
+    assert_equal ['do-not-reply@mitrecyberacademy.org'], email.from
+    assert_equal ['mitrectf+user4@gmail.com'], email.to
+    assert_equal 'MITRE CTF: Congratulations!', email.subject
+    assert_equal true, email.has_attachments?
+    assert_includes (strip_tags(email.body.parts.first.to_s).squish.to_s), @first_place_email_body
+  end
+
+  test 'ranking email top ten' do
+    user = users(:full_team_user_two)
+    email = UserMailer.ranking(user, 1 + (divisions(:high_school).ordered_teams.index user.team),
+                               Rails.root.join( 'tmp', 'high_school-certificates', user.team.id.to_s, "#{user.id.to_s}.pdf")).deliver_now
+
+    assert_not ActionMailer::Base.deliveries.empty?
+
+    assert_equal ['do-not-reply@mitrecyberacademy.org'], email.from
+    assert_equal ['mitrectf+fulluser2@gmail.com'], email.to
+    assert_equal 'MITRE CTF: Congratulations!', email.subject
+    assert_equal true, email.has_attachments?
+    assert_includes (strip_tags(email.body.parts.first.body.to_s).squish.to_s), @top_ten_email_body
+  end
+
+  test 'open source email' do
+    email = UserMailer.open_source(users(:user_one)).deliver_now
+
+    assert_not ActionMailer::Base.deliveries.empty?
+
+    assert_equal ['do-not-reply@mitrecyberacademy.org'], email.from
+    assert_equal ['mitrectf+user1test@gmail.com'], email.to
+    assert_equal "MITRE CTF: Challenges Released", email.subject
+    assert_equal @open_source_email_body, strip_tags(email.body.to_s).squish
   end
 end
