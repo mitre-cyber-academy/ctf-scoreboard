@@ -63,7 +63,7 @@ class Game < ApplicationRecord
   # Fetch every teams name and current score to provide JSON feed of team rankings
   def all_teams_information
     results = divisions.collect(&:ordered_teams).flatten
-    results.collect { |team| { name: team['team_name'], score: team['current_score'] } }
+    results.collect { |team| { pos: 1, team: team['team_name'], score: team['current_score'] } }
   end
 
   def open_source
