@@ -60,6 +60,12 @@ class Game < ApplicationRecord
     end
   end
 
+  # Fetch every teams name and current score to provide JSON feed of team rankings
+  def all_teams_information
+    results = divisions.collect(&:ordered_teams_with_rank).flatten
+    results.collect { |team| { pos: team.rank, team: team.team_name, score: team.current_score } }
+  end
+
   def open_source
     User.all.find_each do |usr|
       UserMailer.open_source(usr).deliver_now

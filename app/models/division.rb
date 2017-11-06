@@ -26,6 +26,12 @@ class Division < ApplicationRecord
     end
   end
 
+  def ordered_teams_with_rank
+    ordered_teams.each_with_index do |team, index|
+      team.rank = index + 1
+    end
+  end
+
   # Returns an array of the appropriate years in school for the current division
   def acceptable_years_in_school
     Array(min_year_in_school..max_year_in_school)

@@ -4,6 +4,11 @@
 class Team < ApplicationRecord
   has_paper_trail ignore: %i[created_at updated_at]
 
+  # Rank is an attribute that can be added to the team model on the fly however
+  # it has no value by default. This allows us to cache a teams current rank
+  # without having to hit the database to calculate it.
+  attr_accessor :rank
+
   has_many :feed_items, dependent: :destroy
   has_many :achievements, dependent: :destroy
   has_many :solved_challenges, dependent: :destroy
