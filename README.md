@@ -30,6 +30,22 @@ Automated emails can be setup by adding
 where `min`, `hour`, and `path/to/ctf-scoreboard` are replaced with the values you prefer. 
 If the project is being hosted on Heroku a daily task can be created using the Heroku Scheduler to run `rake email:automated_email`
 
+### Screenshots ###
+
+Gameboard
+
+![gameboard](https://i.imgur.com/UgkPX5q.png)
+
+Administration: dashboard
+
+![admin dashboard](https://i.imgur.com/lzj7U3m.png)
+
+Administration: add challenge
+
+![add challenge](https://i.imgur.com/ZRyimTp.png)
+
+More screenshots available on the [wiki](https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Screenshots).
+
 ### License ###
 
 This application is licensed under [Apache License 2.0](LICENSE).
