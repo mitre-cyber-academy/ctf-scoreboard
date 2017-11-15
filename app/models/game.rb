@@ -39,7 +39,7 @@ class Game < ApplicationRecord
 
   def remind_all
     User.all.find_each do |usr|
-      UserMailer.competition_reminder(usr).deliver_now
+      UserMailer.competition_reminder(usr).deliver_later
     end
   end
 
@@ -68,7 +68,7 @@ class Game < ApplicationRecord
 
   def open_source
     User.all.find_each do |usr|
-      UserMailer.open_source(usr).deliver_now
+      UserMailer.open_source(usr).deliver_later
     end
   end
 

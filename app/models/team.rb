@@ -148,7 +148,7 @@ class Team < ApplicationRecord
     team_cert_directory = make_completion_cert_directories
     users.each do |user|
       path = generate_certificate(user, team_cert_directory, rank, total)
-      UserMailer.ranking(user, rank, path).deliver_now if send_email
+      UserMailer.ranking(user, rank, path.to_s).deliver_later if send_email
     end
   end
 
