@@ -37,4 +37,10 @@ class UserMailer < ApplicationMailer
     @user = user
     mail(to: @user.email, subject: 'MITRE CTF: Challenges Released')
   end
+
+  def message_notification(user, message)
+    @user = user
+    @message = message
+    mail(to: @user.email, subject: "MITRE CTF New Message: #{message.title}")
+  end
 end

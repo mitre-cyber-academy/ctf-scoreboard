@@ -42,7 +42,7 @@ class UserInvite < ApplicationRecord
   private
 
   def send_email
-    UserMailer.invite_user(self).deliver_now
+    UserMailer.invite_user(self).deliver_later
   end
 
   def link_to_user

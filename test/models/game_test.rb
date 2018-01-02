@@ -29,22 +29,14 @@ class GameTest < ActiveSupport::TestCase
 
   test 'send reminder emails' do
     game = games(:mitre_ctf_game)
-    before = ActionMailer::Base.deliveries.size
     game.remind_all
-    assert_equal before + User.all.size, ActionMailer::Base.deliveries.size
+    assert_equal User.all.size, ActionMailer::Base.deliveries.size
   end
 
   test 'send ranking emails' do
     game = games(:mitre_ctf_game)
-    before = ActionMailer::Base.deliveries.size
     game.generate_completion_certs
-    user_count = 0
-    Team.all.each do |team|
-      team.users.each do |*|
-        user_count = user_count + 1
-      end
-    end
-    assert_equal before + user_count, ActionMailer::Base.deliveries.size
+    assert_equal User.where.not(team_id: nil).size, ActionMailer::Base.deliveries.size
   end
 
   test 'generate all certs' do
@@ -61,8 +53,7 @@ class GameTest < ActiveSupport::TestCase
 
   test 'send open source emails' do
     game = games(:mitre_ctf_game)
-    before = ActionMailer::Base.deliveries.size
     game.open_source
-    assert_equal before + User.all.size, ActionMailer::Base.deliveries.size
+    assert_equal User.all.size, ActionMailer::Base.deliveries.size
   end
 end

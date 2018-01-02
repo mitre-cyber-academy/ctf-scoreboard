@@ -44,6 +44,6 @@ class UserRequest < ApplicationRecord
   private
 
   def send_email
-    UserMailer.user_request(self).deliver_now
+    UserMailer.user_request(self).deliver_later
   end
 end

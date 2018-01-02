@@ -1,24 +1,6 @@
 require 'test_helper'
 
 class ApplicationControllerTest < ActionController::TestCase
-  test 'to timeline' do
-  end
-
-  test 'enable auto reload' do
-  end
-
-  test 'load game' do
-  end
-
-  test 'load messages count' do
-  end
-
-  test 'enforce access' do
-  end
-
-  test 'after sign in path' do
-  end
-
   test 'users unread message count is calculated correctly when there is a new message' do
     sign_in users(:user_one)
     @controller.load_game

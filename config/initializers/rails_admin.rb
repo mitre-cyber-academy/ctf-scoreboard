@@ -26,6 +26,12 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model 'Message' do
+    configure :email_message do
+      help 'Check this box to also email the message to all competitors'
+    end
+  end
+
   # If you want to track changes on your models:
   # config.audit_with :history, 'User'
 
