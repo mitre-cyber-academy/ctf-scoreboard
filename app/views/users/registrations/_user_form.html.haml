@@ -70,7 +70,7 @@
         .controls
           = f.password_field :current_password, :class => "textarea"
   .controls
-    = button_tag :Submit, :label => 'Confirm Account', :class => "btn"
+    = invisible_recaptcha_tags text: 'Submit', :class => "btn"
 - if on_update_page
   %hr
   = form_for(resource, as: resource_name, url: registration_path(resource_name), :html => { :multipart => "true", :class => "form-horizontal"}, :method => :delete) do |f|

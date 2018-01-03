@@ -27,6 +27,7 @@ gem 'prawn'
 gem 'rails', '~> 5.1.4'
 gem 'rails_admin'
 gem 'rails_email_validator'
+gem 'recaptcha', require: 'recaptcha/rails'
 gem 'sentry-raven'
 
 gem 'letter_opener', group: :development

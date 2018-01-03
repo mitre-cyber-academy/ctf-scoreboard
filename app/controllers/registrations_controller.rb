@@ -3,6 +3,17 @@
 class RegistrationsController < Devise::RegistrationsController
   before_action :load_game, :load_message_count
 
+  def create
+    if verify_recaptcha
+      super
+    else
+      build_resource(sign_up_params)
+      clean_up_passwords(resource)
+      set_flash_message! :alert, :recaptcha_failed
+      render :new
+    end
+  end
+
   # DELETE /resource
   def destroy
     if resource.team_captain?
