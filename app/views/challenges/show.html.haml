@@ -26,7 +26,7 @@
       .controls
         = f.text_field :submitted_flag, :class => "span5"
     .control-group
-      = button_tag "Submit", :class => "btn btn-primary"
+      = invisible_recaptcha_tags text: 'Submit', :class => "btn btn-primary"
 
 - if @solved_by.length > 0
   %table.table.table-bordered.table-striped

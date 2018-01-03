@@ -6,12 +6,12 @@ class ChallengesController < ApplicationController
   before_action :enforce_access
   before_action :load_game, :load_message_count
   before_action :find_challenge
-  before_action :find_and_log_flag, :on_team?, only: [:update]
+  before_action :find_solved_by, only: %i[show update]
+  before_action :valid_captcha, :find_and_log_flag, :on_team?, only: [:update]
 
   def show
     @solved_challenge = @challenge.get_solved_challenge_for(current_user.team_id)
     @solved_video_url = @solved_challenge.flag.video_url if @solved_challenge
-    @solved_by = @challenge.solved_challenges.includes(team: :division).order(created_at: :desc)
     flash.now[:notice] = I18n.t('flag.accepted') if @solved_challenge
   end
 
@@ -23,16 +23,26 @@ class ChallengesController < ApplicationController
     else
       flash.now[:alert] = wrong_flag_messages.sample
     end
-    @solved_by = @challenge.solved_challenges.order(created_at: :desc)
 
     render :show
   end
 
   private
 
+  def valid_captcha
+    return if verify_recaptcha
+
+    flash.now[:alert] = I18n.t('devise.registrations.recaptcha_failed')
+    render :show
+  end
+
   def find_challenge
     @challenge = @game.challenges.find(params[:id])
     raise ActiveRecord::RecordNotFound if !current_user.admin? && !@challenge.open?
+  end
+
+  def find_solved_by
+    @solved_by = @challenge.solved_challenges.includes(team: :division).order(created_at: :desc)
   end
 
   def find_and_log_flag
