@@ -10,8 +10,6 @@ class Message < ApplicationRecord
   private
 
   def send_email
-    User.all.find_each do |usr|
-      UserMailer.message_notification(usr, self).deliver_later
-    end
+    EmailMessagesJob.perform_later(self)
   end
 end
