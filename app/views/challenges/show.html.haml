@@ -2,7 +2,7 @@
   %li= link_to %[Edit "#{@challenge.name}"], rails_admin.edit_path("challenge", @challenge.id)
 
 - content_for :header do
-  - @challenge.name
+  = @challenge.name
 
 - content_for :subheading do
   - "#{@challenge.category.name} - #{@challenge.point_value} points"
