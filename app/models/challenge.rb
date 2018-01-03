@@ -15,7 +15,7 @@ class Challenge < ApplicationRecord
   # Handles the ordering of all returned challenge objects.
   default_scope -> { order(:point_value, :name) }
 
-  attr_accessor :submitted_flag
+  attr_accessor :submitted_flag, :solved_challenges_count
 
   # This bypasses game open check and only looks at the challenge state
   def challenge_open?
@@ -27,7 +27,11 @@ class Challenge < ApplicationRecord
   end
 
   def solved?
-    solved_challenges.count.positive?
+    # We sometimes define solved_challenges_count using the
+    # activerecord preloader gem. If we have done this then
+    # we should utilize that count, if not then we should fall
+    # through and use the regular old count method.
+    (solved_challenges_count || solved_challenges.count).positive?
   end
 
   def get_solved_challenge_for(team)
