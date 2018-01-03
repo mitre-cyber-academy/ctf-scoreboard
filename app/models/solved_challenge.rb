@@ -32,9 +32,8 @@ class SolvedChallenge < FeedItem
   end
 
   def award_achievement
-    if Game.instance.solved_challenges.all.count == 1 # if this is the first solved challenge
-      Achievement.create(team: team, text: 'First Blood!')
-    end
+    # if this is the first solved challenge
+    Achievement.create(team: team, text: 'First Blood!') if Game.instance.solved_challenges.all.count == 1
     name = challenge.achievement_name
     Achievement.create(team: team, text: name) if name.present?
   end

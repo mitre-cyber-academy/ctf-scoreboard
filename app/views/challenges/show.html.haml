@@ -13,7 +13,7 @@
   - if @challenge.description.blank?
     No description
   - else
-    = raw(BlueCloth.new(@challenge.description).to_html)
+    = raw(Kramdown::Document.new(@challenge.description).to_html)
 - if !@solved_video_url.blank?
   .embed-container
     = embed(@solved_video_url)
@@ -28,7 +28,7 @@
     .control-group
       = button_tag "Submit", :class => "btn btn-primary"
 
-- if @solved_by.size > 0
+- if @solved_by.length > 0
   %table.table.table-bordered.table-striped
     %thead
       %tr

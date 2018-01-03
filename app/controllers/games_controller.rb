@@ -7,8 +7,11 @@ class GamesController < ApplicationController
   before_action :load_game_graph_data, only: %i[summary]
   before_action :load_message_count
 
+  def teams; end
+
   def show
     @challenges = @game&.challenges
+    ActiveRecord::Precounter.new(@challenges).precount(:solved_challenges)
     @categories = @game&.categories
     @solved_challenges = current_user&.team&.solved_challenges&.map(&:challenge_id)
   end

@@ -43,7 +43,8 @@ class Game < ApplicationRecord
     end
   end
 
-  def generate_completion_certs(send_email = true) # hit all divisions and iterate over all teams to create certs
+  # hit all divisions and iterate over all teams to create certs
+  def generate_completion_certs(send_email = true)
     divisions.each do |div|
       size = div.teams.size
       div.ordered_teams.each_with_index do |team, index|
@@ -52,7 +53,8 @@ class Game < ApplicationRecord
     end
   end
 
-  def generate_certificate_header(doc) # generates the top of the certificate when given a Prawn Document
+  # generates the top of the certificate when given a Prawn Document
+  def generate_certificate_header(doc)
     doc.font('Helvetica', size: 28, style: :bold) do
       doc.text name.to_s, color: '005BA1', size: 28, align: :center, leading: 8
       doc.text "#{start.day}-#{stop.day} #{I18n.t('date.month_names')[start.month]} #{start.year}",
@@ -72,7 +74,8 @@ class Game < ApplicationRecord
     end
   end
 
-  def reload_user_count # reload user_count counter_cache in team
+  # reload user_count counter_cache in team
+  def reload_user_count
     teams.each do |team|
       Team.reset_counters team.id, :users
     end

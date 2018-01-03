@@ -8,5 +8,5 @@
       %h2
         = m.title
         %small= m.updated_at.strftime("%b %e, %R %Z")
-      = raw(BlueCloth.new(m.text).to_html)
+      = raw(Kramdown::Document.new(m.text).to_html)
   = paginate @messages

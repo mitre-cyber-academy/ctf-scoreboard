@@ -17,7 +17,10 @@ class Team < ApplicationRecord
   has_many :user_requests, dependent: :destroy
   has_many :submitted_flags, through: :users, dependent: :destroy
   belongs_to :division, required: true
+  # team_captain has no inverse
+  # rubocop:disable Rails/InverseOf
   belongs_to :team_captain, class_name: 'User'
+  # rubocop:enable Rails/InverseOf
   accepts_nested_attributes_for :user_invites
   validates :team_name, :affiliation, presence: true, obscenity: true
   validates :team_name, uniqueness: { case_sensitive: false }
@@ -152,7 +155,8 @@ class Team < ApplicationRecord
     end
   end
 
-  def generate_certificate(user, directory, rank, total) # generate cert for specific user
+  # generate cert for specific user
+  def generate_certificate(user, directory, rank, total)
     dimensions = [720, 540]
     file_name = directory.join user.id.to_s + '.pdf'
     CertModule::CompletionPdf.generate(file_name, background: @template_file, page_size: dimensions, margin: 0) do |doc|
@@ -165,7 +169,8 @@ class Team < ApplicationRecord
     file_name
   end
 
-  def generate_certificate_body(doc, username, rank, total) # generates the body of the certificate
+  # generates the body of the certificate
+  def generate_certificate_body(doc, username, rank, total)
     doc.bounding_box([55, 200], width: 640, height: 200) do
       doc.font('Helvetica-Bold', size: 18) do
         doc.text team_completion_cert_string(username, rank, total), color: '005BA1', align: :center, leading: 4
@@ -179,11 +184,13 @@ class Team < ApplicationRecord
      achieving #{score} points and finishing #{rank} out of #{total} teams."
   end
 
-  def make_completion_cert_directories # creates division and team directories unless they already exist
+  # creates division and team directories unless they already exist
+  def make_completion_cert_directories
     make_team_directory make_division_directory
   end
 
-  def make_division_directory # creates division directory for storing completion certificates if it does not exist
+  # creates division directory for storing completion certificates if it does not exist
+  def make_division_directory
     certs_directory = Rails.root.join 'tmp', self.class.transform(division.name) + '-certificates'
     FileUtils.mkdir_p(certs_directory) unless Dir.exist?(certs_directory)
     certs_directory

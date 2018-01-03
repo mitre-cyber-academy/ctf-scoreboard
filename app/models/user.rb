@@ -42,16 +42,16 @@ class User < ApplicationRecord
          :rememberable, :trackable, :confirmable, :secure_validatable
 
   # These are things we require user to have but do not require of admins.
-  with_options unless: :admin? do |user|
-    user.before_save :clear_compete_for_prizes
-    user.before_destroy :leave_team_before_delete
-    user.after_create :link_to_invitations
-    user.after_update :update_team
-    user.validates :full_name, :affiliation, presence: true, obscenity: true
-    user.validates :state, presence: true
-    user.validates :age, numericality: { greater_than_or_equal_to: 0, less_than: 200 }, allow_blank: true
-    user.validates :year_in_school, inclusion: { in: [0, 9, 10, 11, 12, 13, 14, 15, 16] }, presence: true
-    user.validates :gender, inclusion: { in: %w[Male Female] }, allow_blank: true
+  with_options unless: :admin? do
+    before_save :clear_compete_for_prizes
+    before_destroy :leave_team_before_delete
+    after_create :link_to_invitations
+    after_update :update_team
+    validates :full_name, :affiliation, presence: true, obscenity: true
+    validates :state, presence: true
+    validates :age, numericality: { greater_than_or_equal_to: 0, less_than: 200 }, allow_blank: true
+    validates :year_in_school, inclusion: { in: [0, 9, 10, 11, 12, 13, 14, 15, 16] }, presence: true
+    validates :gender, inclusion: { in: %w[Male Female] }, allow_blank: true
   end
 
   # Returns whether a user is currently on a team or not.
