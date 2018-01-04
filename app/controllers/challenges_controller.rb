@@ -42,7 +42,7 @@ class ChallengesController < ApplicationController
   end
 
   def find_solved_by
-    @solved_by = @challenge.solved_challenges.includes(team: :division).order(created_at: :desc)
+    @solved_by = @challenge.solved_challenges.includes(team: :division).order(created_at: :asc)
   end
 
   def find_and_log_flag
