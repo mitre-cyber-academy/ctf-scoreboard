@@ -12,6 +12,7 @@ MITRE CTF Scoreboard is a fully featured CTF platform with scoreboard and regist
 + Install ruby.
 + In your terminal run `gem install bundler`
 + Install postgres to your system (and create a role with your system username). This can be done on mac using Homebrew by running `brew install postgresql`.
++ Setup Recaptcha. This can be done by getting a site key from [here](https://www.google.com/recaptcha/intro/) and then setting the `RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY` environment variables for the application. The steps for this will vary based on your hosting platform.
 + Run `bundle install`
 + Run `bundle exec rake db:create`
 + Run `bundle exec rake db:schema:load`
@@ -27,7 +28,7 @@ MITRE CTF Scoreboard is a fully featured CTF platform with scoreboard and regist
 
 Automated emails can be setup by adding
 `min hour * * * /bin/bash -l -c 'cd /path/to/ctf-scoreboard && RAILS_ENV=production bundle exec rake email:automated_email --silent'`
-where `min`, `hour`, and `path/to/ctf-scoreboard` are replaced with the values you prefer. 
+where `min`, `hour`, and `path/to/ctf-scoreboard` are replaced with the values you prefer.
 If the project is being hosted on Heroku a daily task can be created using the Heroku Scheduler to run `rake email:automated_email`
 
 ### Screenshots ###
