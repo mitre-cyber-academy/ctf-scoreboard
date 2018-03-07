@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171115185920) do
+ActiveRecord::Schema.define(version: 20180307192144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -202,6 +202,7 @@ ActiveRecord::Schema.define(version: 20171115185920) do
     t.string "country"
     t.datetime "messages_stamp", default: "1970-01-01 00:00:00", null: false
     t.boolean "vpn_cert_downloaded", default: false
+    t.boolean "interested_in_employment", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

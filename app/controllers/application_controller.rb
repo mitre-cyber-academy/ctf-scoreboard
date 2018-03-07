@@ -49,14 +49,13 @@ class ApplicationController < ActionController::Base
   private
 
   def configure_permitted_parameters
-    # Be sure to update this in the confirmations controller as well if you need to add parameters.
     devise_parameter_sanitizer.permit(
       :sign_up,
-      keys: %i[full_name affiliation year_in_school state compete_for_prizes gender age area_of_study]
+      keys: User.user_editable_keys
     )
     devise_parameter_sanitizer.permit(
       :account_update,
-      keys: %i[full_name affiliation year_in_school state compete_for_prizes gender age area_of_study]
+      keys: User.user_editable_keys
     )
   end
 

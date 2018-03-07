@@ -48,6 +48,11 @@
       .controls
         = f.check_box :compete_for_prizes
   .control-group
+    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Are you interested receiving internship or employment emails from MITRE?" }
+      = f.label :interested_in_employment, :class => "control-label"
+      .controls
+        = f.check_box :interested_in_employment
+  .control-group
     .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Gender will be used in aggregate statistics and are held confidentially." }
       = f.label :gender, :class => "control-label"
       .controls
