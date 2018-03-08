@@ -5,16 +5,20 @@
 - if (@rank.eql? 1) && @team.eligible?
   %p
     Because you finished on the first-place team in the #{@div.name} Division, you could be eligible for a scholarship.  Please email
-    #{link_to 'ctf@mitre.org', 'mailto:ctf@mitre.org'} with your official
+    #{link_to 'ctf@mitre.org', 'mailto:ctf@mitre.org'} with your unofficial
     college, university, or high school transcript AND an up-to-date resume to verify your eligibility.
     Both a transcript and a resume are required for the award of any scholarship prize.
 - if (@team.score > 0) && @user.interested_in_employment?
   %p
     If you are interested in working at MITRE, please apply using the link below which best matches your situation:
   %p
-    #{link_to 'I am in high school or college and am seeking an internship position.', 'https://example.com/placeholder'}
+    #{link_to 'I am a high school or college student and am seeking a software engineering internship position.', 'https://example.com/placeholder'}
   %p
-    #{link_to 'I have graduated college and am seeking a full-time position.', 'https://example.com/placeholder'}
+    #{link_to 'I am a high school or college student and am seeking a cyber security internship position.', 'https://example.com/placeholder'}
+  %p
+    #{link_to 'I have graduated college and am seeking a software engineering internship position.', 'https://example.com/placeholder'}
+  %p
+    #{link_to 'I have graduated college and am seeking a cyber security internship position.', 'https://example.com/placeholder'}
   %p
     While this competition was open to professional and government participants as part of cyber training, only
     eligible teams composed of high school and college students will be considered for winning prizes, scholarships and
