@@ -28,6 +28,7 @@ user_two:
   state: FL
   encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
   compete_for_prizes: true
+  interested_in_employment: true
   gender: Male
   age: 20
   area_of_study: Computer Science
@@ -39,6 +40,7 @@ user_three:
   affiliation: Industry
   year_in_school: 13
   compete_for_prizes: false
+  interested_in_employment: false
   state: AK
   encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
   confirmed_at: <%= Time.now %>

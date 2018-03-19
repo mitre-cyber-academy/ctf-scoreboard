@@ -4,17 +4,21 @@
   Congratulations on completing the MITRE CTF! Your team, #{@user.team.team_name} came ranked #{@rank.ordinalize}.
 - if (@rank.eql? 1) && @team.eligible?
   %p
-    Because you finished on the first-place team in the #{@div.name} Division, you could be eligible for a scholarship and
-    consideration for an internship at MITRE or an industry partner.  Please email
-    #{link_to 'ctf@mitre.org', 'mailto:ctf@mitre.org'} with your official
+    Because you finished on the first-place team in the #{@div.name} Division, you could be eligible for a scholarship.  Please email
+    #{link_to 'ctf@mitre.org', 'mailto:ctf@mitre.org'} with your unofficial
     college, university, or high school transcript AND an up-to-date resume to verify your eligibility.
     Both a transcript and a resume are required for the award of any scholarship prize.
-- elsif (@rank <= 10) && @team.eligible?
+- if (@team.score > 0) && @user.interested_in_employment?
   %p
-    Because you finished in the top ten, we are requesting your resume and transcript. If you’re interested, please
-    email #{link_to 'ctf@mitre.org', 'mailto:ctf@mitre.org'} with your official or unofficial college, university, or
-    high school transcript AND an up-to-date resume.
-- if @rank <= 10
+    If you are interested in working at MITRE, please apply using the link below which best matches your situation:
+  %p
+    #{link_to 'I am seeking a software engineering internship position.', 'https://mitre.referrals.selectminds.com/jobs/search/496723'}
+  %p
+    #{link_to 'I am seeking a cyber security internship position.', 'https://mitre.referrals.selectminds.com/jobs/search/496682'}
+  %p
+    #{link_to 'I am seeking a full-time software engineering position.', 'https://mitre.referrals.selectminds.com/jobs/search/506904'}
+  %p
+    #{link_to 'I am seeking a full-time cyber security position.', 'http://f.rfer.us/MITREvG.1q2'}
   %p
     While this competition was open to professional and government participants as part of cyber training, only
     eligible teams composed of high school and college students will be considered for winning prizes, scholarships and

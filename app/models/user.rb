@@ -55,6 +55,10 @@ class User < ApplicationRecord
     validates :gender, inclusion: { in: %w[Male Female] }, allow_blank: true
   end
 
+  def self.user_editable_keys
+    %i[full_name affiliation year_in_school state compete_for_prizes interested_in_employment gender age area_of_study]
+  end
+
   # Returns whether a user is currently on a team or not.
   def on_a_team?
     !team.nil?
