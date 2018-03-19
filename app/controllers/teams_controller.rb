@@ -85,7 +85,7 @@ class TeamsController < ApplicationController
   # The code for inviting a user and updating a team is exactly the same, except for the actual
   # notice displayed. This allows us to preload some information for both methods without duplication.
   def update_team
-    @team.update_attributes(team_params)
+    @team.update(team_params)
   end
 
   def load_team_by_id

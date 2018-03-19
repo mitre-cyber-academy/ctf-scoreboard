@@ -34,7 +34,7 @@ class UserInvite < ApplicationRecord
     elsif user.nil? || !user.team.nil? # Check to make sure user isn't already on a team.
       false
     else
-      update_attributes(status: :Accepted)
+      update(status: :Accepted)
       team.users << user
     end
   end
@@ -46,6 +46,6 @@ class UserInvite < ApplicationRecord
   end
 
   def link_to_user
-    update_attributes(user: User.find_by(email: email))
+    update(user: User.find_by(email: email))
   end
 end

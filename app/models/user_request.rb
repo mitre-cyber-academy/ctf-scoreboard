@@ -36,7 +36,7 @@ class UserRequest < ApplicationRecord
     elsif user_on_team? # Check to make sure user isn't already on a team.
       false
     else
-      update_attributes(status: :Accepted)
+      update(status: :Accepted)
       team.users << user
     end
   end

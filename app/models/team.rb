@@ -113,7 +113,7 @@ class Team < ApplicationRecord
 
   def promote(user_id)
     new_captain = users.find_by(id: user_id)
-    update_attributes(team_captain: new_captain) if new_captain
+    update(team_captain: new_captain) if new_captain
     !new_captain.nil?
   end
 
@@ -122,7 +122,7 @@ class Team < ApplicationRecord
     new_eligibility = team_competing_for_prizes? && appropriate_division_level?
     # Check if eligibility is different from what is saved on the team object and
     # if it is update the team model.
-    update_attributes(eligible: new_eligibility) unless new_eligibility.eql? eligible?
+    update(eligible: new_eligibility) unless new_eligibility.eql? eligible?
   end
 
   def score
@@ -207,6 +207,6 @@ class Team < ApplicationRecord
 
   # If a team doesn't have a team captain but does have a user, set the team captain to the first user.
   def set_team_captain
-    update_attributes(team_captain: users.first) if team_captain.nil? && !users.empty?
+    update(team_captain: users.first) if team_captain.nil? && !users.empty?
   end
 end

@@ -95,7 +95,7 @@ class User < ApplicationRecord
   end
 
   def update_messages_stamp
-    update_attributes(messages_stamp: Time.now.utc)
+    update(messages_stamp: Time.now.utc)
   end
 
   def create_vpn_cert_request
