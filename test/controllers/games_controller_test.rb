@@ -44,4 +44,23 @@ class GamesControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal "application/zip", response.content_type
   end
+
+  test 'guest and user cannot access transcript' do
+    user = add_resume_transcript_to(users(:user_four))
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get :transcripts # Nobody is signed in
+    end
+    sign_in user
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get :transcripts # User is signed in
+    end
+  end
+
+  test 'admin can access transcript' do
+    user = add_resume_transcript_to(users(:user_four))
+    sign_in users(:admin_user)
+    get :transcripts
+    assert_response :success
+    assert_equal "application/zip", response.content_type
+  end
 end
