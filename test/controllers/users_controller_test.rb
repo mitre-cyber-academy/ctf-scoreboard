@@ -117,11 +117,46 @@ class UsersControllerTest < ActionController::TestCase
     end
   end
 
+  test 'guest and user cannot access transcript' do
+    user = add_resume_transcript_to(users(:user_four))
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get :transcript, params: { id: user.id } # Nobody is signed in
+    end
+    sign_in user
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get :transcript, params: { id: user.id } # User is signed in
+    end
+  end
+
   test 'admin can access resume' do
     user = add_resume_transcript_to(users(:user_four))
     sign_in users(:admin_user)
     get :resume, params: { id: user.id }
     assert_response :success
     assert_equal "application/pdf", response.content_type
+  end
+
+  test 'admin can access transcript' do
+    user = add_resume_transcript_to(users(:user_four))
+    sign_in users(:admin_user)
+    get :transcript, params: { id: user.id }
+    assert_response :success
+    assert_equal "application/pdf", response.content_type
+  end
+
+  test 'admin redirected when resume not available' do
+    user = users(:user_four)
+    sign_in users(:admin_user)
+    get :resume, params: { id: user.id }
+    assert_redirected_to rails_admin_path
+    assert_equal I18n.t('users.download_not_available'), flash[:alert]
+  end
+
+  test 'admin redirected when transcript not available' do
+    user = users(:user_four)
+    sign_in users(:admin_user)
+    get :transcript, params: { id: user.id }
+    assert_redirected_to rails_admin_path
+    assert_equal I18n.t('users.download_not_available'), flash[:alert]
   end
 end

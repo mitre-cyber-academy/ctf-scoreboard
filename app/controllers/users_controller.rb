@@ -80,7 +80,7 @@ class UsersController < ApplicationController
 
   def download_file(file)
     file_contents = file.read
-    if file_contents.empty?
+    if file_contents.blank?
       redirect_back fallback_location: rails_admin_path, alert: I18n.t('users.download_not_available')
     else
       send_data file_contents, filename: "#{@user.full_name}_#{file.mounted_as}.pdf"
