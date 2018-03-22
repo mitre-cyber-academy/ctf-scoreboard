@@ -6,9 +6,6 @@ class GamesControllerTest < ActionController::TestCase
     @request.env["devise.mapping"] = Devise.mappings[:user]
   end
 
-  test 'index' do
-  end
-
   test "should get show" do
     get :show
     assert_response :success
@@ -27,5 +24,24 @@ class GamesControllerTest < ActionController::TestCase
     get :summary
     assert_redirected_to @controller.user_root_path
     assert_equal flash[:alert], I18n.t('game.not_available')
+  end
+
+  test 'guest and user cannot access resume' do
+    user = add_resume_transcript_to(users(:user_four))
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get :resumes # Nobody is signed in
+    end
+    sign_in user
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get :resumes # User is signed in
+    end
+  end
+
+  test 'admin can access resume' do
+    user = add_resume_transcript_to(users(:user_four))
+    sign_in users(:admin_user)
+    get :resumes
+    assert_response :success
+    assert_equal "application/zip", response.content_type
   end
 end

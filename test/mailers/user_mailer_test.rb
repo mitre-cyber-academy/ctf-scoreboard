@@ -30,8 +30,8 @@ class UserMailerTest < ActionMailer::TestCase
                    Your team, #{users(:user_one).team.team_name} came ranked #{(1 + (divisions(:high_school).ordered_teams.index users(:user_one).team)).ordinalize}.").squish
     @first_place_email_body = strip_tags("Hello #{users(:user_four).full_name}! Congratulations on completing the MITRE CTF!
                    Your team, #{users(:user_four).team.team_name} came ranked #{(1 + (divisions(:professional).ordered_teams.index users(:user_four).team)).ordinalize}.
-                   Because you finished on the first-place team in the #{divisions(:professional).name} Division, you could be eligible for a scholarship.  Please email #{link_to 'ctf@mitre.org', 'mailto:ctf@mitre.org'}
-                   with your unofficial college, university, or high school transcript AND an up-to-date resume to verify your eligibility.
+                   Because you finished on the first-place team in the #{divisions(:professional).name} Division, you could be eligible for a scholarship.  Please upload your unofficial
+                   college, university, or high school transcript AND an up-to-date resume to your profile on the scoreboard to verify your eligibility.  You can do this by clicking here.
                    Both a transcript and a resume are required for the award of any scholarship prize.").squish
     @employment_email_body = strip_tags("If you are interested in working at MITRE, please apply using the link below which best matches your situation:").squish
     @open_source_email_body = strip_tags("Hello #{users(:user_one).full_name}! All solved challenges from the last competition have been released with solutions on

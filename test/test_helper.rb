@@ -19,6 +19,13 @@ end
 
 class ActionController::TestCase
   include Devise::Test::ControllerHelpers
+
+  def add_resume_transcript_to(user)
+    user.resume = File.open(Rails.root.join('test/files/regular.pdf'))
+    user.transcript = File.open(Rails.root.join('test/files/regular.pdf'))
+    user.save!
+    user
+  end
 end
 
 class ActionView::TestCase

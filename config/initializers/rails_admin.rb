@@ -17,6 +17,14 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Game' do
+    show do
+      configure :resumes do
+        formatted_value do
+          bindings[:view].link_to('Download resume bundle', Rails.application.routes.url_helpers.resumes_game_path)
+        end
+      end
+    end
+
     edit do
       [:start, :stop].each do |f|
         configure f do

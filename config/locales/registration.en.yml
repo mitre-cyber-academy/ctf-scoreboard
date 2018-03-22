@@ -72,5 +72,6 @@ en:
   users:
     login_required: 'You must login in order to perform this action.'
     certificate_not_ready: 'Your VPN Certificate is not yet ready for download, please try again in a few minutes.'
+    download_not_available: 'The download you have selected is not available for this user.'
   admin:
     should_not_do_action: 'Admins should use the Rails Admin console to perform administrative actions.'

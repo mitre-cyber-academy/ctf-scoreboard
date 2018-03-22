@@ -3,6 +3,7 @@
 class Game < ApplicationRecord
   has_many :divisions, dependent: :destroy
   has_many :teams, through: :divisions, dependent: :destroy
+  has_many :users, through: :teams, dependent: :destroy
   has_many :feed_items, through: :divisions, dependent: :destroy
   has_many :achievements, through: :divisions, dependent: :destroy
   has_many :solved_challenges, through: :divisions, dependent: :destroy

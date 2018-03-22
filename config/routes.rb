@@ -44,6 +44,8 @@ CtfRegistration::Application.routes.draw do
 
   # game
   resource :game, only: [:show] do
+    get :resumes
+    get :transcripts
     resources :messages, only: [:index]
     resources :achievements, only: [:index]
     resources :divisions, only: [:index]
@@ -56,7 +58,11 @@ CtfRegistration::Application.routes.draw do
   get '/game/teams' => 'games#teams'
 
   resources :users, only: %i[index show] do
-    get :download, on: :member
+    member do
+      get :resume
+      get :transcript
+      get :download
+    end
   end
 
   root to: 'home#index'

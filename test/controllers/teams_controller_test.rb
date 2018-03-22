@@ -74,6 +74,7 @@ class TeamsControllerTest < ActionController::TestCase
 
   test 'authenticated users without a team cannot view teams show page' do
     user = users(:user_two)
+
     sign_in user
     get :show, params: { id: teams(:team_two) }
     assert_redirected_to @controller.user_root_path
