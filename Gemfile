@@ -8,6 +8,8 @@ gem 'activerecord-precounter'
 gem 'awesome_nested_fields'
 gem 'aws-sdk-s3'
 gem 'bootstrap-sass', '~> 2.3.2.2'
+gem 'bootstrap_file_input_rails', '>= 1.0.0'
+gem 'carrierwave-postgresql', '< 0.3.0' # Can be upgraded once https://github.com/diogob/carrierwave-postgresql/issues/33
 gem 'chartkick'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
@@ -28,6 +30,7 @@ gem 'rails', '~> 5.1.4'
 gem 'rails_admin'
 gem 'rails_email_validator'
 gem 'recaptcha', require: 'recaptcha/rails'
+gem 'rubyzip'
 gem 'sentry-raven'
 
 gem 'letter_opener', group: :development

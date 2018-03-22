@@ -70,6 +70,16 @@
   -# if this is a new user registering then on_update_page should be false.
   - if on_update_page
     .control-group
+      .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Please provide us with a copy of your resume in PDF format" }
+        = f.label :resume, :class => "control-label"
+        .controls
+          = f.file_field :resume
+    .control-group
+      .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Please provide us with a copy of your unofficial transcript in PDF format" }
+        = f.label :unofficial_transcript, :class => "control-label"
+        .controls
+          = f.file_field :transcript
+    .control-group
       .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "We need your current password to update your account information." }
         = f.label :current_password, :class => "control-label-required"
         .controls

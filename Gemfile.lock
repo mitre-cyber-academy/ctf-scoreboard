@@ -62,11 +62,20 @@ GEM
     bcrypt (3.1.11)
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
+    bootstrap_file_input_rails (1.0.0)
+      railties (>= 3.1, < 6)
     brakeman (4.2.0)
     builder (3.2.3)
     bundler-audit (0.6.0)
       bundler (~> 1.2)
       thor (~> 0.18)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
+    carrierwave-postgresql (0.2.0)
+      carrierwave (~> 0.10.0)
     chartkick (2.3.2)
     coderay (1.1.2)
     coffee-rails (4.2.2)
@@ -160,6 +169,9 @@ GEM
     mail (2.7.0)
       mini_mime (>= 0.1.1)
     method_source (0.9.0)
+    mime-types (3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0521)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
@@ -264,6 +276,7 @@ GEM
     ruby-progressbar (1.9.0)
     ruby_parser (3.11.0)
       sexp_processor (~> 4.9)
+    rubyzip (1.2.1)
     sass (3.5.5)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -322,8 +335,10 @@ DEPENDENCIES
   awesome_nested_fields
   aws-sdk-s3
   bootstrap-sass (~> 2.3.2.2)
+  bootstrap_file_input_rails (>= 1.0.0)
   brakeman
   bundler-audit
+  carrierwave-postgresql (< 0.3.0)
   chartkick
   coffee-rails
   coveralls
@@ -350,6 +365,7 @@ DEPENDENCIES
   rails_email_validator
   recaptcha
   rubocop
+  rubyzip
   sass-rails
   scout_apm
   sentry-raven

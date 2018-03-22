@@ -105,4 +105,23 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to %r(\Ahttps://.*\.s3\.amazonaws\.com)
     assert user.reload.vpn_cert_downloaded
   end
+
+  test 'guest and user cannot access resume' do
+    user = add_resume_transcript_to(users(:user_four))
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get :resume, params: { id: user.id } # Nobody is signed in
+    end
+    sign_in user
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get :resume, params: { id: user.id } # User is signed in
+    end
+  end
+
+  test 'admin can access resume' do
+    user = add_resume_transcript_to(users(:user_four))
+    sign_in users(:admin_user)
+    get :resume, params: { id: user.id }
+    assert_response :success
+    assert_equal "application/pdf", response.content_type
+  end
 end

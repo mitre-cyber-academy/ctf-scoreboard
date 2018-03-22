@@ -46,6 +46,11 @@ class ApplicationController < ActionController::Base
     redirect_back fallback_location: user_root_path, alert: I18n.t('teams.in_top_ten')
   end
 
+  def deny_if_not_admin
+    return if current_user&.admin?
+    raise ActiveRecord::RecordNotFound
+  end
+
   private
 
   def configure_permitted_parameters
