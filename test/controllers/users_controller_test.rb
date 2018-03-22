@@ -133,6 +133,7 @@ class UsersControllerTest < ActionController::TestCase
     sign_in users(:admin_user)
     get :resume, params: { id: user.id }
     assert_response :success
+    assert_equal user.resume.url, request.original_fullpath
     assert_equal "application/pdf", response.content_type
   end
 
@@ -141,6 +142,7 @@ class UsersControllerTest < ActionController::TestCase
     sign_in users(:admin_user)
     get :transcript, params: { id: user.id }
     assert_response :success
+    assert_equal user.transcript.url, request.original_fullpath
     assert_equal "application/pdf", response.content_type
   end
 
