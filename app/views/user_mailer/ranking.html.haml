@@ -5,7 +5,7 @@
 - if (@rank.eql? 1) && @team.eligible?
   %p
     Because you finished on the first-place team in the #{@div.name} Division, you could be eligible for a scholarship.  Please upload your unofficial
-    college, university, or high school transcript AND an up-to-date resume to your profile on the scoreboard to verify your eligibility.  You can do this by clicking #{link_to 'here', edit_user_registration_url}.
+    college, university, or high school transcript AND an up-to-date resume to your #{link_to 'profile', edit_user_registration_url} on the scoreboard to verify your eligibility.
     Both a transcript and a resume are required for the award of any scholarship prize.
 - if (@team.score > 0) && @user.interested_in_employment?
   %p
@@ -19,7 +19,7 @@
   %p
     #{link_to 'I am seeking a full-time cyber security position.', 'http://f.rfer.us/MITREvG.1q2'}
   %p
-    Also, please take the time to make sure your #{link_to 'resume is uploaded', edit_user_registration_url} to the scoreboard as well during this step.
+    Also, please take the time to make sure your #{link_to 'resume is uploaded', edit_user_registration_url} during this step.
   %p
     While this competition was open to professional and government participants as part of cyber training, only
     eligible teams composed of high school and college students will be considered for winning prizes, scholarships and
