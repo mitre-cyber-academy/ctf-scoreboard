@@ -18,9 +18,7 @@ class Team < ApplicationRecord
   has_many :submitted_flags, through: :users, dependent: :destroy
   belongs_to :division, required: true
   # team_captain has no inverse
-  # rubocop:disable Rails/InverseOf
   belongs_to :team_captain, class_name: 'User'
-  # rubocop:enable Rails/InverseOf
   accepts_nested_attributes_for :user_invites
   validates :team_name, :affiliation, presence: true, obscenity: true
   validates :team_name, uniqueness: { case_sensitive: false }
