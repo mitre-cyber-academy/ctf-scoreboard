@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Challenge < ApplicationRecord
+  before_save :post_state_change_message
+
   belongs_to :category, required: true
   has_many :flags, inverse_of: :challenge, dependent: :destroy
   has_many :solved_challenges, dependent: :destroy
@@ -51,7 +53,22 @@ class Challenge < ApplicationRecord
     update(state: new_state)
   end
 
+  def post_state_change_message
+    return unless state_transition('force_closed', 'open') || state_transition('open', 'force_closed')
+    Message.create!(
+      game: Game.instance,
+      title: "#{name}: #{category.name} #{point_value}",
+      text: I18n.t('challenge.state_change_message', state: state.titleize)
+    )
+  end
+
   def find_flag(flag_str)
     flags.find { |flag_obj| flag_obj.flag.casecmp(flag_str).zero? }
+  end
+
+  private
+
+  def state_transition(from, to)
+    state_was == from && state == to
   end
 end

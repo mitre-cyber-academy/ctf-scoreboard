@@ -69,6 +69,7 @@ en:
     game_not_open: 'The game must be open.'
     already_solved: 'This player has already solved this challenge.'
     must_be_on_team: 'You must be on a team to submit a flag.'
+    state_change_message: 'The challenge is now %{state}'
   users:
     login_required: 'You must login in order to perform this action.'
     certificate_not_ready: 'Your VPN Certificate is not yet ready for download, please try again in a few minutes.'
