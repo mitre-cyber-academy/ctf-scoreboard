@@ -46,9 +46,9 @@ class ChallengesController < ApplicationController
   end
 
   def find_and_log_flag
-    flag = params[:challenge][:submitted_flag]
+    flag = params[:challenge][:submitted_flag] if params.key? :challenge
     SubmittedFlag.create(user: current_user, challenge: @challenge, text: flag) unless current_user.admin?
-    @flag_found = @challenge.find_flag(flag)
+    @flag_found = @challenge.find_flag(flag) unless flag.nil?
   end
 
   def on_team?
