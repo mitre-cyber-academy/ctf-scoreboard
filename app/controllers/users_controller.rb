@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   before_action :check_if_user_on_team, only: [:join_team]
   before_action :check_promote_permissions, only: [:promote]
   before_action :fetch_user_team, :deny_team_in_top_ten, only: %i[leave_team promote]
+  before_action :prevent_action_after_game, only: %i[join_team leave_team download_vpn_cert promote]
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable MethodLength

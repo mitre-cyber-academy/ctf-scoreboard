@@ -55,6 +55,10 @@ class ApplicationController < ActionController::Base
     raise ActiveRecord::RecordNotFound
   end
 
+  def prevent_action_after_game
+    redirect_back fallback_location: root_path, alert: I18n.t('game.modifications_disabled') if @game.after_competition?
+  end
+
   private
 
   def configure_permitted_parameters

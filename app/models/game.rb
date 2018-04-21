@@ -34,8 +34,11 @@ class Game < ApplicationRecord
   end
 
   def before_competition?
-    time = Time.now.utc
-    time < start
+    Time.now.utc < start
+  end
+
+  def after_competition?
+    Time.now.utc > stop
   end
 
   def remind_all
