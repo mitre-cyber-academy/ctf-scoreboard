@@ -27,4 +27,15 @@ class ChallengeTest < ActiveSupport::TestCase
     challenges(:challenge_one_cat_one).state!('force_closed')
     assert_equal 'force_closed', challenges(:challenge_one_cat_one).state
   end
+
+  test 'post state change message' do
+    open_challenge = challenges(:challenge_one_cat_one)
+    forced_challenge = challenges(:challenge_four_cat_two)
+    assert_difference 'Message.count', +2 do
+      open_challenge.update_attributes(state: 'force_closed')
+      forced_challenge.update_attributes(state: 'open')
+    end
+    message = Message.last
+    assert I18n.t('challenge.state_change_message', state: 'open'.titleize), message.title
+  end
 end
