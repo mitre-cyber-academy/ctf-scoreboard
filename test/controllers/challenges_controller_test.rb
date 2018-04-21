@@ -42,10 +42,10 @@ class ChallengesControllerTest < ActionController::TestCase
   test 'can not submit flag with no team' do
     sign_in users(:user_two)
     put :update, params: {
-        id: challenges(:challenge_one_cat_one),
-        challenge: {
-            submitted_flag: flags(:flag_one).flag
-        }
+      id: challenges(:challenge_one_cat_one),
+      challenge: {
+        submitted_flag: flags(:flag_one).flag
+      }
     }
     assert :success
     assert true, wrong_flag_messages.include?(flash[:notice])
@@ -54,7 +54,7 @@ class ChallengesControllerTest < ActionController::TestCase
   test 'can not submit flag with no flag' do
     sign_in users(:user_one)
     put :update, params: {
-        id: challenges(:challenge_one_cat_one)
+      id: challenges(:challenge_one_cat_one)
     }
     assert :success
     assert true, wrong_flag_messages.include?(flash[:notice])
@@ -62,10 +62,10 @@ class ChallengesControllerTest < ActionController::TestCase
 
   test 'can not submit flag with no user' do
     put :update, params: {
-        id: challenges(:challenge_one_cat_one),
-        challenge: {
-            submitted_flag: flags(:flag_one).flag
-        }
+      id: challenges(:challenge_one_cat_one),
+      challenge: {
+        submitted_flag: flags(:flag_one).flag
+      }
     }
     assert :success
     assert true, wrong_flag_messages.include?(flash[:notice])
