@@ -63,6 +63,7 @@ en:
     not_available: 'This action is not available until the game is open.'
     too_many: 'You may not create more than one game.'
     date_mismatch: 'The start date must be before the end date.'
+    modifications_disabled: "This action is currently blocked. Check back closer to next year's competition."
   flag:
     accepted: 'Flag accepted!'
   challenge:
