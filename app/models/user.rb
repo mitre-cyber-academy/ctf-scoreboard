@@ -4,6 +4,7 @@
 # set to nil until they are added to a team.
 class User < ApplicationRecord
   include VpnModule
+  include ActionView::Helpers::UserHelper
 
   has_paper_trail only: %i[
     email
@@ -127,6 +128,19 @@ class User < ApplicationRecord
 
   def update_team
     team&.update_captain_and_eligibility
+  end
+
+  # For Rails Admin Select
+  def gender_enum
+    %w[Male Female]
+  end
+
+  def state_enum
+    us_states
+  end
+
+  def year_in_school_enum
+    years_in_school
   end
 
   private
