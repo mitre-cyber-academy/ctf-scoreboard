@@ -12,7 +12,6 @@ class UserMailerTest < ActionMailer::TestCase
   def setup
     # Is there a sane way to check to see if the URL provided is right without
     # typing the whole email in HTML?
-    Game.instance.generate_completion_certs false
     @inv_email_body = strip_tags("Hello #{user_invites(:invite_one).email}! You have been
                    invited to join the team #{user_invites(:invite_one).team.team_name}
                    for the upcoming MITRE CTF Click the link below to register
@@ -76,8 +75,7 @@ class UserMailerTest < ActionMailer::TestCase
 
   test 'ranking no employment' do
     user = users(:user_one)
-    email = UserMailer.ranking(user, 1 + (divisions(:high_school).ordered_teams.index users(:user_one).team),
-                               Rails.root.join( 'tmp', 'high_school-certificates', user.team.id.to_s, "#{user.id.to_s}.pdf")).deliver_now
+    email = UserMailer.ranking(user).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
 
@@ -92,8 +90,7 @@ class UserMailerTest < ActionMailer::TestCase
   test 'ranking with employment' do
     user = users(:user_one)
     user.update_attributes(interested_in_employment: true)
-    email = UserMailer.ranking(user, 1 + (divisions(:high_school).ordered_teams.index users(:user_one).team),
-                               Rails.root.join( 'tmp', 'high_school-certificates', user.team.id.to_s, "#{user.id.to_s}.pdf")).deliver_now
+    email = UserMailer.ranking(user).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
 
@@ -107,8 +104,7 @@ class UserMailerTest < ActionMailer::TestCase
 
   test 'ranking email for first no employment' do
     user = users(:user_four)
-    email = UserMailer.ranking(user, 1 + (divisions(:professional).ordered_teams.index user.team),
-                               Rails.root.join( 'tmp', 'professional-certificates', user.team.id.to_s, "#{user.id.to_s}.pdf")).deliver_now
+    email = UserMailer.ranking(user).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
 
@@ -123,8 +119,7 @@ class UserMailerTest < ActionMailer::TestCase
   test 'ranking email for first employment' do
     user = users(:user_four)
     user.update_column(:interested_in_employment, true)
-    email = UserMailer.ranking(user, 1 + (divisions(:professional).ordered_teams.index user.team),
-                               Rails.root.join( 'tmp', 'professional-certificates', user.team.id.to_s, "#{user.id.to_s}.pdf")).deliver_now
+    email = UserMailer.ranking(user, 1 + (divisions(:professional).ordered_teams.index user.team)).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
 

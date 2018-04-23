@@ -8,7 +8,15 @@ namespace :email do
 
   desc 'Send completion email to all users on teams'
   task completion_email: :environment do
-    Game.instance.generate_completion_certs
+    Division.all.each do |div|
+      div.ordered_teams.each_with_index do |team, index|
+        next if team.score.zero?
+
+        team.users.each do |user|
+          UserMailer.ranking(user, index + 1).deliver_later
+        end
+      end
+    end
   end
 
   desc 'Send challenge open source notification email to all users'

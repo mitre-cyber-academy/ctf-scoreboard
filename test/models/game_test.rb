@@ -33,24 +33,6 @@ class GameTest < ActiveSupport::TestCase
     assert_equal User.all.size, ActionMailer::Base.deliveries.size
   end
 
-  test 'send ranking emails' do
-    game = games(:mitre_ctf_game)
-    game.generate_completion_certs
-    assert_equal User.where.not(team_id: nil).size, ActionMailer::Base.deliveries.size
-  end
-
-  test 'generate all certs' do
-    game = Game.includes(teams: :users).instance
-    game.generate_completion_certs false
-    game.divisions.each do |division|
-      division.teams.each do |team|
-        team.users.each do |user|
-          assert_equal true, (File.exist? (Rails.root.join 'tmp', Division.transform(division.name) + '-certificates', team.id.to_s, user.id.to_s + '.pdf'))
-        end
-      end
-    end
-  end
-
   test 'send open source emails' do
     game = games(:mitre_ctf_game)
     game.open_source

@@ -83,6 +83,10 @@ class Team < ApplicationRecord
     users.count.eql? 5
   end
 
+  def find_rank
+    (1 + (division.ordered_teams.index self))
+  end
+
   # rubocop:disable Metrics/AbcSize
   # Takes a query and the column it is filtering and returns results.
   def self.search_by(query, column_to_filter)
@@ -141,64 +145,6 @@ class Team < ApplicationRecord
   def update_captain_and_eligibility(*)
     set_team_captain
     update_eligibility
-  end
-
-  # iterate over all users to create completion certs and maybe send ranking email
-  def generate_completion_certificates(rank, total, send_email)
-    @template_file = Rails.root.join 'templates', 'ctf-certificate-template.jpg'
-    team_cert_directory = make_completion_cert_directories
-    users.each do |user|
-      path = generate_certificate(user, team_cert_directory, rank, total)
-      UserMailer.ranking(user, rank, path.to_s).deliver_later if send_email
-    end
-  end
-
-  # generate cert for specific user
-  def generate_certificate(user, directory, rank, total)
-    dimensions = [720, 540]
-    file_name = directory.join user.id.to_s + '.pdf'
-    CertModule::CompletionPdf.generate(file_name, background: @template_file, page_size: dimensions, margin: 0) do |doc|
-      doc.image @template_file, at: [0, dimensions[1]], fit: dimensions
-      doc.bounding_box([55, 450], width: 640, height: 200) do
-        Game.instance.generate_certificate_header doc
-      end
-      generate_certificate_body doc, user.full_name, rank, total
-    end
-    file_name
-  end
-
-  # generates the body of the certificate
-  def generate_certificate_body(doc, username, rank, total)
-    doc.bounding_box([55, 200], width: 640, height: 200) do
-      doc.font('Helvetica-Bold', size: 18) do
-        doc.text team_completion_cert_string(username, rank, total), color: '005BA1', align: :center, leading: 4
-      end
-    end
-  end
-
-  def team_completion_cert_string(username, rank, total)
-    "This is to certify that #{username}
-     successfully competed as a member of Team #{team_name},
-     achieving #{score} points and finishing #{rank} out of #{total} teams."
-  end
-
-  # creates division and team directories unless they already exist
-  def make_completion_cert_directories
-    make_team_directory make_division_directory
-  end
-
-  # creates division directory for storing completion certificates if it does not exist
-  def make_division_directory
-    certs_directory = Rails.root.join 'tmp', self.class.transform(division.name) + '-certificates'
-    FileUtils.mkdir_p(certs_directory) unless Dir.exist?(certs_directory)
-    certs_directory
-  end
-
-  # creates team directory for storing completion certificates if it does not exist
-  def make_team_directory(certs_directory)
-    team_cert_directory = certs_directory.join id.to_s
-    FileUtils.mkdir_p(team_cert_directory) unless Dir.exist?(team_cert_directory)
-    team_cert_directory
   end
 
   private
