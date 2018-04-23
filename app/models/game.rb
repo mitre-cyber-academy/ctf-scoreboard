@@ -44,16 +44,6 @@ class Game < ApplicationRecord
     end
   end
 
-  # hit all divisions and iterate over all teams to create certs
-  def generate_completion_certs(send_email = true)
-    divisions.each do |div|
-      size = div.teams.size
-      div.ordered_teams.each_with_index do |team, index|
-        team.generate_completion_certificates index + 1, size, send_email unless team.users.size.zero?
-      end
-    end
-  end
-
   # generates the top of the certificate when given a Prawn Document
   def generate_certificate_header(doc)
     doc.font('Helvetica', size: 28, style: :bold) do

@@ -4,6 +4,8 @@ module CertModule
   class CompletionPdf < Prawn::Document
     def initialize(options)
       set_fallback_fonts
+      options[:background] ||= Rails.root.join 'templates', 'ctf-certificate-template.jpg'
+      options[:margin] ||= 0
       super(options)
     end
 
@@ -18,5 +20,10 @@ module CertModule
     def fallback_fonts
       %w[TwitterColorEmoji SourceHanSans]
     end
+
+    # def self.generate(options = {}, &block)
+    #
+    #   super(template, options, &block)
+    # end
   end
 end
