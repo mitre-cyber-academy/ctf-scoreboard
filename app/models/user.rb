@@ -32,6 +32,8 @@ class User < ApplicationRecord
 
   after_create :create_vpn_cert_request
 
+  scope :interested_in_employment, -> { where(interested_in_employment: true) }
+
   reverse_geocoded_by :latitude, :longitude do |obj, results|
     if (geo = results.first)
       obj.country = geo.country
