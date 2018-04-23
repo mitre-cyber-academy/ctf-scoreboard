@@ -24,14 +24,6 @@ RailsAdmin.config do |config|
         end
       end
     end
-
-    edit do
-      [:start, :stop].each do |f|
-        configure f do
-          help "Required - Must be in UTC. Current time is #{Time.now.utc}"
-        end
-      end
-    end
   end
 
   config.model 'Message' do
