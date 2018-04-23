@@ -217,13 +217,53 @@ class TeamsControllerTest < ActionController::TestCase
     assert I18n.t('teams.update_successful'), flash[:notice]
   end
 
-  test 'update a team after game is closed' do
-    games(:mitre_ctf_game).update_attributes( {start: Time.now - 9.hours, stop: Time.now - 1.hours})
+  test 'can not update a team after game is closed' do
+    games(:mitre_ctf_game).update_attributes(start: Time.now - 9.hours, stop: Time.now - 1.hours)
     user = users(:user_one)
     sign_in user
     patch :update, params: { team: { team_name: 'team_one_newname', affiliation: 'school1' }, id: user.team }
-    assert_redirected_to team_path(users(:user_one).team)
-    assert I18n.t('teams.update_successful'), flash[:notice]
+    assert_redirected_to root_path
+    assert I18n.t('game.modifications_disabled'), flash[:alert]
   end
 
+  test 'can not create a team after game is closed' do
+    games(:mitre_ctf_game).update_attributes(start: Time.now - 9.hours, stop: Time.now - 1.hours)
+    user = users(:user_two)
+    sign_in user
+    assert_no_difference 'Team.count' do
+      post :create, params: { team: { team_name: 'another_team', affiliation: 'school1', division_id: divisions(:high_school) } }
+    end
+    assert_redirected_to root_path
+    assert I18n.t('game.modifications_disabled'), flash[:alert]
+  end
+
+  test 'can not invite a team member after game is closed' do
+    games(:mitre_ctf_game).update_attributes(start: Time.now - 9.hours, stop: Time.now - 1.hours)
+    user = users(:user_one)
+    sign_in user
+    assert_no_difference 'user.team.user_invites.count' do
+      patch :invite, params: { team: { user_invites_attributes: { '0': {email: 'mitrectf+user3@gmail.com'} } }, id: user.team }
+    end
+    assert_redirected_to root_path
+    assert I18n.t('game.modifications_disabled'), flash[:alert]
+  end
+
+  test 'show team after game is closed' do
+    games(:mitre_ctf_game).update_attributes(start: Time.now - 9.hours, stop: Time.now - 1.hours)
+    user = users(:user_one)
+    sign_in user
+    get :show, params: { id: user.team }
+    assert_response :success
+  end
+
+  test 'summary after game is closed' do
+    games(:mitre_ctf_game).update_attributes(start: Time.now - 9.hours, stop: Time.now - 1.hours)
+    user = users(:user_two)
+    sign_in user
+    get :summary, params: { id: teams(:team_two) }
+    assert_response :success
+    assert_select 'h3', 'Per User Statistics'
+    assert_select 'h3', 'Solved Challenges'
+    assert_select 'h3', 'Team Map'
+  end
 end

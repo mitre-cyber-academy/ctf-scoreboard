@@ -3,6 +3,7 @@
 class UserInvitesController < ApplicationController
   include ApplicationModule
 
+  before_action :prevent_action_after_game
   before_action :user_logged_in?
   before_action :load_game, :load_message_count
   before_action :block_admin_action, only: [:accept]
