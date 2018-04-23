@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     @pending_requests = current_user.user_requests.pending
     (@filterrific = initialize_filterrific(
       Team, params[:filterrific],
-      select_options: { location: us_states, division: Division.all.map { |d| [d.name, d.id] } }
+      select_options: { location: state_enum, division: Division.all.map { |d| [d.name, d.id] } }
     )) || return
     @teams = @filterrific.find.includes(:division).page(params[:page])
 

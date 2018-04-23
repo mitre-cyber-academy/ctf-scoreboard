@@ -132,19 +132,6 @@ class User < ApplicationRecord
     team&.update_captain_and_eligibility
   end
 
-  # For Rails Admin Select
-  def gender_enum
-    %w[Male Female]
-  end
-
-  def state_enum
-    us_states
-  end
-
-  def year_in_school_enum
-    years_in_school
-  end
-
   # generate cert for specific user
   def generate_certificate(rank)
     return nil unless on_a_team?
