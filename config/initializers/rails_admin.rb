@@ -40,6 +40,18 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model 'User' do
+    # Have to disable filtering on this since it is an integer and it
+    # breaks search
+    configure :year_in_school do
+      searchable false
+    end
+
+    list do
+      scopes [nil, :interested_in_employment]
+    end
+  end
+
   # If you want to track changes on your models:
   # config.audit_with :history, 'User'
 
