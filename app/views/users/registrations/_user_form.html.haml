@@ -28,12 +28,12 @@
   .control-group
     = f.label :year_in_school, :class => "control-label-required"
     .controls
-      = f.select :year_in_school, options_for_select(years_in_school, resource.year_in_school), { :include_blank => '' }, :onChange => "hidePrizesCheckbox()"
+      = f.select :year_in_school, options_for_select(year_in_school_enum, resource.year_in_school), { :include_blank => '' }, :onChange => "hidePrizesCheckbox()"
   .control-group
     .helpertext-wrapper{ 'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Enter the state in which you are a resident." }
       = f.label :state, :class => "control-label-required"
       .controls
-        = f.select :state, options_for_select(us_states, resource.state), { :include_blank => '' }, :onChange => "hidePrizesCheckbox()"
+        = f.select :state, options_for_select(state_enum, resource.state), { :include_blank => '' }, :onChange => "hidePrizesCheckbox()"
   .control-group
     = f.label :password, :class => on_update_page ? "control-label" : "control-label-required"
     .controls
@@ -56,7 +56,7 @@
     .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Gender will be used in aggregate statistics and are held confidentially." }
       = f.label :gender, :class => "control-label"
       .controls
-        = f.select :gender, options_for_select(genders, resource.gender), { :include_blank => '' }
+        = f.select :gender, options_for_select(gender_enum, resource.gender), { :include_blank => '' }
   .control-group
     .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Age will be used in aggregate statistics and are held confidentially." }
       = f.label :age, :class => "control-label"

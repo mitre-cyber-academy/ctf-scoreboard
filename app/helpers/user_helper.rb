@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module UserHelper
-  def years_in_school
+  # All methods named appropriately to work with rails_admin select
+
+  def year_in_school_enum
     [
       %w[9 9], %w[10 10], %w[11 11], %w[12 12],
       ['College - Freshman', '13'],
@@ -13,7 +15,7 @@ module UserHelper
   end
 
   # rubocop:disable Metrics/MethodLength
-  def us_states
+  def state_enum
     [
       %w[Alabama AL],
       %w[Alaska AK],
@@ -71,7 +73,7 @@ module UserHelper
     ]
   end
 
-  def genders
+  def gender_enum
     [
       %w[Male Male],
       %w[Female Female]
