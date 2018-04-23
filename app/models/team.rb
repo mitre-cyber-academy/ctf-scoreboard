@@ -147,6 +147,18 @@ class Team < ApplicationRecord
     update_eligibility
   end
 
+  # generates the body of the email certificate
+  def generate_certificate_body(doc, user_full_name, rank)
+    doc.bounding_box([55, 200], width: 640, height: 200) do
+      doc.font('Helvetica-Bold', size: 18) do
+        doc.text(I18n.t('users.team_completion_cert_string',
+                        full_name: user_full_name, team_name: team_name,
+                        score: score, rank: rank, team_size: division.teams.size),
+                 color: '005BA1', align: :center, leading: 4)
+      end
+    end
+  end
+
   private
 
   # If a team doesn't have a team captain but does have a user, set the team captain to the first user.

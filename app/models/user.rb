@@ -163,23 +163,8 @@ class User < ApplicationRecord
       doc.bounding_box([55, 450], width: 640, height: 200) do
         Game.instance.generate_certificate_header doc
       end
-      generate_certificate_body doc, rank
+      team.generate_certificate_body doc, full_name, rank
     end
-  end
-
-  # generates the body of the certificate
-  def generate_certificate_body(doc, rank)
-    doc.bounding_box([55, 200], width: 640, height: 200) do
-      doc.font('Helvetica-Bold', size: 18) do
-        doc.text team_completion_cert_string(rank), color: '005BA1', align: :center, leading: 4
-      end
-    end
-  end
-
-  def team_completion_cert_string(rank)
-    "This is to certify that #{full_name}
-     successfully competed as a member of Team #{team.team_name},
-     achieving #{team.score} points and finishing #{rank} out of #{team.division.teams.size} teams."
   end
 
   # If a user chooses to compete for prizes then they must be located in the US and be in school.
