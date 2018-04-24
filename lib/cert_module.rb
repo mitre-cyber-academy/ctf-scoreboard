@@ -20,10 +20,5 @@ module CertModule
     def fallback_fonts
       %w[TwitterColorEmoji SourceHanSans]
     end
-
-    # def self.generate(options = {}, &block)
-    #
-    #   super(template, options, &block)
-    # end
   end
 end
