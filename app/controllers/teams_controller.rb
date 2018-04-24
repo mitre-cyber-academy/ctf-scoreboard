@@ -90,6 +90,7 @@ class TeamsController < ApplicationController
 
   def load_team_by_id
     @team = Team.find_by(id: params[:id].to_i)
+    redirect_back(fallback_location: game_summary_path, alert: I18n.t('teams.does_not_exist')) unless @team
   end
 
   def load_summary_info

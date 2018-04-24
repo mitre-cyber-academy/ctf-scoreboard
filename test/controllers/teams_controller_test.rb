@@ -91,6 +91,12 @@ class TeamsControllerTest < ActionController::TestCase
     assert_select 'h3', 'Team Map'
   end
 
+  test 'team summary page correctly redirects if the team does not exist' do
+    get :summary, params: { id: '9999999999999' }
+    assert_redirected_to game_summary_path
+    assert_equal I18n.t('teams.does_not_exist'), flash[:alert]
+  end
+
   test 'a team cannot be created with the same name as another team' do
     sign_in users(:user_two)
     assert_no_difference 'Team.count', 'A Team should not be created' do
