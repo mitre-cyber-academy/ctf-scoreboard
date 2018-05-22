@@ -18,9 +18,11 @@ RailsAdmin.config do |config|
 
   config.model 'Game' do
     show do
-      configure :resumes do
-        formatted_value do
-          bindings[:view].link_to('Download resume bundle', Rails.application.routes.url_helpers.resumes_game_path)
+      [:resumes, :transcripts].each do |title|
+        configure title do
+          formatted_value do
+            bindings[:view].link_to("Download #{title.to_s.singularize} bundle", Rails.application.routes.url_helpers.send("#{title}_game_path"))
+          end
         end
       end
     end
