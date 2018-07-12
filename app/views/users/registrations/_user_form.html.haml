@@ -19,7 +19,7 @@
   .control-group
     = f.label :email, :class => "control-label-required"
     .controls
-      = f.text_field :email, :class => "textarea", :value => params[:email] ||= f.object.email
+      = f.email_field :email, :class => "textarea", :value => params[:email] ||= f.object.email
   .control-group
     .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "If you are a student, please list your school. If you are an industry professional please list your professional organization." }
       = f.label :affiliation, :class => "control-label-required"
