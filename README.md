@@ -11,7 +11,7 @@ MITRE CTF Scoreboard is a fully featured CTF platform with scoreboard and regist
 
 + Install ruby.
 + In your terminal run `gem install bundler`
-+ Install postgres to your system (and create a role with your system username). This can be done on mac using Homebrew by running `brew install postgresql`.
++ Install postgres to your system (and create a role with your system username).
 + Setup Recaptcha. This can be done by getting a site key from [here](https://www.google.com/recaptcha/intro/) and then setting the `RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY` environment variables for the application. The steps for this will vary based on your hosting platform.
 + Run `bundle install`
 + Run `bundle exec rake db:create`
