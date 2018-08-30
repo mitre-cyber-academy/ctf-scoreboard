@@ -7,7 +7,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-User.create(email: 'root@root.com', password: 'ChangeMe123', admin: true)
+admin = User.create(email: 'root@root.com', password: 'ChangeMe123', admin: true)
+admin.confirm
+admin.save
 
 # default game
 game = Game.create!(name: 'Test Game', start: Time.now.utc + 3.months, stop: Time.now.utc + 3.months + 2.days)
@@ -30,6 +32,8 @@ user = User.create!(
   area_of_study: 'Robotics',
   state: 'FL'
 )
+user.confirm
+user.save
 team1.reload.save! # This will trigger set_team_captain so that the user declared above will become team captain
 
 Team.create!(team_name: 'n00bs', affiliation: "We're n00bs", division: college, eligible: true)
