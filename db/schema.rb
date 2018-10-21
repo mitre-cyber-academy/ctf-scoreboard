@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180319162300) do
+ActiveRecord::Schema.define(version: 20181021182635) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,11 +26,17 @@ ActiveRecord::Schema.define(version: 20180319162300) do
     t.string "name"
     t.text "description"
     t.integer "point_value"
-    t.integer "category_id"
     t.string "achievement_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "state", default: 0, null: false
+  end
+
+  create_table "challenges_categories", primary_key: ["challenge_id", "category_id"], force: :cascade do |t|
+    t.integer "challenge_id", null: false
+    t.integer "category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -232,5 +238,7 @@ ActiveRecord::Schema.define(version: 20180319162300) do
     t.index ["transaction_id"], name: "index_versions_on_transaction_id"
   end
 
+  add_foreign_key "challenges_categories", "categories"
+  add_foreign_key "challenges_categories", "challenges"
   add_foreign_key "teams", "divisions"
 end
