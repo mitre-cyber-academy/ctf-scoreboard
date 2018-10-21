@@ -28,6 +28,8 @@ MITRE CTF Scoreboard is a fully featured CTF platform with scoreboard and regist
 
 #### Production ####
 
+**Warning**: The most tested way of deploying the ctf-scoreboard is using Heroku, or if you want to use your own server then using https://github.com/dokku/dokku. Don't deploy this in production without a proper and secure reverse proxy.
+
 + Install ruby (using a ruby version manager like [rvm](https://rvm.io/) is recommended).
 + In your terminal run `gem install bundler`
 + Install postgres to your system (and create a role with your system username `sudo -u postgres -i` then `createuser --interactive`).
