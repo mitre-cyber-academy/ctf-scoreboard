@@ -181,7 +181,7 @@ GEM
     multipart-post (2.0.0)
     nested_form (0.3.2)
     nio4r (2.3.1)
-    nokogiri (1.8.4)
+    nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
     obscenity (1.0.2)
     orm_adapter (0.5.0)
