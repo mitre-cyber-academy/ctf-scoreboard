@@ -21,6 +21,7 @@ module VpnModule
     def find_or_create_cert_for(filename)
       certificate_bundle = @bucket_connection.object("#{filename}.zip")
       return certificate_bundle.presigned_url(:get, expires_in: 10.minutes.to_i) if certificate_bundle.exists?
+
       create_certificate_for(filename)
       nil
     rescue StandardError # If S3 errors for any reason then we return nil so that the application does not error
@@ -29,6 +30,7 @@ module VpnModule
 
     def cert_ready_for?(filename)
       return true if bucket_file_exists?("#{filename}.zip")
+
       create_certificate_for(filename) unless bucket_file_exists?(filename)
       false
     end

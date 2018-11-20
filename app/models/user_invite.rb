@@ -25,6 +25,7 @@ class UserInvite < ApplicationRecord
   # Make sure a user cannot be invited to the same team over and over.
   def uniqueness_of_invite
     return true if UserInvite.pending.where(team: team, email: email).empty? && team.users.where(email: email).empty?
+
     errors.add(:email, :uniqueness)
   end
 

@@ -79,6 +79,7 @@ class TeamsController < ApplicationController
     # If the user is not signed in, not on a team, or not on the team they are trying to access
     # then deny them from accessing the update and create actions on a team page.
     return true unless !current_user.on_a_team? || (current_user.team_id != params[:id].to_i)
+
     redirect_to user_root_path, alert: I18n.t('teams.invalid_permissions')
   end
 

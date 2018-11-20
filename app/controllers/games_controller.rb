@@ -70,6 +70,7 @@ class GamesController < ApplicationController
     compressed_filestream = Zip::OutputStream.write_buffer do |zos|
       @game.users.each do |user|
         next unless (file_contents = user.send(uploader).read)
+
         zos.put_next_entry "#{uploader.pluralize}/#{user.team_id}/#{user.full_name}.pdf"
         zos.write file_contents
       end

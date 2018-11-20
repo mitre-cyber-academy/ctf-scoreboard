@@ -55,6 +55,7 @@ class Challenge < ApplicationRecord
 
   def post_state_change_message
     return unless state_transition('force_closed', 'open') || state_transition('open', 'force_closed')
+
     Message.create!(
       game: Game.instance,
       title: "#{name}: #{category.name} #{point_value}",

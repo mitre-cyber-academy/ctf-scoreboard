@@ -36,11 +36,13 @@ class Team < ApplicationRecord
 
   scope :filter_team_name, lambda { |query|
     return nil if query.blank?
+
     search_by(query, 'team_name')
   }
 
   scope :filter_affiliation, lambda { |query|
     return nil if query.blank?
+
     search_by(query, 'teams.affiliation')
   }
 
@@ -137,6 +139,7 @@ class Team < ApplicationRecord
 
   def display_name
     return self[:team_name] if eligible?
+
     self[:team_name] + ' (ineligible)'
   end
 

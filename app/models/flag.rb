@@ -10,6 +10,7 @@ class Flag < ApplicationRecord
   def save_solved_challenge(user)
     invoke_api_request
     return if user.admin?
+
     solved_challenges.create(user: user, team: user.team, challenge: challenge, division: user.team.division)
   end
 

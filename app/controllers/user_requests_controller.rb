@@ -56,6 +56,7 @@ class UserRequestsController < ApplicationController
   def check_if_able_to_reject
     @user_request = UserRequest.find(params[:id])
     return true if @user_request.user.eql?(current_user) || @user_request.team.team_captain.eql?(current_user)
+
     raise ActiveRecord::RecordNotFound
   end
 end
