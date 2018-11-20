@@ -23,6 +23,7 @@ class UserRequest < ApplicationRecord
   # Make sure a user cannot be invited to the same team over and over.
   def uniqueness_of_pending_request
     return true if UserRequest.pending_requests.where(team: team, user: user).empty?
+
     errors.add(:user, I18n.t('requests.already_pending'))
   end
 

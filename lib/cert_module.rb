@@ -11,9 +11,9 @@ module CertModule
 
     def set_fallback_fonts
       font_families.update(
-        'Helvetica-Bold'    => { normal: Rails.root.join('lib', 'assets', 'fonts', 'Helvetica-Bold.ttf') },
+        'Helvetica-Bold' => { normal: Rails.root.join('lib', 'assets', 'fonts', 'Helvetica-Bold.ttf') },
         'TwitterColorEmoji' => { normal: Rails.root.join('lib', 'assets', 'fonts', 'TwitterColorEmoji.ttf') },
-        'SourceHanSans'     => { normal: Rails.root.join('lib', 'assets', 'fonts', 'SourceHanSans.ttf') }
+        'SourceHanSans' => { normal: Rails.root.join('lib', 'assets', 'fonts', 'SourceHanSans.ttf') }
       )
     end
 

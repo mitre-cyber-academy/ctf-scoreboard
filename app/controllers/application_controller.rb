@@ -28,6 +28,7 @@ class ApplicationController < ActionController::Base
 
   def load_message_count
     return if current_user.nil?
+
     @unread_message_count = @game.messages.where('updated_at >= :time', time: current_user.messages_stamp).count
   end
 
@@ -38,16 +39,19 @@ class ApplicationController < ActionController::Base
   # Only allow access to information specific to the game when the game is actually open
   def filter_access_before_game_open
     return if current_user&.admin? || !@game.before_competition?
+
     redirect_to user_root_path, alert: I18n.t('game.not_available')
   end
 
   def deny_team_in_top_ten
     return if @game.before_competition? || !@team&.in_top_ten?
+
     redirect_back fallback_location: user_root_path, alert: I18n.t('teams.in_top_ten')
   end
 
   def deny_if_not_admin
     return if current_user&.admin?
+
     raise ActiveRecord::RecordNotFound
   end
 

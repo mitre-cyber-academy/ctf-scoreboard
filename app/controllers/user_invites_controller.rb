@@ -38,6 +38,7 @@ class UserInvitesController < ApplicationController
   def check_destroy_access
     @user_invite = UserInvite.find_by id: params[:id]
     return true if @user_invite.user.eql?(current_user) || @user_invite.team.team_captain.eql?(current_user)
+
     raise ActiveRecord::RecordNotFound
   end
 end
