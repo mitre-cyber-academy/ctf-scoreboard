@@ -9,7 +9,7 @@ gem 'awesome_nested_fields'
 gem 'aws-sdk-s3'
 gem 'bootstrap-sass', '~> 2.3.2.2'
 gem 'bootstrap_file_input_rails', '>= 1.0.0'
-gem 'carrierwave-postgresql', '< 0.3.0' # Can be upgraded once https://github.com/diogob/carrierwave-postgresql/issues/33
+gem 'carrierwave-postgresql', '< 0.4.0' # Can be upgraded once https://github.com/diogob/carrierwave-postgresql/issues/33
 gem 'chartkick'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
