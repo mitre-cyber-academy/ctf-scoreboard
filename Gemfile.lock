@@ -44,6 +44,8 @@ GEM
       public_suffix (>= 2.0.2, < 4.0)
     arel (8.0.0)
     ast (2.4.0)
+    autoprefixer-rails (9.3.1)
+      execjs
     awesome_nested_fields (0.6.4)
       rails (>= 3.0.0)
     aws-eventstream (1.0.1)
@@ -62,8 +64,9 @@ GEM
       aws-sigv4 (~> 1.0)
     aws-sigv4 (1.0.3)
     bcrypt (3.1.12)
-    bootstrap-sass (2.3.2.2)
-      sass (~> 3.2)
+    bootstrap-sass (3.3.7)
+      autoprefixer-rails (>= 5.2.1)
+      sass (>= 3.3.4)
     bootstrap_file_input_rails (1.0.0)
       railties (>= 3.1, < 6)
     brakeman (4.3.1)
@@ -339,7 +342,7 @@ DEPENDENCIES
   activerecord-precounter
   awesome_nested_fields
   aws-sdk-s3
-  bootstrap-sass (~> 2.3.2.2)
+  bootstrap-sass (~> 3.3.7)
   bootstrap_file_input_rails (>= 1.0.0)
   brakeman
   bundler-audit

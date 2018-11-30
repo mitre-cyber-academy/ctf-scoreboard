@@ -7,7 +7,7 @@ ruby '2.5.1'
 gem 'activerecord-precounter'
 gem 'awesome_nested_fields'
 gem 'aws-sdk-s3'
-gem 'bootstrap-sass', '~> 2.3.2.2'
+gem 'bootstrap-sass', '~> 3.3.7'
 gem 'bootstrap_file_input_rails', '>= 1.0.0'
 gem 'carrierwave-postgresql', '< 0.3.0' # Can be upgraded once https://github.com/diogob/carrierwave-postgresql/issues/33
 gem 'chartkick'
