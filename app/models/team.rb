@@ -122,7 +122,6 @@ class Team < ApplicationRecord
   end
 
   def update_eligibility
-    reload # SQL caching causing users to be empty when creating team making all teams ineligible
     new_eligibility = team_competing_for_prizes? && appropriate_division_level?
     # Check if eligibility is different from what is saved on the team object and
     # if it is update the team model.
@@ -130,7 +129,7 @@ class Team < ApplicationRecord
   end
 
   def score
-    feed_items.where(type: [SolvedChallenge, ScoreAdjustment])
+    feed_items.where(type: %w[SolvedChallenge ScoreAdjustment])
               .joins(
                 'LEFT JOIN challenges ON challenges.id = feed_items.challenge_id'
               )
@@ -146,6 +145,7 @@ class Team < ApplicationRecord
   # After remove callback passes a parameter which is the object that was just removed, we don't need it
   # so we just throw it away
   def update_captain_and_eligibility(*)
+    reload # SQL caching causing users to be empty when creating team making all teams ineligible
     set_team_captain
     update_eligibility
   end

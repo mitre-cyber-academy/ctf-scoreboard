@@ -21,7 +21,7 @@ class User < ApplicationRecord
   mount_uploader :resume, ResumeUploader
   mount_uploader :transcript, TranscriptUploader
 
-  belongs_to :team, counter_cache: true
+  belongs_to :team, counter_cache: true, required: false
   has_many :feed_items, dependent: :destroy
   has_many :user_invites, dependent: :destroy
   has_many :user_requests, dependent: :destroy

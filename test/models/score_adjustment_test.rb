@@ -18,8 +18,7 @@ class ScoreAdjustmentTest < ActiveSupport::TestCase
   end
 
   test 'point value is not zero' do
-    score_adjustment = ScoreAdjustment.new(
-      point_value: 0)
+    score_adjustment = ScoreAdjustment.new(point_value: 0)
     assert_not score_adjustment.valid?
     assert_equal ['must not be zero.'], score_adjustment.errors.messages[:point_value]
   end
