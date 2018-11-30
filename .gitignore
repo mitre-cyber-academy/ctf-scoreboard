@@ -29,3 +29,5 @@
 
 # Ignore simplecov output.
 coverage
+
+/public/uploads/*

@@ -2,11 +2,12 @@
 
 source 'https://rubygems.org'
 
-ruby '2.5.1'
+ruby '2.5.3'
 
 gem 'activerecord-precounter'
 gem 'awesome_nested_fields'
 gem 'aws-sdk-s3'
+gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap-sass', '~> 2.3.2.2'
 gem 'bootstrap_file_input_rails', '>= 1.0.0'
 gem 'carrierwave-postgresql', '< 0.3.0' # Can be upgraded once https://github.com/diogob/carrierwave-postgresql/issues/33
@@ -27,14 +28,17 @@ gem 'paper_trail-association_tracking'
 gem 'passenger', require: 'phusion_passenger/rack_handler'
 gem 'pg'
 gem 'prawn'
-gem 'rails', '~> 5.1.4'
+gem 'rails', '~> 5.2.1'
 gem 'rails_admin'
 gem 'rails_email_validator'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'rubyzip'
 gem 'sentry-raven'
 
-gem 'letter_opener', group: :development
+group :development do
+  gem 'letter_opener'
+  gem 'listen'
+end
 
 group :development, :test do
   gem 'pry-remote'

@@ -2,9 +2,9 @@
 
 class FeedItem < ApplicationRecord
   belongs_to :team, required: true
-  belongs_to :user
-  belongs_to :challenge
-  belongs_to :division
+  belongs_to :user, required: false
+  belongs_to :challenge, required: false
+  belongs_to :division, required: false
 
   validates :type, inclusion: %w[SolvedChallenge Achievement ScoreAdjustment]
 
