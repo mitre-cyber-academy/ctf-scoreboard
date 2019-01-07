@@ -13,6 +13,19 @@ body { padding-top: 60px; }
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#0A2C641E, endColorstr=#0A2C641E)";
   background-color: rgba(10, 44, 100,0.3);
 }
+
+td.break-word {
+  max-width: 100px;
+  @extend .break-word;
+}
+
+.break-word {
+  line-height: normal;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .remove_top_padding {
   margin-top:-20px;
 }

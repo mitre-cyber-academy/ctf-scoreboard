@@ -20,7 +20,7 @@ class Team < ApplicationRecord
   # team_captain has no inverse
   belongs_to :team_captain, class_name: 'User'
   accepts_nested_attributes_for :user_invites
-  validates :team_name, :affiliation, presence: true, obscenity: true
+  validates :team_name, :affiliation, presence: true, length: { maximum: 255 }, obscenity: true
   validates :team_name, uniqueness: { case_sensitive: false }
 
   after_save :update_captain_and_eligibility

@@ -1,5 +1,5 @@
 - content_for :header do
-  #{@team.display_name}
+  .break-word= @team.display_name
 
 - content_for :subheading do
   #{@team.division.name} - #{pluralize(@solved_challenges.size, 'solved challenge')}

@@ -3,8 +3,8 @@
 - content_for :vpn_cert_download do
   - if current_user&.vpn_cert_available?
     = render partial: "users/vpn_cert_alert"
-%h2 #{@team.display_name} - Team Information
-%h3 Affiliation: #{@team.affiliation}
+%h2.break-word= @team.display_name
+%h3.break-word Affiliation: #{@team.affiliation}
 %table.table.table-condensed.table-striped
   %thead
   %tr
@@ -50,7 +50,7 @@
   .span6
     %h4 Team Division Status
     You have currently selected the
-    %b=@team.division.name
+    %b= @team.division.name
     division for your team.
     - if @team.appropriate_division_level?
       This division is acceptable for your team.
