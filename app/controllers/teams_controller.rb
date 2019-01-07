@@ -95,7 +95,7 @@ class TeamsController < ApplicationController
   end
 
   def load_summary_info
-    @solved_challenges = @team&.solved_challenges
+    @solved_challenges = @team&.solved_challenges&.includes(challenge: :category)
     load_team_flag_stats
     @flags_per_hour = @team.submitted_flags.group_by_hour('submitted_flags.created_at', format: '%l:%M %p').count
     @team_flag_submissions = [
