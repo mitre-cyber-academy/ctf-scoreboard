@@ -37,7 +37,7 @@
               - if user_signed_in?
                 %li.dropdown
                   %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                    Hello #{current_user.full_name}
+                    Hello #{truncate(current_user.full_name, length: 30)}
                     %b.caret
                   %ul.dropdown-menu
                     %li

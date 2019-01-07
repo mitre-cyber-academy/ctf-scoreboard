@@ -54,7 +54,7 @@ class User < ApplicationRecord
     after_create :link_to_invitations
     after_update :update_team
     validates :email, uniqueness: true
-    validates :full_name, :affiliation, presence: true, obscenity: true
+    validates :full_name, :affiliation, presence: true, length: { maximum: 255 }, obscenity: true
     validates :state, presence: true
     validates :age, numericality: { greater_than_or_equal_to: 0, less_than: 200 }, allow_blank: true
     validates :year_in_school, inclusion: { in: [0, 9, 10, 11, 12, 13, 14, 15, 16] }, presence: true

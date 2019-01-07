@@ -12,11 +12,11 @@
   .control-group
     = f.label :team_name, :class => "control-label"
     .controls
-      = f.text_field :team_name, :class => "textarea"
+      = f.text_field :team_name, :class => "textarea", maxlength: 255
   .control-group
     = f.label :affiliation, :class => "control-label"
     .controls
-      = f.text_field :affiliation, :class => "textarea"
+      = f.text_field :affiliation, :class => "textarea", maxlength: 255
   .control-group
     = f.label :division, :class => "control-label"
     .controls
