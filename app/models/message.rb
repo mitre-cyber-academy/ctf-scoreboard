@@ -3,7 +3,7 @@
 class Message < ApplicationRecord
   after_create :send_email, if: :email_message?
 
-  belongs_to :game, required: true
+  belongs_to :game, optional: false
 
   validates :text, :title, presence: true
 
