@@ -2,8 +2,8 @@
 
 # Whenever a user requests to join a team a new user request is created.
 class UserRequest < ApplicationRecord
-  belongs_to :team, required: true
-  belongs_to :user, required: true
+  belongs_to :team, optional: false
+  belongs_to :user, optional: false
 
   enum status: %i[Pending Accepted Rejected]
 

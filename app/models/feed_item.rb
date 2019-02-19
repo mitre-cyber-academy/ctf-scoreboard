@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class FeedItem < ApplicationRecord
-  belongs_to :team, required: true
-  belongs_to :user, required: false
-  belongs_to :challenge, required: false
-  belongs_to :division, required: false
+  belongs_to :team, optional: false
+  belongs_to :user, optional: true
+  belongs_to :challenge, optional: true
+  belongs_to :division, optional: true
 
   validates :type, inclusion: %w[SolvedChallenge Achievement ScoreAdjustment]
 

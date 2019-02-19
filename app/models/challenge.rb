@@ -3,7 +3,7 @@
 class Challenge < ApplicationRecord
   before_save :post_state_change_message
 
-  belongs_to :category, required: true
+  belongs_to :category, optional: false
   has_many :flags, inverse_of: :challenge, dependent: :destroy
   has_many :solved_challenges, dependent: :destroy
   has_many :submitted_flags, dependent: :destroy

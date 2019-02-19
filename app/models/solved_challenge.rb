@@ -5,10 +5,10 @@ class SolvedChallenge < FeedItem
 
   after_save :award_achievement, :open_next_challenge
 
-  belongs_to :flag, required: true
-  belongs_to :division, required: true
-  belongs_to :challenge, required: true
-  belongs_to :team, required: true
+  belongs_to :flag, optional: false
+  belongs_to :division, optional: false
+  belongs_to :challenge, optional: false
+  belongs_to :team, optional: false
 
   def description
     %(Solved challenge "#{challenge.category.name} #{challenge.point_value}")
