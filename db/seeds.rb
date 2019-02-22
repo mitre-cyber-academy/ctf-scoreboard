@@ -17,11 +17,10 @@ college = Division.create!(name: 'College', game: game, min_year_in_school: 9, m
 Division.create!(name: 'Professional', game: game, min_year_in_school: 0, max_year_in_school: 16)
 
 # players
-team1 = Team.create(team_name: 'pwnies', affiliation: 'PwnPwnPwn', division: high_school, eligible: false)
+
 user = User.create!(
   email: 'ctf@mitre.org',
   password: 'Test123456',
-  team: team1,
   full_name: 'I Pwn',
   affiliation: 'PwnPwnPwn',
   year_in_school: 12,
@@ -30,9 +29,14 @@ user = User.create!(
   area_of_study: 'Robotics',
   state: 'FL'
 )
-team1.reload.save! # This will trigger set_team_captain so that the user declared above will become team captain
-
-Team.create!(team_name: 'n00bs', affiliation: "We're n00bs", division: college, eligible: true)
+team1 = Team.create!(
+  team_name: 'pwnies',
+  affiliation: 'PwnPwnPwn',
+  division: high_school,
+  eligible: false,
+  users: [user],
+  team_captain: user,
+)
 
 # crypto
 category = Category.create!(name: 'Crypto', game: game)
