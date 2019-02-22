@@ -17,24 +17,28 @@ class ChallengesControllerTest < ActionController::TestCase
 
   test 'submit correct flag' do
     sign_in users(:user_one)
-    put :update, params: {
-      id: challenges(:challenge_one_cat_one),
-      challenge: {
-        submitted_flag: flags(:flag_one).flag
+    assert_difference 'SubmittedFlag.count', +1 do
+      put :update, params: {
+        id: challenges(:challenge_one_cat_one),
+        challenge: {
+          submitted_flag: flags(:flag_one).flag
+        }
       }
-    }
+    end
     assert :success
     assert_equal flash[:notice], I18n.t('flag.accepted')
   end
 
   test 'submit incorrect flag' do
     sign_in users(:user_one)
-    put :update, params: {
-      id: challenges(:challenge_one_cat_one),
-      challenge: {
-        submitted_flag: "wrong"
+    assert_difference 'SubmittedFlag.count', +1 do
+      put :update, params: {
+        id: challenges(:challenge_one_cat_one),
+        challenge: {
+          submitted_flag: "wrong"
+        }
       }
-    }
+    end
     assert :success
     assert true, wrong_flag_messages.include?(flash[:notice])
   end
@@ -52,10 +56,12 @@ class ChallengesControllerTest < ActionController::TestCase
   end
 
   test 'can not submit flag with no flag' do
-    sign_in users(:user_one)
-    put :update, params: {
-      id: challenges(:challenge_one_cat_one)
-    }
+    assert_no_difference 'SubmittedFlag.count' do
+      sign_in users(:user_one)
+      put :update, params: {
+        id: challenges(:challenge_one_cat_one)
+      }
+    end
     assert :success
     assert true, wrong_flag_messages.include?(flash[:notice])
   end
