@@ -6,3 +6,9 @@ $(document).ready ->
   if ids.length > 1
     id = ids.pop(1)
     $("#summaryTabs a[href=\"##{id}\"]").tab('show')
+
+  $('#summaryTabs').on 'click', 'li', (event) ->
+    activeTab = $(this).find('a').attr('href')
+    console.log activeTab
+    base = window.location.href.split('#')[0]
+    window.location.href = base + activeTab
