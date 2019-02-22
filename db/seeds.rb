@@ -30,9 +30,35 @@ user = User.create!(
   area_of_study: 'Robotics',
   state: 'FL'
 )
-team1.reload.save! # This will trigger set_team_captain so that the user declared above will become team captain
+college_user = User.create!(
+  email: 'ftc@mitre.org',
+  password: 'Test123456',
+  full_name: 'ctf is fun',
+  affiliation: 'hax0r',
+  year_in_school: 14,
+  gender: 'Female',
+  age: 20,
+  area_of_study: 'Robotics',
+  state: 'FL'
+)
 
-Team.create!(team_name: 'n00bs', affiliation: "We're n00bs", division: college, eligible: true)
+team1 = Team.create!(
+  team_name: 'pwnies',
+  affiliation: 'PwnPwnPwn',
+  division: high_school,
+  eligible: false,
+  users: [user],
+  team_captain: user
+)
+
+team2 = Team.create!(
+  team_name: 'hax0rs',
+  affiliation: 'CollegePwn2Win',
+  division: college,
+  eligible: false,
+  users: [college_user],
+  team_captain: college_user
+)
 
 # crypto
 category = Category.create!(name: 'Crypto', game: game)
@@ -107,5 +133,14 @@ FeedItem.create!(
   division: high_school,
   challenge: Challenge.first,
   text: 'Achievement',
+  type: Achievement
+)
+
+FeedItem.create!(
+  team: team2,
+  user: college_user,
+  division: college,
+  challenge: Challenge.first,
+  text: 'Cool & Neat',
   type: Achievement
 )
