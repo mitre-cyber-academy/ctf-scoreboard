@@ -2,8 +2,8 @@
 
 # Every time a team captain invites a user to their team, a new user invite is created.
 class UserInvite < ApplicationRecord
-  belongs_to :team, required: true
-  belongs_to :user, required: false
+  belongs_to :team, optional: false
+  belongs_to :user, optional: true
 
   enum status: %i[Pending Accepted Rejected]
 

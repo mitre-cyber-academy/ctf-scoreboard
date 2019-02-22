@@ -16,7 +16,7 @@ class Team < ApplicationRecord
   has_many :user_invites, dependent: :destroy
   has_many :user_requests, dependent: :destroy
   has_many :submitted_flags, through: :users, dependent: :destroy
-  belongs_to :division, required: true
+  belongs_to :division, optional: false
   # team_captain has no inverse
   belongs_to :team_captain, class_name: 'User'
   accepts_nested_attributes_for :user_invites

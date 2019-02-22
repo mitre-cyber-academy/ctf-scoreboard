@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Category < ApplicationRecord
-  belongs_to :game, required: true
+  belongs_to :game, optional: false
   has_many :challenges, dependent: :destroy
 
   validates :name, presence: true
