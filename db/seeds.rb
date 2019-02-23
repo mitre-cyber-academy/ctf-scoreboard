@@ -7,7 +7,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-User.create(email: 'root@root.com', password: 'ChangeMe123', admin: true)
+User.create(email: 'root@root.com', password: 'ChangeMe123', confirmed_at: Time.now.utc, admin: true)
 
 # default game
 game = Game.create!(name: 'Test Game', start: Time.now.utc + 3.months, stop: Time.now.utc + 3.months + 2.days)
@@ -16,20 +16,19 @@ high_school = Division.create!(name: 'High School', game: game, min_year_in_scho
 college = Division.create!(name: 'College', game: game, min_year_in_school: 9, max_year_in_school: 16)
 Division.create!(name: 'Professional', game: game, min_year_in_school: 0, max_year_in_school: 16)
 
-# players
-team1 = Team.create(team_name: 'pwnies', affiliation: 'PwnPwnPwn', division: high_school, eligible: false)
 user = User.create!(
   email: 'ctf@mitre.org',
   password: 'Test123456',
-  team: team1,
   full_name: 'I Pwn',
   affiliation: 'PwnPwnPwn',
   year_in_school: 12,
   gender: 'Male',
   age: 16,
   area_of_study: 'Robotics',
+  confirmed_at: Time.now.utc,
   state: 'FL'
 )
+
 college_user = User.create!(
   email: 'ftc@mitre.org',
   password: 'Test123456',
@@ -39,6 +38,7 @@ college_user = User.create!(
   gender: 'Female',
   age: 20,
   area_of_study: 'Robotics',
+  confirmed_at: Time.now.utc,
   state: 'FL'
 )
 
