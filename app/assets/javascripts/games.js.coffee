@@ -9,6 +9,5 @@ $(document).ready ->
 
   $('#summaryTabs').on 'click', 'li', (event) ->
     activeTab = $(this).find('a').attr('href')
-    console.log activeTab
     base = window.location.href.split('#')[0]
     window.location.href = base + activeTab
