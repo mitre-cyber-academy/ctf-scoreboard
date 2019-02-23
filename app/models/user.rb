@@ -36,7 +36,18 @@ class User < ApplicationRecord
 
   reverse_geocoded_by :latitude, :longitude do |obj, results|
     if (geo = results.first)
-      obj.country = geo.country
+      obj.country = case geo.country
+                    when 'USA'
+                      'United States'
+                    when 'RSA'
+                      'South Africa'
+                    when 'ROC'
+                      'Taiwan'
+                    when 'PRC'
+                      'China'
+                    else
+                      geo.country
+                    end
     end
   end
   after_validation :reverse_geocode, if: ->(obj) { obj.latitude_changed? || obj.longitude_changed? }
