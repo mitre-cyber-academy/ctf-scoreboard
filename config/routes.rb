@@ -57,7 +57,7 @@ Rails.application.routes.draw do
   get '/game/summary' => 'games#summary'
   get '/game/teams' => 'games#teams'
 
-  resources :users, only: %i[index show] do
+  resources :users, only: [] do
     member do
       get :resume
       get :transcript
