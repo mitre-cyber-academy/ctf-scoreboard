@@ -14,7 +14,7 @@ gem 'carrierwave-postgresql', '< 0.3.0' # Can be upgraded once https://github.co
 gem 'chartkick'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
-gem 'devise'
+gem 'devise', '~> 4.4', '< 4.6' # Dependent on https://github.com/sferik/rails_admin/issues/3110
 gem 'filterrific'
 gem 'formtastic'
 gem 'geocoder'
