@@ -73,7 +73,6 @@ en:
     state_change_message: 'The challenge is now %{state}'
   users:
     login_required: 'You must login in order to perform this action.'
-    certificate_not_ready: 'Your VPN Certificate is not yet ready for download, please try again in a few minutes.'
     download_not_available: 'The download you have selected is not available for this user.'
     team_completion_cert_string: "This is to certify that %{full_name}
      successfully competed as a member of Team %{team_name},
