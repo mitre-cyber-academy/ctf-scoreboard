@@ -15,6 +15,7 @@ class User < ApplicationRecord
     state
     compete_for_prizes
     admin
+    current_sign_in_ip
   ]
 
   mount_uploader :resume, ResumeUploader
