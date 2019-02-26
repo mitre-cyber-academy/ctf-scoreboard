@@ -53,6 +53,9 @@ GEM
     bcrypt (3.1.12)
     bootsnap (1.4.1)
       msgpack (~> 1.0)
+    bootstrap-kaminari-views (0.0.5)
+      kaminari (>= 0.13)
+      rails (>= 3.1)
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
     bootstrap_file_input_rails (1.0.0)
@@ -341,6 +344,7 @@ DEPENDENCIES
   activerecord-precounter
   awesome_nested_fields
   bootsnap (>= 1.1.0)
+  bootstrap-kaminari-views
   bootstrap-sass (~> 2.3.2.2)
   bootstrap_file_input_rails (>= 1.0.0)
   brakeman
@@ -358,6 +362,7 @@ DEPENDENCIES
   groupdate
   haml-rails
   jquery-rails
+  kaminari
   kramdown
   letter_opener
   listen

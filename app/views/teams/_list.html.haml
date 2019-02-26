@@ -28,4 +28,4 @@
                   %td= team.slots_available
                   %td= team.division.name
                   %td= button_to 'Request', team_user_requests_path(team), :class => "btn btn-default"
-  = paginate teams # provided by kaminari
+  = paginate teams, :theme => 'twitter-bootstrap' # provided by kaminari
