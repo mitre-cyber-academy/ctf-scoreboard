@@ -206,7 +206,7 @@ GEM
     parallel (1.13.0)
     parser (2.6.0.0)
       ast (~> 2.4.0)
-    passenger (6.0.1)
+    passenger (6.0.2)
       rack
       rake (>= 0.8.1)
     pdf-core (0.7.0)
