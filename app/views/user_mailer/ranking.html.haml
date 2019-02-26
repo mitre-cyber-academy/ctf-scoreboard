@@ -9,15 +9,7 @@
     Both a transcript and a resume are required for the award of any scholarship prize.
 - if (@team.score > 0) && @user.interested_in_employment?
   %p
-    If you are interested in working at MITRE, please apply using the link below which best matches your situation:
-  %p
-    #{link_to 'I am seeking a software engineering internship position.', 'https://mitre.referrals.selectminds.com/jobs/search/496723'}
-  %p
-    #{link_to 'I am seeking a cyber security internship position.', 'https://mitre.referrals.selectminds.com/jobs/search/496682'}
-  %p
-    #{link_to 'I am seeking a full-time software engineering position.', 'https://mitre.referrals.selectminds.com/jobs/search/506904'}
-  %p
-    #{link_to 'I am seeking a full-time cyber security position.', 'https://mitre.referrals.selectminds.com/jobs/cyber-new-professional-00047874-2684?et=4k3DZdin'}
+    If you are interested in working at MITRE, please #{link_to 'apply here', 'https://mitre.referrals.selectminds.com'}.
   %p
     Also, please take the time to make sure your #{link_to 'resume is uploaded', edit_user_registration_url} and email #{mail_to 'ctf@mitre.org'} stating you have applied during this step for our internal tracking purposes.
   %p
@@ -25,8 +17,6 @@
     eligible teams composed of high school and college students will be considered for winning prizes, scholarships and
     internships. Participation in a MITRE or industry partner cyber internship program is subject to an interviewing
     process and based on current business needs.
-%p
-  Also, all challenges from the competition have been open sourced and can be found on the #{link_to 'MITRE Cyber Academy GitHub', 'https://github.com/mitre-cyber-academy/'}.
 %p
   Thanks for participating!
 %p -The MITRE CTF Team
