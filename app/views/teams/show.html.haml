@@ -1,8 +1,5 @@
 - content_for :header do
   See your Team
-- content_for :vpn_cert_download do
-  - if current_user&.vpn_cert_available?
-    = render partial: "users/vpn_cert_alert"
 %h2.break-word= @team.display_name
 %h3.break-word Affiliation: #{@team.affiliation}
 %table.table.table-condensed.table-striped

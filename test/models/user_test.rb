@@ -93,30 +93,6 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(false, user_on_team.can_remove?(another_user))
   end
 
-  test 'cert file name is property created' do
-    cert_file_name = users(:user_one).id.to_s
-    assert_equal cert_file_name, users(:user_one).vpn_cert_file_name
-  end
-
-  test 'admin cert filename is not broken if the admin has no name on file' do
-    admin = users(:admin_user)
-    admin.save
-    assert_equal admin.id.to_s, admin.vpn_cert_file_name
-  end
-
-  test 'users certificate is properly created' do
-    user = users(:user_one)
-    user.save
-    assert user.vpn_cert_request_created?
-    # The VPN certificate creation is all handled by the VPN server, here we workaround
-    # the fact that there is no VPN server in the test environment by saving the user and
-    # then calling the certificate creation method with the .zip extension. This will trigger
-    # the code to believe that the VPN server responded to the certificate request, however
-    # the "certificate" that is created is simply going to be an empty file
-    VpnModule::S3Certificates.instance.create_certificate_for("#{user.vpn_cert_file_name}.zip")
-    assert_not_nil user.vpn_cert_url
-  end
-
   test 'users country is calculated on save' do
     # Users current_sign_in_ip is set to a US held IP
     user = users(:full_team_user_one)

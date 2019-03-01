@@ -17,7 +17,6 @@ Rails.application.routes.draw do
 
   resource :users, only: [] do
     get :join_team, on: :member
-    get :download_vpn_cert
   end
 
   # Saying resources :users do causes all routes for the team to be generated.
