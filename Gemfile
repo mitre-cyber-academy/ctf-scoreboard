@@ -6,7 +6,6 @@ ruby '2.6.1'
 
 gem 'activerecord-precounter'
 gem 'awesome_nested_fields'
-gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap-sass', '~> 2.3.2.2'
 gem 'bootstrap_file_input_rails', '>= 1.0.0'

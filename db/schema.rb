@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_23_012315) do
+ActiveRecord::Schema.define(version: 2019_02_26_231133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,7 +81,6 @@ ActiveRecord::Schema.define(version: 2019_02_23_012315) do
     t.datetime "stop"
     t.text "description"
     t.text "terms_of_service"
-    t.boolean "disable_vpn"
     t.boolean "disable_flags_an_hour_graph", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -201,7 +200,6 @@ ActiveRecord::Schema.define(version: 2019_02_23_012315) do
     t.float "longitude"
     t.string "country"
     t.datetime "messages_stamp", default: "1970-01-01 00:00:00", null: false
-    t.boolean "vpn_cert_downloaded", default: false
     t.boolean "interested_in_employment", default: false
     t.oid "resume"
     t.oid "transcript"
