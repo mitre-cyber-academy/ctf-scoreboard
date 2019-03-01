@@ -3,7 +3,6 @@
 # User model, uses devise to manage registrations. Each user has a team reference which is
 # set to nil until they are added to a team.
 class User < ApplicationRecord
-  include VpnModule
   include ActionView::Helpers::UserHelper
 
   has_paper_trail only: %i[
@@ -30,8 +29,6 @@ class User < ApplicationRecord
 
   geocoded_by :current_sign_in_ip
   after_validation :geocode, unless: :geocoded?
-
-  after_create :create_vpn_cert_request
 
   scope :interested_in_employment, -> { where(interested_in_employment: true) }
 
@@ -114,31 +111,8 @@ class User < ApplicationRecord
     (eql? user) || (team.team_captain.eql? self)
   end
 
-  def vpn_cert_file_name
-    id.to_s
-  end
-
   def update_messages_stamp
     update(messages_stamp: Time.now.utc)
-  end
-
-  def create_vpn_cert_request
-    S3Certificates.instance.create_certificate_for(vpn_cert_file_name)
-  end
-
-  # Returns nil if the user does not currently have a certificate generated for them
-  # Returns a URL that is valid for 10 minutes for the user to download their vpn
-  # certificate file if their certificate is already generated
-  def vpn_cert_url
-    S3Certificates.instance.find_or_create_cert_for(vpn_cert_file_name)
-  end
-
-  def vpn_cert_request_created?
-    S3Certificates.instance.bucket_file_exists?(vpn_cert_file_name)
-  end
-
-  def vpn_cert_available?
-    S3Certificates.instance.cert_ready_for?(vpn_cert_file_name)
   end
 
   def update_team
