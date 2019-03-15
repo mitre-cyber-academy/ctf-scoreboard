@@ -81,7 +81,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.4)
+    concurrent-ruby (1.1.5)
     coveralls (0.8.22)
       json (>= 1.8, < 3)
       simplecov (~> 0.16.1)
@@ -131,7 +131,7 @@ GEM
       haml (>= 4.0, < 6)
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
-    i18n (1.5.3)
+    i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.2)
     jquery-rails (4.3.3)
@@ -186,7 +186,7 @@ GEM
       mini_portile2 (~> 2.4.0)
     obscenity (1.0.2)
     orm_adapter (0.5.0)
-    paper_trail (10.2.0)
+    paper_trail (10.2.1)
       activerecord (>= 4.2, < 6.1)
       request_store (~> 1.1)
     paper_trail-association_tracking (2.0.0)
