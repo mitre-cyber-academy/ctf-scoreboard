@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '2.6.1'
+ruby '2.6.2'
 
 gem 'activerecord-precounter'
 gem 'awesome_nested_fields'
@@ -14,7 +14,7 @@ gem 'carrierwave-postgresql', '< 0.3.0' # Can be upgraded once https://github.co
 gem 'chartkick'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
-gem 'devise', '~> 4.4', '< 4.6' # Dependent on https://github.com/sferik/rails_admin/issues/3110
+gem 'devise'
 gem 'filterrific'
 gem 'formtastic'
 gem 'geocoder'
