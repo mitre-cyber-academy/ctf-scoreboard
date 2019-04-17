@@ -5,7 +5,7 @@ require 'zip'
 class GamesController < ApplicationController
   before_action :load_game_with_users, :deny_if_not_admin, only: %i[resumes transcripts]
   before_action :load_users_and_divisions, only: %i[summary teams]
-  before_action :load_game_for_show_page, only: %i[show]
+  before_action :deny_users_to_non_html_formats, :load_game_for_show_page, only: %i[show]
   before_action :filter_access_before_game_open
   before_action :load_game_graph_data, only: %i[summary]
   before_action :load_message_count
@@ -17,6 +17,12 @@ class GamesController < ApplicationController
     ActiveRecord::Precounter.new(@challenges).precount(:solved_challenges)
     @categories = @game&.categories
     @solved_challenges = current_user&.team&.solved_challenges&.map(&:challenge_id)
+    respond_to do |format|
+      format.html
+      format.markdown do
+        render_to_string :show
+      end
+    end
   end
 
   def summary
@@ -59,6 +65,10 @@ class GamesController < ApplicationController
 
   def load_game_with_users
     @game = Game.includes(:users).instance
+  end
+
+  def deny_users_to_non_html_formats
+    deny_if_not_admin unless request.format.html?
   end
 
   private
