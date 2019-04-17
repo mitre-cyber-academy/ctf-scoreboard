@@ -1,0 +1,19 @@
+= @game.name
+= '=' * @game.name.length
+
+- @categories.each do |category|
+  = "\n\#\#\# #{category.name}\n"
+  %table
+    %tr
+      %th Title
+      %th Value
+      %th Repository
+      %th Description
+    - category.challenges.each do |challenge|
+      %tr
+        %td= challenge.name
+        %td= challenge.point_value
+        %td
+          %a{:href => "https://\<URL\>/\<YEAR\>-#{category.name}-#{challenge.point_value}"}
+            = "\<YEAR\>-#{category.name}-#{challenge.point_value}"
+        %td= challenge.description

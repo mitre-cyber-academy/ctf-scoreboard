@@ -56,11 +56,28 @@ class GamesControllerTest < ActionController::TestCase
     end
   end
 
+  test 'guest and user cannot access show as markdown' do
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get :show, format: :markdown # Nobody is signed in
+    end
+    sign_in users(:user_four)
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get :show, format: :markdown # User is signed in
+    end
+  end
+
   test 'admin can access transcript' do
     user = add_resume_transcript_to(users(:user_four))
     sign_in users(:admin_user)
     get :transcripts
     assert_response :success
     assert_equal "application/zip", response.content_type
+  end
+
+  test 'admin can access show as markdown' do
+    sign_in users(:admin_user)
+    get :show, format: :markdown
+    assert_response :success
+    assert_equal "text/markdown", response.content_type
   end
 end
