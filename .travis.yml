@@ -18,6 +18,6 @@ before_script:
   - psql -c 'create database registration_test;' -U postgres
 script:
 - bundle exec brakeman -qAzw1
-- bundle exec bundle-audit check --update
+- bundle exec bundle-audit check --update --ignore CVE-2016-10735 CVE-2019-8331
 - bundle exec rake test
 - bundle exec rubocop
