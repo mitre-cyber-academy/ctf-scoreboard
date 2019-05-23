@@ -104,7 +104,6 @@ class TeamsController < ApplicationController
                                                                           format: '%l:%M %p').count }
     ]
     @user_locations = @team.users.where('country IS NOT NULL').group(:country).count
-    @page_requires_gcharts = true
   end
 
   def load_team_flag_stats
