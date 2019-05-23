@@ -88,7 +88,6 @@ class TeamsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'h3', 'Per User Statistics'
     assert_select 'h3', 'Solved Challenges'
-    assert_select 'h3', 'Team Map'
   end
 
   test 'team summary page correctly redirects if the team does not exist' do

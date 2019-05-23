@@ -26,7 +26,6 @@ class GamesController < ApplicationController
   end
 
   def summary
-    @page_requires_gcharts = true
     @view_all_teams_link = true
 
     respond_to do |format|

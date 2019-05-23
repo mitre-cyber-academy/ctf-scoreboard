@@ -43,7 +43,4 @@
                   %td=link_to user.id, rails_admin.show_path("user", user)
                   %td= user.full_name
                   %td= user.email
-%hr
-%h3.muted Team Map
-= geo_chart @user_locations, colors: ["#5d8cb6", '#446582']
 %br
