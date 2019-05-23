@@ -62,7 +62,7 @@ class User < ApplicationRecord
     before_destroy :leave_team_before_delete
     after_create :link_to_invitations
     after_update :update_team
-    validates :email, uniqueness: true
+    validates :email, uniqueness: true, presence: true
     validates :full_name, :affiliation, presence: true, length: { maximum: 255 }, obscenity: true
     validates :state, presence: true
     validates :age, numericality: { greater_than_or_equal_to: 0, less_than: 200 }, allow_blank: true
