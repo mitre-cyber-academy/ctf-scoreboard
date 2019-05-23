@@ -31,7 +31,6 @@ user_two:
   encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
   compete_for_prizes: true
   interested_in_employment: true
-  gender: Male
   age: 20
   area_of_study: Computer Science
   confirmed_at: <%= Time.now %>
@@ -158,4 +157,3 @@ user_for_top_ten:
   state: FL
   encrypted_password: <%= Devise::Encryptor.digest(User, 'TestPassword123') %>
   confirmed_at: <%= Time.now %>
-

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_26_231133) do
+ActiveRecord::Schema.define(version: 2019_05_23_135449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -188,7 +188,6 @@ ActiveRecord::Schema.define(version: 2019_02_26_231133) do
     t.string "full_name"
     t.string "affiliation"
     t.integer "year_in_school", limit: 2
-    t.string "gender"
     t.integer "age", limit: 2
     t.string "area_of_study"
     t.string "location"

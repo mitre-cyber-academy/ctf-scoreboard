@@ -72,12 +72,5 @@ module UserHelper
       ['Outside US', 'NA']
     ]
   end
-
-  def gender_enum
-    [
-      %w[Male Male],
-      %w[Female Female]
-    ]
-  end
   # rubocop:enable Metrics/MethodLength
 end
