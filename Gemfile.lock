@@ -60,7 +60,7 @@ GEM
       sass (~> 3.2)
     bootstrap_file_input_rails (1.0.0)
       railties (>= 3.1, < 6)
-    brakeman (4.5.0)
+    brakeman (4.5.1)
     builder (3.2.3)
     bundler-audit (0.6.1)
       bundler (>= 1.2.0, < 3)
