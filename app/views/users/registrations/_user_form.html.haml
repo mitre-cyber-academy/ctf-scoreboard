@@ -53,11 +53,6 @@
       .controls
         = f.check_box :interested_in_employment
   .control-group
-    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Gender will be used in aggregate statistics and are held confidentially." }
-      = f.label :gender, :class => "control-label"
-      .controls
-        = f.select :gender, options_for_select(gender_enum, resource.gender), { :include_blank => '' }
-  .control-group
     .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Age will be used in aggregate statistics and are held confidentially." }
       = f.label :age, :class => "control-label"
       .controls
