@@ -8,6 +8,6 @@
       %h2
         = m.title
         %small= m.updated_at.strftime("%b %e, %R %Z")
-      = raw(Kramdown::Document.new(m.text).to_html)
+      = sanitize(Kramdown::Document.new(m.text).to_html)
     %hr
   = paginate @messages, :theme => 'twitter-bootstrap'
