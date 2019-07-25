@@ -264,7 +264,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
-    recaptcha (4.14.0)
+    recaptcha (5.0.0)
       json
     ref (2.0.0)
     remotipart (1.4.2)
