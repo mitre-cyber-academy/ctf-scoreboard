@@ -195,7 +195,7 @@ GEM
       request_store (~> 1.1)
     paper_trail-association_tracking (2.0.0)
     parallel (1.17.0)
-    parser (2.6.3.0)
+    parser (2.6.5.0)
       ast (~> 2.4.0)
     passenger (6.0.3)
       rack
@@ -301,7 +301,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    scout_apm (2.6.0)
+    scout_apm (2.6.2)
       parser
     sentry-raven (2.11.1)
       faraday (>= 0.7.6, < 1.0)
