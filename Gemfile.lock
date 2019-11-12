@@ -108,7 +108,7 @@ GEM
     erubi (1.8.0)
     erubis (2.7.0)
     execjs (2.7.0)
-    faraday (0.15.4)
+    faraday (0.17.0)
       multipart-post (>= 1.2, < 3)
     ffi (1.11.1)
     filterrific (5.2.1)
@@ -303,7 +303,7 @@ GEM
       tilt
     scout_apm (2.6.0)
       parser
-    sentry-raven (2.11.1)
+    sentry-raven (2.12.3)
       faraday (>= 0.7.6, < 1.0)
     sexp_processor (4.12.0)
     simplecov (0.16.1)
