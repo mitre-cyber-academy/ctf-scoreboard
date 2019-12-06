@@ -1,3 +1,20 @@
+GIT
+  remote: https://github.com/sferik/rails_admin.git
+  revision: 77571f28ef686e5b3fac853e5f29037ff4591a08
+  specs:
+    rails_admin (2.0.0)
+      activemodel-serializers-xml (>= 1.0)
+      builder (~> 3.1)
+      haml (>= 4.0, < 6)
+      jquery-rails (>= 3.0, < 5)
+      jquery-ui-rails (>= 5.0, < 7)
+      kaminari (>= 0.14, < 2.0)
+      nested_form (~> 0.3)
+      rack-pjax (>= 0.7)
+      rails (>= 5.0, < 7)
+      remotipart (~> 1.3)
+      sassc-rails (>= 1.3, < 3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -239,18 +256,6 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.3.0)
       loofah (~> 2.3)
-    rails_admin (2.0.0)
-      activemodel-serializers-xml (>= 1.0)
-      builder (~> 3.1)
-      haml (>= 4.0, < 6)
-      jquery-rails (>= 3.0, < 5)
-      jquery-ui-rails (>= 5.0, < 7)
-      kaminari (>= 0.14, < 2.0)
-      nested_form (~> 0.3)
-      rack-pjax (>= 0.7)
-      rails (>= 5.0, < 7)
-      remotipart (~> 1.3)
-      sassc-rails (>= 1.3, < 3)
     rails_email_validator (0.1.4)
       activemodel (>= 3.0.0)
     railties (5.2.4)
@@ -378,7 +383,7 @@ DEPENDENCIES
   pry-remote
   rails (~> 5.2.1)
   rails-controller-testing
-  rails_admin
+  rails_admin (~> 2.0)!
   rails_email_validator
   recaptcha
   rubocop
