@@ -14,7 +14,7 @@ MITRE CTF Scoreboard is a fully featured CTF platform with scoreboard and regist
 + Install ruby (using a ruby version manager like [rvm](https://rvm.io/) is recommended).
 + In your terminal run `gem install bundler`
 + Install postgres to your system (and create a role with your system username `sudo -u postgres -i` then `createuser --interactive`).
-+ Setup Recaptcha. This can be done by getting a site key from [here](https://www.google.com/recaptcha/intro/) and then setting the `RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY` environment variables for the application. The steps for this will vary based on your hosting platform.
++ Setup or disable Recaptcha. If you would like to disable it you can set `RECAPTCHA_DISABLE=true` as an environment variable and then run the server. If you would like to use Recaptcha, setup a site key from [here](https://www.google.com/recaptcha/intro/) and then set the `RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY` environment variables for the application. The steps for this will vary based on your hosting platform.
 + Run `bundle install` to install dependencies
 + Run `bundle exec rake db:create` to create the database
 + Run `bundle exec rake db:schema:load` to load the database schema
