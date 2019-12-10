@@ -11,19 +11,24 @@ class GamesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should get summary" do
+  test 'cannot get summary before game is open' do
+    games(:mitre_ctf_game).update_attributes(start: Time.now + 9.hours, stop: Time.now + 10.hours)
+
+    get :summary
+    assert_redirected_to @controller.user_root_path
+    assert_equal flash[:alert], I18n.t('game.before_competition')
+  end
+
+  test "should get summary during game" do
     get :summary
     assert_response :success
   end
 
-  test 'should not get summary when game is not open' do
-    game = games(:mitre_ctf_game)
-    game.start = Time.now + 9.hours
-    game.save
+  test "should get summary after game" do
+    games(:mitre_ctf_game).update_attributes(start: Time.now - 9.hours, stop: Time.now - 1.hours)
 
     get :summary
-    assert_redirected_to @controller.user_root_path
-    assert_equal flash[:alert], I18n.t('game.not_available')
+    assert_response :success
   end
 
   test 'guest and user cannot access resume' do

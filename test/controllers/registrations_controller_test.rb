@@ -41,13 +41,14 @@ class RegistrationsControllerTest < ActionController::TestCase
     assert_equal I18n.t("devise.registrations.password_needed_destroy"), flash[:alert]
   end
 
-  test 'create' do
-      post user_registration_path, params: {}
-  end
-
   test 'cannot get new registration after game close' do
-    get new_user_registration_path
-    assert_redirected root_path
-    assert I18n.t('game.modifications_disabled'), flash[:alert]
+    game = games(:mitre_ctf_game)
+    game.start = Time.now - 24.hours
+    game.stop = Time.now - 23.hours
+    game.save
+
+    get :new
+    assert_redirected_to @controller.user_root_path
+    assert_equal I18n.t('game.after_competition'), flash[:alert]
   end
 end
