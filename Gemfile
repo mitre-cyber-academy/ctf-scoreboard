@@ -52,6 +52,7 @@ group :test do
   gem 'coveralls', require: false
   gem 'rails-controller-testing'
   gem 'rubocop', require: false
+  gem 'rubocop-rails'
 end
 
 # Gems used only for assets and not required

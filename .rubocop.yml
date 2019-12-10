@@ -1,3 +1,5 @@
+require: rubocop-rails
+
 AllCops:
   TargetRubyVersion: 2.3
   Exclude:
@@ -7,8 +9,6 @@ AllCops:
     - config/initializers/*
     - test/**/*
     - 'vendor/**/*'
-Rails:
-  Enabled: true
 ClassLength:
   Max: 150
 Metrics/LineLength:
