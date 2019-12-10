@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
   def filter_access_before_game_open
     return if current_user&.admin? || !@game.before_competition?
 
-    redirect_to user_root_path, alert: I18n.t('game.not_available')
+    redirect_to user_root_path, alert: I18n.t('game.before_competition')
   end
 
   def deny_team_in_top_ten
@@ -55,8 +55,12 @@ class ApplicationController < ActionController::Base
     raise ActiveRecord::RecordNotFound
   end
 
+  def prevent_action_before_game
+    redirect_back fallback_location: user_root_path, alert: I18n.t('game.before_competition') if @game.before_competition?
+  end
+
   def prevent_action_after_game
-    redirect_back fallback_location: root_path, alert: I18n.t('game.modifications_disabled') if @game.after_competition?
+    redirect_back fallback_location: user_root_path, alert: I18n.t('game.after_competition') if @game.after_competition?
   end
 
   private

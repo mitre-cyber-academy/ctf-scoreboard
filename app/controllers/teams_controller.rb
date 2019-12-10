@@ -10,9 +10,9 @@ class TeamsController < ApplicationController
   before_action :check_user_on_team, only: %i[new create]
   before_action :check_membership, only: %i[show update destroy]
   before_action :check_team_captain, :load_user_team, only: %i[update edit invite]
+  before_action :prevent_action_after_game, except: %i[index show summary]
   before_action :deny_team_in_top_ten, :update_team, only: %i[update invite]
   before_action :load_team_by_id, :load_summary_info, only: %i[show summary]
-  before_action :prevent_action_after_game, except: %i[index show summary]
 
   def index; end
 

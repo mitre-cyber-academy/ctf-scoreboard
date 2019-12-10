@@ -60,10 +60,10 @@ en:
     full_team: 'This team currently does not have any more open slots. Please try again later.'
   game:
     closed: 'The game is currently closed.'
-    not_available: 'This action is not available until the game is open.'
     too_many: 'You may not create more than one game.'
     date_mismatch: 'The start date must be before the end date.'
-    modifications_disabled: "This action is currently blocked. Check back closer to next year's competition."
+    before_competition: 'This action is not available until the game is open.'
+    after_competition: "This action is not available after the game is over."
   flag:
     accepted: 'Flag accepted!'
   challenge:
