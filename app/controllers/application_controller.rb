@@ -55,12 +55,6 @@ class ApplicationController < ActionController::Base
     raise ActiveRecord::RecordNotFound
   end
 
-  def prevent_action_before_game
-    return unless @game.before_competition?
-
-    redirect_back fallback_location: user_root_path, alert: I18n.t('game.before_competition')
-  end
-
   def prevent_action_after_game
     return unless @game.after_competition?
 
