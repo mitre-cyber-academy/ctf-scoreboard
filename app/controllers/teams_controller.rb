@@ -12,11 +12,22 @@ class TeamsController < ApplicationController
   before_action :check_team_captain, :load_user_team, only: %i[update edit invite]
   before_action :prevent_action_after_game, except: %i[index show summary]
   before_action :deny_team_in_top_ten, :update_team, only: %i[update invite]
-  before_action :load_team_by_id, :load_summary_info, only: %i[show summary]
+  before_action :load_team_by_id, only: %i[show summary]
+  before_action :load_admin_stats, only: %i[summary]
 
   def index; end
 
-  def summary; end
+  def summary
+    @solved_challenges = @team&.solved_challenges&.includes(challenge: :category)
+
+    @flags_per_hour = @team.submitted_flags.group_by_hour('submitted_flags.created_at', format: '%l:%M %p').count
+    @flag_categories = @team.solved_challenges.joins(challenge: :category).group('categories.name').count
+    @team_flag_submissions = [
+      { name: 'Flag Submissions', data: @flags_per_hour },
+      { name: 'Challenges Solved', data: @solved_challenges.group_by_hour('feed_items.created_at',
+                                                                          format: '%l:%M %p').count }
+    ]
+  end
 
   def destroy; end
 
@@ -31,6 +42,7 @@ class TeamsController < ApplicationController
     @pending_invites = @team.user_invites.pending
     @pending_requests = @team.user_requests.pending
     flash.now[:notice] = I18n.t('teams.full_team') if @team.full?
+    summary
   end
 
   def create
@@ -97,29 +109,18 @@ class TeamsController < ApplicationController
     redirect_back(fallback_location: game_summary_path, alert: I18n.t('teams.does_not_exist')) unless @team
   end
 
-  def load_summary_info
-    @solved_challenges = @team&.solved_challenges&.includes(challenge: :category)
-    load_team_flag_stats
-    @flags_per_hour = @team.submitted_flags.group_by_hour('submitted_flags.created_at', format: '%l:%M %p').count
-    @team_flag_submissions = [
-      { name: 'Flag Submissions', data: @flags_per_hour },
-      { name: 'Challenges Solved', data: @solved_challenges.group_by_hour('feed_items.created_at',
-                                                                          format: '%l:%M %p').count }
-    ]
-    @user_locations = @team.users.where('country IS NOT NULL').group(:country).count
-  end
+  def load_admin_stats
+    return unless current_user&.admin?
 
-  def load_team_flag_stats
-    @per_user_stats = [
-      {
+    @per_user_stats =
+      [{
         name: 'Flag Submissions',
-        data: @team.submitted_flags.group(:user_id).count
+        data: @team.submitted_flags.joins(:user).group('users.full_name').count
       },
-      {
-        name: 'Challenges Solved',
-        data: @team.solved_challenges.group(:user_id).count
-      }
-    ]
+       {
+         name: 'Challenges Solved',
+         data: @team.solved_challenges.joins(:user).group('users.full_name').count
+       }]
   end
 
   def load_user_team
