@@ -5,7 +5,7 @@ class UserRequest < ApplicationRecord
   belongs_to :team, optional: false
   belongs_to :user, optional: false
 
-  enum status: %i[Pending Accepted Rejected]
+  enum status: { Pending => 0, Accepted => 1, Rejected => 2 }
 
   after_create :send_email
 

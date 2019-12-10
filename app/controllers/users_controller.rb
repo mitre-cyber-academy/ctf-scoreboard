@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   before_action :deny_if_not_admin, :fetch_user_by_id, only: %i[resume transcript]
   before_action :user_logged_in?
   before_action :load_game, :load_message_count
-  before_action :prevent_action_after_game, only: %i[join_team leave_team download_vpn_cert promote]
+  before_action :prevent_action_after_game, only: %i[join_team leave_team promote]
   before_action :check_removal_permissions, only: [:leave_team]
   before_action :check_if_user_on_team, only: [:join_team]
   before_action :check_promote_permissions, only: [:promote]
