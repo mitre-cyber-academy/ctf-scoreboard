@@ -86,8 +86,9 @@ class TeamsControllerTest < ActionController::TestCase
     sign_in user
     get :summary, params: { id: teams(:team_two) }
     assert_response :success
-    assert_select 'h3', 'Per User Statistics'
+    assert_select 'h3', 'Team Flag Submissions'
     assert_select 'h3', 'Solved Challenges'
+    assert_select 'h3', 'Solved Challenge Categories'
   end
 
   test 'team summary page correctly redirects if the team does not exist' do
@@ -256,13 +257,29 @@ class TeamsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test 'summary after game is closed' do
+  test 'summary is available after game is closed' do
     games(:mitre_ctf_game).update_attributes(start: Time.now - 9.hours, stop: Time.now - 1.hours)
     user = users(:user_two)
     sign_in user
     get :summary, params: { id: teams(:team_two) }
     assert_response :success
-    assert_select 'h3', 'Per User Statistics'
+    assert_select 'h3', 'Team Flag Submissions'
     assert_select 'h3', 'Solved Challenges'
+    assert_select 'h3', 'Solved Challenge Categories'
+    assert_select 'h3', {count: 0, text: 'Team Members'}, 'Team member list should only be visible to administrators'
+    assert_select 'h3', {count: 0, text: 'Per User Statistics'}, 'Per User Statistics should only be visible to administrators'
+  end
+
+  test 'summary page shows additional information to administrators' do
+    games(:mitre_ctf_game).update_attributes(start: Time.now - 9.hours, stop: Time.now - 1.hours)
+    user = users(:admin_user)
+    sign_in user
+    get :summary, params: { id: teams(:team_two) }
+    assert_response :success
+    assert_select 'h3', 'Team Flag Submissions'
+    assert_select 'h3', 'Solved Challenges'
+    assert_select 'h3', 'Solved Challenge Categories'
+    assert_select 'h3', 'Team Members'
+    assert_select 'h3', 'Per User Statistics'
   end
 end
