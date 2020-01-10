@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 class UserMailer < ApplicationMailer
-  before_action { @game = Game.instance }
-
-  default from: -> { @game.do_not_reply_email }
-
   def invite_user(user_invite)
     @invite = user_invite
     @team = @invite.team
