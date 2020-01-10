@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserInviteTest < ActiveSupport::TestCase
   def setup
-    create(:active_game)
+    @game = create(:active_game)
     @email = 'mitrectf+test@gmail.com'
     @team = create(:team)
     @user_to_invite = create(:user, email: @email)
@@ -13,7 +13,7 @@ class UserInviteTest < ActiveSupport::TestCase
       create(:user_invite, email: @email, team: @team)
     end
     email = ActionMailer::Base.deliveries.last
-    assert_equal "MITRE CTF: Invite to join team #{@team.team_name}", email.subject
+    assert_equal "#{@game.title}: Invite to join team #{@team.team_name}", email.subject
     assert_equal [@user_to_invite.email.to_s], email.to
   end
 

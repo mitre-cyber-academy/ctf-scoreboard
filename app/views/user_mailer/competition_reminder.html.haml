@@ -3,9 +3,9 @@
 %p.pull-right#clock
   %aS
     #time_remaining
-      This is a reminder for the upcoming MITRE CTF which will start at #{@game.start}.
+      This is a reminder for the upcoming #{@game.organization} #{@game.title} which will start at #{@game.start}.
 %p Click the link below to login and check your account
-%p #{link_to 'MITRE CTF', home_index_url}.
+%p #{link_to @game.title, home_index_url}.
 :coffeescript
   countdown = (endTime) ->
     diff = endTime - new Date()

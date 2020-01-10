@@ -4,6 +4,7 @@ class UserMailer < ApplicationMailer
   def invite_user(user_invite)
     @invite = user_invite
     @team = @invite.team
+    @game = Game.instance
     mail(to: @invite.email, subject: "#{@game.title}: Invite to join team #{@team.team_name}")
   end
 
@@ -23,6 +24,7 @@ class UserMailer < ApplicationMailer
 
   # Assumes user is on a team
   def ranking(user, rank = nil)
+    @game = Game.instance
     @user = user
     @team = @user.team
     @div = @team.division
@@ -37,12 +39,14 @@ class UserMailer < ApplicationMailer
 
   def open_source(user)
     @user = user
+    @game = Game.instance
     mail(to: @user.email, subject: "#{@game.title}: Challenges Released")
   end
 
   def message_notification(user, message)
     @user = user
     @message = message
+    @game = Game.instance
     mail(to: @user.email, subject: "#{@game.title} New Message: #{message.title}")
   end
 end
