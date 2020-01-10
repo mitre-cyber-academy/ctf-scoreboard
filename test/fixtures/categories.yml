@@ -1,6 +1,0 @@
-category_one:
-  name: binary
-  game: mitre_ctf_game
-category_two:
-  name: forensics
-  game: mitre_ctf_game

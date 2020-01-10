@@ -1,16 +1,20 @@
 require 'test_helper'
 
 class ApplicationControllerTest < ActionController::TestCase
+  def setup
+    create(:active_game)
+    @user = create(:user)
+  end
+
   test 'users unread message count is calculated correctly when there is a new message' do
-    sign_in users(:user_one)
+    sign_in @user
     @controller.load_game
     assert_equal 1, @controller.load_message_count
   end
 
   test 'users unread message count is calculated correctly when there are no new messages' do
-    user = users(:user_one)
-    sign_in user
-    user.update_messages_stamp
+    sign_in @user
+    @user.update_messages_stamp
     @controller.load_game
     assert_equal 0, @controller.load_message_count
   end

@@ -1,31 +1,39 @@
 require 'test_helper'
 
 class UserInviteTest < ActiveSupport::TestCase
+  def setup
+    create(:active_game)
+    @email = 'mitrectf+test@gmail.com'
+    @team = create(:team)
+    @user_to_invite = create(:user, email: @email)
+  end
+
   test 'send email' do
     assert_difference 'ActionMailer::Base.deliveries.size', +1 do
-      user_invites(:invite_one).send(:send_email)
+      create(:user_invite, email: @email, team: @team)
     end
     email = ActionMailer::Base.deliveries.last
-    assert_equal "MITRE CTF: Invite to join team #{teams(:team_one).team_name}", email.subject
-    assert_equal [users(:user_two).email.to_s], email.to
+    assert_equal "MITRE CTF: Invite to join team #{@team.team_name}", email.subject
+    assert_equal [@user_to_invite.email.to_s], email.to
   end
 
   test 'invites are linked to user' do
-    assert_difference 'users(:user_two).user_invites.reload.size', +1 do
-      user_invites(:invite_one).send(:link_to_user)
+    assert_difference '@user_to_invite.user_invites.reload.size', +1 do
+      invite = create(:user_invite, email: @user_to_invite.email, team: @team)
     end
   end
 
   test 'invites can be accepted' do
-    user_invites(:invite_one).send(:link_to_user)
-    assert_difference 'user_invites(:invite_one).team.users.size', +1 do
-      user_invites(:invite_one).accept
+    invite = create(:user_invite, email: @user_to_invite.email, team: @team)
+    assert_difference '@team.users.size', +1 do
+      invite.accept
     end
   end
 
   test 'invites with no linked user cannot be accepted' do
-    assert_no_difference 'user_invites(:invite_one).team.users.size' do
-      user_invites(:invite_one).accept
+    invite = create(:user_invite, email: 'mitrectf+unregistereduser@gmail.com', team: @team)
+    assert_no_difference 'invite.team.users.size' do
+      invite.accept
     end
   end
 end

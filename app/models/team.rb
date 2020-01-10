@@ -12,7 +12,10 @@ class Team < ApplicationRecord
   has_many :feed_items, dependent: :destroy
   has_many :achievements, dependent: :destroy
   has_many :solved_challenges, dependent: :destroy
-  has_many :users, after_remove: :update_captain_and_eligibility, dependent: :nullify
+  has_many :users,
+           after_add: :refresh_team_info,
+           after_remove: :refresh_team_info,
+           dependent: :nullify
   has_many :user_invites, dependent: :destroy
   has_many :user_requests, dependent: :destroy
   has_many :submitted_flags, through: :users, dependent: :destroy
@@ -23,7 +26,7 @@ class Team < ApplicationRecord
   validates :team_name, :affiliation, presence: true, length: { maximum: 255 }, obscenity: true
   validates :team_name, uniqueness: { case_sensitive: false }
 
-  after_save :update_captain_and_eligibility
+  after_save :refresh_team_info
 
   filterrific(
     available_filters: %i[
@@ -61,9 +64,10 @@ class Team < ApplicationRecord
     where(id: appropriate_teams)
   }
 
-  # A team can only consist of 5 users.
-  def slots_available
-    5 - users.size
+  # Number of users on team is calculated using game team size
+  def set_slots_available
+    updated_slots_available = division.game.team_size - users.count
+    update(slots_available: updated_slots_available) unless updated_slots_available.eql? slots_available
   end
 
   def in_top_ten?
@@ -80,9 +84,9 @@ class Team < ApplicationRecord
     users.collect(&:compete_for_prizes).uniq.eql? [true]
   end
 
-  # If no slots are available then mark the team as full.  Makes new query to make sure result is accurate
+  # If no slots are available then mark the team as full.
   def full?
-    users.count.eql? 5
+    slots_available.zero?
   end
 
   def find_rank
@@ -144,9 +148,10 @@ class Team < ApplicationRecord
 
   # After remove callback passes a parameter which is the object that was just removed, we don't need it
   # so we just throw it away
-  def update_captain_and_eligibility(*)
+  def refresh_team_info(*)
     reload # SQL caching causing users to be empty when creating team making all teams ineligible
     set_team_captain
+    set_slots_available
     update_eligibility
   end
 

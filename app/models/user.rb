@@ -21,7 +21,7 @@ class User < ApplicationRecord
   mount_uploader :resume, ResumeUploader
   mount_uploader :transcript, TranscriptUploader
 
-  belongs_to :team, counter_cache: true, optional: true
+  belongs_to :team, optional: true
   has_many :feed_items, dependent: :destroy
   has_many :user_invites, dependent: :destroy
   has_many :user_requests, dependent: :destroy
@@ -60,7 +60,7 @@ class User < ApplicationRecord
   with_options unless: :admin? do
     before_save :clear_compete_for_prizes
     before_destroy :leave_team_before_delete
-    after_create :link_to_invitations
+    after_create :link_to_invitations, :update_team
     after_update :update_team
     validates :email, uniqueness: true, presence: true
     validates :full_name, :affiliation, presence: true, length: { maximum: 255 }, obscenity: true
@@ -115,7 +115,7 @@ class User < ApplicationRecord
   end
 
   def update_team
-    team&.update_captain_and_eligibility
+    team&.refresh_team_info
   end
 
   # generate cert for specific user

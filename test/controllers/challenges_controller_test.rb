@@ -4,24 +4,26 @@ class ChallengesControllerTest < ActionController::TestCase
   include ChallengesHelper
 
   def setup
-    @request.env["devise.mapping"] = Devise.mappings[:user]
+    create(:active_game)
+    @challenge = create(:challenge, flag_count: 3)
   end
 
   test 'should get show' do
-    sign_in users(:user_one)
+    sign_in create(:user_with_team)
     get :show, params: {
-      id: challenges(:challenge_one_cat_one)
+      id: @challenge
     }
     assert_response :success
   end
 
-  test 'submit correct flag' do
-    sign_in users(:user_one)
+  test "submit any of the correct flags when on a team" do
+    @user = create(:user_with_team)
+    sign_in @user
     assert_difference 'SubmittedFlag.count', +1 do
       put :update, params: {
-        id: challenges(:challenge_one_cat_one),
+        id: @challenge,
         challenge: {
-          submitted_flag: flags(:flag_one).flag
+          submitted_flag: @challenge.flags.sample.flag
         }
       }
     end
@@ -29,11 +31,11 @@ class ChallengesControllerTest < ActionController::TestCase
     assert_equal flash[:notice], I18n.t('flag.accepted')
   end
 
-  test 'submit incorrect flag' do
-    sign_in users(:user_one)
+  test 'submit incorrect flag when on team' do
+    sign_in create(:user_with_team)
     assert_difference 'SubmittedFlag.count', +1 do
       put :update, params: {
-        id: challenges(:challenge_one_cat_one),
+        id: create(:challenge),
         challenge: {
           submitted_flag: "wrong"
         }
@@ -44,11 +46,12 @@ class ChallengesControllerTest < ActionController::TestCase
   end
 
   test 'can not submit flag with no team' do
-    sign_in users(:user_two)
+    sign_in create(:user)
+    @challenge = create(:challenge)
     put :update, params: {
-      id: challenges(:challenge_one_cat_one),
+      id: @challenge,
       challenge: {
-        submitted_flag: flags(:flag_one).flag
+        submitted_flag: @challenge.flags.sample.flag
       }
     }
     assert :success
@@ -57,9 +60,9 @@ class ChallengesControllerTest < ActionController::TestCase
 
   test 'can not submit flag with no flag' do
     assert_no_difference 'SubmittedFlag.count' do
-      sign_in users(:user_one)
+      sign_in create(:user_with_team)
       put :update, params: {
-        id: challenges(:challenge_one_cat_one)
+        id: create(:challenge)
       }
     end
     assert :success
@@ -68,9 +71,9 @@ class ChallengesControllerTest < ActionController::TestCase
 
   test 'can not submit flag with no user' do
     put :update, params: {
-      id: challenges(:challenge_one_cat_one),
+      id: @challenge,
       challenge: {
-        submitted_flag: flags(:flag_one).flag
+        submitted_flag: @challenge.flags.sample.flag
       }
     }
     assert :success

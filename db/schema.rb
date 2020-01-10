@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_23_135449) do
+ActiveRecord::Schema.define(version: 2020_01_09_181816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 2019_05_23_135449) do
   end
 
   create_table "games", id: :serial, force: :cascade do |t|
-    t.string "name"
+    t.string "title"
     t.datetime "start"
     t.datetime "stop"
     t.text "description"
@@ -84,6 +84,16 @@ ActiveRecord::Schema.define(version: 2019_05_23_135449) do
     t.boolean "disable_flags_an_hour_graph", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "subtitle"
+    t.string "contact_url"
+    t.text "footer"
+    t.integer "team_size", default: 5
+    t.string "do_not_reply_email"
+    t.string "contact_email"
+    t.string "open_source_url"
+    t.string "participant_recruitment_url"
+    t.boolean "scholarships_available", default: false
+    t.text "recruitment_additional_text"
   end
 
   create_table "messages", id: :serial, force: :cascade do |t|
@@ -141,7 +151,7 @@ ActiveRecord::Schema.define(version: 2019_05_23_135449) do
     t.integer "team_captain_id"
     t.integer "division_id"
     t.boolean "eligible", default: false
-    t.integer "users_count", default: 0
+    t.integer "slots_available", default: 0
     t.index ["division_id"], name: "index_teams_on_division_id"
     t.index ["team_captain_id"], name: "index_teams_on_team_captain_id"
   end

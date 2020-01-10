@@ -2,21 +2,19 @@
   Hello #{@user.full_name}!
 %p
   Congratulations on completing the MITRE CTF! Your team, #{@user.team.team_name} came ranked #{@rank.ordinalize}.
-- if (@rank.eql? 1) && @team.eligible?
+- if (@rank.eql? 1) && @team.eligible? && @game.scholarships_available?
   %p
     Because you finished on the first-place team in the #{@div.name} Division, you could be eligible for a scholarship.  Please upload your unofficial
     college, university, or high school transcript AND an up-to-date resume to your #{link_to 'profile', edit_user_registration_url} on the scoreboard to verify your eligibility.
     Both a transcript and a resume are required for the award of any scholarship prize.
-- if (@team.score > 0) && @user.interested_in_employment?
+- if (@team.score > 0) && @user.interested_in_employment? && !@game.participant_recruitment_url.blank?
   %p
-    If you are interested in working at MITRE, please #{link_to 'apply here', 'https://mitre.referrals.selectminds.com'}.
+    If you are interested in job opportunities, please #{link_to 'apply here', @game.participant_recruitment_url}.
   %p
-    Also, please take the time to make sure your #{link_to 'resume is uploaded', edit_user_registration_url} and email #{mail_to 'ctf@mitre.org'} stating you have applied during this step for our internal tracking purposes.
-  %p
-    While this competition was open to professional and government participants as part of cyber training, only
-    eligible teams composed of high school and college students will be considered for winning prizes, scholarships and
-    internships. Participation in a MITRE or industry partner cyber internship program is subject to an interviewing
-    process and based on current business needs.
+    Also, please take the time to make sure your #{link_to 'resume is uploaded', edit_user_registration_url} and email #{mail_to '#{@game.contact_email}'} stating you have applied during this step for our internal tracking purposes.
+  - unless @game.recruitment_additional_text.blank?
+    %p
+      #{@game.recruitment_additional_text}
 %p
   Thanks for participating!
 %p -The MITRE CTF Team

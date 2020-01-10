@@ -10,7 +10,15 @@
 User.create(email: 'root@root.com', password: 'ChangeMe123', confirmed_at: Time.now.utc, admin: true)
 
 # default game
-game = Game.create!(name: 'Test Game', start: Time.now.utc + 3.months, stop: Time.now.utc + 3.months + 2.days)
+game = Game.create!(
+  name: 'Test Game',
+  start: Time.now.utc + 3.months,
+  stop: Time.now.utc + 3.months + 2.days,
+  recruitment_additional_text: 'While this competition was open to professional and government participants as part '\
+    'of cyber training, only eligible teams composed of high school and college students will be considered for '\
+    'winning prizes, scholarships and internships. Participation in a MITRE or industry partner cyber internship '\
+    'program is subject to an interviewing process and based on current business needs.'
+)
 
 high_school = Division.create!(name: 'High School', game: game, min_year_in_school: 9, max_year_in_school: 12)
 college = Division.create!(name: 'College', game: game, min_year_in_school: 9, max_year_in_school: 16)

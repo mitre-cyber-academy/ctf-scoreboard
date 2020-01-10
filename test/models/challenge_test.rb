@@ -1,36 +1,45 @@
 require 'test_helper'
 
 class ChallengeTest < ActiveSupport::TestCase
-
-  test 'challenge state open' do
-    assert_equal true, challenges(:challenge_one_cat_one).challenge_open?
-    assert_equal false, challenges(:challenge_three_cat_one).challenge_open?
+  def setup
+    create(:active_game)
   end
 
-  test 'challenge open' do
-    assert_equal true, challenges(:challenge_one_cat_one).open?
+  test 'challenge state open' do
+    create(:unstarted_game)
+
+    assert_equal true, create(:challenge, state: :open).challenge_open?
+    assert_equal false, create(:challenge, state: :closed).challenge_open?
+    assert_equal false, create(:challenge, state: :force_closed).challenge_open?
+  end
+
+  test 'challenge open when game is open' do
+    assert_equal true, create(:challenge, state: :open).open?
   end
 
   test 'challenge solved' do
-    assert_equal false, challenges(:challenge_one_cat_one).solved?
+    challenge = create(:challenge, state: :open)
+    create(:solved_challenge, challenge: challenge, team: create(:team))
+    assert_equal false, create(:challenge, state: :open).solved?
   end
 
-  test 'challenge available' do
-    assert_equal false, challenges(:challenge_one_cat_one).available?
+  test 'already opened challenge is not available to be opened' do
+    assert_equal false, create(:challenge, state: :open).available?
   end
 
   test 'challenge force closed' do
-    assert_equal true, challenges(:challenge_two_cat_one).force_closed?
+    assert_equal true, create(:challenge, state: :force_closed).force_closed?
   end
 
   test 'set state' do
-    challenges(:challenge_one_cat_one).state!('force_closed')
-    assert_equal 'force_closed', challenges(:challenge_one_cat_one).state
+    challenge = create(:challenge, state: :open)
+    challenge.state!('force_closed')
+    assert_equal 'force_closed', challenge.state
   end
 
   test 'post state change message' do
-    open_challenge = challenges(:challenge_one_cat_one)
-    forced_challenge = challenges(:challenge_four_cat_two)
+    open_challenge = create(:challenge, state: :open)
+    forced_challenge = create(:challenge, state: :force_closed)
     assert_difference 'Message.count', +2 do
       open_challenge.update_attributes(state: 'force_closed')
       forced_challenge.update_attributes(state: 'open')

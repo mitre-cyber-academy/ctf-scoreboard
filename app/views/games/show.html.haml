@@ -1,5 +1,5 @@
 - content_for :header do
-  = @game.name
+  = @game.title
 
 .catchphrase
   %h2
@@ -42,4 +42,3 @@
               %td{ style: style }= link_to_if (is_admin || challenge.open?), challenge.point_value, game_challenge_path(challenge), style: "color:inherit;"
             - else
               %td &nbsp;
-
