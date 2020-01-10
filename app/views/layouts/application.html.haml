@@ -30,9 +30,10 @@
                     %a{:href => game_achievements_path} Achievements
                   %li{:class => "#{'active' if current_page? game_summary_path}"}
                     %a{:href => game_summary_path} Summary
-                %li
-                  %a{:href => "http://mitrecyberacademy.org/contact", :target => "_blank"}
-                    Contact
+                - unless @game.contact_url.blank?
+                  %li
+                    %a{:href => @game.contact_url, :target => "_blank"}
+                      Contact
             %ul.nav.pull-right
               - if user_signed_in?
                 %li.dropdown
