@@ -12,10 +12,6 @@ class GamesController < ApplicationController
 
   def teams; end
 
-  def new
-    redirect_to new_user_session_path, alert: I18n.t('game.must_be_admin') unless current_user&.admin?
-  end
-
   def show
     @challenges = @game&.challenges
     ActiveRecord::Precounter.new(@challenges).precount(:solved_challenges)
