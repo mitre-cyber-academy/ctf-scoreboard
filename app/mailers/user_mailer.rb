@@ -24,12 +24,10 @@ class UserMailer < ApplicationMailer
 
   # Assumes user is on a team
   def ranking(user, rank = nil)
-    @game = Game.instance
     @user = user
     @team = @user.team
     @div = @team.division
-    rank = 1 + (@div.ordered_teams.index @team) if rank.nil?
-    @rank = rank
+    @rank = 1 + (@div.ordered_teams.index @team) if rank.nil?
     attachment = @user.generate_certificate(rank)
 
     attachments['Competition Certificate.pdf'] = attachment.read unless attachment.nil?
