@@ -15,8 +15,8 @@ FactoryBot.define do
     initialize_with { Game.find_or_initialize_by(id: id) }
 
     factory :active_game do
-      title { 'MITRE CTF' }
-      subtitle { 'Cyber Challenge 2019' }
+      organization { 'MITRE CTF' }
+      title { 'Cyber Challenge 2019' }
       description { 'MITRE CTF Game' }
       start { Time.now }
       stop { Time.now + 10.hours }

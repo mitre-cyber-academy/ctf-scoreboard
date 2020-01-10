@@ -23,22 +23,22 @@ class UserMailerTest < ActionMailer::TestCase
     create(:solved_challenge, team: @second_place_team, challenge: create(:challenge, point_value: 500))
     # Is there a sane way to check to see if the URL provided is right without
     # typing the whole email in HTML?
-    @rank_email_body = strip_tags("Hello #{@second_place_user.full_name}! Congratulations on completing the #{@game.title}!
+    @rank_email_body = strip_tags("Hello #{@second_place_user.full_name}! Congratulations on completing #{@game.title}!
                    Your team, #{@second_place_team.team_name} came ranked 2nd.").squish
-    @first_place_email_body = strip_tags("Hello #{@first_place_user.full_name}! Congratulations on completing the #{@game.title}!
+    @first_place_email_body = strip_tags("Hello #{@first_place_user.full_name}! Congratulations on completing #{@game.title}!
                    Your team, #{@first_place_team.team_name} came ranked 1st.").squish
     @scholarship_email_body = strip_tags("Because you finished on the first-place team in the #{@division.name} Division, you could be eligible for a scholarship.
                    Please upload your unofficial college, university, or high school transcript AND an up-to-date resume to your profile on the scoreboard to verify your eligibility.
                    Both a transcript and a resume are required for the award of any scholarship prize.").squish
     @employment_email_body = strip_tags("If you are interested in job opportunities, please apply here.").squish
-    @open_source_email_body = strip_tags("Hello #{@first_place_user.full_name}! All solved challenges from the last competition have been released with solutions
+    @open_source_email_body = strip_tags("Hello #{@first_place_user.full_name}! All solved challenges from #{@game.title} have been released with solutions
                    here. Have a great day!").squish
   end
 
   test 'user invite email' do
     @inv_email_body = strip_tags("Hello #{@user_invite.email}! You have been
                    invited to join the team #{@user_invite.team.team_name}
-                   for the upcoming #{@game.title} Click the link below to register
+                   for the upcoming #{@game.organization} #{@game.title} Click the link below to register
                    an account in order to accept the invitation. #{link_to '
                    Create my account', new_user_registration_url(:email => @user_invite.email)}").squish
 
@@ -71,7 +71,7 @@ class UserMailerTest < ActionMailer::TestCase
 
   test 'competition reminder' do
     @remind_email_body = strip_tags("Hello #{@first_place_user.full_name}! This is a reminder for the
-                   upcoming #{@game.title} which will start at #{@game.start}.
+                   upcoming #{@game.organization} #{@game.title} which will start at #{@game.start}.
                    Click the link below to login and check your account #{link_to @game.title, home_index_url}.").squish
 
     email = UserMailer.competition_reminder(@first_place_user).deliver_now
@@ -93,8 +93,8 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal [@second_place_user.email], email.to
     assert_equal "#{@game.title}: Congratulations!", email.subject
     assert_equal true, email.has_attachments?
-    assert_includes (strip_tags(email.body.parts.first.to_s).squish.to_s), @rank_email_body
-    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish.to_s), @employment_email_body
+    assert_includes (strip_tags(email.body.parts.first.body.raw_source).squish), @rank_email_body
+    assert_not_includes (strip_tags(email.body.parts.first.body.raw_source).squish), @employment_email_body
   end
 
   test 'ranking with user interested in employment and game having no employment information' do
