@@ -10,30 +10,16 @@
     - else
       %h2 Competition has Completed
   .maincontent.row-fluid.indent-40px-left
-    %h3 Step 1
-    %p Create or join a team:
-    %ul
-      %li Team captains: Register a team name, complete your registration, then invite up to four of your friends to join.
-      %li Looking to join a team? Register an account and then use our matchmaking service to find a team or wait for an invite from your team captain.
-      %li Want to play solo? Register a team and complete your registration, but don't invite or accept requests to join from anyone.
-    %h3 Step 2
-    %ul
-      %li Sharpen your skills on our #{ link_to 'practice range', 'http://mitrecyberacademy.org/practice'} before you compete.
-      %li Install the latest Kali Linux. We test our challenges with the latest Kali Linux and recommend using it to participate.
-    %h3 Step 3
-    %ul
-      %li
-        Read the #{ link_to 'rules', 'http://mitrecyberacademy.org/competitions/rules/index.html'} and #{ link_to 'terms of service', 'http://mitrecyberacademy.org/terms-of-service/' }. If you don't follow them, you could be #{ link_to 'disqualified', 'http://i.imgur.com/VXSxAAE.gifv'}.
-    %hr
+    = sanitize(Kramdown::Document.new(@game&.description).to_html)
     %p
       %b
         %u When to compete
-    %ul
-      %li This competition will run from #{@game.start.strftime('%B %e at %l:%M %p %Z')} until #{@game.stop.strftime('%B %e at %l:%M %p %Z')}. More information about or competition can be found on our #{ link_to 'competitions page.', 'http://mitrecyberacademy.org/competitions/'}
-    %p
-      %b
-        %u Help, I'm Stuck!
-    %p We'd be happy to give you a hand if you contact us through any method listed on our #{ link_to 'contact form', 'http://mitrecyberacademy.org/contact/'}.
+    %p This competition will run from #{@game.start.strftime('%B %e at %l:%M %p %Z')} until #{@game.stop.strftime('%B %e at %l:%M %p %Z')}.
+    - unless @game&.contact_url.blank?
+      %p
+        %b
+          %u Help, I'm Stuck!
+      %p We'd be happy to give you a hand if you #{ link_to 'contact us', @game.contact_url}.
   - if user_signed_in?
     .btn-toolbar
       .pagination-centered
