@@ -12,10 +12,7 @@ class Team < ApplicationRecord
   has_many :feed_items, dependent: :destroy
   has_many :achievements, dependent: :destroy
   has_many :solved_challenges, dependent: :destroy
-  has_many :users,
-           after_add: :refresh_team_info,
-           after_remove: :refresh_team_info,
-           dependent: :nullify
+  has_many :users, dependent: :nullify
   has_many :user_invites, dependent: :destroy
   has_many :user_requests, dependent: :destroy
   has_many :submitted_flags, through: :users, dependent: :destroy
