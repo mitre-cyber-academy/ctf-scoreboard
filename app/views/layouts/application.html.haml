@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title= @game.name
+    %title= @game&.title
     = stylesheet_link_tag    "application"
     = javascript_include_tag "application"
     = csrf_meta_tags
@@ -13,25 +13,26 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand{:href => "/"} MITRE CTF
+          %a.brand{:href => "/"}= @game&.title || 'CTF Scoreboard'
           .nav-collapse.collapse
-            %ul.nav
-              - if !@game.before_competition? || current_user&.admin?
-                %li{:class => "#{'active' if current_page? game_path}"}
-                  %a{:href => game_path} Gameboard
-              %li{:class => "#{'active' if current_page? game_messages_path}"}
-                %a{:href => game_messages_path}
-                  Messages
-                  - if !@unread_message_count&.eql? 0
-                    %span.badge.badge-important= @unread_message_count
-              - if !@game.before_competition? || current_user&.admin?
-                %li{:class => "#{'active' if current_page? game_achievements_path}"}
-                  %a{:href => game_achievements_path} Achievements
-                %li{:class => "#{'active' if current_page? game_summary_path}"}
-                  %a{:href => game_summary_path} Summary
-              %li
-                %a{:href => "http://mitrecyberacademy.org/contact", :target => "_blank"}
-                  Contact
+            - if @game
+              %ul.nav
+                - if !@game.before_competition? || current_user&.admin?
+                  %li{:class => "#{'active' if current_page? game_path}"}
+                    %a{:href => game_path} Gameboard
+                %li{:class => "#{'active' if current_page? game_messages_path}"}
+                  %a{:href => game_messages_path}
+                    Messages
+                    - if !@unread_message_count&.eql? 0
+                      %span.badge.badge-important= @unread_message_count
+                - if !@game.before_competition? || current_user&.admin?
+                  %li{:class => "#{'active' if current_page? game_achievements_path}"}
+                    %a{:href => game_achievements_path} Achievements
+                  %li{:class => "#{'active' if current_page? game_summary_path}"}
+                    %a{:href => game_summary_path} Summary
+                %li
+                  %a{:href => "http://mitrecyberacademy.org/contact", :target => "_blank"}
+                    Contact
             %ul.nav.pull-right
               - if user_signed_in?
                 %li.dropdown
@@ -76,7 +77,7 @@
       .container
         %h1
           = yield :header
-          - if @game.open?
+          - if @game&.open?
             = render partial: "games/countdown", locals: {endTime: @game.stop}
 
         %p

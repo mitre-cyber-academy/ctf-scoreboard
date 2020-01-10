@@ -27,7 +27,7 @@ en:
           attributes:
             email:
               blank: 'You cannot invite your invisible friend.'
-              invalid: 'Email address is not valid.'
+              invalid: 'address is not valid.'
               uniqueness: "Inviting the same friend multiple times doesn't make your team perform any better."
   teams:
     captain_removed_player: 'Player was successfully removed.'
@@ -59,6 +59,7 @@ en:
     rejected_successful: 'User invitation was successfully rejected.'
     full_team: 'This team currently does not have any more open slots. Please try again later.'
   game:
+    must_be_admin: 'You must be an administrator to setup the scoreboard. Run `bundle exec rake db:create_admin` from the command line on your server and then login with your credentials to continue.'
     closed: 'The game is currently closed.'
     too_many: 'You may not create more than one game.'
     date_mismatch: 'The start date must be before the end date.'

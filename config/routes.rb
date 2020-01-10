@@ -42,7 +42,7 @@ Rails.application.routes.draw do
   end
 
   # game
-  resource :game, only: [:show] do
+  resource :game, only: %i[new show] do
     get :resumes
     get :transcripts
     resources :messages, only: [:index]

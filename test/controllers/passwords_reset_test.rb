@@ -2,7 +2,8 @@ require 'test_helper'
 
 class PasswordsResetTest < ActionDispatch::IntegrationTest
   test 'user can reset password' do
-    user = users(:user_one)
+    create(:active_game)
+    user = create(:user)
     old_password = user.encrypted_password
 
     assert_difference('ActionMailer::Base.deliveries.count', 1) do
@@ -33,8 +34,7 @@ class PasswordsResetTest < ActionDispatch::IntegrationTest
         password: 'Ch1ck3n4me',
         password_confirmation: 'Ch1ck3n4me',
     }}
-
-    assert_redirected_to '/game/summary'
+    assert flash[:notice], I18n.t('devise.password.updated')
 
     user.reload
     assert_not_equal(user.encrypted_password, old_password)

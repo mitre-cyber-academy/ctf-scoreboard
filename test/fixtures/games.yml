@@ -1,5 +1,0 @@
-mitre_ctf_game:
-  name: MITRE CTF
-  start: <%= Time.now %>
-  stop: <%= Time.now + 10.hours %>
-  description: MITRE CTF Game

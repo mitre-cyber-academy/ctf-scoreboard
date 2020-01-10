@@ -10,135 +10,203 @@ class UserMailerTest < ActionMailer::TestCase
   end
 
   def setup
+    @game = create(:active_game)
+    @user_invite = create(:user_invite)
+    @user_request = create(:user_request)
+    @division = @game.divisions.first
+    @teams = create_list(:team, 5, division: @division, compete_for_prizes: true)
+    @first_place_team = @teams.first
+    @first_place_user = @first_place_team.team_captain
+    create(:solved_challenge, team: @first_place_team, challenge: create(:challenge, point_value: 1000))
+    @second_place_team = @teams.second
+    @second_place_user = @second_place_team.team_captain
+    create(:solved_challenge, team: @second_place_team, challenge: create(:challenge, point_value: 500))
     # Is there a sane way to check to see if the URL provided is right without
     # typing the whole email in HTML?
-    @inv_email_body = strip_tags("Hello #{user_invites(:invite_one).email}! You have been
-                   invited to join the team #{user_invites(:invite_one).team.team_name}
-                   for the upcoming MITRE CTF Click the link below to register
-                   an account in order to accept the invitation. #{link_to '
-                   Create my account', new_user_registration_url(:email => user_invites(:invite_one).email)}").squish
-    @reg_email_body = strip_tags("Hello #{user_requests(:request_one).team.team_captain.email}!
-                   #{user_requests(:request_one).user.full_name}
-                   has requested to join your team #{user_requests(:request_one).team.team_name}
-                   Click the link below to view and accept or reject the request.
-                   #{link_to 'View Team Dashboard', team_url(user_requests(:request_one).team)}").squish
-    @remind_email_body = strip_tags("Hello #{users(:user_one).full_name}! This is a reminder for the
-                   upcoming MITRE CTF which will start at #{games(:mitre_ctf_game).start}.
-                   Click the link below to login and check your account #{link_to 'MITRE CTF', home_index_url}.").squish
-    @rank_email_body = strip_tags("Hello #{users(:user_one).full_name}! Congratulations on completing the MITRE CTF!
-                   Your team, #{users(:user_one).team.team_name} came ranked #{(1 + (divisions(:high_school).ordered_teams.index users(:user_one).team)).ordinalize}.").squish
-    @first_place_email_body = strip_tags("Hello #{users(:user_four).full_name}! Congratulations on completing the MITRE CTF!
-                   Your team, #{users(:user_four).team.team_name} came ranked #{(1 + (divisions(:professional).ordered_teams.index users(:user_four).team)).ordinalize}.
-                   Because you finished on the first-place team in the #{divisions(:professional).name} Division, you could be eligible for a scholarship.  Please upload your unofficial
-                   college, university, or high school transcript AND an up-to-date resume to your profile on the scoreboard to verify your eligibility.
+    @rank_email_body = strip_tags("Hello #{@second_place_user.full_name}! Congratulations on completing the #{@game.title}!
+                   Your team, #{@second_place_team.team_name} came ranked 2nd.").squish
+    @first_place_email_body = strip_tags("Hello #{@first_place_user.full_name}! Congratulations on completing the #{@game.title}!
+                   Your team, #{@first_place_team.team_name} came ranked 1st.").squish
+    @scholarship_email_body = strip_tags("Because you finished on the first-place team in the #{@division.name} Division, you could be eligible for a scholarship.
+                   Please upload your unofficial college, university, or high school transcript AND an up-to-date resume to your profile on the scoreboard to verify your eligibility.
                    Both a transcript and a resume are required for the award of any scholarship prize.").squish
-    @employment_email_body = strip_tags("If you are interested in working at MITRE, please apply here.").squish
-    @open_source_email_body = strip_tags("Hello #{users(:user_one).full_name}! All solved challenges from the last competition have been released with solutions on
-                   #{link_to 'GitHub', 'https://github.com/mitre-cyber-academy'} Have a great day!").squish
+    @employment_email_body = strip_tags("If you are interested in job opportunities, please apply here.").squish
+    @open_source_email_body = strip_tags("Hello #{@first_place_user.full_name}! All solved challenges from the last competition have been released with solutions
+                   here. Have a great day!").squish
   end
 
-  test 'invite' do
-    email = UserMailer.invite_user(user_invites(:invite_one)).deliver_now
+  test 'user invite email' do
+    @inv_email_body = strip_tags("Hello #{@user_invite.email}! You have been
+                   invited to join the team #{@user_invite.team.team_name}
+                   for the upcoming #{@game.title} Click the link below to register
+                   an account in order to accept the invitation. #{link_to '
+                   Create my account', new_user_registration_url(:email => @user_invite.email)}").squish
+
+    email = UserMailer.invite_user(@user_invite).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
 
-    assert_equal ['do-not-reply@mitrecyberacademy.org'], email.from
-    assert_equal ['mitrectf+user2@gmail.com'], email.to
-    assert_equal "MITRE CTF: Invite to join team #{user_invites(:invite_one).team.team_name}", email.subject
+    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [@user_invite.email], email.to
+    assert_equal "#{@game.title}: Invite to join team #{@user_invite.team.team_name}", email.subject
     assert_equal @inv_email_body, strip_tags(email.body.to_s).squish
   end
 
-  test 'invite contains correct url' do
-  end
+  test 'user request email' do
+    @reg_email_body = strip_tags("Hello #{@user_request.team.team_captain.full_name}!
+                   #{@user_request.user.full_name}
+                   has requested to join your team #{@user_request.team.team_name}
+                   Click the link below to view and accept or reject the request.
+                   #{link_to 'View Team Dashboard', team_url(@user_request.team)}").squish
 
-  test 'request' do
-    email = UserMailer.user_request(user_requests(:request_one)).deliver_now
+    email = UserMailer.user_request(@user_request).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
 
-    assert_equal ['do-not-reply@mitrecyberacademy.org'], email.from
-    assert_equal ['mitrectf+user1test@gmail.com'], email.to
-    assert_equal "MITRE CTF: Request from #{user_requests(:request_one).user.full_name} to join #{user_requests(:request_one).team.team_name}", email.subject
+    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [@user_request.team.team_captain.email], email.to
+    assert_equal "#{@game.title}: Request from #{@user_request.user.full_name} to join #{@user_request.team.team_name}", email.subject
     assert_equal @reg_email_body, strip_tags(email.body.to_s).squish
   end
 
-  test 'reminder' do
-    email = UserMailer.competition_reminder(users(:user_one)).deliver_now
+  test 'competition reminder' do
+    @remind_email_body = strip_tags("Hello #{@first_place_user.full_name}! This is a reminder for the
+                   upcoming #{@game.title} which will start at #{@game.start}.
+                   Click the link below to login and check your account #{link_to @game.title, home_index_url}.").squish
+
+    email = UserMailer.competition_reminder(@first_place_user).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
 
-    assert_equal ['do-not-reply@mitrecyberacademy.org'], email.from
-    assert_equal ['mitrectf+user1test@gmail.com'], email.to
-    assert_equal 'MITRE CTF: Competition Reminder', email.subject
+    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [@first_place_user.email], email.to
+    assert_equal "#{@game.title}: Competition Reminder", email.subject
     assert_equal @remind_email_body, strip_tags(email.body.to_s).squish
   end
 
   test 'ranking no employment' do
-    user = users(:user_one)
-    email = UserMailer.ranking(user).deliver_now
+    email = UserMailer.ranking(@second_place_user).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
 
-    assert_equal ['do-not-reply@mitrecyberacademy.org'], email.from
-    assert_equal ['mitrectf+user1test@gmail.com'], email.to
-    assert_equal 'MITRE CTF: Congratulations!', email.subject
+    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [@second_place_user.email], email.to
+    assert_equal "#{@game.title}: Congratulations!", email.subject
     assert_equal true, email.has_attachments?
     assert_includes (strip_tags(email.body.parts.first.to_s).squish.to_s), @rank_email_body
     assert_not_includes (strip_tags(email.body.parts.first.to_s).squish.to_s), @employment_email_body
   end
 
-  test 'ranking with employment' do
-    user = users(:user_one)
-    user.update_attributes(interested_in_employment: true)
-    email = UserMailer.ranking(user).deliver_now
+  test 'ranking with user interested in employment and game having no employment information' do
+    @second_place_user.update(interested_in_employment: true)
+    email = UserMailer.ranking(@second_place_user).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
 
-    assert_equal ['do-not-reply@mitrecyberacademy.org'], email.from
-    assert_equal ['mitrectf+user1test@gmail.com'], email.to
-    assert_equal 'MITRE CTF: Congratulations!', email.subject
+    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [@second_place_user.email], email.to
+    assert_equal "#{@game.title}: Congratulations!", email.subject
+    assert_equal true, email.has_attachments?
+    assert_includes (strip_tags(email.body.parts.first.to_s).squish), @rank_email_body
+    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @employment_email_body
+  end
+
+  test 'ranking with user interested in employment and game having employment information' do
+    @second_place_user.update(interested_in_employment: true)
+    @game.update(participant_recruitment_url: Faker::Internet.url(host: 'mitre.org'))
+    email = UserMailer.ranking(@second_place_user).deliver_now
+
+    assert_not ActionMailer::Base.deliveries.empty?
+
+    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [@second_place_user.email], email.to
+    assert_equal "#{@game.title}: Congratulations!", email.subject
     assert_equal true, email.has_attachments?
     assert_includes (strip_tags(email.body.parts.first.to_s).squish), @rank_email_body
     assert_includes (strip_tags(email.body.parts.first.to_s).squish), @employment_email_body
   end
 
-  test 'ranking email for first no employment' do
-    user = users(:user_four)
-    email = UserMailer.ranking(user).deliver_now
+  test 'ranking email for first place with scholarships available' do
+    @game.update(scholarships_available: true)
+    email = UserMailer.ranking(@first_place_user).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
 
-    assert_equal ['do-not-reply@mitrecyberacademy.org'], email.from
-    assert_equal ['mitrectf+user4@gmail.com'], email.to
-    assert_equal 'MITRE CTF: Congratulations!', email.subject
+    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [@first_place_user.email], email.to
+    assert_equal "#{@game.title}: Congratulations!", email.subject
+    assert_equal true, email.has_attachments?
+    assert_includes (strip_tags(email.body.parts.first.to_s).squish), @scholarship_email_body
+  end
+
+  test 'ranking email for first place with user not interested in employment and game has recruitment no scholarships' do
+    @game.update(participant_recruitment_url: Faker::Internet.url(host: 'mitre.org'))
+    @first_place_user.update(interested_in_employment: false)
+    email = UserMailer.ranking(@first_place_user).deliver_now
+
+    assert_not ActionMailer::Base.deliveries.empty?
+
+    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [@first_place_user.email], email.to
+    assert_equal "#{@game.title}: Congratulations!", email.subject
+    assert_equal true, email.has_attachments?
+    assert_includes (strip_tags(email.body.parts.first.to_s).squish), @first_place_email_body
+    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @employment_email_body
+    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @scholarship_email_body
+  end
+
+  test 'ranking email for first place with user interested in employment and game has recruitment no scholarships' do
+    @game.update(participant_recruitment_url: Faker::Internet.url(host: 'mitre.org'))
+    @first_place_user.update(interested_in_employment: true)
+    email = UserMailer.ranking(@first_place_user).deliver_now
+
+    assert_not ActionMailer::Base.deliveries.empty?
+
+    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [@first_place_user.email], email.to
+    assert_equal "#{@game.title}: Congratulations!", email.subject
+    assert_equal true, email.has_attachments?
+    assert_includes (strip_tags(email.body.parts.first.to_s).squish), @first_place_email_body
+    assert_includes (strip_tags(email.body.parts.first.to_s).squish), @employment_email_body
+    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @scholarship_email_body
+  end
+
+  test 'ranking email for first with user not interested in employment and game does not have recruitment' do
+    @first_place_user.update(interested_in_employment: false)
+    email = UserMailer.ranking(@first_place_user).deliver_now
+
+    assert_not ActionMailer::Base.deliveries.empty?
+
+    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [@first_place_user.email], email.to
+    assert_equal "#{@game.title}: Congratulations!", email.subject
     assert_equal true, email.has_attachments?
     assert_includes (strip_tags(email.body.parts.first.to_s).squish), @first_place_email_body
     assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @employment_email_body
   end
 
-  test 'ranking email for first employment' do
-    user = users(:user_four)
-    user.update_column(:interested_in_employment, true)
-    email = UserMailer.ranking(user, 1 + (divisions(:professional).ordered_teams.index user.team)).deliver_now
+  test 'ranking email for first with user interested in employment and game does not have recruitment' do
+    @first_place_user.update(interested_in_employment: true)
+    email = UserMailer.ranking(@first_place_user).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
 
-    assert_equal ['do-not-reply@mitrecyberacademy.org'], email.from
-    assert_equal ['mitrectf+user4@gmail.com'], email.to
-    assert_equal 'MITRE CTF: Congratulations!', email.subject
+    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [@first_place_user.email], email.to
+    assert_equal "#{@game.title}: Congratulations!", email.subject
     assert_equal true, email.has_attachments?
     assert_includes (strip_tags(email.body.parts.first.to_s).squish), @first_place_email_body
-    assert_includes (strip_tags(email.body.parts.first.to_s).squish), @employment_email_body
+    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @employment_email_body
   end
 
   test 'open source email' do
-    email = UserMailer.open_source(users(:user_one)).deliver_now
+    email = UserMailer.open_source(@first_place_user).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
 
-    assert_equal ['do-not-reply@mitrecyberacademy.org'], email.from
-    assert_equal ['mitrectf+user1test@gmail.com'], email.to
-    assert_equal "MITRE CTF: Challenges Released", email.subject
+    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [@first_place_user.email], email.to
+    assert_equal "#{@game.title}: Challenges Released", email.subject
     assert_equal @open_source_email_body, strip_tags(email.body.to_s).squish
   end
 end

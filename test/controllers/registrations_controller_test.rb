@@ -3,49 +3,52 @@ require 'test_helper'
 class RegistrationsControllerTest < ActionController::TestCase
 
   def setup
+    create(:active_game)
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @password = 'TestPassword123'
   end
 
   test 'unable to destroy team captain' do
-    sign_in users(:user_one)
-    delete :destroy, params: { id: users(:user_one).id }
+    user_team_captain = create(:user_with_team)
+    sign_in user_team_captain
+    delete :destroy, params: { id: user_team_captain.id }
     assert :success
     assert_equal I18n.t("devise.registrations.captain_tried_to_destroy"), flash[:alert]
   end
 
   test 'destroy user on a team' do
-    sign_in users(:full_team_user_five)
-    team = users(:full_team_user_five).team
-    assert_difference 'team.users.reload.size', -1 do
-      delete :destroy, params: { id: users(:full_team_user_five).id, user: { current_password: @password } }
+    @team = create(:team)
+    @user_not_captain = create(:user, password: @password, team: @team)
+    sign_in @user_not_captain
+
+    assert_difference '@team.users.reload.count', -1 do
+      delete :destroy, params: { id: @user_not_captain.id, user: { current_password: @password } }
     end
     assert :success
     assert_equal I18n.t("devise.registrations.destroyed"), flash[:notice]
   end
 
   test 'destroy user not on a team' do
-    sign_in users(:user_three)
+    @user = create(:user, password: @password)
+    sign_in @user
     assert_difference 'User.count', -1 do
-      delete :destroy, params: { id: users(:user_three).id, user: { current_password: @password } }
+      delete :destroy, params: { id: @user.id, user: { current_password: @password } }
     end
     assert :success
     assert_equal I18n.t("devise.registrations.destroyed"), flash[:notice]
   end
 
   test 'user unable to delete account without password' do
-    sign_in users(:user_three)
+    @user = create(:user)
+    sign_in @user
     assert_no_difference 'User.count' do
-      delete :destroy, params: { id: users(:user_three).id }
+      delete :destroy, params: { id: @user.id }
     end
     assert_equal I18n.t("devise.registrations.password_needed_destroy"), flash[:alert]
   end
 
   test 'cannot get new registration after game close' do
-    game = games(:mitre_ctf_game)
-    game.start = Time.now - 24.hours
-    game.stop = Time.now - 23.hours
-    game.save
+    game = create(:ended_game)
 
     get :new
     assert_redirected_to @controller.user_root_path

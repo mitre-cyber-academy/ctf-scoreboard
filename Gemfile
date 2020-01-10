@@ -21,6 +21,7 @@ gem 'geocoder'
 gem 'groupdate'
 gem 'haml-rails'
 gem 'highcharts-rails'
+gem 'highline'
 gem 'jquery-rails'
 gem 'kaminari'
 gem 'kramdown'
@@ -43,6 +44,8 @@ group :development do
 end
 
 group :development, :test do
+  gem 'factory_bot_rails'
+  gem 'faker'
   gem 'pry-remote'
 end
 

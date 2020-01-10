@@ -11,7 +11,7 @@ class Game < ApplicationRecord
   has_many :categories, dependent: :destroy
   has_many :challenges, through: :categories, dependent: :destroy
 
-  validates :name, :start, :stop, presence: true
+  validates :title, :start, :stop, :do_not_reply_email, :contact_email, presence: true
 
   validate :instance_is_singleton, :order_of_start_and_stop_date
 
@@ -50,7 +50,7 @@ class Game < ApplicationRecord
   # generates the top of the certificate when given a Prawn Document
   def generate_certificate_header(doc)
     doc.font('Helvetica', size: 28, style: :bold) do
-      doc.text name.to_s, color: '005BA1', size: 28, align: :center, leading: 8
+      doc.text title.to_s, color: '005BA1', size: 28, align: :center, leading: 8
       doc.text "#{start.day}-#{stop.day} #{I18n.t('date.month_names')[start.month]} #{start.year}",
                color: '005BA1', align: :center, size: 20
     end

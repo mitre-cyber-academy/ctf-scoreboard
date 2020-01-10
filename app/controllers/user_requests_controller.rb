@@ -47,9 +47,9 @@ class UserRequestsController < ApplicationController
   # Only the captain of the team specified on the user request is allowed to
   # accept the users request.
   def captain_of_team_requested
-    @user_request = current_user.team.user_requests.find(params[:id])
-    @team = @user_request.team
-    raise ActiveRecord::RecordNotFound unless @user_request.team.team_captain.eql?(current_user)
+    @user_request = current_user&.team&.user_requests&.find(params[:id])
+    @team = @user_request&.team
+    raise ActiveRecord::RecordNotFound unless @user_request&.team&.team_captain&.eql?(current_user)
   end
 
   # Only allow team captain and the user requesting to delete a user request.

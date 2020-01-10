@@ -1,36 +1,54 @@
 require 'test_helper'
 
 class TeamTest < ActiveSupport::TestCase
+  def setup
+    create(:active_game)
+  end
 
   test 'team without team captain is automatically assigned to first user' do
-    team = teams(:team_two)
-    user = users(:user_three)
+    team = build(:team)
+    team.team_captain = nil
+    team.save!(validate: false)
+    user = create(:user)
     team.users << user
     team.save
     assert_equal(user, team.team_captain)
   end
 
   test 'high school team with two high school students is allowed' do
-    teams(:team_one).users << users(:full_team_user_one)
-    assert_equal(true, teams(:team_one).appropriate_division_level?)
+    hs_division = create(:hs_division)
+    captain = create(:user, year_in_school: 9)
+    team = create(:team, team_captain: captain, division: hs_division)
+    team.users << create(:user, year_in_school: 9)
+
+    assert_equal(true, team.appropriate_division_level?)
   end
 
   test 'high school team with one high school and one college student is not allowed' do
-    teams(:team_one).users << users(:user_three)
-    assert_equal(false, teams(:team_one).appropriate_division_level?)
+    hs_division = create(:hs_division)
+    captain = create(:user, year_in_school: 9)
+    team = create(:team, team_captain: captain, division: hs_division)
+    team.users << create(:user, year_in_school: 13)
+    assert_equal(false, team.appropriate_division_level?)
   end
 
   test 'professional team with one professional is allowed' do
-    assert_equal(true, teams(:team_three).appropriate_division_level?)
+    professional_division = create(:division)
+    captain = create(:user, year_in_school: 0)
+    team = create(:team, team_captain: captain, division: professional_division)
+    assert_equal(true, team.appropriate_division_level?)
   end
 
   test 'team with profanity will not save' do
-    @team = Team.new(team_name: 'hell', affiliation: 'hell')
+    @team = build(:team, team_name: 'hell', affiliation: 'hell')
     assert_equal(false, @team.save)
   end
 
   test 'deleting a team will not leave any orphaned invites or requests' do
-    teams(:team_one).destroy
+    team = create(:team)
+    create(:user_invite, email: 'mitrectf+user2@gmail.com', team: team)
+    create(:user_request, team: team, user: create(:user))
+    team.destroy
     # Get all user invites and requests where the associated team no longer exists. The call to compact
     # is in order to get rid of the nil's that the collect method leaves in for teams which are not nil.
     orphaned_invites = UserInvite.all.collect{ |user_invite| user_invite if user_invite.team.nil? }.compact
@@ -39,39 +57,37 @@ class TeamTest < ActiveSupport::TestCase
     assert_equal 0, orphaned_requests.count
   end
 
-  test 'promote' do
-    # These users are on the same team!
-    team = users(:full_team_user_one).team
-    team.promote(users(:full_team_user_five))
-    assert_equal team.team_captain, users(:full_team_user_five)
+  test 'promoting a new captain is successful' do
+    # This user is already on the team
+    team = create(:team, additional_member_count: 1)
+    non_captain = team.users.where.not(id: team.team_captain).first
+    team.promote(non_captain)
+    assert_equal team.team_captain, non_captain
   end
 
   test 'promote a user that is not on the same team' do
     # These users are not on the same team!
-    team = users(:user_one).team
-    team.promote(users(:full_team_user_five))
-    assert_not_equal team.team_captain, users(:full_team_user_five)
-  end
-
-  test 'score method returns proper value' do
-    team_one = teams(:team_one)
-    # Team 1 has a 200 point score adjustment added from the fixtures
-    assert_equal 200, team_one.score
+    team = create(:team)
+    user_to_promote = create(:user)
+    team.promote(user_to_promote)
+    assert_not_equal team.team_captain, user_to_promote
   end
 
   test 'display name' do
     # Eligible
-    assert_equal teams(:team_one).display_name, teams(:team_one).display_name
+    eligible_team = create(:team, compete_for_prizes: true)
+    assert_equal eligible_team.team_name, eligible_team.display_name
     # Ineligible
-    assert_equal teams(:team_three).display_name, teams(:team_three).display_name
+    ineligible_team = create(:team)
+    assert_equal ineligible_team.team_name + ' (ineligible)', ineligible_team.display_name
   end
 
   test 'in top ten' do
     # Make sure to test with and without a solved challenge attached to a team
-    team = teams(:team_two)
+    team = create(:team_in_top_ten)
     assert_equal true, team.in_top_ten?, 'Team with solved challenge and in first place is not in top ten'
 
-    team2 = teams(:team_with_special_chars)
+    team2 = create(:team)
     assert_equal false, team2.in_top_ten?, "Team is in top ten when it hasn't solved a challenge"
   end
 end
