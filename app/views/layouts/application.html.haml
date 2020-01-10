@@ -13,7 +13,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand{:href => "/"}= @game&.title || 'CTF Scoreboard'
+          %a.brand{:href => "/"}= @game&.organization || 'Gameboard'
           .nav-collapse.collapse
             - if @game
               %ul.nav
@@ -38,7 +38,7 @@
               - if user_signed_in?
                 %li.dropdown
                   %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                    Hello #{truncate(current_user.full_name, length: 30)}
+                    Hello #{truncate(current_user.full_name, length: 30) || 'Admin' }
                     %b.caret
                   %ul.dropdown-menu
                     %li
