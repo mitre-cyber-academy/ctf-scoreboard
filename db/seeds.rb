@@ -11,9 +11,12 @@ User.create(email: 'root@root.com', password: 'ChangeMe123', confirmed_at: Time.
 
 # default game
 game = Game.create!(
-  name: 'Test Game',
+  title: 'Test Game',
+  organization: 'MITRE',
   start: Time.now.utc + 3.months,
   stop: Time.now.utc + 3.months + 2.days,
+  do_not_reply_email: 'do-not-reply@mitrestemctf.org',
+  contact_email: 'contact@mitrestemctf.org',
   recruitment_additional_text: 'While this competition was open to professional and government participants as part '\
     'of cyber training, only eligible teams composed of high school and college students will be considered for '\
     'winning prizes, scholarships and internships. Participation in a MITRE or industry partner cyber internship '\
