@@ -64,7 +64,7 @@ en:
     too_many: 'You may not create more than one game.'
     date_mismatch: 'The start date must be before the end date.'
     before_competition: 'This action is not available until the game is open.'
-    after_competition: "This action is not available after the game is over."
+    after_competition: 'This action is not available after the game is over.'
   flag:
     accepted: 'Flag accepted!'
   challenge:
@@ -75,9 +75,9 @@ en:
     state_change_message: 'The challenge is now %{state}'
   users:
     login_required: 'You must login in order to perform this action.'
-    download_not_available: 'The download you have selected is not available for this user.'
     team_completion_cert_string: "This is to certify that %{full_name}
      successfully competed as a member of Team %{team_name},
      achieving %{score} points and finishing %{rank} out of %{team_size} teams."
   admin:
     should_not_do_action: 'Admins should use the Rails Admin console to perform administrative actions.'
+    download_not_available: 'The download you have selected is not available.'

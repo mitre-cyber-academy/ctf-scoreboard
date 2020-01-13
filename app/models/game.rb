@@ -15,6 +15,8 @@ class Game < ApplicationRecord
 
   validate :instance_is_singleton, :order_of_start_and_stop_date
 
+  mount_uploader :completion_certificate_template, CompletionCertificateTemplateUploader
+
   def self.instance
     all.first
   end
