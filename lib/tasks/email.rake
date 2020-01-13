@@ -34,9 +34,4 @@ namespace :email do
       Rake::Task['email:completion_email'].invoke
     end
   end
-
-  desc 'Generate completion certificates'
-  task generate_certificates: :environment do
-    Game.instance.generate_completion_certs false
-  end
 end
