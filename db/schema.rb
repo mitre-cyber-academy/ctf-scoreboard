@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_13_160904) do
+ActiveRecord::Schema.define(version: 2020_01_13_212703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 2020_01_13_160904) do
     t.boolean "scholarships_available", default: false
     t.text "recruitment_additional_text"
     t.boolean "enable_completion_certificates", default: false
+    t.oid "completion_certificate_template"
   end
 
   create_table "messages", id: :serial, force: :cascade do |t|

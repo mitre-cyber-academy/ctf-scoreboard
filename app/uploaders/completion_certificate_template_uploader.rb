@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CompletionCertificateUploader < CarrierWave::Uploader::Base
+class CompletionCertificateTemplateUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
@@ -36,12 +36,12 @@ class CompletionCertificateUploader < CarrierWave::Uploader::Base
   end
 
   def url
-    "/#{model.class.to_s.underscore.pluralize}/#{model.id}/completion_certificate"
+    "/#{model.class.to_s.underscore}/completion_certificate_template"
   end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   def filename
-    "ctf-certificate-template.jpg" if original_filename
+    'ctf-certificate-template.jpg'
   end
 end

@@ -20,4 +20,14 @@ module ApplicationModule
   def block_admin_action
     redirect_back(fallback_location: root_path, alert: I18n.t('admin.should_not_do_action')) if current_user.admin?
   end
+
+  def download_file(file, filename)
+    file_contents = file.read
+    if file_contents.blank?
+      redirect_back fallback_location: rails_admin_path, alert: I18n.t('admin.download_not_available')
+    else
+      extension = file.filename.nil? ? 'pdf' : File.extname(file.filename)
+      send_data file_contents, filename: "#{filename}_#{file.mounted_as}.#{extension}"
+    end
+  end
 end

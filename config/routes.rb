@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   resource :game, only: %i[show] do
     get :resumes
     get :transcripts
+    get :completion_certificate_template
     resources :messages, only: [:index]
     resources :achievements, only: [:index]
     resources :divisions, only: [:index]

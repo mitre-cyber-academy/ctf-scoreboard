@@ -60,23 +60,14 @@ class UsersController < ApplicationController
   end
 
   def resume
-    download_file(@user.resume)
+    download_file(@user.resume, @user.full_name)
   end
 
   def transcript
-    download_file(@user.transcript)
+    download_file(@user.transcript, @user.full_name)
   end
 
   private
-
-  def download_file(file)
-    file_contents = file.read
-    if file_contents.blank?
-      redirect_back fallback_location: rails_admin_path, alert: I18n.t('users.download_not_available')
-    else
-      send_data file_contents, filename: "#{@user.full_name}_#{file.mounted_as}.pdf"
-    end
-  end
 
   # Only allow the team captain or the current user to remove the current user from a team.
   def check_removal_permissions
