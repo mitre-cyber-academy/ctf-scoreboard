@@ -33,20 +33,18 @@ class User < ApplicationRecord
   scope :interested_in_employment, -> { where(interested_in_employment: true) }
 
   reverse_geocoded_by :latitude, :longitude do |obj, results|
-    if (geo = results.first)
-      obj.country = case geo.country
-                    when 'USA'
-                      'United States'
-                    when 'RSA'
-                      'South Africa'
-                    when 'ROC'
-                      'Taiwan'
-                    when 'PRC'
-                      'China'
-                    else
-                      geo.country
-                    end
-    end
+    obj.country = case results.first.data['country']
+                  when 'USA'
+                    'United States'
+                  when 'RSA'
+                    'South Africa'
+                  when 'ROC'
+                    'Taiwan'
+                  when 'PRC'
+                    'China'
+                  else
+                    results.first.data['country']
+                  end
   end
   after_validation :reverse_geocode, if: ->(obj) { obj.latitude_changed? || obj.longitude_changed? }
 
