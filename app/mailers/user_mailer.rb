@@ -28,9 +28,11 @@ class UserMailer < ApplicationMailer
     @team = @user.team
     @div = @team.division
     @rank = 1 + (@div.ordered_teams.index @team) if rank.nil?
-    attachment = @user.generate_certificate(rank)
 
-    attachments['Competition Certificate.pdf'] = attachment.read unless attachment.nil?
+    if @game.enable_completion_certificates
+      attachment = @user.generate_certificate(@rank)
+      attachments['Competition Certificate.pdf'] = attachment.read unless attachment.nil?
+    end
 
     mail(to: @user.email, subject: "#{@game.title}: Congratulations!")
   end

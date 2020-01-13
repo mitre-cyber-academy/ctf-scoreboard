@@ -31,6 +31,8 @@ FactoryBot.define do
 
       team_size { 5 }
 
+      enable_completion_certificates { true }
+
       transient do
         message_count { 1 }
         division_count { 1 }

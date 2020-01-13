@@ -194,9 +194,16 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal [@game.do_not_reply_email], email.from
     assert_equal [@first_place_user.email], email.to
     assert_equal "#{@game.title}: Congratulations!", email.subject
-    assert_equal true, email.has_attachments?
+    assert email.has_attachments?
     assert_includes (strip_tags(email.body.parts.first.to_s).squish), @first_place_email_body
     assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @employment_email_body
+  end
+
+  test 'ranking no certificate' do
+    binding.pry
+    @game.update!(enable_completion_certificates: false)
+    email = UserMailer.ranking(@first_place_user).deliver_now
+    assert_not email.has_attachments?
   end
 
   test 'open source email' do
