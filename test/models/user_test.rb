@@ -82,12 +82,30 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(false, player_list.first.can_remove?(player_list.last))
   end
 
-  test 'users country is calculated on save' do
-    # Users current_sign_in_ip is set to a US held IP
-    user = build(:user, current_sign_in_ip: '3.1.1.1')
-    user.save
-    assert user.geocoded?
-    assert_equal 'United States', user.country
+  stubs = [
+    {'country' => 'USA', 'country_code' => 'US'},
+    {'country' => 'RSA', 'country_code' => 'ZA'},
+    {'country' => 'PRC', 'country_code' => 'CN'},
+    {'country' => 'ROC', 'country_code' => 'TW'}
+  ]
+
+  countries = [
+    'United States',
+    'South Africa',
+    'China',
+    'Taiwan'
+  ]
+
+  stubs.each_with_index do |stub, idx|
+    Geocoder::Lookup::Test.reset
+    test "users country is calculated on save #{stub['country_code']}" do
+      Geocoder::Lookup::Test.set_default_stub([stub])
+      user = build(:user, current_sign_in_ip: Faker::Internet.public_ip_v4_address)
+      user.save
+      assert user.geocoded?
+      assert_equal countries[idx], user.country
+    end
+    Geocoder::Lookup::Test.reset
   end
 
   test 'transform replaces bad characters' do
