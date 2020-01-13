@@ -11,7 +11,7 @@ class Game < ApplicationRecord
   has_many :categories, dependent: :destroy
   has_many :challenges, through: :categories, dependent: :destroy
 
-  validates :title, :start, :stop, :do_not_reply_email, :contact_email, presence: true
+  validates :title, :start, :stop, :do_not_reply_email, :contact_email, :description, presence: true
 
   validate :instance_is_singleton, :order_of_start_and_stop_date
 
