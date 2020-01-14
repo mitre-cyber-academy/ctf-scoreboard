@@ -100,7 +100,7 @@ class UserTest < ActiveSupport::TestCase
     Geocoder::Lookup::Test.reset
     test "users country is calculated on save #{stub['country_code']}" do
       Geocoder::Lookup::Test.set_default_stub([stub])
-      user = build(:user, current_sign_in_ip: Faker::Internet.public_ip_v4_address)
+      user = build(:user, current_sign_in_ip: '3.1.1.1')
       user.save
       assert user.geocoded?
       assert_equal countries[idx], user.country
