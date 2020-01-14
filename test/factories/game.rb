@@ -31,7 +31,15 @@ FactoryBot.define do
 
       team_size { 5 }
 
-      enable_completion_certificates { true }
+      enable_completion_certificates { false }
+
+      completion_certificate_template {
+        if enable_completion_certificates
+          File.open(Rails.root.join('test/files/ctf-certificate-template.jpg'))
+        else
+          nil
+        end
+      }
 
       transient do
         message_count { 1 }

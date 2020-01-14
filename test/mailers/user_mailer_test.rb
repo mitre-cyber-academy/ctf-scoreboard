@@ -10,7 +10,7 @@ class UserMailerTest < ActionMailer::TestCase
   end
 
   def setup
-    @game = create(:active_game)
+    @game = create(:active_game, enable_completion_certificates: true)
     @user_invite = create(:user_invite)
     @user_request = create(:user_request)
     @division = @game.divisions.first
@@ -200,10 +200,13 @@ class UserMailerTest < ActionMailer::TestCase
   end
 
   test 'ranking no certificate' do
-    binding.pry
     @game.update!(enable_completion_certificates: false)
     email = UserMailer.ranking(@first_place_user).deliver_now
     assert_not email.has_attachments?
+  end
+
+  test 'ranking with certificate' do
+    @game.update!(enable_completion_certificates: true)
   end
 
   test 'open source email' do

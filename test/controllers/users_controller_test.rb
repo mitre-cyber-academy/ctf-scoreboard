@@ -142,7 +142,7 @@ class UsersControllerTest < ActionController::TestCase
     sign_in create(:admin)
     get :resume, params: { id: user.id }
     assert_redirected_to rails_admin_path
-    assert_equal I18n.t('users.download_not_available'), flash[:alert]
+    assert_equal I18n.t('admin.download_not_available'), flash[:alert]
   end
 
   test 'admin redirected when transcript not available' do
@@ -150,6 +150,6 @@ class UsersControllerTest < ActionController::TestCase
     sign_in create(:admin)
     get :transcript, params: { id: user.id }
     assert_redirected_to rails_admin_path
-    assert_equal I18n.t('users.download_not_available'), flash[:alert]
+    assert_equal I18n.t('admin.download_not_available'), flash[:alert]
   end
 end
