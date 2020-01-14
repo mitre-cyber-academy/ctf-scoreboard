@@ -7,7 +7,7 @@ class AchievementTest < ActiveSupport::TestCase
 
   test 'description' do
     achievement = create(:achievement)
-    description_string =  %(Unlocked achievement "#{achievement.text}")
+    description_string =  %(Unlocked Achievement "#{achievement.text}")
     assert_equal description_string, achievement.description
   end
 
