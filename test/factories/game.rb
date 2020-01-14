@@ -22,16 +22,13 @@ FactoryBot.define do
       stop { Time.now + 10.hours }
       do_not_reply_email { Faker::Internet.free_email }
       contact_email { Faker::Internet.free_email }
-
       participant_recruitment_url { nil }
-
       open_source_url { Faker::Internet.url(host: 'github.com') }
-
       scholarships_available { false }
-
       team_size { 5 }
-
       enable_completion_certificates { false }
+      recruitment_text { 'Jobs and internships are available if you meet the following requirements ...' }
+      prizes_text { 'Prizes are available if you meet the following requirements ...'}
 
       completion_certificate_template {
         if enable_completion_certificates

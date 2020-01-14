@@ -27,10 +27,6 @@ class UserMailerTest < ActionMailer::TestCase
                    Your team, #{@second_place_team.team_name} came ranked 2nd.").squish
     @first_place_email_body = strip_tags("Hello #{@first_place_user.full_name}! Congratulations on completing #{@game.title}!
                    Your team, #{@first_place_team.team_name} came ranked 1st.").squish
-    @scholarship_email_body = strip_tags("Because you finished on the first-place team in the #{@division.name} Division, you could be eligible for a scholarship.
-                   Please upload your unofficial college, university, or high school transcript AND an up-to-date resume to your profile on the scoreboard to verify your eligibility.
-                   Both a transcript and a resume are required for the award of any scholarship prize.").squish
-    @employment_email_body = strip_tags("If you are interested in job opportunities, please apply here.").squish
     @open_source_email_body = strip_tags("Hello #{@first_place_user.full_name}! All solved challenges from #{@game.title} have been released with solutions
                    here. Have a great day!").squish
   end
@@ -88,42 +84,41 @@ class UserMailerTest < ActionMailer::TestCase
     email = UserMailer.ranking(@second_place_user).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
-
     assert_equal [@game.do_not_reply_email], email.from
     assert_equal [@second_place_user.email], email.to
     assert_equal "#{@game.title}: Congratulations!", email.subject
     assert_equal true, email.has_attachments?
     assert_includes (strip_tags(email.body.parts.first.body.raw_source).squish), @rank_email_body
-    assert_not_includes (strip_tags(email.body.parts.first.body.raw_source).squish), @employment_email_body
+    assert_not_includes (strip_tags(email.body.parts.first.body.raw_source).squish), @game.recruitment_text
   end
 
   test 'ranking with user interested in employment and game having no employment information' do
     @second_place_user.update(interested_in_employment: true)
+
     email = UserMailer.ranking(@second_place_user).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
-
     assert_equal [@game.do_not_reply_email], email.from
     assert_equal [@second_place_user.email], email.to
     assert_equal "#{@game.title}: Congratulations!", email.subject
     assert_equal true, email.has_attachments?
     assert_includes (strip_tags(email.body.parts.first.to_s).squish), @rank_email_body
-    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @employment_email_body
+    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @game.recruitment_text
   end
 
   test 'ranking with user interested in employment and game having employment information' do
     @second_place_user.update(interested_in_employment: true)
     @game.update(participant_recruitment_url: Faker::Internet.url(host: 'mitre.org'))
+
     email = UserMailer.ranking(@second_place_user).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
-
     assert_equal [@game.do_not_reply_email], email.from
     assert_equal [@second_place_user.email], email.to
     assert_equal "#{@game.title}: Congratulations!", email.subject
     assert_equal true, email.has_attachments?
     assert_includes (strip_tags(email.body.parts.first.to_s).squish), @rank_email_body
-    assert_includes (strip_tags(email.body.parts.first.to_s).squish), @employment_email_body
+    assert_includes (strip_tags(email.body.parts.first.to_s).squish), @game.recruitment_text
   end
 
   test 'ranking email for first place with scholarships available' do
@@ -136,7 +131,7 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal [@first_place_user.email], email.to
     assert_equal "#{@game.title}: Congratulations!", email.subject
     assert_equal true, email.has_attachments?
-    assert_includes (strip_tags(email.body.parts.first.to_s).squish), @scholarship_email_body
+    assert_includes (strip_tags(email.body.parts.first.to_s).squish), @game.prizes_text
   end
 
   test 'ranking email for first place with user not interested in employment and game has recruitment no scholarships' do
@@ -151,8 +146,8 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal "#{@game.title}: Congratulations!", email.subject
     assert_equal true, email.has_attachments?
     assert_includes (strip_tags(email.body.parts.first.to_s).squish), @first_place_email_body
-    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @employment_email_body
-    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @scholarship_email_body
+    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @game.recruitment_text
+    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @game.prizes_text
   end
 
   test 'ranking email for first place with user interested in employment and game has recruitment no scholarships' do
@@ -167,8 +162,8 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal "#{@game.title}: Congratulations!", email.subject
     assert_equal true, email.has_attachments?
     assert_includes (strip_tags(email.body.parts.first.to_s).squish), @first_place_email_body
-    assert_includes (strip_tags(email.body.parts.first.to_s).squish), @employment_email_body
-    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @scholarship_email_body
+    assert_includes (strip_tags(email.body.parts.first.to_s).squish), @game.recruitment_text
+    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @game.prizes_text
   end
 
   test 'ranking email for first with user not interested in employment and game does not have recruitment' do
@@ -182,7 +177,7 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal "#{@game.title}: Congratulations!", email.subject
     assert_equal true, email.has_attachments?
     assert_includes (strip_tags(email.body.parts.first.to_s).squish), @first_place_email_body
-    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @employment_email_body
+    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @game.recruitment_text
   end
 
   test 'ranking email for first with user interested in employment and game does not have recruitment' do
@@ -196,7 +191,7 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal "#{@game.title}: Congratulations!", email.subject
     assert email.has_attachments?
     assert_includes (strip_tags(email.body.parts.first.to_s).squish), @first_place_email_body
-    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @employment_email_body
+    assert_not_includes (strip_tags(email.body.parts.first.to_s).squish), @game.recruitment_text
   end
 
   test 'ranking no certificate' do
