@@ -9,10 +9,10 @@ class FeedItem < ApplicationRecord
   validates :type, inclusion: %w[SolvedChallenge Achievement ScoreAdjustment]
 
   def description
-    self.class
+    self.class.name
   end
 
-  def icon
-    ''
+  def icon(icon)
+    icon
   end
 end

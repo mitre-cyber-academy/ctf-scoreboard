@@ -39,7 +39,7 @@ class Division < ApplicationRecord
 
   private
 
-  # rubocop:disable MethodLength
+  # rubocop:disable Metrics/MethodLength
   # Sorts the provided list of teams. This sorts directly in the database instead of getting the
   # data out of the database and sorting in rails. It gets all feed items of type ScoreAdjustment
   # and SolvedChallenge and sums up their values or the value of the challenge in the case of a
@@ -60,5 +60,5 @@ class Division < ApplicationRecord
          )
          .order('current_score desc', 'last_solved_date asc', 'team_name asc').to_a
   end
-  # rubocop:enable MethodLength
+  # rubocop:enable Metrics/MethodLength
 end

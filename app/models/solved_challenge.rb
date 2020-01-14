@@ -11,11 +11,11 @@ class SolvedChallenge < FeedItem
   belongs_to :team, optional: false
 
   def description
-    %(Solved challenge "#{challenge.category.name} #{challenge.point_value}")
+    %(#{super.titleize} "#{challenge.category.name} #{challenge.point_value}")
   end
 
   def icon
-    'ok'
+    super('ok')
   end
 
   def challenge_is_open

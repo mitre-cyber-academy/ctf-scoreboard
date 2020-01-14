@@ -4,10 +4,10 @@ class Achievement < FeedItem
   validates :text, presence: true, uniqueness: true
 
   def description
-    %(Unlocked achievement "#{text}")
+    %(Unlocked #{super} "#{text}")
   end
 
   def icon
-    'certificate'
+    super('certificate')
   end
 end

@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   before_action :fetch_user_team, :deny_team_in_top_ten, only: %i[leave_team promote]
 
   # rubocop:disable Metrics/AbcSize
-  # rubocop:disable MethodLength
+  # rubocop:disable Metrics/MethodLength
   def join_team
     @pending_invites = current_user.user_invites.pending
     @pending_requests = current_user.user_requests.pending
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
   end
 
   # rubocop:enable Metrics/AbcSize
-  # rubocop:enable MethodLength
+  # rubocop:enable Metrics/MethodLength
 
   def promote
     if @team.promote(params[:user_id])
