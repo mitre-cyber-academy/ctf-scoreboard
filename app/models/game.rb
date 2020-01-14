@@ -1,21 +1,25 @@
 # frozen_string_literal: true
 
 class Game < ApplicationRecord
-  has_many :divisions, dependent: :destroy
-  has_many :teams, through: :divisions, dependent: :destroy
-  has_many :users, through: :teams, dependent: :destroy
-  has_many :feed_items, through: :divisions, dependent: :destroy
-  has_many :achievements, through: :divisions, dependent: :destroy
-  has_many :solved_challenges, through: :divisions, dependent: :destroy
-  has_many :messages, dependent: :destroy
-  has_many :categories, dependent: :destroy
-  has_many :challenges, through: :categories, dependent: :destroy
+  with_options dependent: :destroy do
+    has_many :divisions
+    has_many :teams, through: :divisions
+    has_many :users, through: :teams
+    has_many :feed_items, through: :divisions
+    has_many :achievements, through: :divisions
+    has_many :solved_challenges, through: :divisions
+    has_many :messages
+    has_many :categories
+    has_many :challenges, through: :categories
+  end
 
   validates :title, :start, :stop, :do_not_reply_email, :contact_email, :description, presence: true
 
   validate :instance_is_singleton, :order_of_start_and_stop_date
 
   mount_uploader :completion_certificate_template, CompletionCertificateTemplateUploader
+
+  validates :completion_certificate_template, presence: true, if: :enable_completion_certificates?
 
   def self.instance
     all.first
