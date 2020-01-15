@@ -3,7 +3,7 @@ require 'test_helper'
 class GamesControllerTest < ActionController::TestCase
 
   def setup
-    @game = create(:active_game)
+    @game = create(:active_game, enable_completion_certificates: true)
   end
 
   test "should get show" do
@@ -87,16 +87,16 @@ class GamesControllerTest < ActionController::TestCase
   end
 
   test 'admin can access certificate template' do
-    @game.update(enable_completion_certificates: true)
-    sign_in create(:admin)
+    admin = create(:admin)
+    sign_in admin
     get :completion_certificate_template
     assert_response :success
-    assert_equal 'application/jpg', response.content_type
-    @game.update(enable_completion_certificates: false)
-    @game.udpate(completion_certificate_template: nil)
+    assert_equal 'image/jpeg', response.content_type
   end
 
   test 'admin redirect when certificate template unavailable' do
+    @game.destroy
+    @game = create(:active_game)
     sign_in create(:admin)
     get :completion_certificate_template
     assert_redirected_to rails_admin_path
