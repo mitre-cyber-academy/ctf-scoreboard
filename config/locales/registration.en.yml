@@ -59,12 +59,14 @@ en:
     rejected_successful: 'User invitation was successfully rejected.'
     full_team: 'This team currently does not have any more open slots. Please try again later.'
   game:
-    must_be_admin: 'You must be an administrator to setup the scoreboard. Run `bundle exec rake db:create_admin` from the command line on your server and then login with your credentials to continue.'
+    must_be_admin: "The scoreboard has not finished set up! You must be an administrator to setup the scoreboard. Log in with existing administrator credentials to continue set up. If this is the initial setup of the scoreboard, run `bundle exec rake db:create_admin` from the web server's command line to create an administrator account."
     closed: 'The game is currently closed.'
     too_many: 'You may not create more than one game.'
     date_mismatch: 'The start date must be before the end date.'
     before_competition: 'This action is not available until the game is open.'
     after_competition: 'This action is not available after the game is over.'
+    setup: 'Finish setting up the scoreboard by creating a game. Not all fields are required, and you can always change them later! Learn more at %{href}'
+    setup_href: "https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Configuration#game"
   flag:
     accepted: 'Flag accepted!'
   challenge:
