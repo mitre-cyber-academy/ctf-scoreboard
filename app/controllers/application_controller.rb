@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
     return unless @game.nil?
 
     redirect_to(new_user_session_path, alert: I18n.t('game.must_be_admin')) && return unless current_user&.admin?
-    redirect_to rails_admin.new_path('game')
+    redirect_to(rails_admin.new_path('game'), notice: I18n.t('game.setup', href: I18n.t('game.setup_href')))
   end
 
   def load_message_count
