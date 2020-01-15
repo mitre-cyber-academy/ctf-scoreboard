@@ -33,3 +33,4 @@ coverage
 /public/uploads/*
 
 node_modules/
+logfile

@@ -1,6 +1,12 @@
 require 'coveralls'
 Coveralls.wear!('rails')
 
+if ENV['LOCAL_COVERAGE']
+  SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
+    SimpleCov::Formatter::HTMLFormatter,
+  ])
+end
+
 ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'

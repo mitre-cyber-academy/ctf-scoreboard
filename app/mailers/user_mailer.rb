@@ -27,7 +27,7 @@ class UserMailer < ApplicationMailer
     @user = user
     @team = @user.team
     @div = @team.division
-    rank = 1 + (@div.ordered_teams.index @team) if rank.nil?
+    rank = @team.find_rank if rank.nil?
     @rank = rank
 
     if @game.enable_completion_certificates
