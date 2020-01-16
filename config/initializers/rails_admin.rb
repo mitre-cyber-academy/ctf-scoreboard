@@ -28,9 +28,21 @@ RailsAdmin.config do |config|
     end
 
     edit do
+      [:teams, :challenges, :users, :feed_items, :divisions, :messages, :solved_challenges, :categories, :achievements].each do |field|
+        configure field do
+          hide
+        end
+      end
+
       [:start, :stop].each do |f|
         configure f do
           help "Required - Must be in UTC."
+        end
+      end
+
+      configure :load_js, :hidden do
+        def render
+          bindings[:view].render partial: 'show_hide_js'
         end
       end
     end
