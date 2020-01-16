@@ -98,7 +98,7 @@ class UserMailerTest < ActionMailer::TestCase
   end
 
   test 'ranking email for first place with scholarships available' do
-    @game.update(scholarships_available: true)
+    @game.update(prizes_available: true)
     email = UserMailer.ranking(@first_place_user).deliver_now
 
     assert_not ActionMailer::Base.deliveries.empty?
