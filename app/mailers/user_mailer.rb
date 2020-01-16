@@ -4,7 +4,6 @@ class UserMailer < ApplicationMailer
   def invite_user(user_invite)
     @invite = user_invite
     @team = @invite.team
-    @game = Game.instance
     mail(to: @invite.email, subject: "#{@game.title}: Invite to join team #{@team.team_name}")
   end
 
@@ -12,13 +11,11 @@ class UserMailer < ApplicationMailer
     @team = user_request.team
     @captain = @team.team_captain
     @user = user_request.user
-    @game = Game.instance
     mail(to: @captain.email, subject: "#{@game.title}: Request from #{@user.full_name} to join #{@team.team_name}")
   end
 
   def competition_reminder(user)
     @user = user
-    @game = Game.instance
     mail(to: @user.email, subject: "#{@game.title}: Competition Reminder")
   end
 
@@ -27,11 +24,10 @@ class UserMailer < ApplicationMailer
     @user = user
     @team = @user.team
     @div = @team.division
-    rank = @team.find_rank if rank.nil?
-    @rank = rank
+    @rank = rank || @team.find_rank
 
     if @game.enable_completion_certificates
-      attachments['Competition Certificate.pdf'] = @user.generate_certificate(rank).read
+      attachments['Competition Certificate.pdf'] = @user.generate_certificate(@rank).read
     end
 
     mail(to: @user.email, subject: "#{@game.title}: Congratulations!")
@@ -39,14 +35,12 @@ class UserMailer < ApplicationMailer
 
   def open_source(user)
     @user = user
-    @game = Game.instance
     mail(to: @user.email, subject: "#{@game.title}: Challenges Released")
   end
 
   def message_notification(user, message)
     @user = user
     @message = message
-    @game = Game.instance
     mail(to: @user.email, subject: "#{@game.title} New Message: #{message.title}")
   end
 end
