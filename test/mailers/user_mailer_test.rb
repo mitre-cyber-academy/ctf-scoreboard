@@ -87,7 +87,6 @@ class UserMailerTest < ActionMailer::TestCase
 
   test 'ranking with user interested in employment and game having employment information' do
     @second_place_user.update(interested_in_employment: true)
-    @game.update(participant_recruitment_url: Faker::Internet.url(host: 'mitre.org'))
 
     email = UserMailer.ranking(@second_place_user).deliver_now
 
@@ -111,7 +110,6 @@ class UserMailerTest < ActionMailer::TestCase
   end
 
   test 'ranking email for first place with user not interested in employment and game has recruitment no scholarships' do
-    @game.update(participant_recruitment_url: Faker::Internet.url(host: 'mitre.org'))
     @first_place_user.update(interested_in_employment: false)
     email = UserMailer.ranking(@first_place_user).deliver_now
 
@@ -124,7 +122,6 @@ class UserMailerTest < ActionMailer::TestCase
   end
 
   test 'ranking email for first place with user interested in employment and game has recruitment no scholarships' do
-    @game.update(participant_recruitment_url: Faker::Internet.url(host: 'mitre.org'))
     @first_place_user.update(interested_in_employment: true)
     email = UserMailer.ranking(@first_place_user).deliver_now
 

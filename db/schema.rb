@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_14_203246) do
+ActiveRecord::Schema.define(version: 2020_01_16_145004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,7 +91,6 @@ ActiveRecord::Schema.define(version: 2020_01_14_203246) do
     t.string "do_not_reply_email"
     t.string "contact_email"
     t.string "open_source_url"
-    t.string "participant_recruitment_url"
     t.boolean "scholarships_available", default: false
     t.text "recruitment_text"
     t.boolean "enable_completion_certificates", default: false

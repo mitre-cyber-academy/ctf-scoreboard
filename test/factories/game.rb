@@ -22,7 +22,6 @@ FactoryBot.define do
       stop { Time.now + 10.hours }
       do_not_reply_email { Faker::Internet.free_email }
       contact_email { Faker::Internet.free_email }
-      participant_recruitment_url { nil }
       open_source_url { Faker::Internet.url(host: 'github.com') }
       scholarships_available { false }
       team_size { 5 }
