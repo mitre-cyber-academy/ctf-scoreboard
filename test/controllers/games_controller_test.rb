@@ -88,6 +88,12 @@ class GamesControllerTest < ActionController::TestCase
     assert_equal "application/zip", response.content_type
     # An empty zip (from the above test) is 22 byte so based on the test pdf...
     assert_operator response.body.size, :>, 1000
+
+    get :resumes
+    assert_response :success
+    assert_equal "application/zip", response.content_type
+    # An empty zip (from the above test) is 22 byte so based on the test pdf...
+    assert_operator response.body.size, :>, 1000
   end
 
   test 'admin can access show as markdown' do
