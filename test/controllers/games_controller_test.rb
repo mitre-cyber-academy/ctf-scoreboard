@@ -79,6 +79,17 @@ class GamesControllerTest < ActionController::TestCase
     assert_equal "application/zip", response.content_type
   end
 
+  test 'create zip of transcript' do
+    user = create(:user_with_team)
+    user.update(resume: File.open(Rails.root.join('test/files/regular.pdf')), transcript: File.open(Rails.root.join('test/files/regular.pdf')))
+    sign_in create(:admin)
+    get :transcripts
+    assert_response :success
+    assert_equal "application/zip", response.content_type
+    # An empty zip (from the above test) is 22 byte so based on the test pdf...
+    assert_operator response.body.size, :>, 1000
+  end
+
   test 'admin can access show as markdown' do
     sign_in create(:admin)
     get :show, format: :markdown
