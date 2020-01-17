@@ -26,6 +26,10 @@ MITRE CTF Scoreboard is a fully featured CTF platform with scoreboard and regist
 
 **Note**: for specific deployment steps check the [wiki](https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Installation).
 
+##### Testing
+
+To generate a local code coverage report in `coverage/index.html` set the `$LOCAL_COVERAGE` environment variable: `export LOCAL_COVERAGE=true`
+
 #### Production ####
 
 **Warning**: The most tested way of deploying the ctf-scoreboard is using Heroku, or if you want to use your own server then using https://github.com/dokku/dokku. Don't deploy this in production without a proper and secure reverse proxy.
