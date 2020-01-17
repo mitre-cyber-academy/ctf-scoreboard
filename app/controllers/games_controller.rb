@@ -15,6 +15,10 @@ class GamesController < ApplicationController
 
   def teams; end
 
+  def terms_and_conditions; end
+
+  def terms_of_service; end
+
   def show
     @challenges = @game&.challenges
     ActiveRecord::Precounter.new(@challenges).precount(:solved_challenges)
