@@ -80,6 +80,19 @@ en:
     team_completion_cert_string: "This is to certify that %{full_name}
      successfully competed as a member of Team %{team_name},
      achieving %{score} points and finishing %{rank} out of %{team_size} teams."
+    edit:
+      help:
+        affiliation: 'If you are a student, please list your school. If you are an industry professional please list your professional organization.'
+        state: 'Enter the state in which you are a resident.'
+        compete_for_prizes: 'Prize distribution may be restricted to qualifying teams. Check terms and conditions for full details and to see if you qualify.'
+        interested_in_employment: 'Are you interested receiving internship or employment emails from %{organization}?'
+        age: 'Age will be used in aggregate statistics and are held confidentially.'
+        resume: 'Please provide us with a copy of your resume in PDF format'
+        transcript: 'Please provide us with a copy of your unofficial transcript in PDF format'
+        password: 'We need your current password to update your account information.'
+        destroy: 'Deleting your account will remove you from your team. In order to rejoin a team you will have to be re-invited.'
+    destroy:
+      confirm: 'Are you sure you want to delete your account?'
   admin:
     should_not_do_action: 'Admins should use the Rails Admin console to perform administrative actions.'
     download_not_available: 'The download you have selected is not available.'
