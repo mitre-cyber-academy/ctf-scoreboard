@@ -73,11 +73,4 @@ class Game < ApplicationRecord
       UserMailer.open_source(usr).deliver_later
     end
   end
-
-  # reload user_count counter_cache in team
-  def reload_user_count
-    teams.each do |team|
-      Team.reset_counters team.id, :users
-    end
-  end
 end
