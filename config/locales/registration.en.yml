@@ -45,6 +45,22 @@ en:
     must_be_on_team: 'You must be on a team to view other teams.'
     in_top_ten: 'This team is currently locked since it is in the top ten for its division.'
     does_not_exist: 'No such team exists.'
+    show:
+      remove_user_confirm: 'Are you sure you wish to remove this player from your team?'
+      promote_confirm: 'Are you sure you wish to promote a new team captain? You will immediately lose all captain privileges.'
+      eligible_help: 'This user has not yet registered and their division is unknown at this time.'
+      cancel_invite_confirm: 'Are you sure you wish to cancel this invitation?'
+      reject_request_confirm: 'Are you sure you wish to reject this request?'
+      invite_button: 'Invite Member'
+      currently_selected_division: "You have currently selected the %{division} for your team."
+      division_true: 'This division is acceptable for your team.'
+      division_false: "Your team is not eligible to compete in this division. Consider changing your team's division to match that of the most senior member of your team, or removing the member(s) causing your division to be incorrect."
+      eligible_currently: 'Your team is currently'
+      eligible_true: 'competing for prizes. Your team will not be competing for prizes if any users on the team indicate they do not wish to compete for prizes, or the team is moved to an inappropriate division.'
+      eligible_false: 'competing for prizes. One or more team members has indicated they do not want to compete for prizes. Please contact the users marked as ineligible above.'
+      eligible_false_not: 'NOT'
+      pending_requests_false: 'There are no pending requests to join your team at this time.'
+      pending_invites_false: 'There are no pending invitations to join your team at this time.'
   requests:
     sent_successful: 'Team join request was successfully sent.'
     accepted_another: 'User has accepted another teams invitation, sorry!'
