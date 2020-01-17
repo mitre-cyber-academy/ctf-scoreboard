@@ -19,17 +19,16 @@
               %ul.nav
                 - if !@game.before_competition? || current_user&.admin?
                   %li{:class => "#{'active' if current_page? game_path}"}
-                    %a{:href => game_path} Gameboard
+                    = link_to 'Challenges', game_path
                 %li{:class => "#{'active' if current_page? game_messages_path}"}
                   %a{:href => game_messages_path}
                     Messages
-                    - if !@unread_message_count&.eql? 0
-                      %span.badge.badge-important= @unread_message_count
+                    %span.badge.badge-important= @unread_message_count if !@unread_message_count&.eql? 0
                 - if !@game.before_competition? || current_user&.admin?
                   %li{:class => "#{'active' if current_page? game_achievements_path}"}
-                    %a{:href => game_achievements_path} Achievements
+                    = link_to 'Achievements', game_achievements_path
                   %li{:class => "#{'active' if current_page? game_summary_path}"}
-                    %a{:href => game_summary_path} Summary
+                    = link_to 'Summary', game_summary_path
                 - unless @game.contact_url.blank?
                   %li
                     %a{:href => @game.contact_url, :target => "_blank"}
@@ -101,8 +100,10 @@
         %p.pull-right
           %a{:href => "#"} Back to top
         %p
-          = "#{sanitize(Kramdown::Document.new(@game.footer).to_html)} |"  unless @game.footer.blank?
-          %a{:href => "http://mitrecyberacademy.org/terms-of-service"} Terms of Service
+          = "#{sanitize(Kramdown::Document.new(@game.footer).to_html)} |"  unless @game&.footer.blank?
+          = link_to 'Terms of Service', terms_of_service_game_path
+          |
+          = link_to 'Terms and Conditions', terms_and_conditions_game_path
         %p
           Copyright &copy
           = Time.now.year
