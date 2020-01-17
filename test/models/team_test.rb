@@ -90,4 +90,38 @@ class TeamTest < ActiveSupport::TestCase
     team2 = create(:team)
     assert_equal false, team2.in_top_ten?, "Team is in top ten when it hasn't solved a challenge"
   end
+
+  test 'filter affiliation' do
+    team = create(:team)
+    results = Team.filter_affiliation(team.affiliation)
+    assert_equal results.first, team
+  end
+
+  test 'filter location' do
+    team = create(:team)
+    results = Team.location(team.users.first.state)
+    assert_equal results.first, team
+  end
+
+  test 'filter division' do
+    team = create(:team)
+    results = Team.division(team.division_id)
+    assert_equal results.first, team
+  end
+
+  test 'filter team name' do
+    team = create(:team)
+    results = Team.filter_team_name(team.team_name)
+    assert_equal results.first, team
+  end
+
+  test 'find rank' do
+    team = create(:team)
+    assert_equal 1, team.find_rank
+  end
+
+  test 'full?' do
+    team = create(:team)
+    assert_not team.full?
+  end
 end
