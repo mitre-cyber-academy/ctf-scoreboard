@@ -93,8 +93,6 @@ class User < ApplicationRecord
     return 'College' if year_in_school >= 13
     return 'Professional' if year_in_school.eql? 0
     return 'High School' if year_in_school <= 12
-
-    'Unknown' # If user is not in any of the other three then fallback.
   end
 
   # A user can only promote another user if they are the team captain. The user that they

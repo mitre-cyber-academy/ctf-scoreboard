@@ -86,14 +86,16 @@ class UserTest < ActiveSupport::TestCase
     {'country' => 'USA', 'country_code' => 'US'},
     {'country' => 'RSA', 'country_code' => 'ZA'},
     {'country' => 'PRC', 'country_code' => 'CN'},
-    {'country' => 'ROC', 'country_code' => 'TW'}
+    {'country' => 'ROC', 'country_code' => 'TW'},
+    {'country' => 'country', 'country_code' => 'country'}
   ]
 
   countries = [
     'United States',
     'South Africa',
     'China',
-    'Taiwan'
+    'Taiwan',
+    'country'
   ]
 
   stubs.each_with_index do |stub, idx|
@@ -108,7 +110,11 @@ class UserTest < ActiveSupport::TestCase
     Geocoder::Lookup::Test.reset
   end
 
-  test 'transform replaces bad characters' do
-    assert_equal 'abcs_123_', (ApplicationRecord.transform'@Bc$_#123!%^&*()] [/\\')
+  test 'link to invitiations' do
+    team = create(:team)
+    invite = create(:user_invite, team: team)
+    user = create(:user, email: invite.email)
+    invite.reload
+    assert_equal user, invite.user
   end
 end
