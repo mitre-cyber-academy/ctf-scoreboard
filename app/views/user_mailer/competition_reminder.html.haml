@@ -21,7 +21,7 @@
 
   updateClock = (clock_elem) ->
     t = countdown(new Date(#{@game.start.to_f * 1000}))
-    clock_elem.innerHTML = 'This is a reminder for the upcoming MITRE CTF which will start at #{@game.start}, which is in <b>' + t.days + 'd ' + t.hours + 'h ' + t.minutes + 'm ' + t.seconds + 's</b>'
+    clock_elem.innerHTML = 'This is a reminder for the upcoming #{@game.organization} #{@game.title} which will start at #{@game.start}, which is in <b>' + t.days + 'd ' + t.hours + 'h ' + t.minutes + 'm ' + t.seconds + 's</b>'
     if t.total <= 0
       clearInterval timeinterval
     return
