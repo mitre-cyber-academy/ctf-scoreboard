@@ -239,6 +239,14 @@ class TeamsControllerTest < ActionController::TestCase
     assert_redirected_to @controller.user_root_path
   end
 
+  test 'update a team with invalid params' do
+    team = create(:team)
+    sign_in team.users.first
+    patch :update, params: { team: { team_name: 'hell'}, id: team }
+    assert_includes flash[:alert], 'profane'
+    assert_redirected_to edit_team_path(team)
+  end
+
   test 'cannot create a team after game is closed' do
     create(:ended_game)
     user = create(:user)
