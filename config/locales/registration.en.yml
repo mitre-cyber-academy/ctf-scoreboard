@@ -83,6 +83,8 @@ en:
     after_competition: 'This action is not available after the game is over.'
     setup: 'Finish setting up the scoreboard by creating a game. Not all fields are required, and you can always change them later! Learn more at %{href}'
     setup_href: "https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Configuration#game"
+    no_terms_and_conditions: There are no terms and conditions associated with this game.
+    no_terms_of_service: There are no terms of service associated with this game.
   flag:
     accepted: 'Flag accepted!'
   challenge:

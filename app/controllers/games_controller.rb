@@ -5,10 +5,11 @@ require 'zip'
 class GamesController < ApplicationController
   include ApplicationModule
 
+  before_action :load_game, only: %i[terms_and_conditions terms_of_service]
   before_action :load_game_with_users, :deny_if_not_admin, only: %i[resumes transcripts completion_certificate_template]
   before_action :load_users_and_divisions, only: %i[summary teams]
   before_action :deny_users_to_non_html_formats, :load_game_for_show_page, only: %i[show]
-  before_action :filter_access_before_game_open
+  before_action :filter_access_before_game_open, except: %i[terms_of_service terms_and_conditions]
   before_action :load_game_graph_data, only: %i[summary]
   before_action :load_message_count
 
