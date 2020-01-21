@@ -129,4 +129,13 @@ class UserRequestsControllerTest < ActionController::TestCase
     assert :success
     assert_equal I18n.t('teams.in_top_ten'), flash[:alert]
   end
+
+  test 'delete user request after user deleted' do
+    user_request = create(:user_request, team: @team, user: @requesting_user)
+    sign_in @team.team_captain
+    User.delete(@requesting_user)
+    delete :destroy, params: { team_id: @team, id: user_request }
+    assert :redirect
+    assert_equal 'User must exist', flash['alert']
+  end
 end

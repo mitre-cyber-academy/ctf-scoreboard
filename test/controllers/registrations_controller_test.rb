@@ -54,4 +54,25 @@ class RegistrationsControllerTest < ActionController::TestCase
     assert_redirected_to @controller.user_root_path
     assert_equal I18n.t('game.after_competition'), flash[:alert]
   end
+
+  test 'new' do
+    get :new
+    assert :success
+    # Could look for the HTML elements but not really testing any custom controller actions...
+  end
+
+  test 'create' do
+    user = build(:user)
+    params = {
+      'full_name': user.full_name,
+      'email': user.email,
+      'affiliation': user.affiliation,
+      'year_in_school': user.year_in_school,
+      'state': user.state,
+      'password': user.password,
+      'password_confirmation': user.password,
+    }
+    post :create, params: { user: params }
+    assert :redirect
+  end
 end
