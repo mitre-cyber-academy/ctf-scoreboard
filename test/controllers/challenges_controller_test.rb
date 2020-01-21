@@ -80,10 +80,17 @@ class ChallengesControllerTest < ActionController::TestCase
     assert true, wrong_flag_messages.include?(flash[:notice])
   end
 
-  # Private methods
-  test 'should get find_challenge' do
-  end
-
-  test 'should find and log flag' do
+  test 'submit flag with bad captcha' do
+    Recaptcha.configuration.skip_verify_env.delete('test')
+    user = create(:user_with_team)
+    sign_in user
+    put :update, params: {
+      id: @challenge , challenge: {
+        submitted_flag: @challenge.flags.sample.flag
+      }
+    }
+    assert_response :success
+    assert_equal flash['alert'], I18n.t('devise.registrations.recaptcha_failed')
+    Recaptcha.configuration.skip_verify_env << 'test'
   end
 end
