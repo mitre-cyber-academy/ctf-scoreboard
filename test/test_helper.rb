@@ -26,3 +26,16 @@ end
 class ActionView::TestCase
   include Devise::Test::ControllerHelpers
 end
+
+# Construct the minimum parameters for user creation via controller action.
+def build_user_params(user_obj)
+  params = {
+    'full_name': user_obj.full_name,
+    'email': user_obj.email,
+    'affiliation': user_obj.affiliation,
+    'year_in_school': user_obj.year_in_school,
+    'state': user_obj.state,
+    'password': user_obj.password,
+    'password_confirmation': user_obj.password,
+  }
+end

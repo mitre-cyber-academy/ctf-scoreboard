@@ -63,16 +63,16 @@ class RegistrationsControllerTest < ActionController::TestCase
 
   test 'create' do
     user = build(:user)
-    params = {
-      'full_name': user.full_name,
-      'email': user.email,
-      'affiliation': user.affiliation,
-      'year_in_school': user.year_in_school,
-      'state': user.state,
-      'password': user.password,
-      'password_confirmation': user.password,
-    }
-    post :create, params: { user: params }
+    post :create, params: { user: build_user_params(user) }
     assert :redirect
+  end
+
+  test 'create with failed recaptcha' do
+    Recaptcha.configuration.skip_verify_env.delete('test')
+    user = build(:user)
+    post :create, params: { user: build_user_params(user) }
+    assert_response :success
+    assert_equal flash['alert'], I18n.t('devise.registrations.recaptcha_failed')
+    Recaptcha.configuration.skip_verify_env << 'test'
   end
 end
