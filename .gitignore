@@ -34,3 +34,4 @@ coverage
 
 node_modules/
 logfile
+config/initializers/action_mailer.rb
