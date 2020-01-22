@@ -105,6 +105,6 @@
           |
           = link_to 'Terms and Conditions', terms_and_conditions_game_path
         %p
-          Copyright &copy
-          = Time.now.year
-          The MITRE Corporation
+          = t('application.open_source_statement_1')
+          = link_to 'available', t('application.github_link')
+          = t('application.open_source_statement_2')
