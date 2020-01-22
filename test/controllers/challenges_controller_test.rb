@@ -82,6 +82,10 @@ class ChallengesControllerTest < ActionController::TestCase
 
   test 'submit flag with bad captcha' do
     Recaptcha.configuration.skip_verify_env.delete('test')
+    Recaptcha.configure do |config|
+      config.site_key = 'test_key'
+      config.secret_key = 'test_key'
+    end
     user = create(:user_with_team)
     sign_in user
     put :update, params: {

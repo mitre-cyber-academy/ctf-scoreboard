@@ -69,6 +69,10 @@ class RegistrationsControllerTest < ActionController::TestCase
 
   test 'create with failed recaptcha' do
     Recaptcha.configuration.skip_verify_env.delete('test')
+    Recaptcha.configure do |config|
+      config.site_key = 'whatever'
+      config.secret_key = 'whatever'
+    end
     user = build(:user)
     post :create, params: { user: build_user_params(user) }
     assert_response :success
