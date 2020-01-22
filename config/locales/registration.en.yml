@@ -114,3 +114,7 @@ en:
   admin:
     should_not_do_action: 'Admins should use the Rails Admin console to perform administrative actions.'
     download_not_available: 'The download you have selected is not available.'
+  application:
+    open_source_statement_1: 'Gameboard and registration software is '
+    open_source_statement_2: ' free to use!'
+    github_link: 'https://github.com/mitre-cyber-academy/ctf-scoreboard'

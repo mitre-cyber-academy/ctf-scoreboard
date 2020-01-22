@@ -3,10 +3,9 @@
 # Main controller for the application, handles redirects for the user login to the correct pages
 # and sets devise parameters.
 class ApplicationController < ActionController::Base
-  include SessionsHelper
-
   protect_from_forgery with: :exception
 
+  before_action :store_user_location, if: :storable_location?
   before_action :set_paper_trail_whodunnit
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_mailer_host
@@ -37,10 +36,6 @@ class ApplicationController < ActionController::Base
     @unread_message_count = @game.messages.where('updated_at >= :time', time: current_user.messages_stamp).count
   end
 
-  def set_mailer_host
-    ActionMailer::Base.default_url_options[:host] = request.host_with_port
-  end
-
   # Only allow access to information specific to the game when the game is actually open
   def filter_access_before_game_open
     return if current_user&.admin? || !@game.before_competition?
@@ -68,6 +63,18 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def storable_location?
+    request.get? && is_navigational_format? && !devise_controller? && !request.xhr?
+  end
+
+  def store_user_location
+    store_location_for(:user, request.fullpath)
+  end
+
+  def set_mailer_host
+    ActionMailer::Base.default_url_options[:host] = request.host_with_port
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(
       :sign_up,
@@ -80,6 +87,6 @@ class ApplicationController < ActionController::Base
   end
 
   def enforce_access
-    deny_access unless current_user
+    redirect_to new_user_session_path, notice: I18n.t('users.login_required') unless current_user
   end
 end
