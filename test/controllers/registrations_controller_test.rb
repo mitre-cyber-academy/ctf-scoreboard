@@ -68,6 +68,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   end
 
   test 'create with failed recaptcha' do
+    create(:active_game)
     Recaptcha.configuration.skip_verify_env.delete('test')
     Recaptcha.configure do |config|
       config.site_key = 'whatever'
