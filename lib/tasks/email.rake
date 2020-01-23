@@ -18,6 +18,7 @@ namespace :email do
     address = ui.ask('SMTP server address: ')
     port = ui.ask('SMTP server port: ', Integer).to_s { |q| q.in = 0..65_535 }
     domain = ui.ask('Specify a HELO domain: ')
+    default_url_options_host = ui.ask('Specify the host that mail will be sent from (i.e. app.heroku.com): ')
     authentication = ui.choose do |menu|
       menu.prompt = 'Select how Rails will authenticate to the SMTP server:'
       menu.choices(:plain, :login, :cram_md5)
@@ -40,6 +41,7 @@ namespace :email do
     smtp_server_password = ui.ask('SMTP server password: ') { |q| q.echo = false }
 
     config = <<~CONF
+      ActionMailer::Base.default_url_options[:host] = '#{default_url_options_host}'
       ActionMailer::Base.smtp_settings = {
         address: '#{address}',
         port: '#{port}',
