@@ -39,3 +39,7 @@ def build_user_params(user_obj)
     'password_confirmation': user_obj.password,
   }
 end
+
+def remove_html_artifacts(email_body)
+  strip_tags(email_body).gsub('=0D', '').gsub('E2=80=A6', '').gsub('=', '').gsub("\r", '').gsub("\n", '')
+end

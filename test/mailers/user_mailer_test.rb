@@ -20,7 +20,7 @@ class UserMailerTest < ActionMailer::TestCase
     create(:solved_challenge, team: @first_place_team, challenge: create(:challenge, point_value: 1000))
     @second_place_team = @teams.second
     @second_place_user = @second_place_team.team_captain
-    create(:solved_challenge, team: @second_place_team, challenge: create(:challenge, point_value: 500))
+    @solved_challenge = create(:solved_challenge, team: @second_place_team, challenge: create(:challenge, point_value: 500))
   end
 
   test 'user invite email' do
@@ -63,108 +63,77 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal "#{@game.title}: Competition Reminder", email.subject
   end
 
-  test 'ranking no employment' do
-    email = UserMailer.ranking(@second_place_user).deliver_now
-
-    assert_not ActionMailer::Base.deliveries.empty?
-    assert_equal [@game.do_not_reply_email], email.from
-    assert_equal [@second_place_user.email], email.to
-    assert_equal "#{@game.title}: Congratulations!", email.subject
-    assert_equal true, email.has_attachments?
+  test 'ranking basic rank' do
+    email = UserMailer.ranking(@first_place_user).deliver_now
+    email = remove_html_artifacts(strip_tags(email.body.parts.first.to_s))
+    assert_includes email, 'ranked 1st'
   end
 
-  test 'ranking with user interested in employment and game having no employment information' do
-    @second_place_user.update(interested_in_employment: true)
-
-    email = UserMailer.ranking(@second_place_user).deliver_now
-
-    assert_not ActionMailer::Base.deliveries.empty?
-    assert_equal [@game.do_not_reply_email], email.from
-    assert_equal [@second_place_user.email], email.to
-    assert_equal "#{@game.title}: Congratulations!", email.subject
-    assert_equal true, email.has_attachments?
-  end
-
-  test 'ranking with user interested in employment and game having employment information' do
-    @second_place_user.update(interested_in_employment: true)
-
-    email = UserMailer.ranking(@second_place_user).deliver_now
-
-    assert_not ActionMailer::Base.deliveries.empty?
-    assert_equal [@game.do_not_reply_email], email.from
-    assert_equal [@second_place_user.email], email.to
-    assert_equal "#{@game.title}: Congratulations!", email.subject
-    assert_equal true, email.has_attachments?
-  end
-
-  test 'ranking email for first place with scholarships available' do
+  test 'ranking first place team eligible and prizes available and prize text not blank' do
     @game.update(prizes_available: true)
     email = UserMailer.ranking(@first_place_user).deliver_now
-
-    assert_not ActionMailer::Base.deliveries.empty?
-
-    assert_equal [@game.do_not_reply_email], email.from
-    assert_equal [@first_place_user.email], email.to
-    assert_equal "#{@game.title}: Congratulations!", email.subject
-    assert_equal true, email.has_attachments?
+    email = remove_html_artifacts(strip_tags(email.body.parts.first.to_s))
+    assert_includes email, @game.prizes_text
   end
 
-  test 'ranking email for first place with user not interested in employment and game has recruitment no scholarships' do
-    @first_place_user.update(interested_in_employment: false)
+  test 'ranking first place team eligible and prizes not available' do
     email = UserMailer.ranking(@first_place_user).deliver_now
-
-    assert_not ActionMailer::Base.deliveries.empty?
-
-    assert_equal [@game.do_not_reply_email], email.from
-    assert_equal [@first_place_user.email], email.to
-    assert_equal "#{@game.title}: Congratulations!", email.subject
-    assert_equal true, email.has_attachments?
+    email = remove_html_artifacts(strip_tags(email.body.parts.first.to_s))
+    assert_not_includes email, @game.prizes_text
   end
 
-  test 'ranking email for first place with user interested in employment and game has recruitment no scholarships' do
+  test 'ranking first place team not eligible' do
+    @first_place_user.update(compete_for_prizes: false)
+    email = UserMailer.ranking(@first_place_user).deliver_now
+    email = remove_html_artifacts(strip_tags(email.body.parts.first.to_s))
+    assert_not_includes email, @game.prizes_text
+  end
+
+  test 'ranking second place team' do
+    email = UserMailer.ranking(@second_place_user).deliver_now
+    email = remove_html_artifacts(strip_tags(email.body.parts.first.to_s))
+    assert_not_includes email, @game.prizes_text
+    assert_includes email, 'ranked 2nd'
+  end
+
+  test 'ranking team with no points' do
+    FeedItem.delete(@solved_challenge)
+    email = UserMailer.ranking(@second_place_user).deliver_now
+    email = remove_html_artifacts(strip_tags(email.body.parts.first.to_s))
+    assert_not_includes email, @game.recruitment_text
+  end
+
+  test 'ranking team with points and user not interested in employment' do
+    email = UserMailer.ranking(@first_place_user).deliver_now
+    email = remove_html_artifacts(strip_tags(email.body.parts.first.to_s))
+    assert_not_includes email, @game.recruitment_text
+  end
+
+  test 'ranking team with points and user interested in employment and recruitment text is blank' do
+    recruitment_text = @game.recruitment_text
+    @game.update(recruitment_text: nil)
+    email = UserMailer.ranking(@first_place_user).deliver_now
+    email = remove_html_artifacts(strip_tags(email.body.parts.first.to_s))
+    assert_not_includes email, recruitment_text
+  end
+
+  test 'ranking team with points and user interested in employment and recruitment text is not blank' do
     @first_place_user.update(interested_in_employment: true)
     email = UserMailer.ranking(@first_place_user).deliver_now
-
-    assert_not ActionMailer::Base.deliveries.empty?
-
-    assert_equal [@game.do_not_reply_email], email.from
-    assert_equal [@first_place_user.email], email.to
-    assert_equal "#{@game.title}: Congratulations!", email.subject
-    assert_equal true, email.has_attachments?
+    email = remove_html_artifacts(strip_tags(email.body.parts.first.to_s))
+    assert_includes email, @game.recruitment_text
   end
 
-  test 'ranking email for first with user not interested in employment and game does not have recruitment' do
-    @first_place_user.update(interested_in_employment: false)
-    email = UserMailer.ranking(@first_place_user).deliver_now
-
-    assert_not ActionMailer::Base.deliveries.empty?
-
-    assert_equal [@game.do_not_reply_email], email.from
-    assert_equal [@first_place_user.email], email.to
-    assert_equal "#{@game.title}: Congratulations!", email.subject
-    assert_equal true, email.has_attachments?
-  end
-
-  test 'ranking email for first with user interested in employment and game does not have recruitment' do
-    @first_place_user.update(interested_in_employment: true)
-    email = UserMailer.ranking(@first_place_user).deliver_now
-
-    assert_not ActionMailer::Base.deliveries.empty?
-
-    assert_equal [@game.do_not_reply_email], email.from
-    assert_equal [@first_place_user.email], email.to
-    assert_equal "#{@game.title}: Congratulations!", email.subject
-    assert email.has_attachments?
-  end
-
-  test 'ranking no certificate' do
+  test 'ranking without certificates' do
     @game.update!(enable_completion_certificates: false)
     email = UserMailer.ranking(@first_place_user).deliver_now
     assert_not email.has_attachments?
   end
 
-  test 'ranking with certificate' do
+  test 'ranking with certificates' do
     @game.update!(enable_completion_certificates: true)
+    email = UserMailer.ranking(@first_place_user).deliver_now
+    assert email.has_attachments?
   end
 
   test 'open source email' do
