@@ -56,10 +56,10 @@ class User < ApplicationRecord
 
   # These are things we require user to have but do not require of admins.
   with_options unless: :admin? do
-    before_save :clear_compete_for_prizes
-    before_destroy :leave_team_before_delete
     after_create :link_to_invitations, :update_team
     after_update :update_team
+    before_destroy :leave_team_before_delete, prepend: true
+    before_save :clear_compete_for_prizes
     validates :email, uniqueness: true, presence: true
     validates :full_name, :affiliation, presence: true, length: { maximum: 255 }, obscenity: true
     validates :state, presence: true
@@ -134,7 +134,18 @@ class User < ApplicationRecord
       doc.bounding_box([55, 450], width: 640, height: 200) do
         Game.instance.generate_certificate_header doc
       end
-      team.generate_certificate_body doc, full_name, rank
+      generate_certificate_body doc, rank
+    end
+  end
+
+  def generate_certificate_body(doc, rank)
+    doc.bounding_box([55, 200], width: 640, height: 200) do
+      doc.font('Helvetica-Bold', size: 18) do
+        doc.text(I18n.t('users.team_completion_cert_string',
+                        full_name: full_name, team_name: team.team_name,
+                        score: team.score, rank: rank, team_size: team.division.teams.size),
+                 color: '005BA1', align: :center, leading: 4)
+      end
     end
   end
 

@@ -13,5 +13,5 @@
       - @achievements.each do |a|
         %tr
           %td= a.text
-          %td.break-word= link_to a.team.display_name, summary_team_path(a.team)
+          %td.break-word= link_to display_name(a.team), summary_team_path(a.team)
           %td= a.created_at.strftime("%b %e %y, %R %Z")

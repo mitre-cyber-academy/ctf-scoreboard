@@ -73,15 +73,6 @@ class TeamTest < ActiveSupport::TestCase
     assert_not_equal team.team_captain, user_to_promote
   end
 
-  test 'display name' do
-    # Eligible
-    eligible_team = create(:team, compete_for_prizes: true)
-    assert_equal eligible_team.team_name, eligible_team.display_name
-    # Ineligible
-    ineligible_team = create(:team)
-    assert_equal ineligible_team.team_name + ' (ineligible)', ineligible_team.display_name
-  end
-
   test 'in top ten' do
     # Make sure to test with and without a solved challenge attached to a team
     team = create(:team_in_top_ten)
