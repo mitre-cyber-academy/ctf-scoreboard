@@ -23,14 +23,25 @@ class UserMailerTest < ActionMailer::TestCase
     @solved_challenge = create(:solved_challenge, team: @second_place_team, challenge: create(:challenge, point_value: 500))
   end
 
-  test 'user invite email' do
-    email = UserMailer.invite_user(@user_invite).deliver_now
+  test 'invite user exists' do
+    user = create(:user)
+    user_invite = create(:user_invite, email: user.email)
+    email = UserMailer.invite_user(user_invite).deliver_now
+    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [user_invite.email], email.to
+    assert_equal "#{@game.title}: Invite to join team #{user_invite.team.team_name}", email.subject
+    assert_not_includes email.body.to_s, 'Create my account'
+    assert_includes email.body.to_s, 'View invitation'
+  end
 
-    assert_not ActionMailer::Base.deliveries.empty?
+  test 'invite user does not exist' do
+    email = UserMailer.invite_user(@user_invite).deliver_now
 
     assert_equal [@game.do_not_reply_email], email.from
     assert_equal [@user_invite.email], email.to
     assert_equal "#{@game.title}: Invite to join team #{@user_invite.team.team_name}", email.subject
+    assert_includes email.body.to_s, 'Create my account'
+    assert_not_includes email.body.to_s, 'View invitation'
   end
 
   test 'user request email' do
