@@ -5,14 +5,18 @@ class TeamTest < ActiveSupport::TestCase
     create(:active_game)
   end
 
-  test 'team without team captain is automatically assigned to first user' do
-    team = build(:team)
-    team.team_captain = nil
-    team.save!(validate: false)
-    user = create(:user)
-    team.users << user
+  test 'creating a new team sets the team captain as a user' do
+    team = create(:team)
+    assert_equal team.users.first, team.team_captain
+    team.users.delete(team.team_captain)
     team.save
-    assert_equal(user, team.team_captain)
+    assert_equal team.users.first, team.team_captain
+  end
+
+  test 'deleting the last user on a team deletes the team' do
+    team = create(:team)
+    User.destroy(team.team_captain.id)
+    assert Team.all.blank?
   end
 
   test 'high school team with two high school students is allowed' do
