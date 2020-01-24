@@ -126,12 +126,15 @@ class Team < ApplicationRecord
     set_team_captain
     set_slots_available
     set_eligibility
+    cleanup
   end
 
   private
 
   # If a team doesn't have a team captain but does have a user, set the team captain to the first user.
   def set_team_captain
+    users << team_captain if users.empty? && !team_captain.nil?
+
     update(team_captain: users.first) if team_captain.nil? && !users.empty?
   end
 

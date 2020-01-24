@@ -48,8 +48,6 @@ class TeamsController < ApplicationController
   def create
     @team = Team.new(team_params.merge(team_captain_id: current_user.id))
     if @team.save
-      # Add current user to the team as team captain
-      @team.users << current_user
       redirect_to @team, notice: I18n.t('teams.create_successful')
     else
       render :new
