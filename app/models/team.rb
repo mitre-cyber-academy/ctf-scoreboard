@@ -133,9 +133,11 @@ class Team < ApplicationRecord
 
   # If a team doesn't have a team captain but does have a user, set the team captain to the first user.
   def set_team_captain
-    users << team_captain if users.empty? && !team_captain.nil?
-
-    update(team_captain: users.first) if team_captain.nil? && !users.empty?
+    if users.empty?
+      users << team_captain unless team_captain.nil?
+    elsif team_captain.nil?
+      update(team_captain: users.first)
+    end
   end
 
   # Number of users on team is calculated using game team size
