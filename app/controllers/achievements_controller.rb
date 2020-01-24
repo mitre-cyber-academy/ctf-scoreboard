@@ -5,9 +5,6 @@ class AchievementsController < ApplicationController
   include ActionView::Helpers::TextHelper
 
   def index
-    # Use created at becuase that's what the table is displaying in the view
-    @achievements = @game.achievements.order(:updated_at).reverse_order
-    @title = 'Achievements'
-    @subtitle = pluralize(@achievements.size, 'achievement')
+    @achievements = Achievement.all.order(:updated_at).reverse_order
   end
 end
