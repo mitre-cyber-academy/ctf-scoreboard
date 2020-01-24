@@ -1,6 +1,6 @@
 - content_for :header do
   See your Team
-%h2.break-word= @team.display_name
+%h2.break-word= display_name(@team)
 %h3.break-word Affiliation: #{@team.affiliation}
 %table.table.table-condensed.table-striped
   %thead

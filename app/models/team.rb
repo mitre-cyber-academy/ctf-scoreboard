@@ -61,12 +61,6 @@ class Team < ApplicationRecord
     where(id: appropriate_teams)
   }
 
-  # Number of users on team is calculated using game team size
-  def set_slots_available
-    updated_slots_available = division.game.team_size - users.count
-    update(slots_available: updated_slots_available) unless updated_slots_available.eql? slots_available
-  end
-
   def in_top_ten?
     !solved_challenges.empty? && (division.ordered_teams[0..9].include? self)
   end
@@ -75,10 +69,6 @@ class Team < ApplicationRecord
     # Make sure all the users years in school fall within the acceptable years in school
     # for the division.
     (users.collect(&:year_in_school) - division.acceptable_years_in_school).empty?
-  end
-
-  def team_competing_for_prizes?
-    users.collect(&:compete_for_prizes).uniq.eql? [true]
   end
 
   # If no slots are available then mark the team as full.
@@ -119,14 +109,6 @@ class Team < ApplicationRecord
   def promote(user_id)
     new_captain = users.find_by(id: user_id)
     update(team_captain: new_captain) if new_captain
-    !new_captain.nil?
-  end
-
-  def update_eligibility
-    new_eligibility = team_competing_for_prizes? && appropriate_division_level?
-    # Check if eligibility is different from what is saved on the team object and
-    # if it is update the team model.
-    update(eligible: new_eligibility) unless new_eligibility.eql? eligible?
   end
 
   def score
@@ -137,31 +119,13 @@ class Team < ApplicationRecord
               .pluck(:point_value, :'challenges.point_value').flatten.compact.sum
   end
 
-  def display_name
-    return self[:team_name] if eligible?
-
-    self[:team_name] + ' (ineligible)'
-  end
-
   # After remove callback passes a parameter which is the object that was just removed, we don't need it
   # so we just throw it away
   def refresh_team_info(*)
     reload # SQL caching causing users to be empty when creating team making all teams ineligible
     set_team_captain
     set_slots_available
-    update_eligibility
-  end
-
-  # generates the body of the email certificate
-  def generate_certificate_body(doc, user_full_name, rank)
-    doc.bounding_box([55, 200], width: 640, height: 200) do
-      doc.font('Helvetica-Bold', size: 18) do
-        doc.text(I18n.t('users.team_completion_cert_string',
-                        full_name: user_full_name, team_name: team_name,
-                        score: score, rank: rank, team_size: division.teams.size),
-                 color: '005BA1', align: :center, leading: 4)
-      end
-    end
+    set_eligibility
   end
 
   private
@@ -169,5 +133,22 @@ class Team < ApplicationRecord
   # If a team doesn't have a team captain but does have a user, set the team captain to the first user.
   def set_team_captain
     update(team_captain: users.first) if team_captain.nil? && !users.empty?
+  end
+
+  # Number of users on team is calculated using game team size
+  def set_slots_available
+    updated_slots_available = division.game.team_size - users.count
+    update(slots_available: updated_slots_available) unless updated_slots_available.eql? slots_available
+  end
+
+  def set_eligibility
+    new_eligibility = competing_for_prizes? && appropriate_division_level?
+    # Check if eligibility is different from what is saved on the team object and
+    # if it is update the team model.
+    update(eligible: new_eligibility) unless new_eligibility.eql? eligible?
+  end
+
+  def competing_for_prizes?
+    users.collect(&:compete_for_prizes).uniq.eql? [true]
   end
 end
