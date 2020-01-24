@@ -170,5 +170,6 @@ class User < ApplicationRecord
   # This should only be used when an account is being deleted, it allows the team to update internal information
   def leave_team_before_delete
     team&.users&.delete(self)
+    team&.cleanup
   end
 end
