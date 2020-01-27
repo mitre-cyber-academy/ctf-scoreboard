@@ -5,7 +5,8 @@ require 'zip'
 class GamesController < ApplicationController
   include ApplicationModule
 
-  before_action :load_game, only: %[terms_and_conditions terms_of_service]
+  before_action :load_game, only: %i[terms_and_conditions terms_of_service]
+
   before_action only: %i[resumes transcripts completion_certificate_template] do
     load_game(:users)
     deny_if_not_admin
