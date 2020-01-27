@@ -30,7 +30,7 @@
                 = render partial: "challenge",
                   locals: { challenge: flag,
                     is_admin: is_admin,
-                    challenge_title: 'asdf',
+                    challenge_title: challenge.point_value,
                     defense_team: team,
                     challenge_path: game_team_challenge_path(team, challenge) }
               - else

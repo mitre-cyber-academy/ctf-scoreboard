@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Challenge < ApplicationRecord
-  before_save :post_state_change_message
-
   has_many :submitted_flags, dependent: :destroy
 
   enum state: { closed: 0, open: 1, force_closed: 2 }
@@ -52,16 +50,6 @@ class Challenge < ApplicationRecord
 
   def state!(new_state)
     update(state: new_state)
-  end
-
-  def post_state_change_message
-    return unless state_transition('force_closed', 'open') || state_transition('open', 'force_closed')
-
-    Message.create!(
-      game: Game.instance,
-      title: "#{name}: #{category.name} #{point_value}",
-      text: I18n.t('challenge.state_change_message', state: state.titleize)
-    )
   end
 
   def find_flag(flag_str)
