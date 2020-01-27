@@ -6,12 +6,17 @@ class Team < ApplicationRecord
 
   # Rank is an attribute that can be added to the team model on the fly however
   # it has no value by default. This allows us to cache a teams current rank
-  # without having to hit the database to calculate it.
-  attr_accessor :rank
+  # without having to hit the database to calculate it.#
+  #
+  # Current_score is so we don't have to have any logic to handle
+  # which class we are rendering in the game summary view.
+  attr_accessor :rank, :current_score
 
+  # This has_many is only applicable to PentestGames
+  has_many :flags
   has_many :feed_items, dependent: :destroy
   has_many :achievements, dependent: :destroy
-  has_many :solved_challenges, dependent: :destroy
+  has_many :solved_challenges, inverse_of: :team, dependent: :destroy
   has_many :users, dependent: :nullify
   has_many :user_invites, dependent: :destroy
   has_many :user_requests, dependent: :destroy
@@ -112,11 +117,7 @@ class Team < ApplicationRecord
   end
 
   def score
-    feed_items.where(type: %w[SolvedChallenge ScoreAdjustment])
-              .joins(
-                'LEFT JOIN challenges ON challenges.id = feed_items.challenge_id'
-              )
-              .pluck(:point_value, :'challenges.point_value').flatten.compact.sum
+    division.ordered_teams.detect { |team| team.id = id }.current_score
   end
 
   # After remove callback passes a parameter which is the object that was just removed, we don't need it

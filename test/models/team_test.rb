@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TeamTest < ActiveSupport::TestCase
   def setup
-    create(:active_game)
+    create(:active_jeopardy_game)
   end
 
   test 'creating a new team sets the team captain as a user' do
@@ -20,7 +20,7 @@ class TeamTest < ActiveSupport::TestCase
   end
 
   test 'high school team with two high school students is allowed' do
-    hs_division = create(:hs_division)
+    hs_division = create(:point_hs_division)
     captain = create(:user, year_in_school: 9)
     team = create(:team, team_captain: captain, division: hs_division)
     team.users << create(:user, year_in_school: 9)
@@ -29,7 +29,7 @@ class TeamTest < ActiveSupport::TestCase
   end
 
   test 'high school team with one high school and one college student is not allowed' do
-    hs_division = create(:hs_division)
+    hs_division = create(:point_hs_division)
     captain = create(:user, year_in_school: 9)
     team = create(:team, team_captain: captain, division: hs_division)
     team.users << create(:user, year_in_school: 13)
@@ -37,7 +37,7 @@ class TeamTest < ActiveSupport::TestCase
   end
 
   test 'professional team with one professional is allowed' do
-    professional_division = create(:division)
+    professional_division = create(:point_division)
     captain = create(:user, year_in_school: 0)
     team = create(:team, team_captain: captain, division: professional_division)
     assert_equal(true, team.appropriate_division_level?)

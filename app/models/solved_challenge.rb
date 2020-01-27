@@ -3,12 +3,11 @@
 class SolvedChallenge < FeedItem
   validate :team_has_not_solved_challenge, :challenge_is_open, :game_is_open
 
-  after_save :award_achievement, :open_next_challenge
+  after_save :award_achievement
 
-  belongs_to :flag, optional: false
-  belongs_to :division, optional: false
-  belongs_to :challenge, optional: false
-  belongs_to :team, optional: false
+  after_save :open_next_challenge, unless: -> { Game.instance.is_a?(PentestGame) }
+
+  belongs_to :team, optional: false, inverse_of: :solved_challenges
 
   def description
     %(#{super.titleize} "#{challenge.category.name} #{challenge.point_value}")
@@ -23,12 +22,7 @@ class SolvedChallenge < FeedItem
   end
 
   def game_is_open
-    errors.add(:base, I18n.t('challenge.game_not_open')) unless challenge.category.game.open?
-  end
-
-  def team_has_not_solved_challenge
-    challenge_is_solved = team.solved_challenges.find_by(challenge: challenge)
-    errors.add(:base, I18n.t('challenge.already_solved')) if challenge_is_solved
+    errors.add(:base, I18n.t('challenge.game_not_open')) unless Game.instance.open?
   end
 
   def award_achievement
@@ -43,5 +37,9 @@ class SolvedChallenge < FeedItem
     category = challenge.category
     challenge = category.next_challenge(challenge)
     challenge.state!('open') if challenge&.available?
+  end
+
+  def team_has_not_solved_challenge
+    errors.add(:base, I18n.t('challenge.already_solved')) # This is overridden in the PointSolvedChallenges and PentestSolvedChallenges subclasses
   end
 end

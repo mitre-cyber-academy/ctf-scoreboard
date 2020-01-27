@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserRequestTest < ActiveSupport::TestCase
   def setup
-    @game = create(:active_game)
+    @game = create(:active_jeopardy_game)
     @team = create(:team, additional_member_count: 1)
     @user = create(:user)
   end

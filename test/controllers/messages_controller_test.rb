@@ -3,7 +3,7 @@ require 'test_helper'
 class MessagesControllerTest < ActionController::TestCase
 
   def setup
-    create(:active_game)
+    create(:active_jeopardy_game)
   end
 
   test 'index' do

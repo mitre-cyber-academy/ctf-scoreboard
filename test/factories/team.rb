@@ -9,7 +9,7 @@ FactoryBot.define do
     team_name { Faker::Team.name + rand().to_s } # Avoid team name collisions
     affiliation { Faker::Educator.university }
 
-    division
+    division { create(:point_division) }
 
     after(:build) do |team, evaluator|
       team.team_captain = create(:user, compete_for_prizes: evaluator.compete_for_prizes) unless team.team_captain
@@ -25,7 +25,11 @@ FactoryBot.define do
 
     factory :team_in_top_ten do
       after(:create) do |team|
-        create(:solved_challenge, team: team)
+        if team.division.is_a?(PointDivision)
+          create(:point_solved_challenge, team: team)
+        else
+          create(:pentest_solved_challenge, team: team)
+        end
       end
     end
   end

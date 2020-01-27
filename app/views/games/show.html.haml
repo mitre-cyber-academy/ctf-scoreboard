@@ -5,40 +5,57 @@
   %h2
     Challenges
     &nbsp;
-    %small= %(#{pluralize(@challenges.size, 'challenge')} in #{pluralize(@categories.size, 'category')})
+    - if @game.is_a? PentestGame
+      %small= %(#{pluralize(@challenges.size, 'challenge')} and #{pluralize(@headings.size, 'team')})
+    - else
+      %small= %(#{pluralize(@challenges.size, 'challenge')} in #{pluralize(@headings.size, 'category')})
 - if @challenges.size == 0
   .zero-items-text No Challenges
 - else
-  - max = 0
   %table.table.table-bordered.table-bolded
-    %thead
-      %tr
-        - @categories.each do |c|
-          %th{ :style => "text-align:center;width:#{1.0 / @categories.size.to_f * 100.0}%;" }= c.name
-          - max = [max, c.challenges.size].max
-    %tbody
-      - is_admin = current_user&.admin?
-      - max.times do |row|
+    - is_admin = current_user&.admin?
+    - if @game.is_a?(PentestGame)
+      %thead
         %tr
-          - @categories.size.times do |column_num|
-            - challenges = @categories[column_num].challenges
-            - if row < challenges.size
-              - challenge = challenges[row]
-              - style = "text-align:center;"
-              - if is_admin
-                - is_solved = challenge.solved?
+          - @iter = [OpenStruct.new(name: 'Teams'), @challenges].flatten
+          - @iter.each do |challenge|
+            %th{ :style => "text-align:center;width:#{1.0 / @iter.size.to_f * 100.0}%;" }= challenge.name
+      %tbody
+        - @headings.each do |team|
+          %tr
+            %td{style: "text-align:center;"}
+              = team.team_name
+            - @challenges.each do |challenge|
+              - if flag = @flags.find { |flag| flag.team_id.eql?(team.id) && flag.challenge_id.eql?(challenge.id) }
+                = render partial: "challenge",
+                  locals: { challenge: flag,
+                    is_admin: is_admin,
+                    challenge_title: 'asdf',
+                    defense_team: team,
+                    challenge_path: game_team_challenge_path(team, challenge) }
               - else
-                - is_solved = @solved_challenges&.include?(challenge.id)
-              - if challenge.force_closed? && challenge.solved?
-                - style << "color:DarkOrange;"
-              - elsif challenge.force_closed?
-                - style << "color:red;"
-              - elsif is_solved
-                - style << "color:#00abca;"
-              - elsif challenge.open? || (is_admin && challenge.challenge_open?)
-                - style << "color:#b8d12f;"
+                %td &nbsp;
+
+    - else
+      - max = 0
+      %thead
+        %tr
+          - @headings.each do |category|
+            %th{ :style => "text-align:center;width:#{1.0 / @headings.size.to_f * 100.0}%;" }= category.name
+            - max = [max, category.challenges.size].max
+      %tbody
+        - max.times do |row|
+          %tr
+            - @headings.size.times do |column_num|
+              - challenges = @headings[column_num].challenges
+              - if row < challenges.size
+                - challenge = challenges[row]
+                = render partial: "challenge",
+                  locals: { challenge: challenge,
+                    is_admin: is_admin,
+                    challenge_title: challenge.point_value,
+                    challenge_path: game_challenge_path(challenge),
+                    defense_team: nil,
+                    is_solved: is_admin ? challenge.solved? : solved_challenges&.include?(challenge.id) }
               - else
-                - style << "color:#999999;"
-              %td{ style: style }= link_to_if (is_admin || challenge.open?), challenge.point_value, game_challenge_path(challenge), style: "color:inherit;"
-            - else
-              %td &nbsp;
+                %td &nbsp;

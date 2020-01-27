@@ -4,7 +4,7 @@ class ScoreAdjustmentTest < ActiveSupport::TestCase
   include ActionView::Helpers::TextHelper
 
   def setup
-    create(:active_game)
+    create(:active_jeopardy_game)
   end
 
   test 'build description' do
@@ -29,7 +29,7 @@ class ScoreAdjustmentTest < ActiveSupport::TestCase
 
   test 'score adjustment add points to team' do
     team_one = create(:team)
-    solved_challenge = create(:solved_challenge, team: team_one)
+    solved_challenge = create(:point_solved_challenge, team: team_one)
     assert_equal solved_challenge.challenge.point_value, team_one.score
     score_adjustment = create(:score_adjustment, team: team_one, point_value: 100)
     assert_equal solved_challenge.challenge.point_value + score_adjustment.point_value, team_one.score

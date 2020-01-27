@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    create(:active_game)
+    create(:active_jeopardy_game)
   end
 
   test 'default compete for prizes value is false if none is provided' do

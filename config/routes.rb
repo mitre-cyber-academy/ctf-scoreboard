@@ -52,7 +52,9 @@ Rails.application.routes.draw do
     resources :achievements, only: [:index]
     resources :divisions, only: [:index]
     resources :flags, only: [:index] # Prank route!
-    resources :challenges, only: %i[show update] do
+    resources :challenges, only: %i[show update]
+    resources :teams, only: [] do
+      resources :challenges, only: %i[show update]
     end
   end
 
