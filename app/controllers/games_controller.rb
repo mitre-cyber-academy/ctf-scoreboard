@@ -5,11 +5,20 @@ require 'zip'
 class GamesController < ApplicationController
   include ApplicationModule
 
-  before_action :load_game, only: %i[terms_and_conditions terms_of_service]
-  before_action :load_game_with_users, :deny_if_not_admin, only: %i[resumes transcripts completion_certificate_template]
-  before_action :load_users_and_divisions, only: %i[summary teams]
-  before_action :deny_users_to_non_html_formats, :load_game_for_show_page, only: %i[show]
-  before_action :filter_access_before_game_open, except: %i[terms_of_service terms_and_conditions]
+  before_action :load_game, only: %[terms_and_conditions terms_of_service]
+  before_action only: %i[resumes transcripts completion_certificate_template] do
+    load_game(:users)
+    deny_if_not_admin
+  end
+  before_action only: %i[summary teams] do
+    load_game(:divisions)
+    load_users_and_divisions
+  end
+  before_action only: %i[show] do
+    deny_users_to_non_html_formats
+    load_game(:categories, :challenges)
+  end
+  before_action :filter_access_before_game_open
   before_action :load_game_graph_data, only: %i[summary]
   before_action :load_message_count
 
@@ -22,8 +31,16 @@ class GamesController < ApplicationController
   def show
     @challenges = @game&.challenges
     ActiveRecord::Precounter.new(@challenges).precount(:solved_challenges)
-    @categories = @game&.categories
-    @solved_challenges = current_user&.team&.solved_challenges&.map(&:challenge_id)
+    # The headings of the gameboard are either categories or teams, this loads based
+    # on the STI model that the game is based on.
+    @headings = @game&.load_categories_or_teams
+    @solved_challenges = current_user&.team&.solved_challenges
+    if @game.is_a?(PentestGame)
+      @flags = @game.flags
+      @solved_challenges = @solved_challenges&.map(&:flag_id)
+    else
+      @solved_challenges = @solved_challenges&.map(&:challenge_id)
+    end
     respond_to do |format|
       format.html
       format.markdown do
@@ -34,7 +51,6 @@ class GamesController < ApplicationController
 
   def summary
     @view_all_teams_link = true
-
     respond_to do |format|
       format.html
       format.json { render json: { standings: @game.all_teams_information } }
@@ -53,12 +69,7 @@ class GamesController < ApplicationController
     download_file(@game.completion_certificate_template, @game.title)
   end
 
-  def load_game_for_show_page
-    @game = Game.includes(:categories).includes(:challenges).instance
-  end
-
   def load_users_and_divisions
-    @game = Game.includes(:divisions).instance
     @divisions = @game.divisions
     signed_in_not_admin = !current_user&.admin?
     @active_division = signed_in_not_admin && current_user&.team ? current_user&.team&.division : @divisions.first
@@ -70,10 +81,6 @@ class GamesController < ApplicationController
       { name: 'Flag Submissions', data: @flags_per_hour },
       { name: 'Challenges Solved', data: SolvedChallenge.group_by_hour(:created_at).count }
     ]
-  end
-
-  def load_game_with_users
-    @game = Game.includes(:users).instance
   end
 
   def deny_users_to_non_html_formats

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class AchievementsControllerTest < ActionController::TestCase
   def setup
-    @game = create(:active_game)
+    @game = create(:active_jeopardy_game)
   end
 
   test 'can access achievements index' do

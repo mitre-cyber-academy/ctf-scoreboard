@@ -14,18 +14,18 @@
         %thead
           %tr
             %th #
-            %th Category
+            %th= @game.is_a?(PentestGame) ? 'Defense Team' : 'Category'
             %th Points
             %th When
         %tbody
           - @solved_challenges.each_with_index do |s, i|
             %tr
               %td= i + 1
-              %td= s.challenge.category.name
+              %td= @game.is_a?(PentestGame) ? s.team.team_name : s.challenge.category.name
               %td= s.challenge.point_value
               %td= s.created_at.strftime("%b %e %y, %R %Z")
   %div.span7
-    %h3.muted Solved Challenge Categories
+    %h3.muted Solved Challenge Breakdown
     - if @solved_challenges.size == 0
       .zero-items-text No Solved Challenges
     - else

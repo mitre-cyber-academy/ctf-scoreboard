@@ -3,21 +3,22 @@
 class Challenge < ApplicationRecord
   before_save :post_state_change_message
 
-  belongs_to :category, optional: false
-  has_many :flags, inverse_of: :challenge, dependent: :destroy
-  has_many :solved_challenges, dependent: :destroy
   has_many :submitted_flags, dependent: :destroy
 
   enum state: { closed: 0, open: 1, force_closed: 2 }
 
-  validates :name, :point_value, :flags, presence: true
-
-  accepts_nested_attributes_for :flags, allow_destroy: true
+  validates :name, :point_value, presence: true
 
   # Handles the ordering of all returned challenge objects.
   default_scope -> { order(:point_value, :name) }
 
   attr_accessor :submitted_flag, :solved_challenges_count
+
+  def self.type_enum
+    [['PentestChallenge'], ['PointChallenge']]
+  end
+
+  validates :type, inclusion: type_enum.flatten, presence: true
 
   # This bypasses game open check and only looks at the challenge state
   def challenge_open?

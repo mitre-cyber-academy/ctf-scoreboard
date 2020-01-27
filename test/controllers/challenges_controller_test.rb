@@ -4,8 +4,8 @@ class ChallengesControllerTest < ActionController::TestCase
   include ChallengesHelper
 
   def setup
-    create(:active_game)
-    @challenge = create(:challenge, flag_count: 3)
+    create(:active_jeopardy_game)
+    @challenge = create(:point_challenge, flag_count: 3)
   end
 
   test 'should get show' do
@@ -35,7 +35,7 @@ class ChallengesControllerTest < ActionController::TestCase
     sign_in create(:user_with_team)
     assert_difference 'SubmittedFlag.count', +1 do
       put :update, params: {
-        id: create(:challenge),
+        id: create(:point_challenge),
         challenge: {
           submitted_flag: "wrong"
         }
@@ -47,7 +47,7 @@ class ChallengesControllerTest < ActionController::TestCase
 
   test 'can not submit flag with no team' do
     sign_in create(:user)
-    @challenge = create(:challenge)
+    @challenge = create(:point_challenge)
     put :update, params: {
       id: @challenge,
       challenge: {
@@ -62,7 +62,7 @@ class ChallengesControllerTest < ActionController::TestCase
     assert_no_difference 'SubmittedFlag.count' do
       sign_in create(:user_with_team)
       put :update, params: {
-        id: create(:challenge)
+        id: create(:point_challenge)
       }
     end
     assert :success

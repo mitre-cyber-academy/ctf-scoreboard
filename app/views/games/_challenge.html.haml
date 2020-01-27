@@ -1,0 +1,13 @@
+- style = "text-align:center;"
+- is_solved = challenge.solved? || (defense_team&.eql?(current_user&.team))
+- if challenge.force_closed? && is_solved
+  - style << "color:DarkOrange;"
+- elsif challenge.force_closed?
+  - style << "color:red;"
+- elsif is_solved
+  - style << "color:#00abca;"
+- elsif challenge.open? || (is_admin && challenge.challenge_open?)
+  - style << "color:#b8d12f;"
+- else
+  - style << "color:#999999;"
+%td{ style: style }= link_to_if (is_admin || challenge.open?), challenge_title, challenge_path, style: "color:inherit;"

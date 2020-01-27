@@ -10,17 +10,17 @@ class UserMailerTest < ActionMailer::TestCase
   end
 
   def setup
-    @game = create(:active_game, enable_completion_certificates: true)
+    @game = create(:active_jeopardy_game, enable_completion_certificates: true)
     @user_invite = create(:user_invite)
     @user_request = create(:user_request)
     @division = @game.divisions.first
     @teams = create_list(:team, 5, division: @division, compete_for_prizes: true)
     @first_place_team = @teams.first
     @first_place_user = @first_place_team.team_captain
-    create(:solved_challenge, team: @first_place_team, challenge: create(:challenge, point_value: 1000))
+    create(:point_solved_challenge, team: @first_place_team, challenge: create(:point_challenge, point_value: 1000))
     @second_place_team = @teams.second
     @second_place_user = @second_place_team.team_captain
-    @solved_challenge = create(:solved_challenge, team: @second_place_team, challenge: create(:challenge, point_value: 500))
+    @solved_challenge = create(:point_solved_challenge, team: @second_place_team, challenge: create(:point_challenge, point_value: 500))
   end
 
   test 'invite user exists' do

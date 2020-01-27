@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TeamsControllerTest < ActionController::TestCase
   def setup
-    @game = create(:active_game)
+    @game = create(:active_jeopardy_game)
   end
 
   test 'unauthenticated users should not be able to access new team page' do
@@ -92,7 +92,7 @@ class TeamsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'h3', 'Team Flag Submissions'
     assert_select 'h3', 'Solved Challenges'
-    assert_select 'h3', 'Solved Challenge Categories'
+    assert_select 'h3', 'Solved Challenge Breakdown'
   end
 
   test 'team summary page correctly redirects if the team does not exist' do
@@ -105,7 +105,7 @@ class TeamsControllerTest < ActionController::TestCase
     team = create(:team)
     sign_in create(:user)
     assert_no_difference 'Team.count', 'A Team should not be created' do
-      post :create, params: { team: { team_name: team.team_name, affiliation: 'school1', division_id: create(:hs_division) } }
+      post :create, params: { team: { team_name: team.team_name, affiliation: 'school1', division_id: create(:point_hs_division) } }
     end
     assert_template :new
   end
@@ -114,7 +114,7 @@ class TeamsControllerTest < ActionController::TestCase
     user = create(:user_with_team)
     sign_in user
     assert_no_difference 'Team.count', 'A Team should not be created' do
-      post :create, params: { team: { team_name: 'random_team_name', affiliation: 'school1', division_id: create(:hs_division) } }
+      post :create, params: { team: { team_name: 'random_team_name', affiliation: 'school1', division_id: create(:point_hs_division) } }
     end
     assert_redirected_to team_path(user.team)
     assert_equal I18n.t('teams.already_on_team_create'), flash[:alert]
@@ -125,7 +125,7 @@ class TeamsControllerTest < ActionController::TestCase
     sign_in create(:user)
 
     assert_no_difference 'Team.count', 'A Team should not be created' do
-      post :create, params: { team: { team_name: team.team_name.upcase, affiliation: 'school1', division_id: create(:hs_division) } }
+      post :create, params: { team: { team_name: team.team_name.upcase, affiliation: 'school1', division_id: create(:point_hs_division) } }
     end
     assert_template :new
   end
@@ -134,7 +134,7 @@ class TeamsControllerTest < ActionController::TestCase
     user = create(:user)
     sign_in user
     assert_difference 'Team.count' do
-      post :create, params: { team: { team_name: 'another_team', affiliation: 'school1', division_id: create(:hs_division) } }
+      post :create, params: { team: { team_name: 'another_team', affiliation: 'school1', division_id: create(:point_hs_division) } }
     end
     user.reload
     assert_redirected_to team_path(user.team)
@@ -222,7 +222,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'update a team when game is closed' do
-    create(:unstarted_game)
+    create(:unstarted_jeopardy_game)
     user = create(:user_with_team)
     sign_in user
     patch :update, params: { team: { team_name: 'team_one_newname', affiliation: 'school1' }, id: user.team }
@@ -231,7 +231,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'can not update a team after game is closed' do
-    create(:ended_game)
+    create(:ended_jeopardy_game)
     user = create(:user_with_team)
     sign_in user
     patch :update, params: { team: { team_name: 'team_one_newname', affiliation: 'school1' }, id: user.team }
@@ -248,18 +248,18 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'cannot create a team after game is closed' do
-    create(:ended_game)
+    create(:ended_jeopardy_game)
     user = create(:user)
     sign_in user
     assert_no_difference 'Team.count' do
-      post :create, params: { team: { team_name: 'another_team', affiliation: 'school1', division_id: create(:hs_division) } }
+      post :create, params: { team: { team_name: 'another_team', affiliation: 'school1', division_id: create(:point_hs_division) } }
     end
     assert I18n.t('game.after_competition'), flash[:alert]
     assert_redirected_to @controller.user_root_path
   end
 
   test 'cannot invite a team member after game is closed' do
-    create(:ended_game)
+    create(:ended_jeopardy_game)
     user = create(:user_with_team)
     sign_in user
     assert_no_difference 'user.team.user_invites.count' do
@@ -270,7 +270,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'show team after game is closed' do
-    create(:ended_game)
+    create(:ended_jeopardy_game)
     user = create(:user_with_team)
     sign_in user
     get :show, params: { id: user.team }
@@ -278,25 +278,25 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'summary is available after game is closed' do
-    create(:ended_game)
+    create(:ended_jeopardy_game)
     get :summary, params: { id: create(:team) }
     assert_response :success
     assert_select 'h3', 'Team Flag Submissions'
     assert_select 'h3', 'Solved Challenges'
-    assert_select 'h3', 'Solved Challenge Categories'
+    assert_select 'h3', 'Solved Challenge Breakdown'
     assert_select 'h3', {count: 0, text: 'Team Members'}, 'Team member list should only be visible to administrators'
     assert_select 'h3', {count: 0, text: 'Per User Statistics'}, 'Per User Statistics should only be visible to administrators'
   end
 
   test 'summary page shows additional information to administrators' do
-    create(:ended_game)
+    create(:ended_jeopardy_game)
     admin = create(:admin)
     sign_in admin
     get :summary, params: { id: create(:team) }
     assert_response :success
     assert_select 'h3', 'Team Flag Submissions'
     assert_select 'h3', 'Solved Challenges'
-    assert_select 'h3', 'Solved Challenge Categories'
+    assert_select 'h3', 'Solved Challenge Breakdown'
     assert_select 'h3', 'Team Members'
     assert_select 'h3', 'Per User Statistics'
   end
