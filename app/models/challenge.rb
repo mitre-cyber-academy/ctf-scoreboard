@@ -27,12 +27,12 @@ class Challenge < ApplicationRecord
     challenge_open? && category.game.open?
   end
 
-  def solved?
+  def solved?(times=1)
     # We sometimes define solved_challenges_count using the
     # activerecord preloader gem. If we have done this then
     # we should utilize that count, if not then we should fall
     # through and use the regular old count method.
-    (solved_challenges_count || solved_challenges.count).positive?
+    (solved_challenges_count || solved_challenges.count) >= times
   end
 
   def get_solved_challenge_for(team)

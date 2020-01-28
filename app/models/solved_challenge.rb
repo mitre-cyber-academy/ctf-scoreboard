@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SolvedChallenge < FeedItem
+  scope :ordered, -> { order('created_at ASC') }
+
   validate :team_can_solve_challenge, :challenge_is_open, :game_is_open
 
   after_save :award_achievement
@@ -39,7 +41,8 @@ class SolvedChallenge < FeedItem
     challenge.state!('open') if challenge&.available?
   end
 
+  # This is overridden in the PointSolvedChallenges and PentestSolvedChallenges subclasses
   def team_can_solve_challenge
-    errors.add(:base, I18n.t('challenge.already_solved')) # This is overridden in the PointSolvedChallenges and PentestSolvedChallenges subclasses
+    errors.add(:base, I18n.t('challenge.already_solved'))
   end
 end

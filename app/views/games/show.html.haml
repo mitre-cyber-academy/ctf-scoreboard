@@ -22,7 +22,7 @@
             %th{ :style => "text-align:center;width:#{1.0 / @iter.size.to_f * 100.0}%;" }= challenge.name
       %tbody
         - @headings.each do |team|
-          %tr{class: team.eql?(current_user&.team) ? "info" : ""}
+          %tr{style: team.eql?(current_user&.team) ? "background-color: #F0F0F0;" : ""}
             %td{style: "text-align:center;"}
               = team.team_name
             - @challenges.each do |challenge|
@@ -59,3 +59,31 @@
                     is_solved: is_admin ? challenge.solved? : solved_challenges&.include?(challenge.id) }
               - else
                 %td &nbsp;
+
+%h4
+  Legend
+%blockquote
+  %p{style: "font-size: 1rem;"}
+    %b{style: "color:#006600;"}
+      Dark Green
+    Unsolved by any team
+    %br/
+    %b{style: "color:#009900;"}
+      Green
+    Solved by one team
+    %br/
+    %b{style: "color:#00cc00;"}
+      Light Green
+    Solved by multiple teams
+    %br/
+    %b{style: "color:#00abca;"}
+      Blue
+    Solved by your team
+    %br/
+    %b{style: "color:#999999;"}
+      Grey
+    Unopened
+    %br/
+    %b{style: "color:#800000;"}
+      Red
+    Locked
