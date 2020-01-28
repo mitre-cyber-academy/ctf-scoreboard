@@ -22,7 +22,7 @@
             %th{ :style => "text-align:center;width:#{1.0 / @iter.size.to_f * 100.0}%;" }= challenge.name
       %tbody
         - @headings.each do |team|
-          %tr
+          %tr{class: team.eql?(current_user&.team) ? "info" : ""}
             %td{style: "text-align:center;"}
               = team.team_name
             - @challenges.each do |challenge|
@@ -30,7 +30,7 @@
                 = render partial: "challenge",
                   locals: { challenge: flag,
                     is_admin: is_admin,
-                    challenge_title: challenge.point_value,
+                    challenge_title: flag.point_value(current_user&.team),
                     defense_team: team,
                     challenge_path: game_team_challenge_path(team, challenge) }
               - else

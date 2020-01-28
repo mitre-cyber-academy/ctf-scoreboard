@@ -22,8 +22,8 @@ class TeamsController < ApplicationController
 
     @flags_per_hour = @team.submitted_flags.group_by_hour('submitted_flags.created_at', format: '%l:%M %p').count
     if @game.is_a?(PentestGame)
-      # TODO: Group by other teams which they have pwned
-    @flag_categories = @team.solved_challenges.count
+      @defensive_points = @team.calc_defensive_points
+      @flag_categories = PentestSolvedChallenge.solves_by_category_for(@team)
     else
       @flag_categories = PointSolvedChallenge.solves_by_category_for(@team)
     end

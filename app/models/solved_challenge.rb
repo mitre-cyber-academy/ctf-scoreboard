@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SolvedChallenge < FeedItem
-  validate :team_has_not_solved_challenge, :challenge_is_open, :game_is_open
+  validate :team_can_solve_challenge, :challenge_is_open, :game_is_open
 
   after_save :award_achievement
 
@@ -39,7 +39,7 @@ class SolvedChallenge < FeedItem
     challenge.state!('open') if challenge&.available?
   end
 
-  def team_has_not_solved_challenge
+  def team_can_solve_challenge
     errors.add(:base, I18n.t('challenge.already_solved')) # This is overridden in the PointSolvedChallenges and PentestSolvedChallenges subclasses
   end
 end
