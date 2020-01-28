@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TeamTest < ActiveSupport::TestCase
   def setup
-    create(:active_jeopardy_game)
+    @game = create(:active_jeopardy_game)
   end
 
   test 'creating a new team sets the team captain as a user' do
@@ -17,6 +17,14 @@ class TeamTest < ActiveSupport::TestCase
     team = create(:team)
     User.destroy(team.team_captain.id)
     assert Team.all.blank?
+  end
+
+  test 'no team captain will promote the first user' do
+    team = create(:team, additional_member_count: 1)
+    captain_to_be = team.users.reject { |user| !user.eql? team.team_captain }
+    team.team_captain = nil
+    team.save(validate: false)
+    assert_includes captain_to_be, team.team_captain
   end
 
   test 'high school team with two high school students is allowed' do
@@ -119,4 +127,21 @@ class TeamTest < ActiveSupport::TestCase
     team = create(:team)
     assert_not team.full?
   end
+
+  test 'score with team in a point division' do
+    team = create(:team)
+    challenge = create(:point_challenge, category: @game.categories.first)
+    create(:point_solved_challenge, team: team, challenge: challenge)
+    assert_equal challenge.point_value, team.score
+  end
+
+  # WIP
+  # test 'score with team in a pentest division' do
+  #   @game.destroy
+  #   game = create(:active_pentest_game)
+  #   team = create(:team, division: create(:pentest_division))
+  #   challenge = create(:pentest_challenge)
+  #   create(:pentest_solved_challenge, team: team, challenge: challenge)
+  #   assert_equal challenge.point_value, team.score
+  # end
 end
