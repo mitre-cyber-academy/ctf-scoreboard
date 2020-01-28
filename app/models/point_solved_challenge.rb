@@ -11,9 +11,7 @@ class PointSolvedChallenge < SolvedChallenge
     where(team: team).joins(challenge: :category).group('categories.name').count
   end
 
-  def team_has_not_solved_challenge
-    challenge_is_solved = team.solved_challenges.find_by(challenge: challenge)
-
-    super if challenge_is_solved
+  def team_can_solve_challenge
+    super unless challenge.can_be_solved_by(team)
   end
 end

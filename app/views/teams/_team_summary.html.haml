@@ -21,7 +21,7 @@
           - @solved_challenges.each_with_index do |s, i|
             %tr
               %td= i + 1
-              %td= @game.is_a?(PentestGame) ? s.team.team_name : s.challenge.category.name
+              %td= @game.is_a?(PentestGame) ? s.flag.team.team_name : s.challenge.category.name
               %td= s.challenge.point_value
               %td= s.created_at.strftime("%b %e %y, %R %Z")
   %div.span7
@@ -30,6 +30,23 @@
       .zero-items-text No Solved Challenges
     - else
       = pie_chart @flag_categories
+
+- if @defensive_points
+  %hr
+  %div.row
+    %div.span5
+      %h3.muted Defensive Points
+      %table.table.table-bordered.table-striped
+        %thead
+          %tr
+            %th Challenge
+            %th Points
+        %tbody
+          - @defensive_points.each do |name, value|
+            %tr
+              %td= name
+              %td= value
+
 - if current_user&.admin?
   %hr
   %div.row

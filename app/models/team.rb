@@ -13,7 +13,7 @@ class Team < ApplicationRecord
   attr_accessor :rank, :current_score
 
   # This has_many is only applicable to PentestGames
-  has_many :flags
+  has_many :flags, class_name: 'PentestFlag'
   has_many :feed_items, dependent: :destroy
   has_many :achievements, dependent: :destroy
   has_many :solved_challenges, inverse_of: :team, dependent: :destroy
@@ -67,7 +67,7 @@ class Team < ApplicationRecord
   }
 
   def in_top_ten?
-    !solved_challenges.empty? && (division.ordered_teams[0..9].include? self)
+    !solved_challenges.size.zero? && (division.ordered_teams[0..9].include? self)
   end
 
   def appropriate_division_level?
@@ -128,6 +128,12 @@ class Team < ApplicationRecord
     set_slots_available
     set_eligibility
     cleanup
+  end
+
+  def calc_defensive_points
+    flags.map do |flag|
+      [flag.name, flag.calc_defensive_points.round]
+    end.to_h
   end
 
   private

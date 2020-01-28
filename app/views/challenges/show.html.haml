@@ -8,7 +8,7 @@
 
 - content_for :subheading do
   - if @defense_team
-    - "#{@defense_team.team_name} - #{@challenge.point_value} points"
+    - "#{@defense_team.team_name} - #{@challenge.point_value(current_user&.team)} points"
   - else
     - "#{@challenge.category.name} - #{@challenge.point_value} points"
 
@@ -23,7 +23,7 @@
   .embed-container
     = embed(@solved_video_url)
 
-- if !@solved_challenge
+- if @solvable
   = form_for :challenge, url: @challenge.is_a?(Flag) ? game_team_challenge_path(@defense_team, @challenge.challenge_id) : game_challenge_path(@challenge), method: "put", html: { class: "well", style: "margin-bottom:40px;" } do |f|
     .control-group
       %p Submit Flag

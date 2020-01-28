@@ -39,6 +39,10 @@ class Challenge < ApplicationRecord
     solved_challenges.find_by(team: team)
   end
 
+  def can_be_solved_by(team)
+    get_solved_challenge_for(team).nil?
+  end
+
   # Returns whether or not challenge is available to be opened.
   def available?
     state.eql? 'closed'

@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   def load_game(*preload_objects)
     if @game = Game.instance
       pl = ActiveRecord::Associations::Preloader.new
-      preload_objects.filter! { |table| @game.respond_to?(table) }
+      preload_objects.filter! { |table| table.is_a?(Hash) ? @game.respond_to?(table.keys.first) : @game.respond_to?(table) }
       pl.preload(@game, preload_objects)
     else
       redirect_to(new_user_session_path, alert: I18n.t('game.must_be_admin')) && return unless current_user&.admin?

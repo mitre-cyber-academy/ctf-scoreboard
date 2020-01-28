@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Division < ApplicationRecord
-  belongs_to :game, optional: false
   has_many :teams, dependent: :destroy
   has_many :feed_items, dependent: :destroy
   has_many :achievements, dependent: :destroy
