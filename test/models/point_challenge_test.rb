@@ -19,7 +19,7 @@ class ChallengeTest < ActiveSupport::TestCase
 
   test 'challenge solved' do
     challenge = create(:point_challenge, state: :open)
-    create(:point_solved_challenge, challenge: challenge, team: create(:team))
+    create(:point_solved_challenge, challenge: challenge, team: create(:point_team))
     assert_equal false, create(:point_challenge, state: :open).solved?
   end
 

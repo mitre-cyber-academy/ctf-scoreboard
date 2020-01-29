@@ -15,7 +15,7 @@ FactoryBot.define do
 
     factory :user_with_team do
       after(:create) do |user|
-        user.update(team: create(:team, team_captain: user))
+        user.update(team: create(:point_team, team_captain: user))
       end
     end
 

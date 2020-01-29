@@ -9,25 +9,39 @@ FactoryBot.define do
     team_name { Faker::Team.name + rand().to_s } # Avoid team name collisions
     affiliation { Faker::Educator.university }
 
-    division { create(:point_division) }
-
     after(:build) do |team, evaluator|
       team.team_captain = create(:user, compete_for_prizes: evaluator.compete_for_prizes) unless team.team_captain
     end
 
     after(:create) do |team, evaluator|
-      team.users << team.team_captain unless team.users.include?(team.team_captain)
-
       evaluator.additional_member_count.times do
         team.users << create(:user)
       end
     end
 
-    factory :team_in_top_ten do
-      after(:create) do |team|
-        if team.division.is_a?(PointDivision)
+    factory :point_team do
+      division { create(:point_division) }
+
+      factory :point_team_in_top_ten do
+        after(:create) do |team|
           create(:point_solved_challenge, team: team)
-        else
+        end
+      end
+    end
+
+    factory :pentest_team do
+      division { create(:pentest_division) }
+
+      factory :pentest_team_with_flags do
+        after(:create) do |team|
+          PentestChallenge.all.each do |challenge|
+            create(:pentest_flag, team: team, challenge: challenge)
+          end
+        end
+      end
+
+      factory :pentest_team_in_top_ten do
+        after(:create) do |team|
           create(:pentest_solved_challenge, team: team)
         end
       end

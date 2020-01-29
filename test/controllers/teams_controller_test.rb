@@ -11,12 +11,12 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'unauthenticated users should not be able to access team show page' do
-    get :show, params: { id: create(:team) }
+    get :show, params: { id: create(:point_team) }
     assert_redirected_to root_path
   end
 
   test 'unauthenticated users should not be able to access team edit page' do
-    get :edit, params: { id: create(:team) }
+    get :edit, params: { id: create(:point_team) }
     assert_redirected_to root_path
   end
 
@@ -51,7 +51,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'authenticated users with a team cannot edit their team unless they are a team captain' do
-    user_not_captain = create(:user, team: create(:team))
+    user_not_captain = create(:user, team: create(:point_team))
     sign_in user_not_captain
     get :edit, params: { id: user_not_captain.team }
     assert_redirected_to @controller.user_root_path
@@ -61,7 +61,7 @@ class TeamsControllerTest < ActionController::TestCase
   test 'users cannot view other teams management' do
     user = create(:user)
     sign_in user
-    get :show, params: { id: create(:team) }
+    get :show, params: { id: create(:point_team) }
     assert_redirected_to @controller.user_root_path
   end
 
@@ -80,7 +80,7 @@ class TeamsControllerTest < ActionController::TestCase
     user = create(:user)
 
     sign_in user
-    get :show, params: { id: create(:team) }
+    get :show, params: { id: create(:point_team) }
     assert_redirected_to @controller.user_root_path
     assert_equal I18n.t('teams.invalid_permissions'), flash[:alert]
   end
@@ -88,7 +88,7 @@ class TeamsControllerTest < ActionController::TestCase
   test 'authenticated users without a team can view teams summary page' do
     user = create(:user)
     sign_in user
-    get :summary, params: { id: create(:team) }
+    get :summary, params: { id: create(:point_team) }
     assert_response :success
     assert_select 'h3', 'Team Flag Submissions'
     assert_select 'h3', 'Solved Challenges'
@@ -102,7 +102,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'a team cannot be created with the same name as another team' do
-    team = create(:team)
+    team = create(:point_team)
     sign_in create(:user)
     assert_no_difference 'Team.count', 'A Team should not be created' do
       post :create, params: { team: { team_name: team.team_name, affiliation: 'school1', division_id: create(:point_hs_division) } }
@@ -121,7 +121,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'a team cannot be created with the same name as another team in any case' do
-    team = create(:team)
+    team = create(:point_team)
     sign_in create(:user)
 
     assert_no_difference 'Team.count', 'A Team should not be created' do
@@ -142,7 +142,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'a team captain of a full team sees a message informing them that their team is full' do
-    team = create(:team, additional_member_count: @game.team_size - 1)
+    team = create(:point_team, additional_member_count: @game.team_size - 1)
     user = team.team_captain
     sign_in user
     get :show, params: { id: team }
@@ -150,7 +150,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'a team member of a full team sees a message informing them that their team is full' do
-    user_not_captain = create(:user, team: create(:team, additional_member_count: @game.team_size - 2))
+    user_not_captain = create(:user, team: create(:point_team, additional_member_count: @game.team_size - 2))
     sign_in user_not_captain
     get :show, params: { id: user_not_captain.team }
     assert_equal flash[:notice], I18n.t('teams.full_team')
@@ -176,7 +176,7 @@ class TeamsControllerTest < ActionController::TestCase
   test 'invite a team member who has already been invited' do
     user = create(:user_with_team)
     email_to_invite = 'mitrectf+user2@gmail.com'
-    create(:user_invite, email: email_to_invite, team: user.team)
+    create(:point_user_invite, email: email_to_invite, team: user.team)
     sign_in user
     assert_no_difference 'user.team.user_invites.count', 'A user invite should not be created' do
       patch :invite, params: { team: { user_invites_attributes: { '0': {email: email_to_invite}} }, id: user.team }
@@ -194,7 +194,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'update a team without permission' do
-    team = create(:team)
+    team = create(:point_team)
     user = create(:user_with_team)
     sign_in user
     patch :update, params: { team: { team_name: 'team_one_newname', affiliation: 'school1' }, id: team }
@@ -203,7 +203,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'team captain can not send invites while in top ten' do
-    team = create(:team_in_top_ten)
+    team = create(:point_team_in_top_ten)
     sign_in team.team_captain
     patch :invite, params: { team: { user_invites_attributes: { '0': {email: 'mitrectfnewuserfake@mail.google.com'}}}, id: team}
     assert_equal I18n.t('teams.in_top_ten'), flash[:alert]
@@ -211,7 +211,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'can not update team when game is open and team is in top ten' do
-    team = create(:team_in_top_ten)
+    team = create(:point_team_in_top_ten)
     old_data = team.affiliation
     sign_in team.team_captain
 
@@ -240,7 +240,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'update a team with invalid params' do
-    team = create(:team)
+    team = create(:point_team)
     sign_in team.users.first
     patch :update, params: { team: { team_name: 'hell'}, id: team }
     assert_includes flash[:alert], 'profane'
@@ -279,7 +279,7 @@ class TeamsControllerTest < ActionController::TestCase
 
   test 'summary is available after game is closed' do
     create(:ended_jeopardy_game)
-    get :summary, params: { id: create(:team) }
+    get :summary, params: { id: create(:point_team) }
     assert_response :success
     assert_select 'h3', 'Team Flag Submissions'
     assert_select 'h3', 'Solved Challenges'
@@ -292,7 +292,7 @@ class TeamsControllerTest < ActionController::TestCase
     create(:ended_jeopardy_game)
     admin = create(:admin)
     sign_in admin
-    get :summary, params: { id: create(:team) }
+    get :summary, params: { id: create(:point_team) }
     assert_response :success
     assert_select 'h3', 'Team Flag Submissions'
     assert_select 'h3', 'Solved Challenges'

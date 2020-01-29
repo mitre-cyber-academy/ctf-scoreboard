@@ -10,8 +10,8 @@ class UserInvitesControllerTest < ActionController::TestCase
   end
 
   test 'accept invite' do
-    team = create(:team)
-    user_invite = create(:user_invite, email: @email, team: team)
+    team = create(:point_team)
+    user_invite = create(:point_user_invite, email: @email, team: team)
     sign_in @invited_user
     get :accept, params: { id: user_invite, team_id: user_invite.team }
     assert_redirected_to team_path(user_invite.team)
@@ -19,8 +19,8 @@ class UserInvitesControllerTest < ActionController::TestCase
   end
 
   test 'unable to accept full team invite' do
-    team = create(:team, additional_member_count: @game.team_size - 1)
-    user_invite = create(:user_invite, email: @email, team: team)
+    team = create(:point_team, additional_member_count: @game.team_size - 1)
+    user_invite = create(:point_user_invite, email: @email, team: team)
     sign_in @invited_user
     get :accept, params: { id: user_invite, team_id: team }
     assert_redirected_to @request.env["HTTP_REFERER"]
@@ -28,8 +28,8 @@ class UserInvitesControllerTest < ActionController::TestCase
   end
 
   test 'unable to accept full team invite with no referer' do
-    team = create(:team, additional_member_count: @game.team_size - 1)
-    user_invite = create(:user_invite, email: @email, team: team)
+    team = create(:point_team, additional_member_count: @game.team_size - 1)
+    user_invite = create(:point_user_invite, email: @email, team: team)
     sign_in @invited_user
     @request.env["HTTP_REFERER"] = nil
     get :accept, params: { id: user_invite, team_id: team }
@@ -38,8 +38,8 @@ class UserInvitesControllerTest < ActionController::TestCase
   end
 
   test 'user revokes own invitation' do
-    team = create(:team)
-    user_invite = create(:user_invite, email: @email, team: team)
+    team = create(:point_team)
+    user_invite = create(:point_user_invite, email: @email, team: team)
     sign_in @invited_user
     delete :destroy, params: { id: user_invite, team_id: team }
     assert_redirected_to @request.env["HTTP_REFERER"]
@@ -47,8 +47,8 @@ class UserInvitesControllerTest < ActionController::TestCase
   end
 
   test 'captain revokes invitation' do
-    team = create(:team)
-    user_invite = create(:user_invite, email: @email, team: team)
+    team = create(:point_team)
+    user_invite = create(:point_user_invite, email: @email, team: team)
     sign_in team.team_captain
     delete :destroy, params: { id: user_invite, team_id: team }
     assert_redirected_to @request.env["HTTP_REFERER"]
@@ -56,8 +56,8 @@ class UserInvitesControllerTest < ActionController::TestCase
   end
 
   test 'captain revokes invitation with no referer' do
-    team = create(:team)
-    user_invite = create(:user_invite, email: @email, team: team)
+    team = create(:point_team)
+    user_invite = create(:point_user_invite, email: @email, team: team)
     sign_in team.team_captain
     @request.env["HTTP_REFERER"] = nil
     delete :destroy, params: { id: user_invite, team_id: user_invite.team }
@@ -66,8 +66,8 @@ class UserInvitesControllerTest < ActionController::TestCase
   end
 
   test 'other user not allowed to accept invite' do
-    team = create(:team)
-    user_invite = create(:user_invite, email: @email, team: team)
+    team = create(:point_team)
+    user_invite = create(:point_user_invite, email: @email, team: team)
     sign_in create(:user)
     get :accept, params: { id: user_invite, team_id: user_invite.team }
     assert_redirected_to @request.env["HTTP_REFERER"]
@@ -75,8 +75,8 @@ class UserInvitesControllerTest < ActionController::TestCase
   end
 
   test 'other user not allowed to accept invite with no referer' do
-    team = create(:team)
-    user_invite = create(:user_invite, email: @email, team: team)
+    team = create(:point_team)
+    user_invite = create(:point_user_invite, email: @email, team: team)
     sign_in create(:user)
     @request.env["HTTP_REFERER"] = nil
     get :accept, params: { id: user_invite, team_id: user_invite.team }
@@ -85,8 +85,8 @@ class UserInvitesControllerTest < ActionController::TestCase
   end
 
   test 'other user not allowed to delete invite' do
-    team = create(:team)
-    user_invite = create(:user_invite, email: @email, team: team)
+    team = create(:point_team)
+    user_invite = create(:point_user_invite, email: @email, team: team)
     sign_in create(:user)
     assert_raise ActiveRecord::RecordNotFound do
       delete :destroy, params: { id: user_invite, team_id: user_invite.team }

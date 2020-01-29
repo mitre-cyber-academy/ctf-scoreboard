@@ -16,6 +16,7 @@ class Team < ApplicationRecord
   has_many :flags, class_name: 'PentestFlag'
   has_many :feed_items, dependent: :destroy
   has_many :achievements, dependent: :destroy
+  has_many :score_adjustments, inverse_of: :team, dependent: :destroy
   has_many :solved_challenges, inverse_of: :team, dependent: :destroy
   has_many :users, dependent: :nullify
   has_many :user_invites, dependent: :destroy
@@ -117,7 +118,7 @@ class Team < ApplicationRecord
   end
 
   def score
-    division.ordered_teams.detect { |team| team.id = id }.current_score
+    division.ordered_teams.detect { |team| team.id = id }&.current_score || 0
   end
 
   # After remove callback passes a parameter which is the object that was just removed, we don't need it

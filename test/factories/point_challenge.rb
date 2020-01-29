@@ -3,8 +3,6 @@ FactoryBot.define do
     type { 'PointChallenge' }
     category
 
-    # flags_attributes { flag_count.times.map {FactoryBot.attributes_for(:challenge_flag)} }
-
     after(:build) do |challenge, evaluator|
       evaluator.flag_count.times do
         create(:challenge_flag, challenge: challenge)
