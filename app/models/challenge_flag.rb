@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is a flag that only belongs to a challenge, not a challenge and a team
 
 class ChallengeFlag < Flag

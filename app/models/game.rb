@@ -3,7 +3,6 @@
 class Game < ApplicationRecord
   has_many :messages, dependent: :destroy
 
-
   def self.type_enum
     [['JeopardyGame'], ['PentestGame']]
   end
@@ -21,7 +20,7 @@ class Game < ApplicationRecord
   after_commit { Rails.cache.delete('game_instance') }
 
   def self.instance
-    Rails.cache.fetch("game_instance") { all.first }
+    Rails.cache.fetch('game_instance') { all.first }
   end
 
   def instance_is_singleton
