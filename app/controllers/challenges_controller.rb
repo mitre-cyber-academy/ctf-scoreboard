@@ -16,7 +16,6 @@ class ChallengesController < ApplicationController
   end
 
   def update
-
     if @flag_found
       @solved_challenge = @flag_found.save_solved_challenge(current_user)
       @solved_video_url = @flag_found.video_url
@@ -56,9 +55,11 @@ class ChallengesController < ApplicationController
     flag = params[:challenge][:submitted_flag] if params.key? :challenge
     add_pentest_args = {}
     if @game.is_a?(PentestGame)
-      add_pentest_args = {type: 'PentestSubmittedFlag', flag: @challenge, challenge: @challenge.challenge}
+      add_pentest_args = { type: 'PentestSubmittedFlag', flag: @challenge, challenge: @challenge.challenge }
     end
-    SubmittedFlag.create(user: current_user, challenge: @challenge, text: flag, **add_pentest_args) unless current_user.admin?
+    unless current_user.admin?
+      SubmittedFlag.create(user: current_user, challenge: @challenge, text: flag, **add_pentest_args)
+    end
     @flag_found = @challenge.find_flag(flag) unless flag.nil?
   end
 

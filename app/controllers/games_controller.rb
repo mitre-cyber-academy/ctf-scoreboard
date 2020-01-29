@@ -17,7 +17,7 @@ class GamesController < ApplicationController
   end
   before_action only: %i[show] do
     deny_users_to_non_html_formats
-    load_game(:categories, {challenges: :solved_challenges}, :teams, { flags: {solved_challenges: :team} })
+    load_game(:categories, { challenges: :solved_challenges }, :teams, flags: { solved_challenges: :team })
   end
   before_action :filter_access_before_game_open
   before_action :load_game_graph_data, only: %i[summary]
@@ -35,9 +35,7 @@ class GamesController < ApplicationController
     # The headings of the gameboard are either categories or teams, this loads based
     # on the STI model that the game is based on.
     @headings = @game&.load_categories_or_teams
-    if @game.is_a?(PentestGame)
-      @flags = @game.flags
-    end
+    @flags = @game.flags if @game.is_a?(PentestGame)
     respond_to do |format|
       format.html
       format.markdown do

@@ -21,10 +21,8 @@ class ApplicationController < ActionController::Base
   end
 
   def load_game(*preload_objects)
-    if @game = Game.instance
-      pl = ActiveRecord::Associations::Preloader.new
-      preload_objects.filter! { |table| table.is_a?(Hash) ? @game.respond_to?(table.keys.first) : @game.respond_to?(table) }
-      pl.preload(@game, preload_objects)
+    if (@game = Game.instance)
+      preload_helper(*preload_objects)
     else
       redirect_to(new_user_session_path, alert: I18n.t('game.must_be_admin')) && return unless current_user&.admin?
       redirect_to(rails_admin.new_path('game'), notice: I18n.t('game.setup', href: I18n.t('game.setup_href')))
@@ -63,6 +61,14 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def preload_helper(*preload_objects)
+    pl = ActiveRecord::Associations::Preloader.new
+    preload_objects.filter! do |table|
+      table.is_a?(Hash) ? @game.respond_to?(table.keys.first) : @game.respond_to?(table)
+    end
+    pl.preload(@game, preload_objects)
+  end
 
   def storable_location?
     request.get? && is_navigational_format? && !devise_controller? && !request.xhr?

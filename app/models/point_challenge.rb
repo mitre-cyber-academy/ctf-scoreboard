@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PointChallenge < Challenge
   before_save :post_state_change_message
 

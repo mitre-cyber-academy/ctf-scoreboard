@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class JeopardyGame < Game
   with_options dependent: :destroy do
     has_many :categories, foreign_key: :game_id
@@ -10,5 +12,5 @@ class JeopardyGame < Game
     has_many :solved_challenges, class_name: 'PointSolvedChallenge', through: :divisions
   end
 
-  alias :load_categories_or_teams :categories
+  alias load_categories_or_teams categories
 end
