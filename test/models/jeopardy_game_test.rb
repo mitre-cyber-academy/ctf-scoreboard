@@ -26,14 +26,14 @@ class GameTest < ActiveSupport::TestCase
 
   test 'send reminder emails' do
     game = create(:unstarted_jeopardy_game)
-    create(:team)
+    create(:point_team)
     game.remind_all
     assert_equal User.all.size, ActionMailer::Base.deliveries.size
   end
 
   test 'send open source emails' do
     game = create(:ended_jeopardy_game)
-    create(:team)
+    create(:point_team)
     game.open_source
     assert_equal User.all.size, ActionMailer::Base.deliveries.size
   end
@@ -50,7 +50,7 @@ class GameTest < ActiveSupport::TestCase
 
   test 'all teams information' do
     game = create(:active_jeopardy_game)
-    team = create(:team)
+    team = create(:point_team)
     information = game.all_teams_information
     assert_equal 1, information.length
     information = information.first

@@ -17,7 +17,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   end
 
   test 'destroy user on a team' do
-    @team = create(:team)
+    @team = create(:point_team)
     @user_not_captain = create(:user, password: @password, team: @team)
     sign_in @user_not_captain
 

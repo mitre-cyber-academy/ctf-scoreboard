@@ -3,7 +3,5 @@
 FactoryBot.define do
   factory :flag do
     flag { Faker::Hacker.noun }
-
-    challenge
   end
 end

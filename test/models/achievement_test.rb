@@ -6,12 +6,12 @@ class AchievementTest < ActiveSupport::TestCase
   end
 
   test 'description' do
-    achievement = create(:achievement)
+    achievement = create(:point_achievement)
     description_string =  %(Unlocked Achievement "#{achievement.text}")
     assert_equal description_string, achievement.description
   end
 
   test 'icon' do
-    assert_equal 'certificate', create(:achievement).icon
+    assert_equal 'certificate', create(:point_achievement).icon
   end
 end
