@@ -2,7 +2,8 @@
 
 class Category < ApplicationRecord
   belongs_to :game, optional: false
-  has_many :challenges, foreign_key: 'category_id', class_name: 'PointChallenge', dependent: :destroy
+  has_many :challenges, foreign_key: 'category_id', class_name: 'PointChallenge', dependent: :destroy,
+                        inverse_of: :category
 
   validates :name, presence: true
 

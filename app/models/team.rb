@@ -13,7 +13,7 @@ class Team < ApplicationRecord
   attr_accessor :rank, :current_score
 
   # This has_many is only applicable to PentestGames
-  has_many :flags, class_name: 'PentestFlag'
+  has_many :flags, class_name: 'PentestFlag', dependent: :destroy
   has_many :feed_items, dependent: :destroy
   has_many :achievements, dependent: :destroy
   has_many :score_adjustments, inverse_of: :team, dependent: :destroy
@@ -135,6 +135,14 @@ class Team < ApplicationRecord
     flags.map do |flag|
       [flag.name, flag.calc_defensive_points.round]
     end.to_h
+  end
+
+  def submitted_flags_per_hour
+    submitted_flags.group_by_hour('submitted_flags.created_at', format: '%l:%M %p').count
+  end
+
+  def solved_challenges_per_hour
+    solved_challenges.group_by_hour('feed_items.created_at', format: '%l:%M %p').count
   end
 
   private

@@ -64,7 +64,10 @@ class Division < ApplicationRecord
            MAX(feed_items.created_at) as last_solved_date, teams.*'
          )
          .order('team_score desc', 'last_solved_date asc', 'team_name asc')
-         .map { |team| team.current_score = team.team_score; team }
+         .map do |team|
+      team.current_score = team.team_score
+      team
+    end
   end
   # rubocop:enable Metrics/MethodLength
 end
