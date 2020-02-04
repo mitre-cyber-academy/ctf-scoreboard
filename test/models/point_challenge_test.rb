@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ChallengeTest < ActiveSupport::TestCase
+class PointChallengeTest < ActiveSupport::TestCase
   def setup
     create(:active_jeopardy_game)
   end
