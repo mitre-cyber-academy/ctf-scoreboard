@@ -100,7 +100,7 @@
         %p.pull-right
           %a{:href => "#"} Back to top
         %p
-          = "#{sanitize(Kramdown::Document.new(@game.footer).to_html)} |"  unless @game&.footer.blank?
+          = "#{sanitize(@game.footer)} |" unless @game&.footer.blank?
           = link_to 'Terms of Service', terms_of_service_game_path
           |
           = link_to 'Terms and Conditions', terms_and_conditions_game_path
