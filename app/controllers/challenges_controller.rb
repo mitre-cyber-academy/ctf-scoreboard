@@ -37,14 +37,15 @@ class ChallengesController < ApplicationController
   end
 
   def find_challenge
-    @challenge = @game.challenges.find(params[:id])
     # In a PentestGame we use PentestFlags as if they are Challenges since they are the linking objects between
     # the team defending a flag and the challenge.
     if @game.is_a?(PentestGame)
       @defense_team = @game.teams.find(params[:team_id])
       @challenge = @game.flags.find_by(challenge: @challenge, team: @defense_team)
+    else
+      @challenge = @game.challenges.find(params[:id])
     end
-    raise ActiveRecord::RecordNotFound if !current_user.admin? && !@challenge.open?
+    deny_if_not_admin unless @challenge.open?
   end
 
   def find_solved_by
