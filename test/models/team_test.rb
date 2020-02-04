@@ -135,13 +135,4 @@ class TeamTest < ActiveSupport::TestCase
     assert_equal challenge.point_value, team.score
   end
 
-  # WIP
-  # test 'score with team in a pentest division' do
-  #   @game.destroy
-  #   game = create(:active_pentest_game)
-  #   team = create(:point_team, division: create(:pentest_division))
-  #   challenge = create(:pentest_challenge)
-  #   create(:pentest_solved_challenge, team: team, challenge: challenge)
-  #   assert_equal challenge.point_value, team.score
-  # end
 end
