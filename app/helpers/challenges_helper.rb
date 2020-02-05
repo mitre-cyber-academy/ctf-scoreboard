@@ -19,8 +19,8 @@ module ChallengesHelper
     content_tag(:iframe, nil, src: "https://www.youtube.com/embed/#{youtube_id}?rel=0", frameborder: 0)
   end
 
-  def submit_url(challenge)
-    return game_team_challenge_path(@defense_team, challenge.challenge_id) if challenge.is_a?(Flag)
+  def submit_url(team, challenge)
+    return game_team_challenge_path(team, challenge.challenge_id) if challenge.is_a?(Flag)
 
     game_challenge_path(challenge)
   end
@@ -29,15 +29,15 @@ module ChallengesHelper
     if team
       "#{team.team_name} - #{challenge.point_value(current_user&.team)} points"
     else
-     "#{challenge.category.name} - #{challenge.point_value} points"
+      "#{challenge.category.name} - #{challenge.point_value} points"
     end
   end
 
   def admin_edit_url(challenge)
     if challenge.is_a?(Flag)
-      rails_admin.edit_path("pentest_challenge", challenge)
+      rails_admin.edit_path('pentest_challenge', challenge)
     else
-      rails_admin.edit_path("point_challenge", challenge)
+      rails_admin.edit_path('point_challenge', challenge)
     end
   end
 end
