@@ -25,7 +25,7 @@ class TeamsController < ApplicationController
       @flag_categories = PointSolvedChallenge.solves_by_category_for(@team)
     end
     @team_flag_submissions = [
-      { name: 'Flag Submissions', data: @team.flags_per_hour },
+      { name: 'Flag Submissions', data: @team.submitted_flags_per_hour },
       { name: 'Challenges Solved', data: @team.solved_challenges_per_hour }
     ]
   end
