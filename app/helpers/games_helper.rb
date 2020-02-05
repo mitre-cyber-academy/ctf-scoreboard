@@ -23,19 +23,20 @@ module GamesHelper
   end
 
   def challenge_color(challenge, defense_team)
-   return 'color:#999999;' if own_team_challenge?(defense_team)
-   if challenge.force_closed?
-     'color:#800000;'
-   elsif challenge.get_solved_challenge_for(current_user&.team)
-     'color:#00abca;'
-   elsif challenge.solved?(2)
-     'color:#00cc00;'
-   elsif challenge.solved?(1)
-     'color:#009900;'
-   elsif challenge.open?
-     'color:#006600;'
-   else
-     'color:#999999;'
+    return 'color:#999999;' if own_team_challenge?(defense_team)
+
+    if challenge.force_closed?
+      'color:#800000;'
+    elsif challenge.get_solved_challenge_for(current_user&.team)
+      'color:#00abca;'
+    elsif challenge.solved?(2)
+      'color:#00cc00;'
+    elsif challenge.solved?(1)
+      'color:#009900;'
+    elsif challenge.open?
+      'color:#006600;'
+    else
+      'color:#999999;'
     end
   end
 
@@ -44,7 +45,7 @@ module GamesHelper
   end
 
   def get_team_by_name(teams, team_name)
-    team = teams.select { |team| team.team_name.eql? team_name }
-    team.first.id
+    found_team = teams.select { |team| team.team_name.eql? team_name }
+    found_team.first.id
   end
 end

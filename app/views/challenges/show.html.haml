@@ -21,7 +21,7 @@
     = embed(@solved_video_url)
 
 - if @solvable
-  = form_for :challenge, url: submit_url(@challenge), method: "put", html: { class: "well", style: "margin-bottom:40px;" } do |f|
+  = form_for :challenge, url: submit_url(@defense_team, @challenge), method: "put", html: { class: "well", style: "margin-bottom:40px;" } do |f|
     .control-group
       %p Submit Flag
     .control-group
