@@ -3,87 +3,11 @@
 
 .catchphrase
   %h2
-    Challenges
+    = t('game.show.table_title')
     &nbsp;
-    - if @game.is_a? PentestGame
-      %small= %(#{pluralize(@challenges.size, 'challenge')} and #{pluralize(@headings.size, 'team')})
-    - else
-      %small= %(#{pluralize(@challenges.size, 'challenge')} in #{pluralize(@headings.size, 'category')})
+    %small= table_subtitle(@game, @challenges, @headings)
 - if @challenges.size == 0
-  .zero-items-text No Challenges
+  .zero-items-text= t('game.show.no_challenges')
 - else
-  %table.table.table-bordered.table-bolded
-    - is_admin = current_user&.admin?
-    - if @game.is_a?(PentestGame)
-      %thead
-        %tr
-          - @iter = [OpenStruct.new(name: 'Teams'), @challenges].flatten
-          - @iter.each do |challenge|
-            %th{ :style => "text-align:center;width:#{1.0 / @iter.size.to_f * 100.0}%;" }= challenge.name
-      %tbody
-        - @headings.each do |team|
-          %tr{style: team.eql?(current_user&.team) ? "background-color: #F0F0F0;" : ""}
-            %td{style: "text-align:center;"}
-              = team.team_name
-            - @challenges.each do |challenge|
-              - if flag = @flags.find { |flag| flag.team_id.eql?(team.id) && flag.challenge_id.eql?(challenge.id) }
-                = render partial: "challenge",
-                  locals: { challenge: flag,
-                    is_admin: is_admin,
-                    challenge_title: flag.point_value(current_user&.team),
-                    defense_team: team,
-                    challenge_path: game_team_challenge_path(team, challenge) }
-              - else
-                %td &nbsp;
-
-    - else
-      - max = 0
-      %thead
-        %tr
-          - @headings.each do |category|
-            %th{ :style => "text-align:center;width:#{1.0 / @headings.size.to_f * 100.0}%;" }= category.name
-            - max = [max, category.challenges.size].max
-      %tbody
-        - max.times do |row|
-          %tr
-            - @headings.size.times do |column_num|
-              - challenges = @headings[column_num].challenges
-              - if row < challenges.size
-                - challenge = challenges[row]
-                = render partial: "challenge",
-                  locals: { challenge: challenge,
-                    is_admin: is_admin,
-                    challenge_title: challenge.point_value,
-                    challenge_path: game_challenge_path(challenge),
-                    defense_team: nil,
-                    is_solved: is_admin ? challenge.solved? : solved_challenges&.include?(challenge.id) }
-              - else
-                %td &nbsp;
-
-%h4
-  Legend
-%blockquote
-  %p{style: "font-size: 1rem;"}
-    %b{style: "color:#006600;"}
-      Dark Green
-    Unsolved by any team
-    %br/
-    %b{style: "color:#009900;"}
-      Green
-    Solved by one team
-    %br/
-    %b{style: "color:#00cc00;"}
-      Light Green
-    Solved by multiple teams
-    %br/
-    %b{style: "color:#00abca;"}
-      Blue
-    Solved by your team
-    %br/
-    %b{style: "color:#999999;"}
-      Grey
-    Unopened
-    %br/
-    %b{style: "color:#800000;"}
-      Red
-    Locked
+  = render partial: 'games/table'
+= render partial: 'games/legend'

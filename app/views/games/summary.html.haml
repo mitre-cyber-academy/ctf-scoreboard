@@ -4,7 +4,7 @@
 %h3.muted
   Top 5 Teams
 %br/
-= render partial: "games/divisions", locals: {divisions: @divisions, active_division: @active_division, only_top_five: true}
+= render partial: "games/divisions", locals: {divisions: Game.instance.divisions, active_division: @active_division, only_top_five: true}
 %hr
 / Only show the flags per hour count when we have more than 1 datapoint to show
 - if @flags_per_hour.count > 1
