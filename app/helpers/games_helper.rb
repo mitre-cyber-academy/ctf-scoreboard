@@ -42,4 +42,9 @@ module GamesHelper
   def own_team_challenge?(defense_team)
     defense_team&.eql?(current_user&.team)
   end
+
+  def get_team_by_name(teams, team_name)
+    team = teams.select { |team| team.team_name.eql? team_name }
+    team.first.id
+  end
 end
