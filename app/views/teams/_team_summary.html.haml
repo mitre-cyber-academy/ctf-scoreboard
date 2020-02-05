@@ -1,5 +1,5 @@
 %h3.muted Team Flag Submissions
-- if @solved_challenges.count > 0
+- if @team.solved_challenges.size > 0
   = line_chart @team_flag_submissions, colors: ['#b8d12f', '#00abca']
 - else
   .zero-items-text Nothing to Report
@@ -7,7 +7,7 @@
 %div.row
   %div.span5
     %h3.muted Solved Challenges
-    - if @solved_challenges.size == 0
+    - if @team.solved_challenges.size == 0
       .zero-items-text No Solved Challenges
     - else
       %table.table.table-bordered.table-striped
@@ -18,7 +18,7 @@
             %th Points
             %th When
         %tbody
-          - @solved_challenges.each_with_index do |s, i|
+          - @team.solved_challenges.each_with_index do |s, i|
             %tr
               %td= i + 1
               %td= @game.is_a?(PentestGame) ? s.flag.team.team_name : s.challenge.category.name
@@ -26,7 +26,7 @@
               %td= s.created_at.strftime("%b %e %y, %R %Z")
   %div.span7
     %h3.muted Solved Challenge Breakdown
-    - if @solved_challenges.size == 0
+    - if @team.solved_challenges.size == 0
       .zero-items-text No Solved Challenges
     - else
       = pie_chart @flag_categories
@@ -66,7 +66,7 @@
               %td= user.email
     %div.span7
       %h3.muted Per User Statistics
-      - if @solved_challenges.size == 0
+      - if @team.solved_challenges.size == 0
         .zero-items-text Nothing to Report
       - else
         = column_chart @per_user_stats, legend: 'bottom', xtitle: "User ID", stacked: true, colors: ['#b8d12f', '#00abca']
