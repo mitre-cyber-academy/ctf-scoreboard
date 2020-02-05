@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class GameTest < ActiveSupport::TestCase
+class JeopardyGameTest < ActiveSupport::TestCase
   test 'instance is singleton' do
     create(:active_jeopardy_game)
 

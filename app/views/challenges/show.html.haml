@@ -1,16 +1,13 @@
 -# For PentestGames, @challenge here can actually be a flag object since Pentest challenges belong to teams + challenges and are linked by a flag object.
 
 - content_for :admin_menu do
-  %li= link_to %[Edit "#{@challenge.name}"], (@challenge.is_a?(Flag) ? rails_admin.edit_path("pentest_challenge", @challenge.challenge_id) : nil)
+  %li= link_to "Edit #{@challenge.name}", admin_edit_url(@challenge)
 
 - content_for :header do
   = @challenge.name
 
 - content_for :subheading do
-  - if @defense_team
-    - "#{@defense_team.team_name} - #{@challenge.point_value(current_user&.team)} points"
-  - else
-    - "#{@challenge.category.name} - #{@challenge.point_value} points"
+  = subheading(@defense_team, @challenge)
 
 %div{ :style => "margin-bottom:40px;" }
   %h3
@@ -24,7 +21,7 @@
     = embed(@solved_video_url)
 
 - if @solvable
-  = form_for :challenge, url: @challenge.is_a?(Flag) ? game_team_challenge_path(@defense_team, @challenge.challenge_id) : game_challenge_path(@challenge), method: "put", html: { class: "well", style: "margin-bottom:40px;" } do |f|
+  = form_for :challenge, url: submit_url(@challenge), method: "put", html: { class: "well", style: "margin-bottom:40px;" } do |f|
     .control-group
       %p Submit Flag
     .control-group

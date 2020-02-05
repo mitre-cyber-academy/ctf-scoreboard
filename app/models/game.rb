@@ -71,4 +71,14 @@ class Game < ApplicationRecord
       UserMailer.open_source(usr).deliver_later
     end
   end
+
+  # TODO cleanup 4sure4sure
+  def table_rows(headings)
+    max = 0
+    return max if type.eql? 'PentestGame'
+    headings.each do |category|
+      max = [0, category.challenges.size].max
+    end
+    max
+  end
 end

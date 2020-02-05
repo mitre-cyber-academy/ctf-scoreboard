@@ -85,6 +85,22 @@ en:
     setup_href: "https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Configuration#game"
     no_terms_and_conditions: There are no terms and conditions associated with this game.
     no_terms_of_service: There are no terms of service associated with this game.
+    legend:
+      dark_green: 'Dark Green'
+      green: 'Green'
+      light_green: 'Light Green'
+      blue: 'Blue'
+      gray: 'Gray'
+      red: 'Red'
+      dark_green_desc: 'Unsolved by any team'
+      green_desc: 'Solved by one team'
+      light_green_desc: 'Solved by multiple teams'
+      blue_desc: 'Solved by your team'
+      gray_desc: 'Unopened'
+      red_desc: 'Locked'
+    show:
+      table_title: 'Challenges'
+      no_challenges: 'No Challenges'
   flag:
     accepted: 'Flag accepted!'
   challenge:

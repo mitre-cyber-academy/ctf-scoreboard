@@ -35,7 +35,14 @@ class GamesController < ApplicationController
     # The headings of the gameboard are either categories or teams, this loads based
     # on the STI model that the game is based on.
     @headings = @game&.load_categories_or_teams
-    @flags = @game.flags if @game.is_a?(PentestGame)
+
+    if @game.is_a?(JeopardyGame)
+      @table_rows = @game&.table_rows(@headings)
+    else
+      @table_heading = [OpenStruct.new(name: 'Teams'), @challenges].flatten
+      @teams_with_assoc = @game.teams_associated_with_flags_and_challenges
+    end
+
     respond_to do |format|
       format.html
       format.markdown do
