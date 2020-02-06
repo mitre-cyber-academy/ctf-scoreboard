@@ -13,7 +13,7 @@
   %h3
     Description
   - if @challenge.description.blank?
-    No description
+    = t('challenges.show.no_desc')
   - else
     = sanitize(Kramdown::Document.new(@challenge.description).to_html)
 - if !@solved_video_url.blank?

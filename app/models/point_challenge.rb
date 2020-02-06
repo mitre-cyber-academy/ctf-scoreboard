@@ -18,7 +18,7 @@ class PointChallenge < Challenge
     Message.create!(
       game: Game.instance,
       title: "#{name}: #{category.name} #{point_value}",
-      text: I18n.t('challenge.state_change_message', state: state.titleize)
+      text: I18n.t('challenges.state_change_message', state: state.titleize)
     )
   end
 end

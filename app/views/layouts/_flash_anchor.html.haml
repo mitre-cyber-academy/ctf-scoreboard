@@ -1,0 +1,14 @@
+- if !flash[:notice].blank?
+  .alert.alert-success
+    %a.close{"data-dismiss" => "alert", :href => "#"} ×
+    = notice
+- if !flash[:alert].blank?
+  .alert.alert-error
+    %a.close{"data-dismiss" => "alert", :href => "#"} ×
+    - if alert.is_a?(Enumerable)
+      = amount_of_errors(alert)
+      = list_of(alert) do |a|
+        = a
+    - else
+      = alert
+
