@@ -67,6 +67,6 @@ class ChallengesController < ApplicationController
   def on_team?
     return true if current_user.on_a_team? || current_user.admin?
 
-    redirect_back fallback_location: user_root_path, alert: I18n.t('challenge.must_be_on_team')
+    redirect_back fallback_location: user_root_path, alert: I18n.t('challenges.must_be_on_team')
   end
 end

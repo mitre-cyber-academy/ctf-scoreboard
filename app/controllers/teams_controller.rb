@@ -34,6 +34,7 @@ class TeamsController < ApplicationController
 
   def new
     @team = Team.new
+    @divisions = Division.all
   end
 
   def show
@@ -51,11 +52,12 @@ class TeamsController < ApplicationController
     if @team.save
       redirect_to @team, notice: I18n.t('teams.create_successful')
     else
-      render :new
+      redirect_to new_team_path, alert: @team.errors.full_messages.flatten
     end
   end
 
   def update
+    @divisions = Division.all
     if @team.save
       redirect_to @team, notice: I18n.t('teams.update_successful')
     else

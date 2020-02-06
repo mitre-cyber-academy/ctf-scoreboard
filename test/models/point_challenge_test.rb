@@ -45,6 +45,6 @@ class PointChallengeTest < ActiveSupport::TestCase
       forced_challenge.update_attributes(state: 'open')
     end
     message = Message.last
-    assert I18n.t('challenge.state_change_message', state: 'open'.titleize), message.title
+    assert I18n.t('challenges.state_change_message', state: 'open'.titleize), message.title
   end
 end

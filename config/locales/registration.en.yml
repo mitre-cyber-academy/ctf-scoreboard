@@ -28,8 +28,14 @@ en:
             email:
               blank: 'You cannot invite your invisible friend.'
               invalid: 'address is not valid.'
-              uniqueness: "Inviting the same friend multiple times doesn't make your team perform any better."
+              uniqueness: 'Email address previously invited to team.'
+  achievements:
+    index:
+      zero_items_text: 'No achievements have been awarded'
   teams:
+    edit:
+      legend: 'New Team Information'
+      note: 'All fields are required.'
     captain_removed_player: 'Player was successfully removed.'
     player_removed_self: 'You have successfully left the team.'
     already_on_team_create: 'You cannot create a new team while already being a member of one.'
@@ -103,7 +109,9 @@ en:
       no_challenges: 'No Challenges'
   flag:
     accepted: 'Flag accepted!'
-  challenge:
+  challenges:
+    show:
+      no_desc: 'No description'
     not_open: 'must be open.'
     game_not_open: 'The game must be open.'
     already_solved: 'This player has already solved this challenge.'
@@ -131,6 +139,33 @@ en:
     should_not_do_action: 'Admins should use the Rails Admin console to perform administrative actions.'
     download_not_available: 'The download you have selected is not available.'
   application:
+    admin:
+      dashboard: 'Admin Dasboard'
+      post_message: 'Post a message'
+      view_submitted_flags: 'View submitted flags'
+      award_achievement: 'Award an achievement'
+      create_score_adjustment: 'Create score adjustment'
+    navbar:
+      challenges: 'Challenges'
+      messages: 'Messages'
+      achievements: 'Achievements'
+      summary: 'Summary'
+    log_out: 'Log out'
+    log_in: 'Log in'
+    edit_account: 'Edit Account'
     open_source_statement_1: 'Gameboard and registration software is '
     open_source_statement_2: ' free to use!'
     github_link: 'https://github.com/mitre-cyber-academy/ctf-scoreboard'
+    terms_of_service: 'Terms of Service'
+    no_terms_and_conditions: 'Terms and Conditions'
+  home:
+    index:
+      when_to_compete: 'When to compete'
+      when_to_compete_info: "This competition will run from %{start_time} until %{end_time}"
+      stuck: "Help, I'm Stuck!"
+      stuck_info: "We'd be happy to give you a hand if you %{contact_url}"
+      view_team: 'View Team'
+      join_team: 'Join Team'
+      create_team: 'Create Team'
+      edit_team: 'Edit Team'
+      register: 'Register'

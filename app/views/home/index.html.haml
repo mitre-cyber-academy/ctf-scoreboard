@@ -13,26 +13,27 @@
     = sanitize(Kramdown::Document.new(@game&.description).to_html)
     %p
       %b
-        %u When to compete
-    %p This competition will run from #{@game.start.strftime('%B %e at %l:%M %p %Z')} until #{@game.stop.strftime('%B %e at %l:%M %p %Z')}.
+        %u= t('home.index.when_to_compete')
+    %p= t('home.index.when_to_compete_info', start_time: view_time_format(@game.start), end_time: view_time_format(@game.stop))
     - unless @game&.contact_url.blank?
       %p
         %b
-          %u Help, I'm Stuck!
-      %p We'd be happy to give you a hand if you #{ link_to 'contact us', @game.contact_url}.
-  - if user_signed_in?
-    .btn-toolbar
-      .pagination-centered
-        - if current_user.on_a_team?
+          %u= t('home.index.stuck')
+      %p= t('home.index.stuck_info', contact_url: link_to('contact us', @game.contact_url))
+  - unless @game.after_competition?
+    - if user_signed_in?
+      .btn-toolbar
+        .pagination-centered
+          - if current_user.on_a_team?
+            .btn-group
+              = link_to t('home.index.join_team'), team_path(current_user.team_id), :class => "btn btn-large btn-primary"
+          - else
+            .btn-group
+              = link_to t('home.index.join_team'), join_team_users_path, :class => "btn btn-large btn-primary"
+            .btn-group
+              = link_to t('home.index.create_team'), new_team_path, :class => "btn btn-large btn-primary"
+    - else
+      .btn-toolbar
+        .pagination-centered
           .btn-group
-            = link_to "See your team", team_path(current_user.team_id), :class => "btn btn-large btn-primary"
-        - else
-          .btn-group
-            = link_to "Join a Team", join_team_users_path, :class => "btn btn-large btn-primary"
-          .btn-group
-            = link_to "Create a Team", new_team_path, :class => "btn btn-large btn-primary"
-  - else
-    .btn-toolbar
-      .pagination-centered
-        .btn-group
-          = link_to "Register", new_user_registration_path, :class => "btn btn-large btn-primary"
+            = link_to t('home.index.register'), new_user_registration_path, :class => "btn btn-large btn-primary"

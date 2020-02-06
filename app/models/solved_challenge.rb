@@ -20,11 +20,11 @@ class SolvedChallenge < FeedItem
   end
 
   def challenge_is_open
-    errors.add(:challenge, I18n.t('challenge.not_open')) unless challenge.open?
+    errors.add(:challenge, I18n.t('challenges.not_open')) unless challenge.open?
   end
 
   def game_is_open
-    errors.add(:base, I18n.t('challenge.game_not_open')) unless Game.instance.open?
+    errors.add(:base, I18n.t('challenges.game_not_open')) unless Game.instance.open?
   end
 
   def award_achievement
@@ -43,6 +43,6 @@ class SolvedChallenge < FeedItem
 
   # This is overridden in the PointSolvedChallenges and PentestSolvedChallenges subclasses
   def team_can_solve_challenge
-    errors.add(:base, I18n.t('challenge.already_solved'))
+    errors.add(:base, I18n.t('challenges.already_solved'))
   end
 end

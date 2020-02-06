@@ -3,7 +3,31 @@
 module ApplicationHelper
   # Evaluate the condition, to show the link to a regular user, but always show the link
   # to an admin
-  def always_link_to_if_admin(condition, p_name, options = {}, html_options = {})
-    link_to_if((current_user&.admin? || condition), p_name, options, html_options)
+  def always_link_to_if_admin(condition, p_name, options = {}, html_options = {}, &block)
+    link_to_if((current_user&.admin? || condition), p_name, options, html_options, &block)
+  end
+
+  def view_time_format(time)
+    time.strftime('%B %e at %l:%M %p %Z')
+  end
+
+  def greeting_for_dropdown(current_user)
+    'Hello ' + (truncate(current_user.full_name, length: 30) || 'Admin')
+  end
+
+  def organization_for_navbar(game)
+    @game&.organization || 'Gameboard'
+  end
+
+  def unread_messages(num_unread)
+    num_unread if !num_unread&.eql? 0
+  end
+
+  def active_navbar?(page)
+    'active' if current_page? page
+  end
+
+  def amount_of_errors(alerts)
+   pluralize(alerts.length, 'error') + ':'
   end
 end
