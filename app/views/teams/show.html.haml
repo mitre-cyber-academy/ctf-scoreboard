@@ -56,7 +56,7 @@
 %hr
 .row
   .span6
-    %h3= t('teams.show.pending_invites_heading')
+    %h3= t('teams.show.pending_invites_header')
     - if @pending_invites.empty?
       = t('teams.show.pending_invites_false')
     - else
@@ -64,7 +64,7 @@
     - if team_editable?
       = render partial: 'teams/invites_form'
   .span6
-    %h3= t('teams.show.pending_requests_heading')
+    %h3= t('teams.show.pending_requests_header')
     - if @pending_requests.empty?
       = t('teams.show.pending_requests_false')
     - else
