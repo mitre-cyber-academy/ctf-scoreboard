@@ -1,0 +1,17 @@
+%hr
+%div.row
+  %div.span5
+    %h3.muted= t('teams.summary.defensive_points_header')
+    - if @defensive_points.size == 0
+      .zero-items-text= t('teams.summary.zero_items_text')
+    - else
+      %table.table.table-bordered.table-striped
+        %thead
+          %tr
+            %th Challenge
+            %th Points
+        %tbody
+          - @defensive_points.each do |name, value|
+            %tr
+              %td= name
+              %td= value

@@ -36,6 +36,13 @@ en:
     edit:
       legend: 'New Team Information'
       note: 'All fields are required.'
+    summary:
+      zero_items_text: 'Nothing to report'
+      solved_challenges_header: 'Solved Challenges'
+      solved_challenges_chart_header: 'Solved Challenges Breakdown'
+      defensive_points_header: 'Defensive Points'
+      team_members_header: 'Team Members'
+      per_user_statistics_header: 'Per User Statistics'
     captain_removed_player: 'Player was successfully removed.'
     player_removed_self: 'You have successfully left the team.'
     already_on_team_create: 'You cannot create a new team while already being a member of one.'
@@ -52,13 +59,13 @@ en:
     in_top_ten: 'This team is currently locked since it is in the top ten for its division.'
     does_not_exist: 'No such team exists.'
     show:
-      remove_user_confirm: 'Are you sure you wish to remove this player from your team?'
-      promote_confirm: 'Are you sure you wish to promote a new team captain? You will immediately lose all captain privileges.'
+      remove_user_confirm: 'Are you sure you want to remove this player from your team?'
+      promote_confirm: 'Are you sure you want to promote a new team captain? You will immediately lose all captain privileges.'
       eligible_help: 'This user has not yet registered and their division is unknown at this time.'
-      cancel_invite_confirm: 'Are you sure you wish to cancel this invitation?'
-      reject_request_confirm: 'Are you sure you wish to reject this request?'
+      cancel_invite_confirm: 'Are you sure you want to cancel this invitation?'
+      reject_request_confirm: 'Are you sure you want to reject this request?'
       invite_button: 'Invite Member'
-      currently_selected_division: "You have currently selected the %{division} for your team."
+      currently_selected_division: "You have currently selected %{division} for your team."
       division_true: 'This division is acceptable for your team.'
       division_false: "Your team is not eligible to compete in this division. Consider changing your team's division to match that of the most senior member of your team, or removing the member(s) causing your division to be incorrect."
       eligible_currently: 'Your team is currently'
@@ -67,6 +74,12 @@ en:
       eligible_false_not: 'NOT'
       pending_requests_false: 'There are no pending requests to join your team at this time.'
       pending_invites_false: 'There are no pending invitations to join your team at this time.'
+      pending_requests_heading: 'Pending User Requests'
+      invite_member_heading: 'Invite a Team Member'
+      pending_invites_header: 'Pending User Invites'
+      eligible: 'Yes'
+      ineligible: 'No'
+      subheading: "Affiliation: %{aff}"
   requests:
     sent_successful: 'Team join request was successfully sent.'
     accepted_another: 'User has accepted another teams invitation, sorry!'
@@ -123,6 +136,10 @@ en:
      successfully competed as a member of Team %{team_name},
      achieving %{score} points and finishing %{rank} out of %{team_size} teams."
     edit:
+      label:
+        password: 'Password'
+        password_confirmation: 'Confirm new password'
+        password_change: 'Change password'
       help:
         affiliation: 'If you are a student, please list your school. If you are an industry professional please list your professional organization.'
         state: 'Enter the state in which you are a resident.'
@@ -135,6 +152,20 @@ en:
         destroy: 'Deleting your account will remove you from your team. In order to rejoin a team you will have to be re-invited.'
     destroy:
       confirm: 'Are you sure you want to delete your account?'
+    new:
+      confirmations_legend: 'Resend Confirmation Instructions'
+      password_reset_legend: 'Send a Password Reset'
+      sessions_legend: 'Login'
+    join_team:
+      header: 'Join a Team'
+      pending_team_invites_header: 'Pending Team Invitations'
+      invites_header_desc: 'Teams that would like you to join them'
+      delete_invite_confirmation: 'Are you sure you want to delete this invitation?'
+      pending_team_requests_header: 'Pending Team Requests'
+      requests_header_desc: 'Teams that you have requested to join'
+      delete_request_confirmation: 'Are you sure you want to delete this request?'
+      search_for_team_header: 'Search for a Team'
+
   admin:
     should_not_do_action: 'Admins should use the Rails Admin console to perform administrative actions.'
     download_not_available: 'The download you have selected is not available.'
