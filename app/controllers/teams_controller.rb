@@ -56,8 +56,11 @@ class TeamsController < ApplicationController
     end
   end
 
-  def update
+  def edit
     @divisions = Division.all
+  end
+
+  def update
     if @team.save
       redirect_to @team, notice: I18n.t('teams.update_successful')
     else

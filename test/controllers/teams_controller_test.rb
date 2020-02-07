@@ -88,11 +88,12 @@ class TeamsControllerTest < ActionController::TestCase
   test 'authenticated users without a team can view teams summary page' do
     user = create(:user)
     sign_in user
-    get :summary, params: { id: create(:point_team) }
+    team = create(:point_team)
+    get :summary, params: { id: team }
     assert_response :success
     assert_select 'h3', 'Team Flag Submissions'
     assert_select 'h3', 'Solved Challenges'
-    assert_select 'h3', 'Solved Challenge Breakdown'
+    assert_select 'h3', pluralize(team.solved_challenges.size, 'solved challenge')
   end
 
   test 'team summary page correctly redirects if the team does not exist' do
@@ -107,7 +108,8 @@ class TeamsControllerTest < ActionController::TestCase
     assert_no_difference 'Team.count', 'A Team should not be created' do
       post :create, params: { team: { team_name: team.team_name, affiliation: 'school1', division_id: create(:point_hs_division) } }
     end
-    assert_template :new
+    assert_redirected_to new_team_path
+    assert_includes flash[:alert], 'Team name has already been taken'
   end
 
   test 'authenticated users with a team should not be able to create new team' do
@@ -127,7 +129,8 @@ class TeamsControllerTest < ActionController::TestCase
     assert_no_difference 'Team.count', 'A Team should not be created' do
       post :create, params: { team: { team_name: team.team_name.upcase, affiliation: 'school1', division_id: create(:point_hs_division) } }
     end
-    assert_template :new
+    assert_redirected_to new_team_path
+    assert_includes flash[:alert], 'Team name has already been taken'
   end
 
   test 'a team can be created by a user not currently on a team and the current user will be set as the team captain' do
@@ -279,11 +282,12 @@ class TeamsControllerTest < ActionController::TestCase
 
   test 'summary is available after game is closed' do
     create(:ended_point_game)
-    get :summary, params: { id: create(:point_team) }
+    team = create(:point_team)
+    get :summary, params: { id: team }
     assert_response :success
     assert_select 'h3', 'Team Flag Submissions'
     assert_select 'h3', 'Solved Challenges'
-    assert_select 'h3', 'Solved Challenge Breakdown'
+    assert_select 'h3', pluralize(team.solved_challenges.size, 'solved challenge')
     assert_select 'h3', {count: 0, text: 'Team Members'}, 'Team member list should only be visible to administrators'
     assert_select 'h3', {count: 0, text: 'Per User Statistics'}, 'Per User Statistics should only be visible to administrators'
   end
@@ -292,11 +296,12 @@ class TeamsControllerTest < ActionController::TestCase
     create(:ended_point_game)
     admin = create(:admin)
     sign_in admin
-    get :summary, params: { id: create(:point_team) }
+    team = create(:point_team)
+    get :summary, params: { id: team }
     assert_response :success
     assert_select 'h3', 'Team Flag Submissions'
     assert_select 'h3', 'Solved Challenges'
-    assert_select 'h3', 'Solved Challenge Breakdown'
+    assert_select 'h3', pluralize(team.solved_challenges.size, 'solved challenge')
     assert_select 'h3', 'Team Members'
     assert_select 'h3', 'Per User Statistics'
   end
