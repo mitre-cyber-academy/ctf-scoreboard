@@ -4,7 +4,7 @@ class UserInvitesControllerTest < ActionController::TestCase
 
   def setup
     @request.env["HTTP_REFERER"] = 'http://test.com/'
-    @game = create(:active_jeopardy_game)
+    @game = create(:active_point_game)
     @email = 'mitrectf+user2@gmail.com'
     @invited_user = create(:user, email: @email)
   end

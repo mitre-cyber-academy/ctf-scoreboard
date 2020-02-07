@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class JeopardyGame < Game
+class PointGame < Game
   with_options dependent: :destroy do
     has_many :categories, foreign_key: :game_id, inverse_of: :game
     has_many :challenges, through: :categories

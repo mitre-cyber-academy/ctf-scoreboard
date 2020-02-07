@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TeamTest < ActiveSupport::TestCase
   def setup
-    @game = create(:active_jeopardy_game)
+    @game = create(:active_point_game)
   end
 
   test 'creating a new team sets the team captain as a user' do

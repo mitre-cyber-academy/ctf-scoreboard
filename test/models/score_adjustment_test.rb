@@ -4,7 +4,7 @@ class ScoreAdjustmentTest < ActiveSupport::TestCase
   include ActionView::Helpers::TextHelper
 
   def setup
-    create(:active_jeopardy_game)
+    create(:active_point_game)
   end
 
   test 'build description' do

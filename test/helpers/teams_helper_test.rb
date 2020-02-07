@@ -3,7 +3,7 @@ require 'test_helper'
 class TeamsHelperTest < ActionView::TestCase
 
   def setup
-    create(:active_jeopardy_game)
+    create(:active_point_game)
   end
 
   test 'display name ineligible' do

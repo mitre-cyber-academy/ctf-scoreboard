@@ -5,7 +5,7 @@ class UserRequestsControllerTest < ActionController::TestCase
   def setup
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @request.env["HTTP_REFERER"] = 'http://test.host/'
-    @game = create(:active_jeopardy_game)
+    @game = create(:active_point_game)
     @team = create(:point_team)
     @requesting_user = create(:user)
   end
