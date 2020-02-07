@@ -3,7 +3,7 @@ require 'test_helper'
 class RegistrationsControllerTest < ActionController::TestCase
 
   def setup
-    create(:active_jeopardy_game)
+    create(:active_point_game)
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @password = 'TestPassword123'
   end
@@ -48,7 +48,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   end
 
   test 'cannot get new registration after game close' do
-    game = create(:ended_jeopardy_game)
+    game = create(:ended_point_game)
 
     get :new
     assert_redirected_to @controller.user_root_path
@@ -68,7 +68,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   end
 
   test 'create with failed recaptcha' do
-    create(:active_jeopardy_game)
+    create(:active_point_game)
     Recaptcha.configuration.skip_verify_env.delete('test')
     Recaptcha.configure do |config|
       config.site_key = 'whatever'

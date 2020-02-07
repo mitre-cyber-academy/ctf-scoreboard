@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TeamsControllerTest < ActionController::TestCase
   def setup
-    @game = create(:active_jeopardy_game)
+    @game = create(:active_point_game)
   end
 
   test 'unauthenticated users should not be able to access new team page' do
@@ -222,7 +222,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'update a team when game is closed' do
-    create(:unstarted_jeopardy_game)
+    create(:unstarted_point_game)
     user = create(:user_with_team)
     sign_in user
     patch :update, params: { team: { team_name: 'team_one_newname', affiliation: 'school1' }, id: user.team }
@@ -231,7 +231,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'can not update a team after game is closed' do
-    create(:ended_jeopardy_game)
+    create(:ended_point_game)
     user = create(:user_with_team)
     sign_in user
     patch :update, params: { team: { team_name: 'team_one_newname', affiliation: 'school1' }, id: user.team }
@@ -248,7 +248,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'cannot create a team after game is closed' do
-    create(:ended_jeopardy_game)
+    create(:ended_point_game)
     user = create(:user)
     sign_in user
     assert_no_difference 'Team.count' do
@@ -259,7 +259,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'cannot invite a team member after game is closed' do
-    create(:ended_jeopardy_game)
+    create(:ended_point_game)
     user = create(:user_with_team)
     sign_in user
     assert_no_difference 'user.team.user_invites.count' do
@@ -270,7 +270,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'show team after game is closed' do
-    create(:ended_jeopardy_game)
+    create(:ended_point_game)
     user = create(:user_with_team)
     sign_in user
     get :show, params: { id: user.team }
@@ -278,7 +278,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'summary is available after game is closed' do
-    create(:ended_jeopardy_game)
+    create(:ended_point_game)
     get :summary, params: { id: create(:point_team) }
     assert_response :success
     assert_select 'h3', 'Team Flag Submissions'
@@ -289,7 +289,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'summary page shows additional information to administrators' do
-    create(:ended_jeopardy_game)
+    create(:ended_point_game)
     admin = create(:admin)
     sign_in admin
     get :summary, params: { id: create(:point_team) }

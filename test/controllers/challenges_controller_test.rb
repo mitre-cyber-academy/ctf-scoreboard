@@ -4,7 +4,7 @@ class ChallengesControllerTest < ActionController::TestCase
   include ChallengesHelper
 
   def setup
-    create(:active_jeopardy_game)
+    create(:active_point_game)
     @challenge = create(:point_challenge, flag_count: 3)
   end
 

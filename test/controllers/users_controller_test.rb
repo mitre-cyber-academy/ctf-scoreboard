@@ -4,7 +4,7 @@ class UsersControllerTest < ActionController::TestCase
 
   def setup
     @request.env["devise.mapping"] = Devise.mappings[:user]
-    create(:active_jeopardy_game)
+    create(:active_point_game)
     @team = create(:point_team, additional_member_count: 5)
     @captain = @team.team_captain
     @non_captain = @team.users.where.not(id: @captain).first

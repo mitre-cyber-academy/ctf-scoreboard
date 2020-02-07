@@ -2,11 +2,11 @@ require 'test_helper'
 
 class PointChallengeTest < ActiveSupport::TestCase
   def setup
-    create(:active_jeopardy_game)
+    create(:active_point_game)
   end
 
   test 'challenge state open' do
-    create(:unstarted_jeopardy_game)
+    create(:unstarted_point_game)
 
     assert_equal true, create(:point_challenge, state: :open).challenge_open?
     assert_equal false, create(:point_challenge, state: :closed).challenge_open?

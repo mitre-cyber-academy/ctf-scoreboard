@@ -1,7 +1,7 @@
 FactoryBot.define do
-  factory :active_jeopardy_game, parent: :game, class: 'JeopardyGame' do
+  factory :active_point_game, parent: :game, class: 'PointGame' do
     initialize_with do
-      JeopardyGame.find_or_initialize_by(id: id)
+      PointGame.find_or_initialize_by(id: id)
     end
 
     organization { 'MITRE CTF' }
@@ -17,7 +17,7 @@ FactoryBot.define do
     enable_completion_certificates { false }
     recruitment_text { 'Jobs and internships are available if you meet the following requirements' }
     prizes_text { 'Prizes are available if you meet the following requirements' }
-    type { 'JeopardyGame' }
+    type { 'PointGame' }
 
     completion_certificate_template {
       if enable_completion_certificates
@@ -47,12 +47,12 @@ FactoryBot.define do
       end
     end
 
-    factory :ended_jeopardy_game do
+    factory :ended_point_game do
       start { Time.now - 9.hours }
       stop { Time.now - 1.hours }
     end
 
-    factory :unstarted_jeopardy_game do
+    factory :unstarted_point_game do
       start { Time.now + 1.hours }
       stop { Time.now + 9.hours }
     end

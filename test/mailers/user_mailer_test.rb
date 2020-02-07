@@ -10,7 +10,7 @@ class UserMailerTest < ActionMailer::TestCase
   end
 
   def setup
-    @game = create(:active_jeopardy_game, enable_completion_certificates: true)
+    @game = create(:active_point_game, enable_completion_certificates: true)
     @user_invite = create(:point_user_invite)
     @user_request = create(:point_user_request)
     @division = @game.divisions.first

@@ -36,7 +36,7 @@ class GamesController < ApplicationController
     # on the STI model that the game is based on.
     @headings = @game&.load_categories_or_teams
 
-    if @game.is_a?(JeopardyGame)
+    if @game.is_a?(PointGame)
       @table_rows = @game&.table_rows(@headings)
     else
       @table_heading = [OpenStruct.new(name: 'Teams'), @challenges].flatten

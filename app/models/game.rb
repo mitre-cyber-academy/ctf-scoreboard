@@ -4,7 +4,7 @@ class Game < ApplicationRecord
   has_many :messages, dependent: :destroy
 
   def self.type_enum
-    [['JeopardyGame'], ['PentestGame']]
+    [['PointGame'], ['PentestGame']]
   end
 
   validates :type, inclusion: type_enum.flatten, presence: true

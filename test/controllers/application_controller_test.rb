@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ApplicationControllerTest < ActionController::TestCase
   def setup
-    create(:active_jeopardy_game)
+    create(:active_point_game)
     @user = create(:user)
   end
 

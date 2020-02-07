@@ -2,7 +2,7 @@ require 'test_helper'
 
 class DivisionTest < ActiveSupport::TestCase
   def setup
-    @game = create(:active_jeopardy_game)
+    @game = create(:active_point_game)
     @division = @game.divisions.first
     create_list(:point_team, 10, division: @division)
     create_list(:point_team, 10, division: @division, compete_for_prizes: true)
