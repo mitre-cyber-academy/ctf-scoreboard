@@ -25,6 +25,11 @@ module GamesHelper
   def challenge_color(challenge, defense_team)
     return 'color:#999999;' if own_team_challenge?(defense_team)
 
+    challenge_color_for_other_team(challenge)
+  end
+
+  # rubocop:disable Metrics/MethodLength
+  def challenge_color_for_other_team(challenge)
     if challenge.force_closed?
       'color:#800000;'
     elsif challenge.get_solved_challenge_for(current_user&.team)
@@ -39,6 +44,7 @@ module GamesHelper
       'color:#999999;'
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def own_team_challenge?(defense_team)
     defense_team&.eql?(current_user&.team)
