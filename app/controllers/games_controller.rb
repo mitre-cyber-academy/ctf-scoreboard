@@ -32,17 +32,7 @@ class GamesController < ApplicationController
   def show
     @challenges = @game&.challenges
     ActiveRecord::Precounter.new(@challenges).precount(:solved_challenges)
-    # The headings of the gameboard are either categories or teams, this loads based
-    # on the STI model that the game is based on.
-    @headings = @game&.load_categories_or_teams
-
-    if @game.is_a?(PointGame)
-      @table_rows = @game&.table_rows(@headings)
-    else
-      @table_heading = [OpenStruct.new(name: 'Teams'), @challenges].flatten
-      @teams_with_assoc = @game.teams_associated_with_flags_and_challenges
-    end
-
+    prepare_table
     respond_to do |format|
       format.html
       format.markdown do
@@ -90,6 +80,19 @@ class GamesController < ApplicationController
   end
 
   private
+
+  def prepare_table
+    # The headings of the gameboard are either categories or teams, this loads based
+    # on the STI model that the game is based on.
+    @headings = @game&.load_categories_or_teams
+
+    if @game.is_a?(PointGame)
+      @table_rows = @game&.table_rows(@headings)
+    else
+      @table_heading = [OpenStruct.new(name: 'Teams'), @challenges].flatten
+      @teams_with_assoc = @game.teams_associated_with_flags_and_challenges
+    end
+  end
 
   # Creates a zip from any collection of files available on the user model.
   # For example, create_zip_of('resume') will create a zip of all resumes

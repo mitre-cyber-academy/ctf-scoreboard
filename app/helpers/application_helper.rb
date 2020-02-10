@@ -16,11 +16,11 @@ module ApplicationHelper
   end
 
   def organization_for_navbar(game)
-    @game&.organization || 'Gameboard'
+    game&.organization || 'Gameboard'
   end
 
   def unread_messages(num_unread)
-    num_unread if !num_unread&.eql? 0
+    num_unread unless num_unread&.eql? 0
   end
 
   def active_navbar?(page)
@@ -28,6 +28,6 @@ module ApplicationHelper
   end
 
   def amount_of_errors(alerts)
-   pluralize(alerts.length, 'error') + ':'
+    pluralize(alerts.length, 'error') + ':'
   end
 end
