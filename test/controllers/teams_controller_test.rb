@@ -305,4 +305,14 @@ class TeamsControllerTest < ActionController::TestCase
     assert_select 'h3', 'Team Members'
     assert_select 'h3', 'Per User Statistics'
   end
+
+  test 'summary pentest game' do
+    Game.first.destroy
+    create(:active_pentest_game)
+    team = create(:pentest_team)
+    captain = team.team_captain
+    sign_in captain
+    get :show, params: { id: captain.team }
+    assert_response :success
+  end
 end

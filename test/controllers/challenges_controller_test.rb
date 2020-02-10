@@ -16,6 +16,16 @@ class ChallengesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'show challenge pentest game' do
+    Game.first.destroy
+    game = create(:active_pentest_game)
+    team = create(:pentest_team)
+    challenge = create(:pentest_challenge_with_flags, pentest_game: game)
+    sign_in team.team_captain
+    get :show, params: { id: challenge, team_id: team }
+    assert_response :success
+  end
+
   test "submit any of the correct flags when on a team" do
     @user = create(:user_with_team)
     sign_in @user
@@ -96,5 +106,19 @@ class ChallengesControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal flash['alert'], I18n.t('devise.registrations.recaptcha_failed')
     Recaptcha.configuration.skip_verify_env << 'test'
+  end
+
+  test 'update pentest game' do
+    Game.first.destroy
+    game = create(:active_pentest_game)
+    team1 = create(:pentest_team)
+    team2 = create(:pentest_team)
+    # Creates a challenge for each team
+    challenge = create(:pentest_challenge_with_flags, pentest_game: game)
+    sign_in team1.team_captain
+    flag_text = challenge.flags.find_by(team_id: team2.id).flag
+    put :update, params: { id: challenge, team_id: team2, challenge: { submitted_flag: flag_text } }
+    assert_response :success
+    assert_equal flash[:notice], I18n.t('flag.accepted')
   end
 end
