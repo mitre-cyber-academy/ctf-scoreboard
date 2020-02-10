@@ -72,14 +72,11 @@ class Game < ApplicationRecord
     end
   end
 
-  # TODO: cleanup 4sure4sure
   def table_rows(headings)
-    max = 0
-    return max if type.eql? 'PentestGame'
+    return 0 if type.eql? 'PentestGame'
 
-    headings.each do |category|
-      max = [0, category.challenges.size].max
-    end
-    max
+    headings.map do |category|
+      category.challenges.size
+    end.max
   end
 end
