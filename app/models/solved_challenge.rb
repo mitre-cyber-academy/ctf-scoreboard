@@ -40,9 +40,4 @@ class SolvedChallenge < FeedItem
     challenge = category.next_challenge(challenge)
     challenge.state!('open') if challenge&.available?
   end
-
-  # This is overridden in the PointSolvedChallenges and PentestSolvedChallenges subclasses
-  def team_can_solve_challenge
-    errors.add(:base, I18n.t('challenges.already_solved'))
-  end
 end

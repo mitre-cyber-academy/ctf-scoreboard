@@ -119,4 +119,12 @@ class GamesControllerTest < ActionController::TestCase
     assert_redirected_to rails_admin_path
     assert_equal I18n.t('admin.download_not_available'), flash[:alert]
   end
+
+  test 'show pentest game' do
+    Game.first.destroy
+    game = create(:active_pentest_game)
+    create(:pentest_team_with_flags)
+    get :show
+    assert_response :success
+  end
 end
