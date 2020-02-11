@@ -23,9 +23,10 @@ class ApplicationController < ActionController::Base
   def load_game(*preload_objects)
     if (@game = Game.instance)
       preload_helper(*preload_objects)
-    else
-      redirect_to(new_user_session_path, alert: I18n.t('game.must_be_admin')) && return unless current_user&.admin?
+    elsif current_user&.admin?
       redirect_to(rails_admin.new_path('game'), notice: I18n.t('game.setup', href: I18n.t('game.setup_href')))
+    else
+      redirect_to(new_user_session_path, alert: I18n.t('game.must_be_admin'))
     end
   end
 

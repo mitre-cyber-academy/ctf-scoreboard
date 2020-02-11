@@ -46,15 +46,11 @@ class ChallengesController < ApplicationController
   end
 
   def find_and_log_flag
-    flag = params[:challenge][:submitted_flag] if params.key? :challenge
-    add_pentest_args = {}
-    if @game.is_a?(PentestGame)
-      add_pentest_args = { type: 'PentestSubmittedFlag', flag: @challenge, challenge: @challenge.challenge }
-    end
-    unless current_user.admin?
-      SubmittedFlag.create(user: current_user, challenge: @challenge, text: flag, **add_pentest_args)
-    end
-    @flag_found = @challenge.find_flag(flag) unless flag.nil?
+    flag = params[:challenge]&.[](:submitted_flag) # Safe navigation on a hash
+    return if flag.nil?
+
+    SubmittedFlag.create(user: current_user, challenge: @challenge, text: flag) unless current_user.admin?
+    @flag_found = @challenge.find_flag(flag)
   end
 
   def on_team?
