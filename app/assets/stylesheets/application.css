@@ -17,9 +17,9 @@
   display: inline-block;
 }
 .helpertext-wrapper-overflow {
+  display: block;
   overflow: hidden;
   text-overflow:ellipsis;
-  display: block;
 }
 .table-overflow {
   table-layout: fixed;
