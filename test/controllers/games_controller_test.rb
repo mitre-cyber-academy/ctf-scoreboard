@@ -3,7 +3,7 @@ require 'test_helper'
 class GamesControllerTest < ActionController::TestCase
 
   def setup
-    @game = create(:active_game, enable_completion_certificates: true)
+    @game = create(:active_point_game, enable_completion_certificates: true)
   end
 
   test "should get show" do
@@ -12,7 +12,7 @@ class GamesControllerTest < ActionController::TestCase
   end
 
   test 'cannot get summary before game is open' do
-    create(:unstarted_game)
+    create(:unstarted_point_game)
 
     get :summary
     assert_redirected_to @controller.user_root_path
@@ -25,7 +25,7 @@ class GamesControllerTest < ActionController::TestCase
   end
 
   test "should get summary after game" do
-    create(:ended_game)
+    create(:ended_point_game)
 
     get :summary
     assert_response :success
@@ -113,10 +113,18 @@ class GamesControllerTest < ActionController::TestCase
 
   test 'admin redirect when certificate template unavailable' do
     @game.destroy
-    @game = create(:active_game)
+    @game = create(:active_point_game)
     sign_in create(:admin)
     get :completion_certificate_template
     assert_redirected_to rails_admin_path
     assert_equal I18n.t('admin.download_not_available'), flash[:alert]
+  end
+
+  test 'show pentest game' do
+    Game.first.destroy
+    game = create(:active_pentest_game)
+    create(:pentest_team_with_flags)
+    get :show
+    assert_response :success
   end
 end

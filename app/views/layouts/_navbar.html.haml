@@ -1,0 +1,19 @@
+%a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+  %span.icon-bar
+  %span.icon-bar
+  %span.icon-bar
+= link_to(organization_for_navbar(@game), '/', class: 'brand')
+.nav-collapse.collapse
+  - if @game
+    %ul.nav
+      %li{:class => active_navbar?(game_path) }
+        = always_link_to_if_admin(@game.open?, t('application.navbar.challenges'), game_path){}
+      %li{:class => active_navbar?(game_messages_path) }
+        = link_to(t('application.navbar.messages'), game_messages_path)
+        %span.badge.badge-important= unread_messages(@unread_message_count)
+      %li{:class => active_navbar?(game_achievements_path) }
+        = always_link_to_if_admin(@game.open?, t('application.navbar.achievements'), game_achievements_path){}
+      %li{:class => active_navbar?(game_summary_path) }
+        = always_link_to_if_admin(@game.open?, t('application.navbar.summary'), game_summary_path){}
+      %li
+        = link_to_unless(@game.contact_url.blank?, t('application.navbar.contact'), @game.contact_url, target: '_blank'){}

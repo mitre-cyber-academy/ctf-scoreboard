@@ -1,0 +1,15 @@
+.control-group
+  .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('users.edit.help.resume') }
+    = f.label :resume, :class => "control-label"
+    .controls
+      = f.file_field :resume
+.control-group
+  .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('users.edit.help.transcript') }
+    = f.label :unofficial_transcript, :class => "control-label"
+    .controls
+      = f.file_field :transcript
+.control-group
+  .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('users.edit.help.password') }
+    = f.label :current_password, :class => "control-label-required"
+    .controls
+      = f.password_field :current_password, :class => "textarea"
