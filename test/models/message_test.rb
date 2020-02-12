@@ -2,7 +2,7 @@ require 'test_helper'
 
 class MessageTest < ActiveSupport::TestCase
   def setup
-    create(:active_game)
+    create(:active_point_game)
     create(:user_with_team)
   end
 

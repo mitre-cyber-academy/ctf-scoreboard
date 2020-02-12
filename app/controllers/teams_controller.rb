@@ -18,14 +18,15 @@ class TeamsController < ApplicationController
   def index; end
 
   def summary
-    @solved_challenges = @team&.solved_challenges&.includes(challenge: :category)
-
-    @flags_per_hour = @team.submitted_flags.group_by_hour('submitted_flags.created_at', format: '%l:%M %p').count
-    @flag_categories = @team.solved_challenges.joins(challenge: :category).group('categories.name').count
+    if @game.is_a?(PentestGame)
+      @defensive_points = @team.calc_defensive_points
+      @flag_categories = PentestSolvedChallenge.solves_by_category_for(@team)
+    else
+      @flag_categories = PointSolvedChallenge.solves_by_category_for(@team)
+    end
     @team_flag_submissions = [
-      { name: 'Flag Submissions', data: @flags_per_hour },
-      { name: 'Challenges Solved', data: @solved_challenges.group_by_hour('feed_items.created_at',
-                                                                          format: '%l:%M %p').count }
+      { name: 'Flag Submissions', data: @team.submitted_flags_per_hour },
+      { name: 'Challenges Solved', data: @team.solved_challenges_per_hour }
     ]
   end
 
@@ -33,6 +34,7 @@ class TeamsController < ApplicationController
 
   def new
     @team = Team.new
+    @divisions = Division.all
   end
 
   def show
@@ -50,8 +52,12 @@ class TeamsController < ApplicationController
     if @team.save
       redirect_to @team, notice: I18n.t('teams.create_successful')
     else
-      render :new
+      redirect_to new_team_path, alert: @team.errors.full_messages.flatten
     end
+  end
+
+  def edit
+    @divisions = Division.all
   end
 
   def update

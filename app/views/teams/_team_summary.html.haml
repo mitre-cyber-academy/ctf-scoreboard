@@ -1,56 +1,25 @@
 %h3.muted Team Flag Submissions
-- if @solved_challenges.count > 0
+- if @team.solved_challenges.size > 0
   = line_chart @team_flag_submissions, colors: ['#b8d12f', '#00abca']
 - else
-  .zero-items-text Nothing to Report
+  .zero-items-text= t('teams.summary.zero_items_text')
 %hr
 %div.row
   %div.span5
-    %h3.muted Solved Challenges
-    - if @solved_challenges.size == 0
-      .zero-items-text No Solved Challenges
+    %h3.muted= t('teams.summary.solved_challenges_header')
+    - if @team.solved_challenges.size == 0
+      .zero-items-text= t('teams.summary.zero_items_text')
     - else
-      %table.table.table-bordered.table-striped
-        %thead
-          %tr
-            %th #
-            %th Category
-            %th Points
-            %th When
-        %tbody
-          - @solved_challenges.each_with_index do |s, i|
-            %tr
-              %td= i + 1
-              %td= s.challenge.category.name
-              %td= s.challenge.point_value
-              %td= s.created_at.strftime("%b %e %y, %R %Z")
+      = render partial: 'teams/solved_challenges_table'
   %div.span7
-    %h3.muted Solved Challenge Categories
-    - if @solved_challenges.size == 0
-      .zero-items-text No Solved Challenges
+    %h3.muted= t('solved_challenges_chart_header')
+    - if @team.solved_challenges.size == 0
+      .zero-items-text= t('teams.summary.zero_items_text')
     - else
       = pie_chart @flag_categories
+- if @defensive_points
+  = render partial: 'teams/defensive_points_table'
+
 - if current_user&.admin?
-  %hr
-  %div.row
-    %div.span5
-      %h3.muted Team Members
-      %table.table.table-bordered.table-striped
-        %thead
-          %tr
-            %th User ID
-            %th Name
-            %th Email
-        %tbody
-          - @team.users.each do |user|
-            %tr
-              %td=link_to user.id, rails_admin.show_path("user", user)
-              %td= user.full_name
-              %td= user.email
-    %div.span7
-      %h3.muted Per User Statistics
-      - if @solved_challenges.size == 0
-        .zero-items-text Nothing to Report
-      - else
-        = column_chart @per_user_stats, legend: 'bottom', xtitle: "User ID", stacked: true, colors: ['#b8d12f', '#00abca']
+  = render partial: 'teams/admin_info_table'
 %br

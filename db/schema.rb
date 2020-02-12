@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_17_185553) do
+ActiveRecord::Schema.define(version: 2020_01_22_182004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,17 @@ ActiveRecord::Schema.define(version: 2020_01_17_185553) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "state", default: 0, null: false
+    t.integer "defense_period", default: 1
+    t.integer "defense_points", default: 0
+    t.integer "unsolved_increment_period", default: 1
+    t.integer "unsolved_increment_points", default: 0
+    t.integer "initial_shares", default: 0
+    t.integer "solved_decrement_shares", default: 0
+    t.integer "first_capture_point_bonus", default: 0
+    t.bigint "pentest_game_id"
+    t.string "type"
+    t.integer "solved_decrement_period", default: 1
+    t.index ["pentest_game_id"], name: "index_challenges_on_pentest_game_id"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -53,6 +64,7 @@ ActiveRecord::Schema.define(version: 2020_01_17_185553) do
     t.integer "game_id"
     t.integer "min_year_in_school", default: 0
     t.integer "max_year_in_school", default: 16
+    t.string "type"
   end
 
   create_table "feed_items", id: :serial, force: :cascade do |t|
@@ -73,6 +85,11 @@ ActiveRecord::Schema.define(version: 2020_01_17_185553) do
     t.string "flag"
     t.string "api_url"
     t.string "video_url"
+    t.bigint "team_id"
+    t.integer "challenge_state", default: 0, null: false
+    t.datetime "start_calculation_at"
+    t.string "type"
+    t.index ["team_id"], name: "index_flags_on_team_id"
   end
 
   create_table "games", id: :serial, force: :cascade do |t|
@@ -96,6 +113,7 @@ ActiveRecord::Schema.define(version: 2020_01_17_185553) do
     t.boolean "enable_completion_certificates", default: false
     t.oid "completion_certificate_template"
     t.text "prizes_text"
+    t.string "type"
     t.text "terms_and_conditions"
   end
 
@@ -144,6 +162,9 @@ ActiveRecord::Schema.define(version: 2020_01_17_185553) do
     t.string "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "flag_id"
+    t.string "type"
+    t.index ["flag_id"], name: "index_submitted_flags_on_flag_id"
   end
 
   create_table "teams", id: :serial, force: :cascade do |t|
@@ -243,5 +264,8 @@ ActiveRecord::Schema.define(version: 2020_01_17_185553) do
     t.index ["transaction_id"], name: "index_versions_on_transaction_id"
   end
 
+  add_foreign_key "challenges", "games", column: "pentest_game_id"
+  add_foreign_key "flags", "teams"
+  add_foreign_key "submitted_flags", "flags"
   add_foreign_key "teams", "divisions"
 end

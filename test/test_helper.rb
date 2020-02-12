@@ -17,10 +17,15 @@ class ActiveSupport::TestCase
   setup do
     ActionMailer::Base.deliveries = []
   end
+
+  teardown do
+    Rails.cache.clear
+  end
 end
 
 class ActionController::TestCase
   include Devise::Test::ControllerHelpers
+  include ActionView::Helpers::TextHelper
 end
 
 class ActionView::TestCase

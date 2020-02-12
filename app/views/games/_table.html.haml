@@ -1,0 +1,5 @@
+%table.table.table-bordered.table-bolded
+  - if @game.is_a?(PentestGame)
+    = render partial: 'games/pentest_game_table'
+  - else
+    = render partial: 'games/point_game_table'
