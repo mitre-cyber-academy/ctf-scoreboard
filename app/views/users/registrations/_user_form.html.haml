@@ -7,7 +7,6 @@
       %ul.errors
         - resource.errors.full_messages.each do |msg|
           %li= msg
-  %legend=legend
   %label.label-custom
     Note: Fields marked with
     %span{:style => "color: red;"} *
@@ -35,11 +34,11 @@
       .controls
         = f.select :state, options_for_select(state_enum, resource.state), { :include_blank => '' }, :onChange => "hidePrizesCheckbox()"
   .control-group
-    = f.label :password, :class => on_update_page ? "control-label" : "control-label-required"
+    = f.label :password, :class => required_for_update?(on_update_page)
     .controls
       = f.password_field :password, :input_html => {:autofocus => true}, :class => "textarea"
   .control-group
-    = f.label :password_confirmation, "Confirm Password", :class => on_update_page ? "control-label" : "control-label-required"
+    = f.label :password_confirmation, "Confirm Password", :class => required_for_update?(on_update_page)
     .controls
       = f.password_field :password_confirmation, :class => "textarea"
   .control-group#compete-for-prizes
@@ -64,30 +63,8 @@
   -# If a user is updating their information then on_update_page should be passed to the partial as true,
   -# if this is a new user registering then on_update_page should be false.
   - if on_update_page
-    .control-group
-      .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('users.edit.help.resume') }
-        = f.label :resume, :class => "control-label"
-        .controls
-          = f.file_field :resume
-    .control-group
-      .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('users.edit.help.transcript') }
-        = f.label :unofficial_transcript, :class => "control-label"
-        .controls
-          = f.file_field :transcript
-    .control-group
-      .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('users.edit.help.password') }
-        = f.label :current_password, :class => "control-label-required"
-        .controls
-          = f.password_field :current_password, :class => "textarea"
+    = render partial: 'users/registrations/update_user_form', locals: { f: f }
   .controls
     = invisible_recaptcha_tags text: 'Submit', :class => "btn"
 - if on_update_page
-  %hr
-  = form_for(resource, as: resource_name, url: registration_path(resource_name), :html => { :multipart => "true", :class => "form-horizontal"}, :method => :delete) do |f|
-    .control-group
-      .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('users.edit.help.destroy') }
-        = f.label :area_of_study, "Delete Account", :class => "control-label"
-        .controls
-          .input-append
-            = f.password_field :current_password, :class => "textarea", :placeholder => "Current Password"
-            = button_tag 'Delete Account', :label => 'Delete Account', :class => 'btn btn-danger', :data => { :confirm => t('users.destroy.confirm') }
+  = render partial: 'users/registrations/delete_user_form'

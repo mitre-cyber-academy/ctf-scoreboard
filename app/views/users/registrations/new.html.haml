@@ -1,4 +1,4 @@
 - content_for :header do
   Register for the CTF
 
-= render "user_form", on_update_page: false, legend: "Almost there! Please fill out a few fields to create your account."
+= render partial: 'user_form', locals: { on_update_page: false }

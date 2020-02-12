@@ -1,6 +1,6 @@
 - content_for :header do
   Access Your Account
-%legend Login
+%legend= t('users.new.sessions_legend')
 = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-horizontal"}) do |f|
   .control-group
     = f.label :email, :class => "control-label"

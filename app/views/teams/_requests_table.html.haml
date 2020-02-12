@@ -1,0 +1,27 @@
+%table.table.table-condensed.table-striped.table-overflow
+  %thead
+  %tr
+    %th.span2
+      Email
+    %th
+      Prize Eligible?
+    %th
+      Requested On
+    - if @team_captain
+      %th
+        Accept?
+  - @pending_requests.each do |current|
+    %tbody
+      %tr{:class=>'warning'}
+        %td
+          .helpertext-wrapper-overflow{  'data-toggle' => 'tooltip', 'data-placement' => 'bottom', :title => current.user.email }
+            =current.user.email
+        %td
+          = eligible?(current)
+        %td= current.created_at.strftime("%b %d %Y")
+        - if @team_captain
+          %td
+            = link_to accept_team_user_request_path(@team,current) do
+              %i.icon-ok
+            = link_to team_user_request_path(@team, current), method: :delete, data: { confirm: t('teams.show.reject_request_confirm') } do
+              %i.icon-remove

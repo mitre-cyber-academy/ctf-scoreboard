@@ -3,23 +3,13 @@
 FactoryBot.define do
   factory :feed_item do
     text { 'Did something good or bad' }
-    team
 
-    factory :achievement, class: 'Achievement' do
-      type { 'Achievement' }
-      point_value { 100 }
+    factory :point_feed_item do
+      team { create(:point_team) }
     end
 
-    factory :score_adjustment, class: 'ScoreAdjustment' do
-      type { 'ScoreAdjustment' }
-      point_value { 100 }
-    end
-
-    factory :solved_challenge, class: 'SolvedChallenge' do
-      type { 'SolvedChallenge' }
-      division { team.division }
-      challenge
-      flag { challenge.flags.sample }
+    factory :pentest_feed_item do
+      team { create(:pentest_team) }
     end
   end
 end

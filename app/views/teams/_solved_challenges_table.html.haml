@@ -1,0 +1,14 @@
+%table.table.table-bordered.table-striped
+  %thead
+    %tr
+      %th #
+      %th= category_header(@game)
+      %th Points
+      %th When
+  %tbody
+    - @team.solved_challenges.each_with_index do |s, i|
+      %tr
+        %td= i + 1
+        %td= solved_challenge_title(@game, s)
+        %td= s.challenge.point_value
+        %td= s.created_at.strftime("%b %e %y, %R %Z")

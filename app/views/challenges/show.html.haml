@@ -1,25 +1,27 @@
+-# For PentestGames, @challenge here can actually be a flag object since Pentest challenges belong to teams + challenges and are linked by a flag object.
+
 - content_for :admin_menu do
-  %li= link_to %[Edit "#{@challenge.name}"], rails_admin.edit_path("challenge", @challenge.id)
+  %li= link_to "Edit #{@challenge.name}", admin_edit_url(@challenge)
 
 - content_for :header do
   = @challenge.name
 
 - content_for :subheading do
-  - "#{@challenge.category.name} - #{@challenge.point_value} points"
+  = subheading(@defense_team, @challenge)
 
 %div{ :style => "margin-bottom:40px;" }
   %h3
     Description
   - if @challenge.description.blank?
-    No description
+    = t('challenges.show.no_desc')
   - else
     = sanitize(Kramdown::Document.new(@challenge.description).to_html)
 - if !@solved_video_url.blank?
   .embed-container
     = embed(@solved_video_url)
 
-- if !@solved_challenge
-  = form_for @challenge, url: game_challenge_path(@challenge), method: "put", html: { class: "well", style: "margin-bottom:40px;" } do |f|
+- if @solvable
+  = form_for :challenge, url: submit_url(@defense_team, @challenge), method: "put", html: { class: "well", style: "margin-bottom:40px;" } do |f|
     .control-group
       %p Submit Flag
     .control-group
