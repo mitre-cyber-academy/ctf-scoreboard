@@ -42,14 +42,19 @@ Rails.application.routes.draw do
   end
 
   # game
-  resource :game, only: [:show] do
+  resource :game, only: %i[show] do
     get :resumes
     get :transcripts
+    get :completion_certificate_template
+    get :terms_of_service
+    get :terms_and_conditions
     resources :messages, only: [:index]
     resources :achievements, only: [:index]
     resources :divisions, only: [:index]
     resources :flags, only: [:index] # Prank route!
-    resources :challenges, only: %i[show update] do
+    resources :challenges, only: %i[show update]
+    resources :teams, only: [] do
+      resources :challenges, only: %i[show update]
     end
   end
 

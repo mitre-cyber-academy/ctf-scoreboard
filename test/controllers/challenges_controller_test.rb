@@ -4,24 +4,36 @@ class ChallengesControllerTest < ActionController::TestCase
   include ChallengesHelper
 
   def setup
-    @request.env["devise.mapping"] = Devise.mappings[:user]
+    create(:active_point_game)
+    @challenge = create(:point_challenge, flag_count: 3)
   end
 
   test 'should get show' do
-    sign_in users(:user_one)
+    sign_in create(:user_with_team)
     get :show, params: {
-      id: challenges(:challenge_one_cat_one)
+      id: @challenge
     }
     assert_response :success
   end
 
-  test 'submit correct flag' do
-    sign_in users(:user_one)
+  test 'show challenge pentest game' do
+    Game.first.destroy
+    game = create(:active_pentest_game)
+    team = create(:pentest_team)
+    challenge = create(:pentest_challenge_with_flags, pentest_game: game)
+    sign_in team.team_captain
+    get :show, params: { id: challenge, team_id: team }
+    assert_response :success
+  end
+
+  test "submit any of the correct flags when on a team" do
+    @user = create(:user_with_team)
+    sign_in @user
     assert_difference 'SubmittedFlag.count', +1 do
       put :update, params: {
-        id: challenges(:challenge_one_cat_one),
+        id: @challenge,
         challenge: {
-          submitted_flag: flags(:flag_one).flag
+          submitted_flag: @challenge.flags.sample.flag
         }
       }
     end
@@ -29,11 +41,11 @@ class ChallengesControllerTest < ActionController::TestCase
     assert_equal flash[:notice], I18n.t('flag.accepted')
   end
 
-  test 'submit incorrect flag' do
-    sign_in users(:user_one)
+  test 'submit incorrect flag when on team' do
+    sign_in create(:user_with_team)
     assert_difference 'SubmittedFlag.count', +1 do
       put :update, params: {
-        id: challenges(:challenge_one_cat_one),
+        id: create(:point_challenge),
         challenge: {
           submitted_flag: "wrong"
         }
@@ -44,11 +56,12 @@ class ChallengesControllerTest < ActionController::TestCase
   end
 
   test 'can not submit flag with no team' do
-    sign_in users(:user_two)
+    sign_in create(:user)
+    @challenge = create(:point_challenge)
     put :update, params: {
-      id: challenges(:challenge_one_cat_one),
+      id: @challenge,
       challenge: {
-        submitted_flag: flags(:flag_one).flag
+        submitted_flag: @challenge.flags.sample.flag
       }
     }
     assert :success
@@ -57,9 +70,9 @@ class ChallengesControllerTest < ActionController::TestCase
 
   test 'can not submit flag with no flag' do
     assert_no_difference 'SubmittedFlag.count' do
-      sign_in users(:user_one)
+      sign_in create(:user_with_team)
       put :update, params: {
-        id: challenges(:challenge_one_cat_one)
+        id: create(:point_challenge)
       }
     end
     assert :success
@@ -68,19 +81,44 @@ class ChallengesControllerTest < ActionController::TestCase
 
   test 'can not submit flag with no user' do
     put :update, params: {
-      id: challenges(:challenge_one_cat_one),
+      id: @challenge,
       challenge: {
-        submitted_flag: flags(:flag_one).flag
+        submitted_flag: @challenge.flags.sample.flag
       }
     }
     assert :success
     assert true, wrong_flag_messages.include?(flash[:notice])
   end
 
-  # Private methods
-  test 'should get find_challenge' do
+  test 'submit flag with bad captcha' do
+    Recaptcha.configuration.skip_verify_env.delete('test')
+    Recaptcha.configure do |config|
+      config.site_key = 'test_key'
+      config.secret_key = 'test_key'
+    end
+    user = create(:user_with_team)
+    sign_in user
+    put :update, params: {
+      id: @challenge , challenge: {
+        submitted_flag: @challenge.flags.sample.flag
+      }
+    }
+    assert_response :success
+    assert_equal flash['alert'], I18n.t('devise.registrations.recaptcha_failed')
+    Recaptcha.configuration.skip_verify_env << 'test'
   end
 
-  test 'should find and log flag' do
+  test 'update pentest game' do
+    Game.first.destroy
+    game = create(:active_pentest_game)
+    team1 = create(:pentest_team)
+    team2 = create(:pentest_team)
+    # Creates a challenge for each team
+    challenge = create(:pentest_challenge_with_flags, pentest_game: game)
+    sign_in team1.team_captain
+    flag_text = challenge.flags.find_by(team_id: team2.id).flag
+    put :update, params: { id: challenge, team_id: team2, challenge: { submitted_flag: flag_text } }
+    assert_response :success
+    assert_equal flash[:notice], I18n.t('flag.accepted')
   end
 end

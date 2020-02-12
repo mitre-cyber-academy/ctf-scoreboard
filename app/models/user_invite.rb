@@ -15,8 +15,6 @@ class UserInvite < ApplicationRecord
 
   validates :email, :team, presence: true
 
-  validates :email, email: true
-
   validates :status, inclusion: { in: statuses.keys }
 
   # Get only invites in the pending status.

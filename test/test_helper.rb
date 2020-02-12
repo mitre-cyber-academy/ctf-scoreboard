@@ -1,33 +1,50 @@
 require 'coveralls'
 Coveralls.wear!('rails')
 
+if ENV['LOCAL_COVERAGE']
+  SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
+    SimpleCov::Formatter::HTMLFormatter,
+  ])
+end
+
 ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
 class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
-  #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
-  fixtures :all
+  include FactoryBot::Syntax::Methods
 
   setup do
     ActionMailer::Base.deliveries = []
+  end
+
+  teardown do
+    Rails.cache.clear
   end
 end
 
 class ActionController::TestCase
   include Devise::Test::ControllerHelpers
-
-  def add_resume_transcript_to(user)
-    user.resume = File.open(Rails.root.join('test/files/regular.pdf'))
-    user.transcript = File.open(Rails.root.join('test/files/regular.pdf'))
-    user.save!
-    user
-  end
+  include ActionView::Helpers::TextHelper
 end
 
 class ActionView::TestCase
   include Devise::Test::ControllerHelpers
+end
+
+# Construct the minimum parameters for user creation via controller action.
+def build_user_params(user_obj)
+  params = {
+    'full_name': user_obj.full_name,
+    'email': user_obj.email,
+    'affiliation': user_obj.affiliation,
+    'year_in_school': user_obj.year_in_school,
+    'state': user_obj.state,
+    'password': user_obj.password,
+    'password_confirmation': user_obj.password,
+  }
+end
+
+def remove_html_artifacts(email_body)
+  strip_tags(email_body).gsub('=0D', '').gsub('E2=80=A6', '').gsub('=', '').gsub("\r", '').gsub("\n", '')
 end

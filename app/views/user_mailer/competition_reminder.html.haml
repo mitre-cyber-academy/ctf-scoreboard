@@ -3,29 +3,7 @@
 %p.pull-right#clock
   %aS
     #time_remaining
-      This is a reminder for the upcoming MITRE CTF which will start at #{@game.start}.
+      This is a reminder for the upcoming #{@game.organization} #{@game.title} which will start at #{@game.start}.
 %p Click the link below to login and check your account
-%p #{link_to 'MITRE CTF', home_index_url}.
-:coffeescript
-  countdown = (endTime) ->
-    diff = endTime - new Date()
-    diff = 0 if diff < 0
-    days = Math.floor(diff/1000/60/60/24)
-    diff -= days * 1000*60*60*24
-    hours = Math.floor(diff/1000/60/60)
-    diff -= hours * 1000*60*60
-    minutes = Math.floor(diff/1000/60)
-    diff -= minutes * 1000*60
-    seconds = Math.floor(diff/1000)
-    return {"days": days, "hours": hours, "minutes":minutes, "seconds":seconds}
-
-  updateClock = (clock_elem) ->
-    t = countdown(new Date(#{@game.start.to_f * 1000}))
-    clock_elem.innerHTML = 'This is a reminder for the upcoming MITRE CTF which will start at #{@game.start}, which is in <b>' + t.days + 'd ' + t.hours + 'h ' + t.minutes + 'm ' + t.seconds + 's</b>'
-    if t.total <= 0
-      clearInterval timeinterval
-    return
-
-  clock = document.getElementById('time_remaining')
-  updateClock(clock)
-  setInterval(updateClock, 1000, clock)
+%p #{link_to @game.title, home_index_url}.
+= render partial: 'layouts/countdown', locals: { endTime: @game.stop }

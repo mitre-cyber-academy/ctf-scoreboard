@@ -1,4 +1,4 @@
-- if teams.size.eql? 0
+- if teams.nil? or teams.size.eql? 0
   .zero-items-text No Teams
 - else
   - max = 0
@@ -21,7 +21,7 @@
       - percent = score.to_f / max.to_f * 100.0
         %tr
           %td= i + 1
-          %td.break-word= link_to t.display_name, summary_team_path(t)
+          %td.break-word= link_to display_name(t), summary_team_path(t)
           %td= t.achievements.size
           %td= score
           %td

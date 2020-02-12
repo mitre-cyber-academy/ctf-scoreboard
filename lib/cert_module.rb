@@ -4,7 +4,7 @@ module CertModule
   class CompletionPdf < Prawn::Document
     def initialize(options)
       set_fallback_fonts
-      options[:background] ||= Rails.root.join('templates/ctf-certificate-template.jpg')
+      options[:background] ||= StringIO.new(Game.instance.completion_certificate_template.read)
       options[:margin] ||= 0
       super(options)
     end

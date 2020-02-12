@@ -21,6 +21,7 @@ gem 'geocoder'
 gem 'groupdate'
 gem 'haml-rails'
 gem 'highcharts-rails'
+gem 'highline'
 gem 'jquery-rails'
 gem 'kaminari'
 gem 'kramdown'
@@ -32,7 +33,6 @@ gem 'pg'
 gem 'prawn'
 gem 'rails', '~> 5.2.1'
 gem 'rails_admin', '~> 2.0', git: 'https://github.com/sferik/rails_admin.git'
-gem 'rails_email_validator'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'rubyzip'
 gem 'sentry-raven'
@@ -43,6 +43,8 @@ group :development do
 end
 
 group :development, :test do
+  gem 'factory_bot_rails'
+  gem 'faker'
   gem 'pry-remote'
 end
 

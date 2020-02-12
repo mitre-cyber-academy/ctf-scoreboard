@@ -6,13 +6,19 @@ class Team < ApplicationRecord
 
   # Rank is an attribute that can be added to the team model on the fly however
   # it has no value by default. This allows us to cache a teams current rank
-  # without having to hit the database to calculate it.
-  attr_accessor :rank
+  # without having to hit the database to calculate it.#
+  #
+  # Current_score is so we don't have to have any logic to handle
+  # which class we are rendering in the game summary view.
+  attr_accessor :rank, :current_score
 
+  # This has_many is only applicable to PentestGames
+  has_many :flags, class_name: 'PentestFlag', dependent: :destroy
   has_many :feed_items, dependent: :destroy
   has_many :achievements, dependent: :destroy
-  has_many :solved_challenges, dependent: :destroy
-  has_many :users, after_remove: :update_captain_and_eligibility, dependent: :nullify
+  has_many :score_adjustments, inverse_of: :team, dependent: :destroy
+  has_many :solved_challenges, inverse_of: :team, dependent: :destroy
+  has_many :users, dependent: :nullify
   has_many :user_invites, dependent: :destroy
   has_many :user_requests, dependent: :destroy
   has_many :submitted_flags, through: :users, dependent: :destroy
@@ -23,7 +29,7 @@ class Team < ApplicationRecord
   validates :team_name, :affiliation, presence: true, length: { maximum: 255 }, obscenity: true
   validates :team_name, uniqueness: { case_sensitive: false }
 
-  after_save :update_captain_and_eligibility
+  after_save :refresh_team_info
 
   filterrific(
     available_filters: %i[
@@ -61,13 +67,8 @@ class Team < ApplicationRecord
     where(id: appropriate_teams)
   }
 
-  # A team can only consist of 5 users.
-  def slots_available
-    5 - users.size
-  end
-
   def in_top_ten?
-    !solved_challenges.empty? && (division.ordered_teams[0..9].include? self)
+    !solved_challenges.size.zero? && (division.ordered_teams[0..9].include? self)
   end
 
   def appropriate_division_level?
@@ -76,13 +77,9 @@ class Team < ApplicationRecord
     (users.collect(&:year_in_school) - division.acceptable_years_in_school).empty?
   end
 
-  def team_competing_for_prizes?
-    users.collect(&:compete_for_prizes).uniq.eql? [true]
-  end
-
-  # If no slots are available then mark the team as full.  Makes new query to make sure result is accurate
+  # If no slots are available then mark the team as full.
   def full?
-    users.count.eql? 5
+    slots_available.zero?
   end
 
   def find_rank
@@ -118,54 +115,61 @@ class Team < ApplicationRecord
   def promote(user_id)
     new_captain = users.find_by(id: user_id)
     update(team_captain: new_captain) if new_captain
-    !new_captain.nil?
-  end
-
-  def update_eligibility
-    new_eligibility = team_competing_for_prizes? && appropriate_division_level?
-    # Check if eligibility is different from what is saved on the team object and
-    # if it is update the team model.
-    update(eligible: new_eligibility) unless new_eligibility.eql? eligible?
   end
 
   def score
-    feed_items.where(type: %w[SolvedChallenge ScoreAdjustment])
-              .joins(
-                'LEFT JOIN challenges ON challenges.id = feed_items.challenge_id'
-              )
-              .pluck(:point_value, :'challenges.point_value').flatten.compact.sum
-  end
-
-  def display_name
-    return self[:team_name] if eligible?
-
-    self[:team_name] + ' (ineligible)'
+    division.ordered_teams.detect { |team| team.id.eql?(id) }&.current_score || 0
   end
 
   # After remove callback passes a parameter which is the object that was just removed, we don't need it
   # so we just throw it away
-  def update_captain_and_eligibility(*)
+  def refresh_team_info(*)
     reload # SQL caching causing users to be empty when creating team making all teams ineligible
     set_team_captain
-    update_eligibility
+    set_slots_available
+    set_eligibility
+    cleanup
   end
 
-  # generates the body of the email certificate
-  def generate_certificate_body(doc, user_full_name, rank)
-    doc.bounding_box([55, 200], width: 640, height: 200) do
-      doc.font('Helvetica-Bold', size: 18) do
-        doc.text(I18n.t('users.team_completion_cert_string',
-                        full_name: user_full_name, team_name: team_name,
-                        score: score, rank: rank, team_size: division.teams.size),
-                 color: '005BA1', align: :center, leading: 4)
-      end
-    end
+  def calc_defensive_points
+    flags.map do |flag|
+      [flag.name, flag.calc_defensive_points.round]
+    end.to_h
+  end
+
+  def submitted_flags_per_hour
+    submitted_flags.group_by_hour('submitted_flags.created_at', format: '%l:%M %p').count || 0
+  end
+
+  def solved_challenges_per_hour
+    solved_challenges.group_by_hour('feed_items.created_at', format: '%l:%M %p').count || 0
   end
 
   private
 
   # If a team doesn't have a team captain but does have a user, set the team captain to the first user.
   def set_team_captain
-    update(team_captain: users.first) if team_captain.nil? && !users.empty?
+    if users.empty?
+      users << team_captain unless team_captain.nil?
+    elsif team_captain.nil?
+      update(team_captain: users.first)
+    end
+  end
+
+  # Number of users on team is calculated using game team size
+  def set_slots_available
+    updated_slots_available = Game.instance.team_size - users.count
+    update(slots_available: updated_slots_available) unless updated_slots_available.eql? slots_available
+  end
+
+  def set_eligibility
+    new_eligibility = competing_for_prizes? && appropriate_division_level?
+    # Check if eligibility is different from what is saved on the team object and
+    # if it is update the team model.
+    update(eligible: new_eligibility) unless new_eligibility.eql? eligible?
+  end
+
+  def competing_for_prizes?
+    users.collect(&:compete_for_prizes).uniq.eql? [true]
   end
 end

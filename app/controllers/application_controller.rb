@@ -3,13 +3,11 @@
 # Main controller for the application, handles redirects for the user login to the correct pages
 # and sets devise parameters.
 class ApplicationController < ActionController::Base
-  include SessionsHelper
-
   protect_from_forgery with: :exception
 
+  before_action :store_user_location, if: :storable_location?
   before_action :set_paper_trail_whodunnit
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :set_mailer_host
   helper :all
 
   def user_root_path
@@ -22,18 +20,20 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def load_game
-    @game = Game.instance
+  def load_game(*preload_objects)
+    if (@game = Game.instance)
+      preload_helper(*preload_objects)
+    elsif current_user&.admin?
+      redirect_to(rails_admin.new_path('game'), notice: I18n.t('game.setup', href: I18n.t('game.setup_href')))
+    else
+      redirect_to(new_user_session_path, alert: I18n.t('game.must_be_admin'))
+    end
   end
 
   def load_message_count
     return if current_user.nil?
 
     @unread_message_count = @game.messages.where('updated_at >= :time', time: current_user.messages_stamp).count
-  end
-
-  def set_mailer_host
-    ActionMailer::Base.default_url_options[:host] = request.host_with_port
   end
 
   # Only allow access to information specific to the game when the game is actually open
@@ -63,6 +63,22 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def preload_helper(*preload_objects)
+    pl = ActiveRecord::Associations::Preloader.new
+    preload_objects.filter! do |table|
+      table.is_a?(Hash) ? @game.respond_to?(table.keys.first) : @game.respond_to?(table)
+    end
+    pl.preload(@game, preload_objects)
+  end
+
+  def storable_location?
+    request.get? && is_navigational_format? && !devise_controller? && !request.xhr?
+  end
+
+  def store_user_location
+    store_location_for(:user, request.fullpath)
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(
       :sign_up,
@@ -75,6 +91,6 @@ class ApplicationController < ActionController::Base
   end
 
   def enforce_access
-    deny_access unless current_user
+    redirect_to new_user_session_path, notice: I18n.t('users.login_required') unless current_user
   end
 end

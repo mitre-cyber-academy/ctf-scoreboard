@@ -1,0 +1,7 @@
+- content_for :header do
+  Terms of Service
+
+- if @game&.terms_of_service.blank?
+  = t('game.no_terms_of_service')
+- else
+  = sanitize(Kramdown::Document.new(@game&.terms_of_service).to_html)

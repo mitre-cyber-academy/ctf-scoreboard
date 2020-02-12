@@ -1,0 +1,34 @@
+%table.table.table-condensed.table-striped.table-overflow
+  %thead
+  %tr
+    %th.span2
+      Email
+    %th
+      Prize Eligible?
+    %th
+      Division
+    - if @team_captain
+      %th
+        Cancel Invite
+  - @pending_invites.each do |current|
+    %tbody
+      %tr{:class=>'warning'}
+        %td
+          .helpertext-wrapper-overflow{ 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', :title => current.email }
+            = current.email
+        %td
+          - if current.user.nil?
+            .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('teams.show.eligible_help') }
+              %i.icon-question-sign
+          - else
+            = eligible?(current)
+        %td
+          - if current.user.nil?
+            .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('teams.show.eligible_help') }
+              %i.icon-question-sign
+          - else
+            = current.user.division
+        - if @team_captain
+          %td
+            = link_to team_user_invite_path(@team, current), method: :delete, data: { confirm: t('teams.show.cancel_invite.confirm') } do
+              %i.icon-remove

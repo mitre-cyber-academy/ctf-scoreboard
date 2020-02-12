@@ -1,7 +1,7 @@
-= @game.name
-= '=' * @game.name.length
+= @game.title
+= '=' * @game.title.length
 
-- @categories.each do |category|
+- @headings.each do |category|
   = "\n\#\#\# #{category.name}\n"
   %table
     %tr

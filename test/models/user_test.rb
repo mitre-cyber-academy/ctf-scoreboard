@@ -2,106 +2,121 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    @user_in_school = User.create!(
-      full_name: 'User one',
-      email: 'user4@test.com',
-      affiliation: 'School',
-      year_in_school: 12,
-      state: 'FL',
-      password: 'TestPassword123'
-    )
-    @user_out_of_school = User.create!(
-      full_name: 'User two',
-      email: 'user5@test.com',
-      affiliation: 'Out of School',
-      year_in_school: 0,
-      state: 'FL',
-      password: 'TestPassword123',
-      compete_for_prizes: true
-    )
-    @user_out_of_state = User.create!(
-      full_name: 'User two',
-      email: 'user6@test.com',
-      affiliation: 'Out of School',
-      year_in_school: 12,
-      state: 'NA',
-      password: 'TestPassword123',
-      compete_for_prizes: true
-    )
+    create(:active_point_game)
   end
 
   test 'default compete for prizes value is false if none is provided' do
-    assert_equal(false, @user_in_school.compete_for_prizes)
+    user = create(:user)
+    assert_equal(false, user.compete_for_prizes)
   end
 
   test 'user must be in school to compete for prizes' do
-    assert_equal(false, @user_out_of_school.compete_for_prizes)
+    user = create(:user, year_in_school: 0, compete_for_prizes: true)
+    assert_equal(false, user.compete_for_prizes)
   end
 
   test 'user must be in the US to compete for prizes' do
-    assert_equal(false, @user_out_of_state.compete_for_prizes)
+    user = create(:user, year_in_school: 12, state: 'NA', compete_for_prizes: true)
+    assert_equal(false, user.compete_for_prizes)
   end
 
   test 'user previously not in the US can compete for prizes' do
-    @user_out_of_state.state = 'FL'
-    @user_out_of_state.compete_for_prizes = true
-    assert @user_out_of_state.save
-    assert_equal(true, @user_out_of_state.compete_for_prizes)
+    user = create(:user, year_in_school: 12, state: 'NA', compete_for_prizes: false)
+    user.update(state: 'FL', compete_for_prizes: true)
+    assert_equal(true, user.compete_for_prizes)
   end
 
   test 'user is a team captain' do
-    assert_equal(true, users(:user_one).team_captain?)
-    assert_equal(false, users(:user_two).team_captain?)
+    team = create(:point_team, additional_member_count: 1)
+    captain = team.team_captain
+    non_captain = team.users.where.not(id: captain).first
+    assert_equal(true, captain.team_captain?)
+    assert_equal(false, non_captain.team_captain?)
   end
 
-  test 'user can promote a a team captain if they are currently captain' do
-    team_captain = users(:full_team_user_one)
-    user_on_team = users(:full_team_user_two)
-    assert_equal(true, team_captain.can_promote?(user_on_team))
+  test 'user can promote a team captain if they are currently captain' do
+    team = create(:point_team, additional_member_count: 1)
+    captain = team.team_captain
+    non_captain = team.users.where.not(id: captain).first
+    assert_equal(true, captain.can_promote?(non_captain))
   end
 
   test 'team captain cannot promote themselves team captain' do
-    team_captain = users(:full_team_user_one)
-    assert_equal(false, team_captain.can_promote?(team_captain))
+    team = create(:point_team, additional_member_count: 2)
+    captain = team.team_captain
+    assert_equal(false, captain.can_promote?(captain))
   end
 
   test 'non team captain cannot promote a team captain' do
-    user_on_team = users(:full_team_user_two)
-    another_user = users(:full_team_user_three)
-    assert_equal(false, user_on_team.can_promote?(another_user))
+    team = create(:point_team, additional_member_count: 2)
+    captain = team.team_captain
+    player_list = team.users.where.not(id: captain)
+    assert_equal(false, player_list.first.can_promote?(player_list.last))
   end
 
   test 'team captain can remove themselves from a team' do
-    team_captain = users(:full_team_user_one)
-    assert_equal(true, team_captain.can_remove?(team_captain))
+    team = create(:point_team, additional_member_count: 2)
+    captain = team.team_captain
+    assert_equal(true, captain.can_remove?(captain))
   end
 
   test 'team captain can remove a member from his team' do
-    team_captain = users(:full_team_user_one)
-    user_on_team = users(:full_team_user_two)
-    assert_equal(true, team_captain.can_remove?(user_on_team))
+    team = create(:point_team, additional_member_count: 2)
+    captain = team.team_captain
+    assert_equal(true, captain.can_remove?(captain))
+    non_captain = team.users.where.not(id: captain).first
+    assert_equal(true, captain.can_remove?(non_captain))
   end
 
   test 'user can remove themselves from a team' do
-    user_on_team = users(:full_team_user_two)
-    assert_equal(true, user_on_team.can_remove?(user_on_team))
+    team = create(:point_team, additional_member_count: 1)
+    captain = team.team_captain
+    non_captain = team.users.where.not(id: captain).first
+    assert_equal(true, non_captain.can_remove?(non_captain))
   end
 
   test 'non team captain cannot remove another user from a team' do
-    user_on_team = users(:full_team_user_two)
-    another_user = users(:full_team_user_three)
-    assert_equal(false, user_on_team.can_remove?(another_user))
+    team = create(:point_team, additional_member_count: 2)
+    captain = team.team_captain
+    player_list = team.users.where.not(id: captain)
+    assert_equal(false, player_list.first.can_remove?(player_list.last))
   end
 
-  test 'users country is calculated on save' do
-    # Users current_sign_in_ip is set to a US held IP
-    user = users(:full_team_user_one)
-    user.save
-    assert user.geocoded?
-    assert_equal 'United States', user.country
+  stubs = [
+    {'country' => 'USA', 'country_code' => 'US'},
+    {'country' => 'RSA', 'country_code' => 'ZA'},
+    {'country' => 'PRC', 'country_code' => 'CN'},
+    {'country' => 'ROC', 'country_code' => 'TW'},
+    {'country' => 'country', 'country_code' => 'country'}
+  ]
+
+  countries = [
+    'United States',
+    'South Africa',
+    'China',
+    'Taiwan',
+    'country'
+  ]
+
+  unless ENV['TEST_OFFLINE']
+    stubs.each_with_index do |stub, idx|
+      Geocoder::Lookup::Test.reset
+      test "users country is calculated on save #{stub['country_code']}" do
+        Geocoder::Lookup::Test.set_default_stub([stub])
+        user = build(:user, current_sign_in_ip: '3.1.1.1')
+        user.save
+        assert user.geocoded?
+        assert_equal countries[idx], user.country
+      end
+      Geocoder::Lookup::Test.reset
+    end
   end
 
-  test 'transform replaces bad characters' do
-    assert_equal 'abcs_123_', (ApplicationRecord.transform'@Bc$_#123!%^&*()] [/\\')
+  test 'link to invitiations' do
+    team = create(:point_team)
+    invite = create(:point_user_invite, team: team)
+    user = create(:user, email: invite.email)
+    invite.reload
+    assert_equal user, invite.user
   end
 end

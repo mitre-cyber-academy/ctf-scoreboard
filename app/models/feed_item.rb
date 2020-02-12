@@ -6,13 +6,13 @@ class FeedItem < ApplicationRecord
   belongs_to :challenge, optional: true
   belongs_to :division, optional: true
 
-  validates :type, inclusion: %w[SolvedChallenge Achievement ScoreAdjustment]
+  validates :type, inclusion: %w[PointSolvedChallenge PentestSolvedChallenge Achievement ScoreAdjustment]
 
   def description
-    self.class
+    self.class.name
   end
 
-  def icon
-    ''
+  def icon(icon)
+    icon
   end
 end

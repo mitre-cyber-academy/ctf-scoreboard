@@ -3,7 +3,7 @@ require 'test_helper'
 class MessagesControllerTest < ActionController::TestCase
 
   def setup
-    @request.env["devise.mapping"] = Devise.mappings[:user]
+    create(:active_point_game)
   end
 
   test 'index' do

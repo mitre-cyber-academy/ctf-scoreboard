@@ -1,0 +1,9 @@
+= form_for(@team, url: invite_team_path) do |team|
+  %h4= t('teams.show.invite_member_header')
+  = team.fields_for :user_invites, @team.user_invites.build do |invite_fields|
+    .control-group
+      = invite_fields.label :email, :class => "control-label"
+      .controls
+        = invite_fields.email_field :email, :class => "textarea"
+  .controls
+    = team.submit t('teams.show.invite_button'), :class => "btn"

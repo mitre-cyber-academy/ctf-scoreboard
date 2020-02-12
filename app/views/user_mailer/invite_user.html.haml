@@ -3,9 +3,10 @@
 %p
   You have been invited to join the team
   %b #{@team.team_name}
-  for the upcoming MITRE CTF
-%p Click the link below to register an account in order to accept the invitation.
+  for the upcoming #{@game.organization} #{@game.title}
 - if @invite.user.nil?
+  %p Click the link below to register an account to view the invitation.
   %p= link_to 'Create my account', new_user_registration_url(:email => @invite.email)
 - else
-  %p= link_to 'View and accept or reject the invitation', join_team_users_url
+  %p Click the link below to view the invitiation.
+  %p= link_to 'View invitation', join_team_users_url

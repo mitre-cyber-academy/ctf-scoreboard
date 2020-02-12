@@ -21,7 +21,7 @@ class User < ApplicationRecord
   mount_uploader :resume, ResumeUploader
   mount_uploader :transcript, TranscriptUploader
 
-  belongs_to :team, counter_cache: true, optional: true
+  belongs_to :team, optional: true
   has_many :feed_items, dependent: :destroy
   has_many :user_invites, dependent: :destroy
   has_many :user_requests, dependent: :destroy
@@ -33,20 +33,18 @@ class User < ApplicationRecord
   scope :interested_in_employment, -> { where(interested_in_employment: true) }
 
   reverse_geocoded_by :latitude, :longitude do |obj, results|
-    if (geo = results.first)
-      obj.country = case geo.country
-                    when 'USA'
-                      'United States'
-                    when 'RSA'
-                      'South Africa'
-                    when 'ROC'
-                      'Taiwan'
-                    when 'PRC'
-                      'China'
-                    else
-                      geo.country
-                    end
-    end
+    obj.country = case results.first.data['country']
+                  when 'USA'
+                    'United States'
+                  when 'RSA'
+                    'South Africa'
+                  when 'ROC'
+                    'Taiwan'
+                  when 'PRC'
+                    'China'
+                  else
+                    results.first.data['country']
+                  end
   end
   after_validation :reverse_geocode, if: ->(obj) { obj.latitude_changed? || obj.longitude_changed? }
 
@@ -58,10 +56,10 @@ class User < ApplicationRecord
 
   # These are things we require user to have but do not require of admins.
   with_options unless: :admin? do
-    before_save :clear_compete_for_prizes
-    before_destroy :leave_team_before_delete
-    after_create :link_to_invitations
+    after_create :link_to_invitations, :update_team
     after_update :update_team
+    before_destroy :leave_team_before_delete, prepend: true
+    before_save :clear_compete_for_prizes
     validates :email, uniqueness: true, presence: true
     validates :full_name, :affiliation, presence: true, length: { maximum: 255 }, obscenity: true
     validates :state, presence: true
@@ -95,8 +93,6 @@ class User < ApplicationRecord
     return 'College' if year_in_school >= 13
     return 'Professional' if year_in_school.eql? 0
     return 'High School' if year_in_school <= 12
-
-    'Unknown' # If user is not in any of the other three then fallback.
   end
 
   # A user can only promote another user if they are the team captain. The user that they
@@ -115,7 +111,7 @@ class User < ApplicationRecord
   end
 
   def update_team
-    team&.update_captain_and_eligibility
+    team&.refresh_team_info
   end
 
   # generate cert for specific user
@@ -138,7 +134,18 @@ class User < ApplicationRecord
       doc.bounding_box([55, 450], width: 640, height: 200) do
         Game.instance.generate_certificate_header doc
       end
-      team.generate_certificate_body doc, full_name, rank
+      generate_certificate_body doc, rank
+    end
+  end
+
+  def generate_certificate_body(doc, rank)
+    doc.bounding_box([55, 200], width: 640, height: 200) do
+      doc.font('Helvetica-Bold', size: 18) do
+        doc.text(I18n.t('users.team_completion_cert_string',
+                        full_name: full_name, team_name: team.team_name,
+                        score: team.score, rank: rank, team_size: team.division.teams.size),
+                 color: '005BA1', align: :center, leading: 4)
+      end
     end
   end
 
@@ -163,5 +170,6 @@ class User < ApplicationRecord
   # This should only be used when an account is being deleted, it allows the team to update internal information
   def leave_team_before_delete
     team&.users&.delete(self)
+    team&.cleanup
   end
 end

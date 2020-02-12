@@ -1,7 +1,7 @@
 require: rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.6
   Exclude:
     - bin/*
     - db/schema.rb
@@ -11,7 +11,7 @@ AllCops:
     - 'vendor/**/*'
 ClassLength:
   Max: 150
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
 Metrics/BlockLength:
   Max: 35

@@ -1,52 +1,10 @@
 - content_for :header do
-  Join a Team
-
-
-- if !@pending_invites.empty?
-  %h3
-    Pending Team Invitations
-    %small Teams that would like you to join them
-  %table.table.table-condensed.table-striped
-    %thead
-    %tr
-      %th
-        Team Name
-      %th
-        Invited On
-      %th
-        Accept/Reject
-    - @pending_invites.each do |current|
-      %tbody
-        %tr{:class=>'warning'}
-          %td=current.team.team_name
-          %td=current.created_at.strftime("%b %d %Y")
-          %td
-            = link_to accept_team_user_invite_path(current.team, current) do
-              %i.icon-ok
-            = link_to team_user_invite_path(current.team, current), method: :delete, data: {confirm: "Are you sure?"} do
-              %i.icon-remove
-- if !@pending_requests.empty?
-  %h3
-    Pending Team Requests
-    %small Teams that you have requested to join
-  %table.table.table-condensed.table-striped
-    %thead
-    %tr
-      %th
-        Team Name
-      %th
-        Requested On
-      %th
-        Cancel
-    - @pending_requests.each do |current|
-      %tbody
-        %tr{:class=>'warning'}
-          %td=current.team.team_name
-          %td=current.created_at.strftime("%b %d %Y")
-          %td
-            = link_to team_user_request_path(current.team, current), method: :delete, data: {confirm: "Are you sure?"} do
-              %i.icon-remove
-%h3 Search for a Team
+  = t('users.join_team.header')
+- unless @pending_invites.empty?
+  = render partial: 'users/_join_team_invites_table'
+- unless @pending_requests.empty?
+  = render partial: 'users/_join_team_requests_table'
+%h3= t('users.join_team.search_for_team_header')
 = form_for_filterrific @filterrific, html: { class: 'form_for_filterrific' } do |f|
   .well
     .container

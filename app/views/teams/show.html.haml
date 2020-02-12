@@ -1,7 +1,9 @@
 - content_for :header do
-  See your Team
-%h2.break-word= @team.display_name
-%h3.break-word Affiliation: #{@team.affiliation}
+  .break-word= display_name(@team)
+
+- content_for :subheading do
+  = t('teams.show.subheading', aff: @team.affiliation)
+
 %table.table.table-condensed.table-striped
   %thead
   %tr
@@ -14,7 +16,7 @@
       %th Change Captain
   - @team.users.each do |current|
     %tbody
-      %tr{:class=>'success'}
+      %tr{ :class=>'success' }
         %td
           -if current == @team.team_captain
             %i.icon-ok
@@ -27,124 +29,45 @@
             No
         %td
           - if current_user.can_remove?(current)
-            = link_to team_user_leave_team_path(current.team, current), method: :delete, data: {confirm: "Are you sure you wish to remove this player from your team?"} do
+            = link_to team_user_leave_team_path(current.team, current), method: :delete, data: { confirm: t('teams.show.remove_user_confirm') } do
               %i.icon-remove
         - if @team_captain
           %td
             - if current_user.can_promote?(current)
-              = link_to team_user_promote_path(current.team_id, current), method: :get, data: {confirm: "Are you sure you wish to promote a new team captain? You will lose all captain privileges on this team."} do
+              = link_to team_user_promote_path(current.team_id, current), method: :get, data: { confirm: t('teams.show.promote_confirm') } do
                 %i.icon-star
 %hr
 .row
   .span6
     %h4 Team Prize Eligibility Status
-    Your team is currently
+    = t('teams.show.eligible_currently')
     - if @team.eligible?
-      competing for prizes. This will change for your whole team if you add any users to you team that are not eligible to receive prizes.
+      = t('teams.show.eligible_true')
     - else
-      %b NOT
-      competing for prizes since one or more team members is not eligible to do so or has chosen to not compete for prizes in their profile. Please contact the users marked as ineligible above for more information if this is incorrect.
+      %b= t('teams.show.eligible_false_not')
+      = t('teams.show.eligible_false')
   .span6
     %h4 Team Division Status
-    You have currently selected the
-    %b= @team.division.name
-    division for your team.
+    = t('teams.show.currently_selected_division', division: @team.division.name)
     - if @team.appropriate_division_level?
-      This division is acceptable for your team.
+      = t('teams.show.division_true')
     - else
-      Your team is not eligible to compete at this level. Consider changing your division to match the division of the most senior member of your team or removing the member(s) causing your division to be incorrect.
-%hr
-.row
-  .span12
-    Only US Citizens enrolled in a US High School or Undergraduate College are eligible for prizes and consideration for internships. Verification of enrollment and citizenship will be required post-competition from all members of the winning teams.
+      = t('teams.show.division_false')
 %hr
 .row
   .span6
-    %h3 Pending User Invites
+    %h3= t('teams.show.pending_invites_header')
     - if @pending_invites.empty?
-      No pending invites at this time.
+      = t('teams.show.pending_invites_false')
     - else
-      %table.table.table-condensed.table-striped.table-overflow
-        %thead
-        %tr
-          %th.span2
-            Email
-          %th
-            Prize Eligible?
-          %th
-            Division
-          - if @team_captain
-            %th
-              Cancel Invite
-        - @pending_invites.each do |current|
-          %tbody
-            %tr{:class=>'warning'}
-              %td
-                .helpertext-wrapper-overflow{ 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', :title => current.email }
-                  = current.email
-              %td
-                - if current.user.nil?
-                  .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "This user has not yet registered and therefore we cannot determine their eligibility status at this time." }
-                    %i.icon-question-sign
-                - elsif current.user.compete_for_prizes
-                  Yes
-                - else
-                  No
-
-              %td
-                - if current.user.nil?
-                  .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "This user has not yet registered and therefore we cannot determine their division at this time." }
-                    %i.icon-question-sign
-                - else
-                  = current.user.division
-              - if @team_captain
-                %td
-                  = link_to team_user_invite_path(@team, current), method: :delete, data: {confirm: "Are you sure you wish to cancel this invitation?"} do
-                    %i.icon-remove
+      = render partial: 'teams/invites_table'
     - if team_editable?
-      = form_for(@team, url: invite_team_path) do |team|
-        %h4 Invite a Team Member
-        = team.fields_for :user_invites, @team.user_invites.build do |invite_fields|
-          .control-group
-            = invite_fields.label :email, :class => "control-label"
-            .controls
-              = invite_fields.email_field :email, :class => "textarea"
-        .controls
-          = team.submit "Invite Member", :class => "btn"
+      = render partial: 'teams/invites_form'
   .span6
-    %h3 Pending User Requests
+    %h3= t('teams.show.pending_requests_header')
     - if @pending_requests.empty?
-      No pending join requests at this time.
+      = t('teams.show.pending_requests_false')
     - else
-      %table.table.table-condensed.table-striped.table-overflow
-        %thead
-        %tr
-          %th.span2
-            Email
-          %th
-            Prize Eligible?
-          %th
-            Requested On
-          - if @team_captain
-            %th
-              Accept?
-        - @pending_requests.each do |current|
-          %tbody
-            %tr{:class=>'warning'}
-              %td
-                .helpertext-wrapper-overflow{  'data-toggle' => 'tooltip', 'data-placement' => 'bottom', :title => current.user.email }
-                  =current.user.email
-              %td
-                -if current.user.compete_for_prizes
-                  Yes
-                -else
-                  No
-              %td=current.created_at.strftime("%b %d %Y")
-              - if @team_captain
-                %td
-                  = link_to accept_team_user_request_path(@team,current) do
-                    %i.icon-ok
-                  = link_to team_user_request_path(@team, current), method: :delete, data: {confirm: "Are you sure you wish to reject this request?"} do
-                    %i.icon-remove
+      = render partial: 'teams/requests_table'
 %hr
 = render partial: 'team_summary'

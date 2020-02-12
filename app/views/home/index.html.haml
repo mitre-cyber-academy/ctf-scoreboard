@@ -1,5 +1,5 @@
 - content_for :header do
-  = @game.name
+  = @game&.title
 
 .container
   .catchphrase
@@ -10,43 +10,30 @@
     - else
       %h2 Competition has Completed
   .maincontent.row-fluid.indent-40px-left
-    %h3 Step 1
-    %p Create or join a team:
-    %ul
-      %li Team captains: Register a team name, complete your registration, then invite up to four of your friends to join.
-      %li Looking to join a team? Register an account and then use our matchmaking service to find a team or wait for an invite from your team captain.
-      %li Want to play solo? Register a team and complete your registration, but don't invite or accept requests to join from anyone.
-    %h3 Step 2
-    %ul
-      %li Sharpen your skills on our #{ link_to 'practice range', 'http://mitrecyberacademy.org/practice'} before you compete.
-      %li Install the latest Kali Linux. We test our challenges with the latest Kali Linux and recommend using it to participate.
-    %h3 Step 3
-    %ul
-      %li
-        Read the #{ link_to 'rules', 'http://mitrecyberacademy.org/competitions/rules/index.html'} and #{ link_to 'terms of service', 'http://mitrecyberacademy.org/terms-of-service/' }. If you don't follow them, you could be #{ link_to 'disqualified', 'http://i.imgur.com/VXSxAAE.gifv'}.
-    %hr
+    = sanitize(Kramdown::Document.new(@game&.description).to_html)
     %p
       %b
-        %u When to compete
-    %ul
-      %li This competition will run from #{@game.start.strftime('%B %e at %l:%M %p %Z')} until #{@game.stop.strftime('%B %e at %l:%M %p %Z')}. More information about or competition can be found on our #{ link_to 'competitions page.', 'http://mitrecyberacademy.org/competitions/'}
-    %p
-      %b
-        %u Help, I'm Stuck!
-    %p We'd be happy to give you a hand if you contact us through any method listed on our #{ link_to 'contact form', 'http://mitrecyberacademy.org/contact/'}.
-  - if user_signed_in?
-    .btn-toolbar
-      .pagination-centered
-        - if current_user.on_a_team?
+        %u= t('home.index.when_to_compete')
+    %p= t('home.index.when_to_compete_info', start_time: view_time_format(@game.start), end_time: view_time_format(@game.stop))
+    - unless @game&.contact_url.blank?
+      %p
+        %b
+          %u= t('home.index.stuck')
+      %p= t('home.index.stuck_info', contact_url: link_to('contact us', @game.contact_url))
+  - unless @game.after_competition?
+    - if user_signed_in?
+      .btn-toolbar
+        .pagination-centered
+          - if current_user.on_a_team?
+            .btn-group
+              = link_to t('home.index.join_team'), team_path(current_user.team_id), :class => "btn btn-large btn-primary"
+          - else
+            .btn-group
+              = link_to t('home.index.join_team'), join_team_users_path, :class => "btn btn-large btn-primary"
+            .btn-group
+              = link_to t('home.index.create_team'), new_team_path, :class => "btn btn-large btn-primary"
+    - else
+      .btn-toolbar
+        .pagination-centered
           .btn-group
-            = link_to "See your team", team_path(current_user.team_id), :class => "btn btn-large btn-primary"
-        - else
-          .btn-group
-            = link_to "Join a Team", join_team_users_path, :class => "btn btn-large btn-primary"
-          .btn-group
-            = link_to "Create a Team", new_team_path, :class => "btn btn-large btn-primary"
-  - else
-    .btn-toolbar
-      .pagination-centered
-        .btn-group
-          = link_to "Register", new_user_registration_path, :class => "btn btn-large btn-primary"
+            = link_to t('home.index.register'), new_user_registration_path, :class => "btn btn-large btn-primary"

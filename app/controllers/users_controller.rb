@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   before_action :fetch_user_team, :deny_team_in_top_ten, only: %i[leave_team promote]
 
   # rubocop:disable Metrics/AbcSize
-  # rubocop:disable MethodLength
+  # rubocop:disable Metrics/MethodLength
   def join_team
     @pending_invites = current_user.user_invites.pending
     @pending_requests = current_user.user_requests.pending
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
   end
 
   # rubocop:enable Metrics/AbcSize
-  # rubocop:enable MethodLength
+  # rubocop:enable Metrics/MethodLength
 
   def promote
     if @team.promote(params[:user_id])
@@ -60,23 +60,14 @@ class UsersController < ApplicationController
   end
 
   def resume
-    download_file(@user.resume)
+    download_file(@user.resume, @user.full_name)
   end
 
   def transcript
-    download_file(@user.transcript)
+    download_file(@user.transcript, @user.full_name)
   end
 
   private
-
-  def download_file(file)
-    file_contents = file.read
-    if file_contents.blank?
-      redirect_back fallback_location: rails_admin_path, alert: I18n.t('users.download_not_available')
-    else
-      send_data file_contents, filename: "#{@user.full_name}_#{file.mounted_as}.pdf"
-    end
-  end
 
   # Only allow the team captain or the current user to remove the current user from a team.
   def check_removal_permissions

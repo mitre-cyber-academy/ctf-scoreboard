@@ -27,9 +27,22 @@ en:
           attributes:
             email:
               blank: 'You cannot invite your invisible friend.'
-              invalid: 'Email address is not valid.'
-              uniqueness: "Inviting the same friend multiple times doesn't make your team perform any better."
+              invalid: 'address is not valid.'
+              uniqueness: 'Email address previously invited to team.'
+  achievements:
+    index:
+      zero_items_text: 'No achievements have been awarded'
   teams:
+    edit:
+      legend: 'New Team Information'
+      note: 'All fields are required.'
+    summary:
+      zero_items_text: 'Nothing to report'
+      solved_challenges_header: 'Solved Challenges'
+      solved_challenges_chart_header: 'Solved Challenges Breakdown'
+      defensive_points_header: 'Defensive Points'
+      team_members_header: 'Team Members'
+      per_user_statistics_header: 'Per User Statistics'
     captain_removed_player: 'Player was successfully removed.'
     player_removed_self: 'You have successfully left the team.'
     already_on_team_create: 'You cannot create a new team while already being a member of one.'
@@ -45,6 +58,28 @@ en:
     must_be_on_team: 'You must be on a team to view other teams.'
     in_top_ten: 'This team is currently locked since it is in the top ten for its division.'
     does_not_exist: 'No such team exists.'
+    show:
+      remove_user_confirm: 'Are you sure you want to remove this player from your team?'
+      promote_confirm: 'Are you sure you want to promote a new team captain? You will immediately lose all captain privileges.'
+      eligible_help: 'This user has not yet registered and their division is unknown at this time.'
+      cancel_invite_confirm: 'Are you sure you want to cancel this invitation?'
+      reject_request_confirm: 'Are you sure you want to reject this request?'
+      invite_button: 'Invite Member'
+      currently_selected_division: "You have currently selected %{division} for your team."
+      division_true: 'This division is acceptable for your team.'
+      division_false: "Your team is not eligible to compete in this division. Consider changing your team's division to match that of the most senior member of your team, or removing the member(s) causing your division to be incorrect."
+      eligible_currently: 'Your team is currently'
+      eligible_true: 'competing for prizes. Your team will not be competing for prizes if any users on the team indicate they do not wish to compete for prizes, or the team is moved to an inappropriate division.'
+      eligible_false: 'competing for prizes. One or more team members has indicated they do not want to compete for prizes. Please contact the users marked as ineligible above.'
+      eligible_false_not: 'NOT'
+      pending_requests_false: 'There are no pending requests to join your team at this time.'
+      pending_invites_false: 'There are no pending invitations to join your team at this time.'
+      pending_requests_header: 'Pending User Requests'
+      invite_member_header: 'Invite a Team Member'
+      pending_invites_header: 'Pending User Invites'
+      eligible: 'Yes'
+      ineligible: 'No'
+      subheading: "Affiliation: %{aff}"
   requests:
     sent_successful: 'Team join request was successfully sent.'
     accepted_another: 'User has accepted another teams invitation, sorry!'
@@ -59,14 +94,37 @@ en:
     rejected_successful: 'User invitation was successfully rejected.'
     full_team: 'This team currently does not have any more open slots. Please try again later.'
   game:
+    must_be_admin: "The scoreboard has not finished set up! You must be an administrator to setup the scoreboard. Log in with existing administrator credentials to continue set up. If this is the initial setup of the scoreboard, run `bundle exec rake db:create_admin` from the web server's command line to create an administrator account."
     closed: 'The game is currently closed.'
     too_many: 'You may not create more than one game.'
     date_mismatch: 'The start date must be before the end date.'
     before_competition: 'This action is not available until the game is open.'
-    after_competition: "This action is not available after the game is over."
+    after_competition: 'This action is not available after the game is over.'
+    setup: 'Finish setting up the scoreboard by creating a game. Not all fields are required, and you can always change them later! Learn more at %{href}'
+    setup_href: "https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Configuration#game"
+    no_terms_and_conditions: There are no terms and conditions associated with this game.
+    no_terms_of_service: There are no terms of service associated with this game.
+    legend:
+      dark_green: 'Dark Green'
+      green: 'Green'
+      light_green: 'Light Green'
+      blue: 'Blue'
+      gray: 'Gray'
+      red: 'Red'
+      dark_green_desc: 'Unsolved by any team'
+      green_desc: 'Solved by one team'
+      light_green_desc: 'Solved by multiple teams'
+      blue_desc: 'Solved by your team'
+      gray_desc: 'Unopened'
+      red_desc: 'Locked'
+    show:
+      table_title: 'Challenges'
+      no_challenges: 'No Challenges'
   flag:
     accepted: 'Flag accepted!'
-  challenge:
+  challenges:
+    show:
+      no_desc: 'No description'
     not_open: 'must be open.'
     game_not_open: 'The game must be open.'
     already_solved: 'This player has already solved this challenge.'
@@ -74,9 +132,71 @@ en:
     state_change_message: 'The challenge is now %{state}'
   users:
     login_required: 'You must login in order to perform this action.'
-    download_not_available: 'The download you have selected is not available for this user.'
     team_completion_cert_string: "This is to certify that %{full_name}
      successfully competed as a member of Team %{team_name},
      achieving %{score} points and finishing %{rank} out of %{team_size} teams."
+    edit:
+      label:
+        password: 'Password'
+        password_confirmation: 'Confirm new password'
+        password_change: 'Change password'
+      help:
+        affiliation: 'If you are a student, please list your school. If you are an industry professional please list your professional organization.'
+        state: 'Enter the state in which you are a resident.'
+        compete_for_prizes: 'Prize distribution may be restricted to qualifying teams. Check terms and conditions for full details and to see if you qualify.'
+        interested_in_employment: 'Are you interested receiving internship or employment emails from %{organization}?'
+        age: 'Age will be used in aggregate statistics and are held confidentially.'
+        resume: 'Please provide us with a copy of your resume in PDF format'
+        transcript: 'Please provide us with a copy of your unofficial transcript in PDF format'
+        password: 'We need your current password to update your account information.'
+        destroy: 'Deleting your account will remove you from your team. In order to rejoin a team you will have to be re-invited.'
+    destroy:
+      confirm: 'Are you sure you want to delete your account?'
+    new:
+      confirmations_legend: 'Resend Confirmation Instructions'
+      password_reset_legend: 'Send a Password Reset'
+      sessions_legend: 'Login'
+    join_team:
+      header: 'Join a Team'
+      pending_team_invites_header: 'Pending Team Invitations'
+      invites_header_desc: 'Teams that would like you to join them'
+      delete_invite_confirmation: 'Are you sure you want to delete this invitation?'
+      pending_team_requests_header: 'Pending Team Requests'
+      requests_header_desc: 'Teams that you have requested to join'
+      delete_request_confirmation: 'Are you sure you want to delete this request?'
+      search_for_team_header: 'Search for a Team'
+
   admin:
     should_not_do_action: 'Admins should use the Rails Admin console to perform administrative actions.'
+    download_not_available: 'The download you have selected is not available.'
+  application:
+    admin:
+      dashboard: 'Admin Dasboard'
+      post_message: 'Post a message'
+      view_submitted_flags: 'View submitted flags'
+      award_achievement: 'Award an achievement'
+      create_score_adjustment: 'Create score adjustment'
+    navbar:
+      challenges: 'Challenges'
+      messages: 'Messages'
+      achievements: 'Achievements'
+      summary: 'Summary'
+    log_out: 'Log out'
+    log_in: 'Log in'
+    edit_account: 'Edit Account'
+    open_source_statement_1: 'Gameboard and registration software is '
+    open_source_statement_2: ' free to use!'
+    github_link: 'https://github.com/mitre-cyber-academy/ctf-scoreboard'
+    terms_of_service: 'Terms of Service'
+    no_terms_and_conditions: 'Terms and Conditions'
+  home:
+    index:
+      when_to_compete: 'When to compete'
+      when_to_compete_info: "This competition will run from %{start_time} until %{end_time}"
+      stuck: "Help, I'm Stuck!"
+      stuck_info: "We'd be happy to give you a hand if you %{contact_url}"
+      view_team: 'View Team'
+      join_team: 'Join Team'
+      create_team: 'Create Team'
+      edit_team: 'Edit Team'
+      register: 'Register'

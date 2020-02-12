@@ -2,21 +2,14 @@
 
 class RegistrationsController < Devise::RegistrationsController
   before_action :load_game, :load_message_count
-  before_action :prevent_action_after_game, only: %i[new create]
+  before_action :check_captcha, :prevent_action_after_game, only: %i[new create]
 
   def new
     super
   end
 
   def create
-    if verify_recaptcha
-      super
-    else
-      build_resource(sign_up_params)
-      clean_up_passwords(resource)
-      set_flash_message! :alert, :recaptcha_failed
-      render :new
-    end
+    super
   end
 
   # DELETE /resource
@@ -30,5 +23,17 @@ class RegistrationsController < Devise::RegistrationsController
       set_flash_message! :alert, :password_needed_destroy
       render 'edit'
     end
+  end
+
+  private
+
+  def check_captcha
+    return if verify_recaptcha
+
+    self.resource = build_resource(sign_up_params)
+    resource.validate
+    clean_up_passwords(resource)
+    set_flash_message! :alert, :recaptcha_failed
+    render :new
   end
 end

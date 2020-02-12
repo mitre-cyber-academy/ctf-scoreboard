@@ -1,7 +1,11 @@
 - content_for :header do
-  .break-word= @team.display_name
+  .break-word= display_name(@team)
 
 - content_for :subheading do
-  #{@team.division.name} - #{pluralize(@solved_challenges.size, 'solved challenge')}
+  = t('teams.show.subheading', aff: @team.affiliation)
+
+%h2.break-word= "#{@team.division.name} Division"
+%h3.break-word= pluralize(@team.solved_challenges.size, 'solved challenge')
+%hr
 
 = render partial: 'team_summary'

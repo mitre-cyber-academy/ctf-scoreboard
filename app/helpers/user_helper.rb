@@ -73,4 +73,10 @@ module UserHelper
     ]
   end
   # rubocop:enable Metrics/MethodLength
+
+  def required_for_update?(on_update_page)
+    return 'control-label' if on_update_page
+
+    'control-label-required'
+  end
 end

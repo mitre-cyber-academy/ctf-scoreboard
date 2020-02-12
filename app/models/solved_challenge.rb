@@ -1,34 +1,30 @@
 # frozen_string_literal: true
 
 class SolvedChallenge < FeedItem
-  validate :team_has_not_solved_challenge, :challenge_is_open, :game_is_open
+  scope :ordered, -> { order('created_at ASC') }
 
-  after_save :award_achievement, :open_next_challenge
+  validate :team_can_solve_challenge, :challenge_is_open, :game_is_open
 
-  belongs_to :flag, optional: false
-  belongs_to :division, optional: false
-  belongs_to :challenge, optional: false
-  belongs_to :team, optional: false
+  after_save :award_achievement
+
+  after_save :open_next_challenge, unless: -> { Game.instance.is_a?(PentestGame) }
+
+  belongs_to :team, optional: false, inverse_of: :solved_challenges
 
   def description
-    %(Solved challenge "#{challenge.category.name} #{challenge.point_value}")
+    %(#{super.titleize} "#{challenge.category.name} #{challenge.point_value}")
   end
 
   def icon
-    'ok'
+    super('ok')
   end
 
   def challenge_is_open
-    errors.add(:challenge, I18n.t('challenge.not_open')) unless challenge.open?
+    errors.add(:challenge, I18n.t('challenges.not_open')) unless challenge.open?
   end
 
   def game_is_open
-    errors.add(:base, I18n.t('challenge.game_not_open')) unless challenge.category.game.open?
-  end
-
-  def team_has_not_solved_challenge
-    challenge_is_solved = team.solved_challenges.find_by(challenge: challenge)
-    errors.add(:base, I18n.t('challenge.already_solved')) if challenge_is_solved
+    errors.add(:base, I18n.t('challenges.game_not_open')) unless Game.instance.open?
   end
 
   def award_achievement

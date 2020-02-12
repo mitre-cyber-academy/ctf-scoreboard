@@ -1,45 +1,13 @@
 - content_for :header do
-  = @game.name
+  = @game.title
 
 .catchphrase
   %h2
-    Challenges
+    = t('game.show.table_title')
     &nbsp;
-    %small= %(#{pluralize(@challenges.size, 'challenge')} in #{pluralize(@categories.size, 'category')})
+    %small= table_subtitle(@game, @challenges, @headings)
 - if @challenges.size == 0
-  .zero-items-text No Challenges
+  .zero-items-text= t('game.show.no_challenges')
 - else
-  - max = 0
-  %table.table.table-bordered.table-bolded
-    %thead
-      %tr
-        - @categories.each do |c|
-          %th{ :style => "text-align:center;width:#{1.0 / @categories.size.to_f * 100.0}%;" }= c.name
-          - max = [max, c.challenges.size].max
-    %tbody
-      - is_admin = current_user&.admin?
-      - max.times do |row|
-        %tr
-          - @categories.size.times do |column_num|
-            - challenges = @categories[column_num].challenges
-            - if row < challenges.size
-              - challenge = challenges[row]
-              - style = "text-align:center;"
-              - if is_admin
-                - is_solved = challenge.solved?
-              - else
-                - is_solved = @solved_challenges&.include?(challenge.id)
-              - if challenge.force_closed? && challenge.solved?
-                - style << "color:DarkOrange;"
-              - elsif challenge.force_closed?
-                - style << "color:red;"
-              - elsif is_solved
-                - style << "color:#00abca;"
-              - elsif challenge.open? || (is_admin && challenge.challenge_open?)
-                - style << "color:#b8d12f;"
-              - else
-                - style << "color:#999999;"
-              %td{ style: style }= link_to_if (is_admin || challenge.open?), challenge.point_value, game_challenge_path(challenge), style: "color:inherit;"
-            - else
-              %td &nbsp;
-
+  = render partial: 'games/table'
+= render partial: 'games/legend'

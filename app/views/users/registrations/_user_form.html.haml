@@ -7,7 +7,6 @@
       %ul.errors
         - resource.errors.full_messages.each do |msg|
           %li= msg
-  %legend=legend
   %label.label-custom
     Note: Fields marked with
     %span{:style => "color: red;"} *
@@ -21,7 +20,7 @@
     .controls
       = f.email_field :email, :class => "textarea", :value => params[:email] ||= f.object.email
   .control-group
-    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "If you are a student, please list your school. If you are an industry professional please list your professional organization." }
+    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('users.edit.help.affiliation') }
       = f.label :affiliation, :class => "control-label-required"
       .controls
         = f.text_field :affiliation, :class => "textarea"
@@ -30,30 +29,30 @@
     .controls
       = f.select :year_in_school, options_for_select(year_in_school_enum, resource.year_in_school), { :include_blank => '' }, :onChange => "hidePrizesCheckbox()"
   .control-group
-    .helpertext-wrapper{ 'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Enter the state in which you are a resident." }
+    .helpertext-wrapper{ 'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('users.edit.help.state') }
       = f.label :state, :class => "control-label-required"
       .controls
         = f.select :state, options_for_select(state_enum, resource.state), { :include_blank => '' }, :onChange => "hidePrizesCheckbox()"
   .control-group
-    = f.label :password, :class => on_update_page ? "control-label" : "control-label-required"
+    = f.label :password, :class => required_for_update?(on_update_page)
     .controls
       = f.password_field :password, :input_html => {:autofocus => true}, :class => "textarea"
   .control-group
-    = f.label :password_confirmation, "Confirm Password", :class => on_update_page ? "control-label" : "control-label-required"
+    = f.label :password_confirmation, "Confirm Password", :class => required_for_update?(on_update_page)
     .controls
       = f.password_field :password_confirmation, :class => "textarea"
   .control-group#compete-for-prizes
-    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Only US Citizens enrolled in a US High School or Undergraduate College are eligible for prizes. Verification of enrollment and citizenship will be required post-competition from the winning teams." }
+    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('users.edit.help.compete_for_prizes') }
       = f.label :compete_for_prizes, :class => "control-label"
       .controls
         = f.check_box :compete_for_prizes
   .control-group
-    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Are you interested receiving internship or employment emails from MITRE?" }
+    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('users.edit.help.interested_in_employment', organization: @game.organization) }
       = f.label :interested_in_employment, :class => "control-label"
       .controls
         = f.check_box :interested_in_employment
   .control-group
-    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Age will be used in aggregate statistics and are held confidentially." }
+    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('users.edit.help.age') }
       = f.label :age, :class => "control-label"
       .controls
         = f.text_field :age, :class => "textarea"
@@ -64,30 +63,8 @@
   -# If a user is updating their information then on_update_page should be passed to the partial as true,
   -# if this is a new user registering then on_update_page should be false.
   - if on_update_page
-    .control-group
-      .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Please provide us with a copy of your resume in PDF format" }
-        = f.label :resume, :class => "control-label"
-        .controls
-          = f.file_field :resume
-    .control-group
-      .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Please provide us with a copy of your unofficial transcript in PDF format" }
-        = f.label :unofficial_transcript, :class => "control-label"
-        .controls
-          = f.file_field :transcript
-    .control-group
-      .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "We need your current password to update your account information." }
-        = f.label :current_password, :class => "control-label-required"
-        .controls
-          = f.password_field :current_password, :class => "textarea"
+    = render partial: 'users/registrations/update_user_form', locals: { f: f }
   .controls
     = invisible_recaptcha_tags text: 'Submit', :class => "btn"
 - if on_update_page
-  %hr
-  = form_for(resource, as: resource_name, url: registration_path(resource_name), :html => { :multipart => "true", :class => "form-horizontal"}, :method => :delete) do |f|
-    .control-group
-      .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => "Deleting your account will remove you from your team if applicable. In order to rejoin a team you will have to be re-invited." }
-        = f.label :area_of_study, "Delete Account", :class => "control-label"
-        .controls
-          .input-append
-            = f.password_field :current_password, :class => "textarea", :placeholder => "Current Password"
-            = button_tag 'Delete Account', :label => 'Delete Account', :class => 'btn btn-danger', :data => {:confirm => 'Are you sure you want to delete your account?'}
+  = render partial: 'users/registrations/delete_user_form'
