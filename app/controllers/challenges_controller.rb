@@ -63,9 +63,15 @@ class ChallengesController < ApplicationController
     # In a PentestGame we use PentestFlags as if they are Challenges since they are the linking objects between
     # the team defending a flag and the challenge.
     if @game.is_a?(PentestGame)
-      @defense_team = @game.teams.find(params[:team_id])
-      @challenge = @game.flags.find_by(challenge: params[:id], team: @defense_team)
+      flag_challenge = @game.flags.find_by(challenge: params[:id])
+      if flag_challenge.design_phase_flag
+        @challenge = flag_challenge
+      else
+        @defense_team = @game.teams.find(params[:team_id])
+        @challenge = @game.flags.find_by(challenge: params[:id], team: @defense_team)
+      end
     else
+
       @challenge = @game.challenges.find(params[:id])
     end
   end

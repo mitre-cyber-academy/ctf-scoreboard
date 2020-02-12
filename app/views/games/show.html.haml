@@ -1,11 +1,6 @@
 - content_for :header do
   = @game.title
 
-.catchphrase
-  %h2
-    = t('game.show.table_title')
-    &nbsp;
-    %small= table_subtitle(@game, @challenges, @headings)
 - if @challenges.size == 0
   .zero-items-text= t('game.show.no_challenges')
 - else

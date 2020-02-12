@@ -89,7 +89,8 @@ class GamesController < ApplicationController
     if @game.is_a?(PointGame)
       @table_rows = @game&.table_rows(@headings)
     else
-      @table_heading = [OpenStruct.new(name: 'Teams'), @challenges].flatten
+      @attack_table_heading = [OpenStruct.new(name: 'Teams'), @challenges].flatten
+      @design_table_heading = [OpenStruct.new(name: 'Teams'), @game&.design_phase_challenges].flatten
       @teams_with_assoc = @game.teams_associated_with_flags_and_challenges
     end
   end
