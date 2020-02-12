@@ -4,18 +4,18 @@
     .alert.alert-error
       %a.close{"data-dismiss" => "alert", :href => "#"} ×
       = pluralize(resource.errors.count, "error")
-      prohibited your user from being updated:
+      prohibited your user from being updated3:
       %ul.errors
         - resource.errors.full_messages.each do |msg|
           %li= msg
   = f.hidden_field :reset_password_token
   %div
-    = f.label :password, "New password"
+    = f.label :password, t('users.edit.label.password')
     %br/
     = f.password_field :password
   %div
-    = f.label :password_confirmation, "Confirm new password"
+    = f.label :password_confirmation, t('users.edit.label.password_confirmation')
     %br/
     = f.password_field :password_confirmation
-  %div= button_tag :Reset, :label => 'Change Password', :class => "btn"
+  %div= button_tag :Reset, :label => t('users.edit.label.password_change'), :class => "btn"
 = render "users/shared/links"

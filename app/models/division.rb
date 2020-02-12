@@ -1,13 +1,18 @@
 # frozen_string_literal: true
 
 class Division < ApplicationRecord
-  belongs_to :game, optional: false
   has_many :teams, dependent: :destroy
   has_many :feed_items, dependent: :destroy
   has_many :achievements, dependent: :destroy
   has_many :solved_challenges, dependent: :destroy
 
   validates :name, presence: true
+
+  def self.type_enum
+    [['PentestDivision'], ['PointDivision']]
+  end
+
+  validates :type, inclusion: type_enum.flatten, presence: true
 
   def ordered_teams(only_top_five = false)
     # They are eligible if the boolean is true
@@ -49,16 +54,20 @@ class Division < ApplicationRecord
          .joins(
            "LEFT JOIN feed_items
              ON feed_items.team_id = teams.id
-             AND feed_items.type IN ('SolvedChallenge', 'ScoreAdjustment')
+             AND feed_items.type IN ('PointSolvedChallenge', 'ScoreAdjustment')
            LEFT JOIN challenges ON challenges.id = feed_items.challenge_id"
          )
          .group('teams.id')
          .select(
            'COALESCE(sum(challenges.point_value), 0) + COALESCE(sum(feed_items.point_value), 0)
-             as current_score,
+             as team_score,
            MAX(feed_items.created_at) as last_solved_date, teams.*'
          )
-         .order('current_score desc', 'last_solved_date asc', 'team_name asc').to_a
+         .order('team_score desc', 'last_solved_date asc', 'team_name asc')
+         .map do |team|
+      team.current_score = team.team_score
+      team
+    end
   end
   # rubocop:enable Metrics/MethodLength
 end

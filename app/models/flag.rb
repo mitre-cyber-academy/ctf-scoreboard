@@ -1,17 +1,19 @@
 # frozen_string_literal: true
 
 class Flag < ApplicationRecord
-  belongs_to :challenge, inverse_of: :flags
-
-  has_many :solved_challenges, dependent: :destroy
-
   validates :flag, presence: true
+
+  def self.type_enum
+    [['ChallengeFlag'], ['PentestFlag']]
+  end
+
+  validates :type, inclusion: type_enum.flatten, presence: true
 
   def save_solved_challenge(user)
     invoke_api_request
     return if user.admin?
 
-    solved_challenges.create(user: user, team: user.team, challenge: challenge, division: user.team.division)
+    solved_challenges.create!(user: user, team: user.team, challenge: challenge, division: user.team.division)
   end
 
   def invoke_api_request

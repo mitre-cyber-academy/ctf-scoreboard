@@ -1,0 +1,22 @@
+%h3
+  = t('users.join_team.pending_team_invites_header')
+  %small= t('users.join_team.header_desc')
+%table.table.table-condensed.table-striped
+  %thead
+  %tr
+    %th
+      Team Name
+    %th
+      Invited On
+    %th
+      Accept/Reject
+  - @pending_invites.each do |current|
+    %tbody
+      %tr{:class=>'warning'}
+        %td=current.team.team_name
+        %td=current.created_at.strftime("%b %d %Y")
+        %td
+          = link_to accept_team_user_invite_path(current.team, current) do
+            %i.icon-ok
+          = link_to team_user_invite_path(current.team, current), method: :delete, data: {confirm: t('users.join_team.delete_invite_confirmation')} do
+            %i.icon-remove

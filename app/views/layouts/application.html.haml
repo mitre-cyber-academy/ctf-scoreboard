@@ -9,102 +9,20 @@
     .navbar.navbar-fixed-top.navbar-inverse
       .navbar-inner
         .container
-          %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          %a.brand{:href => "/"}= @game&.organization || 'Gameboard'
-          .nav-collapse.collapse
-            - if @game
-              %ul.nav
-                - if !@game.before_competition? || current_user&.admin?
-                  %li{:class => "#{'active' if current_page? game_path}"}
-                    = link_to 'Challenges', game_path
-                %li{:class => "#{'active' if current_page? game_messages_path}"}
-                  %a{:href => game_messages_path}
-                    Messages
-                    %span.badge.badge-important= @unread_message_count if !@unread_message_count&.eql? 0
-                - if !@game.before_competition? || current_user&.admin?
-                  %li{:class => "#{'active' if current_page? game_achievements_path}"}
-                    = link_to 'Achievements', game_achievements_path
-                  %li{:class => "#{'active' if current_page? game_summary_path}"}
-                    = link_to 'Summary', game_summary_path
-                - unless @game.contact_url.blank?
-                  %li
-                    %a{:href => @game.contact_url, :target => "_blank"}
-                      Contact
-            %ul.nav.pull-right
-              - if user_signed_in?
-                %li.dropdown
-                  %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                    Hello #{truncate(current_user.full_name, length: 30) || 'Admin' }
-                    %b.caret
-                  %ul.dropdown-menu
-                    %li
-                      - if current_user.admin?
-                        = link_to "Admin", rails_admin_path
-                        %li.divider
-                        %li= link_to "Post a new Message", rails_admin.new_path("message")
-                        %li= link_to "View Submitted Flags", rails_admin.index_path("submitted_flag")
-                        %li= link_to "Award an Achievement", rails_admin.new_path("achievement")
-                        %li= link_to "New score adjustment", rails_admin.new_path("score_adjustment")
-                        - if content_for?(:admin_menu)
-                          %li.divider
-                          = yield :admin_menu
-                      - elsif current_user.on_a_team?
-                        = link_to "See your team", team_path(current_user.team_id)
-                        - if current_user.team_captain?
-                          = link_to "Edit your team", edit_team_path(current_user.team_id)
-                      - else
-                        = link_to "Join a team", join_team_users_path
-                        = link_to "Create a team", new_team_path
-                      %li.divider
-                    %li
-                      = link_to "Edit your account", edit_user_registration_path, :method => :get
-                      = link_to "Log out", destroy_user_session_path, :method => :delete
-              - else
-                %li.dropdown
-                  %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                    Log in / Register
-                    %b.caret
-                  %ul.dropdown-menu
-                    %li
-                      =link_to "Log in", new_user_session_path
-                    %li.divider
-                    %li
-                      =link_to "Register", new_user_registration_path
+          = render partial: 'layouts/navbar'
+          = render partial: 'layouts/dropdown'
     %header#subpage.jumbotron.masthead.remove_top_padding
       .container
         %h1
           = yield :header
           - if @game&.open?
-            = render partial: "games/countdown", locals: {endTime: @game.stop}
-
+            = render partial: 'layouts/countdown', locals: { endTime: @game.stop }
         %p
           = yield :subheading
     .colored-divider
     .container
-      - if !flash[:notice].blank?
-        .alert.alert-success
-          %a.close{"data-dismiss" => "alert", :href => "#"} ×
-          = notice
-      - if !flash[:alert].blank?
-        .alert.alert-error
-          %a.close{"data-dismiss" => "alert", :href => "#"} ×
-          = alert
+      = render partial: 'layouts/flash_anchor'
     .container
       = yield
   %footer#page-footer.well.footer
-    .container
-      .row-fluid
-        %p.pull-right
-          %a{:href => "#"} Back to top
-        %p
-          = "#{sanitize(Kramdown::Document.new(@game.footer).to_html)} |"  unless @game&.footer.blank?
-          = link_to 'Terms of Service', terms_of_service_game_path
-          |
-          = link_to 'Terms and Conditions', terms_and_conditions_game_path
-        %p
-          = t('application.open_source_statement_1')
-          = link_to 'available', t('application.github_link')
-          = t('application.open_source_statement_2')
+    = render partial: 'layouts/footer'

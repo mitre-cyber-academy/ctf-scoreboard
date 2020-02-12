@@ -1,7 +1,7 @@
 - content_for :header do
   Achievements
 - if @achievements.count == 0
-  .zero-items-text No achievements have been awarded
+  .zero-items-text= t('achievements.index.zero_items_text')
 - else
   %table.table.table-bordered.table-striped
     %thead

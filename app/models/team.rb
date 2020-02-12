@@ -6,12 +6,18 @@ class Team < ApplicationRecord
 
   # Rank is an attribute that can be added to the team model on the fly however
   # it has no value by default. This allows us to cache a teams current rank
-  # without having to hit the database to calculate it.
-  attr_accessor :rank
+  # without having to hit the database to calculate it.#
+  #
+  # Current_score is so we don't have to have any logic to handle
+  # which class we are rendering in the game summary view.
+  attr_accessor :rank, :current_score
 
+  # This has_many is only applicable to PentestGames
+  has_many :flags, class_name: 'PentestFlag', dependent: :destroy
   has_many :feed_items, dependent: :destroy
   has_many :achievements, dependent: :destroy
-  has_many :solved_challenges, dependent: :destroy
+  has_many :score_adjustments, inverse_of: :team, dependent: :destroy
+  has_many :solved_challenges, inverse_of: :team, dependent: :destroy
   has_many :users, dependent: :nullify
   has_many :user_invites, dependent: :destroy
   has_many :user_requests, dependent: :destroy
@@ -62,7 +68,7 @@ class Team < ApplicationRecord
   }
 
   def in_top_ten?
-    !solved_challenges.empty? && (division.ordered_teams[0..9].include? self)
+    !solved_challenges.size.zero? && (division.ordered_teams[0..9].include? self)
   end
 
   def appropriate_division_level?
@@ -112,11 +118,7 @@ class Team < ApplicationRecord
   end
 
   def score
-    feed_items.where(type: %w[SolvedChallenge ScoreAdjustment])
-              .joins(
-                'LEFT JOIN challenges ON challenges.id = feed_items.challenge_id'
-              )
-              .pluck(:point_value, :'challenges.point_value').flatten.compact.sum
+    division.ordered_teams.detect { |team| team.id.eql?(id) }&.current_score || 0
   end
 
   # After remove callback passes a parameter which is the object that was just removed, we don't need it
@@ -127,6 +129,20 @@ class Team < ApplicationRecord
     set_slots_available
     set_eligibility
     cleanup
+  end
+
+  def calc_defensive_points
+    flags.map do |flag|
+      [flag.name, flag.calc_defensive_points.round]
+    end.to_h
+  end
+
+  def submitted_flags_per_hour
+    submitted_flags.group_by_hour('submitted_flags.created_at', format: '%l:%M %p').count || 0
+  end
+
+  def solved_challenges_per_hour
+    solved_challenges.group_by_hour('feed_items.created_at', format: '%l:%M %p').count || 0
   end
 
   private
@@ -142,7 +158,7 @@ class Team < ApplicationRecord
 
   # Number of users on team is calculated using game team size
   def set_slots_available
-    updated_slots_available = division.game.team_size - users.count
+    updated_slots_available = Game.instance.team_size - users.count
     update(slots_available: updated_slots_available) unless updated_slots_available.eql? slots_available
   end
 

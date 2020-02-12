@@ -10,7 +10,7 @@ class ChallengesController < ApplicationController
   before_action :valid_captcha, :find_and_log_flag, :on_team?, only: [:update]
 
   def show
-    @solved_challenge = @challenge.get_solved_challenge_for(current_user.team_id)
+    @solvable = @challenge.can_be_solved_by(current_user.team)
     @solved_video_url = @solved_challenge.flag.video_url if @solved_challenge
     flash.now[:notice] = I18n.t('flag.accepted') if @solved_challenge
   end
@@ -37,8 +37,8 @@ class ChallengesController < ApplicationController
   end
 
   def find_challenge
-    @challenge = @game.challenges.find(params[:id])
-    raise ActiveRecord::RecordNotFound if !current_user.admin? && !@challenge.open?
+    challenges_for_game_type
+    deny_if_not_admin unless @challenge.open?
   end
 
   def find_solved_by
@@ -46,14 +46,27 @@ class ChallengesController < ApplicationController
   end
 
   def find_and_log_flag
-    flag = params[:challenge][:submitted_flag] if params.key? :challenge
+    flag = params[:challenge]&.[](:submitted_flag) # Safe navigation on a hash
+    return if flag.nil?
+
     SubmittedFlag.create(user: current_user, challenge: @challenge, text: flag) unless current_user.admin?
-    @flag_found = @challenge.find_flag(flag) unless flag.nil?
+    @flag_found = @challenge.find_flag(flag)
   end
 
   def on_team?
     return true if current_user.on_a_team? || current_user.admin?
 
-    redirect_to user_root_path, alert: I18n.t('challenge.must_be_on_team')
+    redirect_back fallback_location: user_root_path, alert: I18n.t('challenges.must_be_on_team')
+  end
+
+  def challenges_for_game_type
+    # In a PentestGame we use PentestFlags as if they are Challenges since they are the linking objects between
+    # the team defending a flag and the challenge.
+    if @game.is_a?(PentestGame)
+      @defense_team = @game.teams.find(params[:team_id])
+      @challenge = @game.flags.find_by(challenge: params[:id], team: @defense_team)
+    else
+      @challenge = @game.challenges.find(params[:id])
+    end
   end
 end
