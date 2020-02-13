@@ -64,14 +64,14 @@ class ChallengesController < ApplicationController
     # the team defending a flag and the challenge.
     if @game.is_a?(PentestGame)
       flag_challenge = @game.flags.find_by(challenge: params[:id])
-      if flag_challenge.design_phase_flag
+      if flag_challenge.design_phase
         @challenge = flag_challenge
+        @defense_team = current_user&.team
       else
         @defense_team = @game.teams.find(params[:team_id])
         @challenge = @game.flags.find_by(challenge: params[:id], team: @defense_team)
       end
     else
-
       @challenge = @game.challenges.find(params[:id])
     end
   end

@@ -14,9 +14,15 @@ module TeamsHelper
   end
 
   def solved_challenge_title(game, solved_challenge)
-    return solved_challenge.flag.team.team_name if game.is_a?(PentestGame)
-
-    solved_challenge.challenge.category.name
+    if game.is_a?(PentestGame)
+      if solved_challenge.challenge.design_phase
+        'Design Phase'
+      else
+        solved_challenge.flag.team.team_name
+      end
+    else
+      solved_challenge.challenge.category.name
+    end
   end
 
   def eligible?(user_request)
