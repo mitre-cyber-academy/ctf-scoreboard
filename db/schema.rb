@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_13_140247) do
+ActiveRecord::Schema.define(version: 2020_02_14_144340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2020_02_13_140247) do
     t.integer "defense_points", default: 0
     t.integer "unsolved_increment_period", default: 1
     t.integer "unsolved_increment_points", default: 0
-    t.integer "initial_shares", default: 0
+    t.integer "initial_shares", default: 1
     t.integer "solved_decrement_shares", default: 0
     t.integer "first_capture_point_bonus", default: 0
     t.bigint "pentest_game_id"
