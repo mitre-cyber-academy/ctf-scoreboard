@@ -40,4 +40,8 @@ class SolvedChallenge < FeedItem
     challenge = category.next_challenge(challenge)
     challenge.state!('open') if challenge&.available?
   end
+
+  def team_can_solve_challenge
+    errors.add(:base, I18n.t('challenges.already_solved'))
+  end
 end
