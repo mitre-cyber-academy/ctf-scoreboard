@@ -25,6 +25,14 @@ module TeamsHelper
     end
   end
 
+  def solved_challenge_table_point_value(game, solved_challenge, team)
+    if game.is_a?(PentestGame)
+      solved_challenge.flag.point_value(team)
+    else
+      solved_challenge.challenge.point_value
+    end
+  end
+
   def eligible?(user_request)
     return t('teams.show.eligible') if user_request.user.compete_for_prizes
 
