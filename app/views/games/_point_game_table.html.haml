@@ -2,7 +2,7 @@
   %thead
     %tr
       - @headings.each do |category|
-        %th{ :style => "text-align:center;width:#{heading_width(@headings)}%;" }=category.name
+        %th.text-center{ style: "width:#{heading_width(@headings)}%;" }=category.name
   %tbody
     - @table_rows.times do |row|
       %tr

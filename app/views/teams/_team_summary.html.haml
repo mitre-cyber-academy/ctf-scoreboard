@@ -12,14 +12,22 @@
     - else
       = render partial: 'teams/solved_challenges_table'
   %div.span7
-    %h3.muted= t('teams.summary.solved_challenges_chart_header')
+    %h3.muted.text-center= t('teams.summary.solved_challenges_chart_header')
     - if @team.solved_challenges.size == 0
       .zero-items-text= t('teams.summary.zero_items_text')
     - else
       = pie_chart @flag_categories
-- if @defensive_points
-  = render partial: 'teams/defensive_points_table'
-
+%hr
+%div.row
+  %div.span5
+    - if @defensive_points
+      = render partial: 'teams/defensive_points_table'
+  %div.span7
+    %h3.muted= t('teams.summary.score_adjustments_header')
+    - if @score_adjustments.size == 0
+      .zero-items-text= t('teams.summary.zero_items_text')
+    - else
+      = render partial: 'teams/score_adjustments_table'
 - if current_user&.admin?
   = render partial: 'teams/admin_info_table'
 %br
