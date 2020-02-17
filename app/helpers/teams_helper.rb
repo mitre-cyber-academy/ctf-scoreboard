@@ -30,4 +30,8 @@ module TeamsHelper
 
     t('teams.show.ineligible')
   end
+
+  def header_with_points(team)
+    "#{display_name(team)} - #{team.score} points"
+  end
 end

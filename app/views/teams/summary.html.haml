@@ -1,5 +1,5 @@
 - content_for :header do
-  .break-word= display_name(@team)
+  .break-word= header_with_points(@team)
 
 - content_for :subheading do
   = t('teams.show.subheading', aff: @team.affiliation)
