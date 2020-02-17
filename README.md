@@ -18,7 +18,7 @@ MITRE CTF Scoreboard is a fully featured CTF platform with scoreboard and regist
 + Run `bundle install` to install dependencies
 + Run `bundle exec rake db:create` to create the database
 + Run `bundle exec rake db:schema:load` to load the database schema
-+ Run `bundle exec rake db:seed` to load demo data
++ Run `bundle exec rake db:create_admin` to setup an administrator account
 + Run `bundle exec rails s` to launch the server in development mode
 + Open the webpage shown in your terminal from the last command in your browser.
 + Login to the registration app `http://localhost:3000` as email: `root@root.com`, password: `ChangeMe123` or email: `ctf@mitre.org`, password: `Test123456` and change the password.
