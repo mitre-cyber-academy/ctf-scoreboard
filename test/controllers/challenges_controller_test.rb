@@ -128,7 +128,6 @@ class ChallengesControllerTest < ActionController::TestCase
     game = create(:active_pentest_game)
     team1 = create(:pentest_team)
     challenge = create(:design_phase_pentest_challenge_with_flag, pentest_game: game)
-    binding.pry
     sign_in team1.team_captain
     get :show, params: { id: challenge }
     assert_response :success
