@@ -119,7 +119,7 @@ class ChallengesControllerTest < ActionController::TestCase
     flag_text = challenge.flags.find_by(team_id: team2.id).flag
     put :update, params: { id: challenge, team_id: team2, challenge: { submitted_flag: flag_text } }
     assert_response :success
-    assert_equal flash[:notice], I18n.t('flag.accepted')
+    assert_equal I18n.t('flag.accepted'), flash[:notice]
   end
 
   test 'find design phase challenge' do
