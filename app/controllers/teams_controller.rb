@@ -14,16 +14,11 @@ class TeamsController < ApplicationController
   before_action :deny_team_in_top_ten, :update_team, only: %i[update invite]
   before_action :load_team_by_id, only: %i[show summary]
   before_action :load_admin_stats, only: %i[summary]
+  before_action :load_categories, only: %i[summary]
 
   def index; end
 
   def summary
-    if @game.is_a?(PentestGame)
-      @defensive_points = @team.calc_defensive_points
-      @flag_categories = PentestSolvedChallenge.solves_by_category_for(@team)
-    else
-      @flag_categories = PointSolvedChallenge.solves_by_category_for(@team)
-    end
     @score_adjustments = @team.score_adjustments
     @team_flag_submissions = [
       { name: 'Flag Submissions', data: @team.submitted_flags_per_hour },
@@ -86,6 +81,15 @@ class TeamsController < ApplicationController
   end
 
   private
+
+  def load_categories
+    if @game.is_a?(PentestGame)
+      @defensive_points = @team.calc_defensive_points
+      @flag_categories = PentestSolvedChallenge.solves_by_category_for(@team)
+    else
+      @flag_categories = PointSolvedChallenge.solves_by_category_for(@team)
+    end
+  end
 
   def check_team_captain
     redirect_to user_root_path, alert: I18n.t('teams.must_be_team_captain') unless current_user.team_captain?
