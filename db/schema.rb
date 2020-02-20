@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_22_182004) do
+ActiveRecord::Schema.define(version: 2020_02_14_144340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,12 +35,13 @@ ActiveRecord::Schema.define(version: 2020_01_22_182004) do
     t.integer "defense_points", default: 0
     t.integer "unsolved_increment_period", default: 1
     t.integer "unsolved_increment_points", default: 0
-    t.integer "initial_shares", default: 0
+    t.integer "initial_shares", default: 1
     t.integer "solved_decrement_shares", default: 0
     t.integer "first_capture_point_bonus", default: 0
     t.bigint "pentest_game_id"
     t.string "type"
     t.integer "solved_decrement_period", default: 1
+    t.boolean "design_phase", default: false
     t.index ["pentest_game_id"], name: "index_challenges_on_pentest_game_id"
   end
 
@@ -89,6 +90,8 @@ ActiveRecord::Schema.define(version: 2020_01_22_182004) do
     t.integer "challenge_state", default: 0, null: false
     t.datetime "start_calculation_at"
     t.string "type"
+    t.boolean "design_phase", default: false
+    t.index ["design_phase"], name: "index_flags_on_design_phase"
     t.index ["team_id"], name: "index_flags_on_team_id"
   end
 
@@ -113,8 +116,8 @@ ActiveRecord::Schema.define(version: 2020_01_22_182004) do
     t.boolean "enable_completion_certificates", default: false
     t.oid "completion_certificate_template"
     t.text "prizes_text"
-    t.string "type"
     t.text "terms_and_conditions"
+    t.string "type"
   end
 
   create_table "messages", id: :serial, force: :cascade do |t|

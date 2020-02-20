@@ -1,0 +1,14 @@
+%table.table.table-bordered.table-striped
+  %thead
+    %tr
+      %th #
+      %th Points
+      %th Description
+      %th When
+  %tbody
+    - @score_adjustments.each_with_index do |adjustment, i|
+      %tr
+        %td= i + 1
+        %td= adjustment.point_value
+        %td= adjustment.text
+        %td= view_time_format(adjustment.created_at)

@@ -10,5 +10,5 @@
       %tr
         %td= i + 1
         %td= solved_challenge_title(@game, s)
-        %td= s.challenge.point_value
-        %td= s.created_at.strftime("%b %e %y, %R %Z")
+        %td= solved_challenge_table_point_value(@game, s, @team)
+        %td= view_time_format(s.created_at)
