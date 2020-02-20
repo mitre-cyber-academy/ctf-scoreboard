@@ -119,6 +119,17 @@ class ChallengesControllerTest < ActionController::TestCase
     flag_text = challenge.flags.find_by(team_id: team2.id).flag
     put :update, params: { id: challenge, team_id: team2, challenge: { submitted_flag: flag_text } }
     assert_response :success
-    assert_equal flash[:notice], I18n.t('flag.accepted')
+    assert_equal I18n.t('flag.accepted'), flash[:notice]
+  end
+
+  test 'find design phase challenge' do
+    Game.first.destroy
+
+    game = create(:active_pentest_game)
+    team1 = create(:pentest_team)
+    challenge = create(:design_phase_pentest_challenge_with_flag, pentest_game: game)
+    sign_in team1.team_captain
+    get :show, params: { id: challenge }
+    assert_response :success
   end
 end

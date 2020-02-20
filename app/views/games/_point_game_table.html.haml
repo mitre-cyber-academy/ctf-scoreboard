@@ -1,13 +1,14 @@
-%thead
-  %tr
-    - @headings.each do |category|
-      %th{ :style => "text-align:center;width:#{heading_width(@headings)}%;" }=category.name
-%tbody
-  - @table_rows.times do |row|
+%table.table.table-bordered.table-bolded
+  %thead
     %tr
-      - @headings.size.times do |column_num|
-        - if row < @headings[column_num].challenges.size
-          = render partial: 'point_challenge',
-            locals: { challenge: @headings[column_num].challenges[row], defense_team: nil }
-        - else
-          %td &nbsp;
+      - @headings.each do |category|
+        %th.text-center{ style: "width:#{heading_width(@headings)}%;" }=category.name
+  %tbody
+    - @table_rows.times do |row|
+      %tr
+        - @headings.size.times do |column_num|
+          - if row < @headings[column_num].challenges.size
+            = render partial: 'point_challenge',
+              locals: { challenge: @headings[column_num].challenges[row], defense_team: nil }
+          - else
+            %td &nbsp;

@@ -44,6 +44,7 @@ en:
       team_members_header: 'Team Members'
       per_user_statistics_header: 'Per User Statistics'
       flag_submissions_header: 'Team Flag Submissions'
+      score_adjustments_header: 'Score Adjustments'
     captain_removed_player: 'Player was successfully removed.'
     player_removed_self: 'You have successfully left the team.'
     already_on_team_create: 'You cannot create a new team while already being a member of one.'

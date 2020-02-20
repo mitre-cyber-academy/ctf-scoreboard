@@ -312,7 +312,7 @@ class TeamsControllerTest < ActionController::TestCase
     team = create(:pentest_team)
     captain = team.team_captain
     sign_in captain
-    get :show, params: { id: captain.team }
+    get :summary, params: { id: captain.team }
     assert_response :success
   end
 end

@@ -1,1 +1,1 @@
-%td{ style: "text-align:center;#{challenge_color(challenge, defense_team)}" }= always_link_to_if_admin(challenge.open?, challenge.point_value, game_challenge_path(challenge), style: "color:inherit;")
+%td.text-center{ style: "#{challenge_color(challenge, defense_team)}" }= always_link_to_if_admin(challenge.open?, challenge.point_value, game_challenge_path(challenge), style: "color:inherit;")

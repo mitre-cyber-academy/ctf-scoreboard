@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 module GamesHelper
-  def table_subtitle(game, challenges, headings)
-    noun = team_or_category(game)
-    "#{pluralize(challenges.size, 'challenge')} across #{pluralize(headings.size, noun)}"
-  end
-
   def team_or_category(game)
     return 'team' if game.is_a?(PentestGame)
 

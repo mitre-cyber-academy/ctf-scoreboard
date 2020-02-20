@@ -26,8 +26,10 @@ module ChallengesHelper
   end
 
   def subheading(team, challenge)
-    if team
-      "#{team.team_name} - #{challenge.point_value(current_user&.team)} points"
+    if challenge.design_phase
+      "Design Phase Challenge - #{pluralize(challenge.point_value(current_user&.team), 'point')}"
+    elsif team
+      "#{team.team_name} - #{pluralize(challenge.point_value(current_user&.team), 'point')}"
     else
       "#{challenge.category.name} - #{challenge.point_value} points"
     end

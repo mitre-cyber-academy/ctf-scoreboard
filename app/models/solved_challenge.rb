@@ -11,14 +11,6 @@ class SolvedChallenge < FeedItem
 
   belongs_to :team, optional: false, inverse_of: :solved_challenges
 
-  def description
-    %(#{super.titleize} "#{challenge.category.name} #{challenge.point_value}")
-  end
-
-  def icon
-    super('ok')
-  end
-
   def challenge_is_open
     errors.add(:challenge, I18n.t('challenges.not_open')) unless challenge.open?
   end
@@ -39,5 +31,9 @@ class SolvedChallenge < FeedItem
     category = challenge.category
     challenge = category.next_challenge(challenge)
     challenge.state!('open') if challenge&.available?
+  end
+
+  def team_can_solve_challenge
+    errors.add(:base, I18n.t('challenges.already_solved'))
   end
 end
