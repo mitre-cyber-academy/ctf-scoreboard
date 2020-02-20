@@ -10,6 +10,7 @@ class ChallengesController < ApplicationController
   before_action :valid_captcha, :find_and_log_flag, :on_team?, only: [:update]
 
   def show
+    # @challenge is either a Flag or a PointChallenge
     @solvable = @challenge.can_be_solved_by(current_user.team)
     @solved_video_url = @solved_challenge.flag.video_url if @solved_challenge
     flash.now[:notice] = I18n.t('flag.accepted') if @solved_challenge
@@ -62,17 +63,17 @@ class ChallengesController < ApplicationController
   def challenges_for_game_type
     # In a PentestGame we use PentestFlags as if they are Challenges since they are the linking objects between
     # the team defending a flag and the challenge.
-    if @game.is_a?(PentestGame)
-      flag_challenge = @game.flags.find_by(challenge: params[:id])
-      if flag_challenge.design_phase
-        @challenge = flag_challenge
-        @defense_team = current_user&.team
-      else
-        @defense_team = @game.teams.find(params[:team_id])
-        @challenge = @game.flags.find_by(challenge: params[:id], team: @defense_team)
-      end
-    else
-      @challenge = @game.challenges.find(params[:id])
-    end
+    return challenges_for_pentest if @game.is_a?(PentestGame)
+
+    @challenge = @game.challenges.find(params[:id])
+  end
+
+  def challenges_for_pentest
+    @challenge = @game.flags.find_by(challenge: params[:id])
+    @defense_team = if @challenge.design_phase
+                      current_user&.team
+                    else
+                      @game.teams.find(params[:team_id])
+                    end
   end
 end
