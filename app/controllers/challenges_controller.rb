@@ -59,13 +59,14 @@ class ChallengesController < ApplicationController
     redirect_back fallback_location: user_root_path, alert: I18n.t('challenges.must_be_on_team')
   end
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def challenges_for_game_type
     # In a PentestGame we use PentestFlags as if they are Challenges since they are the linking objects between
     # the team defending a flag and the challenge.
     if @game.is_a?(PentestGame)
-      flag_challenge = @game.flags.find_by(challenge: params[:id])
-      if flag_challenge.design_phase
-        @challenge = flag_challenge
+      @challenge = @game.flags.find_by(challenge: params[:id])
+      if @challenge.design_phase
         @defense_team = current_user&.team
       else
         @defense_team = @game.teams.find(params[:team_id])
@@ -75,4 +76,6 @@ class ChallengesController < ApplicationController
       @challenge = @game.challenges.find(params[:id])
     end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 end
