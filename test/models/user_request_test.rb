@@ -2,8 +2,8 @@ require 'test_helper'
 
 class UserRequestTest < ActiveSupport::TestCase
   def setup
-    @game = create(:active_point_game)
-    @team = create(:point_team, additional_member_count: 1)
+    @game = create(:active_game)
+    @team = create(:team, additional_member_count: 1)
     @user = create(:user)
   end
 
@@ -27,7 +27,7 @@ class UserRequestTest < ActiveSupport::TestCase
   end
 
   test 'accept full team request' do
-    team = create(:point_team, additional_member_count: @game.team_size - 1)
+    team = create(:team, additional_member_count: @game.team_size - 1)
     user_request = create(:point_user_request, team: team, user: @user)
     assert_no_difference 'team.users.reload.size' do
       user_request.accept

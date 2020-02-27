@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-class PentestFlag < Flag
-  belongs_to :team, inverse_of: :flags, optional: true
-  belongs_to :challenge, inverse_of: :flags, foreign_key: 'challenge_id', class_name: 'PentestChallenge'
+class DefenseFlag < Flag
+  # TODO: Validate uniqueness of defense flag per challenge and team
+
+  belongs_to :team, inverse_of: :defense_flags, optional: false
+  belongs_to :challenge, inverse_of: :defense_flags, foreign_key: 'challenge_id', class_name: 'PentestChallenge'
 
   has_many :solved_challenges, -> { ordered }, inverse_of: :flag, foreign_key: 'flag_id',
                                                class_name: 'PentestSolvedChallenge', dependent: :destroy
@@ -18,11 +20,9 @@ class PentestFlag < Flag
     challenge.get_solved_challenge_for(team, self)
   end
 
-  delegate :name, to: :challenge
-
-  delegate :description, to: :challenge
-
-  validates :team, presence: true, unless: :design_phase?
+  # Without allow_nil rails_admin cannot load defense_flag new page
+  delegate :name, to: :challenge, allow_nil: true
+  delegate :description, to: :challenge, allow_nil: true
 
   def point_value(team)
     if solved_challenges.size.zero? # If nobody has solved

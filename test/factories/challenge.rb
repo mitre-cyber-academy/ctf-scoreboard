@@ -5,12 +5,18 @@ FactoryBot.define do
     name { 'challenge' }
     description { 'challenge description' }
     point_value { 100 }
+    game
     state { :open }
 
     transient do
       flag_count { 1 }
+      category_count { 1 }
     end
 
-    # flags_attributes { flag_count.times.map {FactoryBot.attributes_for(:flag)} }
+    after(:build) do |challenge, evaluator|
+      evaluator.category_count.times do
+        challenge.categories << create(:category)
+      end
+    end
   end
 end

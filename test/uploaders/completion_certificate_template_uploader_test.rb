@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CompetitionCertificateTemplateUploaderTest < ActionDispatch::IntegrationTest
   def setup
-    @game = create(:active_point_game, enable_completion_certificates: true)
+    @game = create(:active_game, enable_completion_certificates: true)
   end
 
   test 'filename' do

@@ -12,7 +12,7 @@
     - else
       = render partial: 'teams/solved_challenges_table'
   %div.span7
-    %h3.muted.text-center= t('teams.summary.solved_challenges_chart_header')
+    %h3.muted= t('teams.summary.solved_challenges_chart_header')
     - if @team.solved_challenges.size == 0
       .zero-items-text= t('teams.summary.zero_items_text')
     - else

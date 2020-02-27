@@ -1,11 +1,10 @@
 FactoryBot.define do
   factory :point_challenge, parent: :challenge, class: 'PointChallenge' do
     type { 'PointChallenge' }
-    category
 
     after(:build) do |challenge, evaluator|
       evaluator.flag_count.times do
-        create(:challenge_flag, challenge: challenge)
+        create(:point_flag, challenge: challenge)
       end
     end
 

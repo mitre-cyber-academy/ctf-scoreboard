@@ -2,8 +2,11 @@ require 'test_helper'
 
 class RegistrationsControllerTest < ActionController::TestCase
 
+  # TODO: Ensure that no errors show up on the registraton page when upon intiial navigation
+  # (This happens if check_captcha is run on new and create for example)
+
   def setup
-    create(:active_point_game)
+    create(:active_game)
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @password = 'TestPassword123'
   end
@@ -17,7 +20,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   end
 
   test 'destroy user on a team' do
-    @team = create(:point_team)
+    @team = create(:team)
     @user_not_captain = create(:user, password: @password, team: @team)
     sign_in @user_not_captain
 
@@ -48,7 +51,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   end
 
   test 'cannot get new registration after game close' do
-    game = create(:ended_point_game)
+    game = create(:ended_game)
 
     get :new
     assert_redirected_to @controller.user_root_path
@@ -68,7 +71,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   end
 
   test 'create with failed recaptcha' do
-    create(:active_point_game)
+    create(:active_game)
     Recaptcha.configuration.skip_verify_env.delete('test')
     Recaptcha.configure do |config|
       config.site_key = 'whatever'

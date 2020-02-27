@@ -1,0 +1,14 @@
+%table.table.table-bordered.table-bolded
+  %thead
+    %tr
+      - @categories.each do |category|
+        %th.text-center{ style: "width:#{heading_width(@categories)}%;" }=category.name
+  %tbody
+    - @game.max_category_size.times do |row|
+      %tr
+        - @categories.size.times do |column_num|
+          - if row < @categories[column_num].challenges.size
+            = render partial: 'point_challenge',
+              locals: { challenge: @categories[column_num].challenges[row] }
+          - else
+            %td &nbsp;

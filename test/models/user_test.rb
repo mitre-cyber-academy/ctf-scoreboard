@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    create(:active_point_game)
+    create(:active_game)
   end
 
   test 'default compete for prizes value is false if none is provided' do
@@ -27,7 +27,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'user is a team captain' do
-    team = create(:point_team, additional_member_count: 1)
+    team = create(:team, additional_member_count: 1)
     captain = team.team_captain
     non_captain = team.users.where.not(id: captain).first
     assert_equal(true, captain.team_captain?)
@@ -35,33 +35,33 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'user can promote a team captain if they are currently captain' do
-    team = create(:point_team, additional_member_count: 1)
+    team = create(:team, additional_member_count: 1)
     captain = team.team_captain
     non_captain = team.users.where.not(id: captain).first
     assert_equal(true, captain.can_promote?(non_captain))
   end
 
   test 'team captain cannot promote themselves team captain' do
-    team = create(:point_team, additional_member_count: 2)
+    team = create(:team, additional_member_count: 2)
     captain = team.team_captain
     assert_equal(false, captain.can_promote?(captain))
   end
 
   test 'non team captain cannot promote a team captain' do
-    team = create(:point_team, additional_member_count: 2)
+    team = create(:team, additional_member_count: 2)
     captain = team.team_captain
     player_list = team.users.where.not(id: captain)
     assert_equal(false, player_list.first.can_promote?(player_list.last))
   end
 
   test 'team captain can remove themselves from a team' do
-    team = create(:point_team, additional_member_count: 2)
+    team = create(:team, additional_member_count: 2)
     captain = team.team_captain
     assert_equal(true, captain.can_remove?(captain))
   end
 
   test 'team captain can remove a member from his team' do
-    team = create(:point_team, additional_member_count: 2)
+    team = create(:team, additional_member_count: 2)
     captain = team.team_captain
     assert_equal(true, captain.can_remove?(captain))
     non_captain = team.users.where.not(id: captain).first
@@ -69,14 +69,14 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'user can remove themselves from a team' do
-    team = create(:point_team, additional_member_count: 1)
+    team = create(:team, additional_member_count: 1)
     captain = team.team_captain
     non_captain = team.users.where.not(id: captain).first
     assert_equal(true, non_captain.can_remove?(non_captain))
   end
 
   test 'non team captain cannot remove another user from a team' do
-    team = create(:point_team, additional_member_count: 2)
+    team = create(:team, additional_member_count: 2)
     captain = team.team_captain
     player_list = team.users.where.not(id: captain)
     assert_equal(false, player_list.first.can_remove?(player_list.last))
@@ -113,7 +113,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'link to invitiations' do
-    team = create(:point_team)
+    team = create(:team)
     invite = create(:point_user_invite, team: team)
     user = create(:user, email: invite.email)
     invite.reload

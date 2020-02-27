@@ -117,7 +117,7 @@ en:
       green_desc: 'Solved by one team'
       light_green_desc: 'Solved by multiple teams'
       blue_desc: 'Solved by your team'
-      gray_desc: 'Unopened'
+      gray_desc: 'Unavailable'
       red_desc: 'Locked'
     show:
       table_title: 'Challenges'
@@ -132,6 +132,8 @@ en:
     already_solved: 'This player has already solved this challenge.'
     must_be_on_team: 'You must be on a team to submit a flag.'
     state_change_message: 'The challenge is now %{state}'
+  challenge_categories:
+    same_game: 'must belong to the same game as category.'
   users:
     login_required: 'You must login in order to perform this action.'
     team_completion_cert_string: "This is to certify that %{full_name}

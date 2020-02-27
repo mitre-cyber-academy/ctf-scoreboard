@@ -4,9 +4,12 @@ class ChallengesControllerTest < ActionController::TestCase
   include ChallengesHelper
 
   def setup
-    create(:active_point_game)
+    create(:active_game)
     @challenge = create(:point_challenge, flag_count: 3)
   end
+
+  # TODO: Write test to verify that PentestChallenges cannot be accessed directly without providing
+  # a Flag ID
 
   test 'should get show' do
     sign_in create(:user_with_team)
@@ -16,11 +19,9 @@ class ChallengesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test 'show challenge pentest game' do
-    Game.first.destroy
-    game = create(:active_pentest_game)
-    team = create(:pentest_team)
-    challenge = create(:pentest_challenge_with_flags, pentest_game: game)
+  test 'show pentest challenge' do
+    team = create(:team)
+    challenge = create(:pentest_challenge_with_flags)
     sign_in team.team_captain
     get :show, params: { id: challenge, team_id: team }
     assert_response :success
@@ -108,28 +109,15 @@ class ChallengesControllerTest < ActionController::TestCase
     Recaptcha.configuration.skip_verify_env << 'test'
   end
 
-  test 'update pentest game' do
-    Game.first.destroy
-    game = create(:active_pentest_game)
-    team1 = create(:pentest_team)
-    team2 = create(:pentest_team)
+  test 'successfully submit flag to pentest challenge' do
+    team1 = create(:team)
+    team2 = create(:team)
     # Creates a challenge for each team
-    challenge = create(:pentest_challenge_with_flags, pentest_game: game)
+    challenge = create(:pentest_challenge_with_flags)
     sign_in team1.team_captain
-    flag_text = challenge.flags.find_by(team_id: team2.id).flag
+    flag_text = challenge.defense_flags.find_by(team_id: team2.id).flag
     put :update, params: { id: challenge, team_id: team2, challenge: { submitted_flag: flag_text } }
     assert_response :success
     assert_equal I18n.t('flag.accepted'), flash[:notice]
-  end
-
-  test 'find design phase challenge' do
-    Game.first.destroy
-
-    game = create(:active_pentest_game)
-    team1 = create(:pentest_team)
-    challenge = create(:design_phase_pentest_challenge_with_flag, pentest_game: game)
-    sign_in team1.team_captain
-    get :show, params: { id: challenge }
-    assert_response :success
   end
 end

@@ -1,23 +1,17 @@
 # frozen_string_literal: true
 
 module GamesHelper
-  def team_or_category(game)
-    return 'team' if game.is_a?(PentestGame)
-
-    'category'
-  end
-
   def heading_width(headings)
     1.0 / headings.size.to_f * 100.0
   end
 
   def cell_background_color(team)
-    return '' unless team.eql? current_user&.team&.team_name
+    return '' unless team.eql? current_user&.team
 
     'background-color: #F0F0F0;'
   end
 
-  def challenge_color(challenge, defense_team)
+  def challenge_color(challenge, defense_team=nil)
     return 'color:#999999;' if own_team_challenge?(defense_team)
 
     challenge_color_for_other_team(challenge)
@@ -43,10 +37,5 @@ module GamesHelper
 
   def own_team_challenge?(defense_team)
     defense_team&.eql?(current_user&.team)
-  end
-
-  def get_team_by_name(teams, team_name)
-    found_team = teams.select { |team| team.team_name.eql? team_name }
-    found_team.first.id
   end
 end

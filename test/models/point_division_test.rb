@@ -1,11 +1,11 @@
 require 'test_helper'
 
-class DivisionTest < ActiveSupport::TestCase
+class PointDivisionTest < ActiveSupport::TestCase
   def setup
-    @game = create(:active_point_game)
+    @game = create(:active_game)
     @division = @game.divisions.first
-    create_list(:point_team, 10, division: @division)
-    create_list(:point_team, 10, division: @division, compete_for_prizes: true)
+    create_list(:team, 10, division: @division)
+    create_list(:team, 10, division: @division, compete_for_prizes: true)
   end
   test 'sort all players and ensure both lists are the same length' do
     ordered_teams = @division.ordered_teams

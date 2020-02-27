@@ -2,7 +2,7 @@ require 'test_helper'
 
 class PasswordsResetTest < ActionDispatch::IntegrationTest
   test 'user can reset password' do
-    create(:active_point_game)
+    create(:active_game)
     user = create(:user)
     old_password = user.encrypted_password
 

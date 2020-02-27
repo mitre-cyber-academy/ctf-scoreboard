@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 class Challenge < ApplicationRecord
+  # TODO: Add validator that verifies a challenge only has one category if the parent game is in JeopardyGame mode
+  before_save :post_state_change_message
+
+  belongs_to :game
+
+  has_many :challenge_categories, dependent: :destroy
+  has_many :categories, through: :challenge_categories
+
   has_many :submitted_flags, dependent: :destroy
 
   enum state: { closed: 0, open: 1, force_closed: 2 }
@@ -13,7 +21,7 @@ class Challenge < ApplicationRecord
   attr_accessor :submitted_flag, :solved_challenges_count
 
   def self.type_enum
-    [['PentestChallenge'], ['PointChallenge']]
+    [['PentestChallenge'], ['ShareChallenge'], ['PointChallenge']]
   end
 
   validates :type, inclusion: type_enum.flatten, presence: true
@@ -24,7 +32,7 @@ class Challenge < ApplicationRecord
   end
 
   def open?
-    challenge_open? && category.game.open?
+    challenge_open? && game.open?
   end
 
   def solved?(times = 1)
@@ -33,6 +41,10 @@ class Challenge < ApplicationRecord
     # we should utilize that count, if not then we should fall
     # through and use the regular old count method.
     (solved_challenges_count || solved_challenges.count) >= times
+  end
+
+  def category_list
+    categories.map(&:name).join(', ')
   end
 
   def get_solved_challenge_for(team)
@@ -64,5 +76,15 @@ class Challenge < ApplicationRecord
 
   def state_transition(from, to)
     state_was == from && state == to
+  end
+
+  def post_state_change_message
+    return unless state_transition('force_closed', 'open') || state_transition('open', 'force_closed')
+
+    Message.create!(
+      game: game,
+      title: "#{name}: #{category_list} #{point_value}",
+      text: I18n.t('challenges.state_change_message', state: state.titleize)
+    )
   end
 end

@@ -5,8 +5,8 @@ class UserRequestsControllerTest < ActionController::TestCase
   def setup
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @request.env["HTTP_REFERER"] = 'http://test.host/'
-    @game = create(:active_point_game)
-    @team = create(:point_team)
+    @game = create(:active_game)
+    @team = create(:team)
     @requesting_user = create(:user)
   end
 
@@ -53,7 +53,7 @@ class UserRequestsControllerTest < ActionController::TestCase
   end
 
   test 'accept request but team now has too many members' do
-    full_team = create(:point_team, additional_member_count: @game.team_size - 1)
+    full_team = create(:team, additional_member_count: @game.team_size - 1)
     user_request = create(:point_user_request, team: full_team, user: @requesting_user)
     sign_in full_team.team_captain
     get :accept, params: { team_id: full_team, id: user_request }
@@ -62,7 +62,7 @@ class UserRequestsControllerTest < ActionController::TestCase
   end
 
   test 'accept request but team now has too many members with no referer' do
-    full_team = create(:point_team, additional_member_count: @game.team_size - 1)
+    full_team = create(:team, additional_member_count: @game.team_size - 1)
     user_request = create(:point_user_request, team: full_team, user: @requesting_user)
     sign_in full_team.team_captain
     @request.env["HTTP_REFERER"] = nil
@@ -122,7 +122,7 @@ class UserRequestsControllerTest < ActionController::TestCase
   end
 
   test 'team captain can not accept requests while in top ten' do
-    team_in_top_ten = create(:point_team_in_top_ten)
+    team_in_top_ten = create(:team_in_top_ten_point_challenges)
     user_request = create(:point_user_request, team: team_in_top_ten, user: @requesting_user)
     sign_in team_in_top_ten.team_captain
     get :accept, params: { team_id: team_in_top_ten, id: user_request }

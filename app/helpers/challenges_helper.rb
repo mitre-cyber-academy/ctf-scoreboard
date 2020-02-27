@@ -26,12 +26,12 @@ module ChallengesHelper
   end
 
   def subheading(team, challenge)
-    if challenge.design_phase
-      "Design Phase Challenge - #{pluralize(challenge.point_value(current_user&.team), 'point')}"
-    elsif team
+    if team
       "#{team.team_name} - #{pluralize(challenge.point_value(current_user&.team), 'point')}"
+    elsif challenge.respond_to?(:category)
+      "#{challenge.category.name || "word"} - #{pluralize(challenge.point_value, 'point')}"
     else
-      "#{challenge.category.name} - #{challenge.point_value} points"
+      pluralize(challenge.point_value, 'point')
     end
   end
 

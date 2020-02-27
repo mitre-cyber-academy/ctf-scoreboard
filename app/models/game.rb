@@ -1,14 +1,6 @@
 # frozen_string_literal: true
 
 class Game < ApplicationRecord
-  has_many :messages, dependent: :destroy
-
-  def self.type_enum
-    [['PointGame'], ['PentestGame']]
-  end
-
-  validates :type, inclusion: type_enum.flatten, presence: true
-
   validates :title, :start, :stop, :do_not_reply_email, :contact_email, :description, presence: true
 
   validate :instance_is_singleton, :order_of_start_and_stop_date
@@ -16,6 +8,26 @@ class Game < ApplicationRecord
   mount_uploader :completion_certificate_template, CompletionCertificateTemplateUploader
 
   validates :completion_certificate_template, presence: true, if: :enable_completion_certificates?
+
+  has_many :messages, dependent: :destroy
+
+  with_options dependent: :destroy do
+    has_many :categories, dependent: :destroy
+    has_many :pentest_challenges, dependent: :destroy
+    has_many :defense_flags, through: :pentest_challenges
+    has_many :point_challenges, dependent: :destroy
+    has_many :challenges, foreign_key: 'game_id'
+    has_many :divisions, dependent: :destroy
+    has_many :teams, through: :divisions
+    has_many :users, through: :teams
+    has_many :feed_items, through: :divisions
+    has_many :achievements, through: :divisions
+    has_many :point_solved_challenges, through: :divisions
+    has_many :pentest_solved_challenges, through: :divisions
+    has_many :solved_challenges, through: :divisions
+  end
+
+  enum board_layout: { jeopardy: 0, teams_x_challenges: 1, multiple_categories: 2 }
 
   after_commit { Rails.cache.delete('game_instance') }
 
@@ -45,6 +57,12 @@ class Game < ApplicationRecord
     Time.now.utc > stop
   end
 
+  # This method returns either the current time in UTC or end of the game if the game is over.
+  # The end of the defense time is either the end of the game or current time if we are during the game
+  def defense_end
+    open? ? Time.now.utc : stop
+  end
+
   def remind_all
     User.all.find_each do |usr|
       UserMailer.competition_reminder(usr).deliver_later
@@ -72,11 +90,21 @@ class Game < ApplicationRecord
     end
   end
 
-  def table_rows(headings)
-    return 0 if type.eql? 'PentestGame'
-
-    headings.map do |category|
+  def max_category_size
+    categories.map do |category|
       category.challenges.size
-    end.max
+    end.max || 0
+  end
+
+  def teams_associated_with_flags_and_pentest_challenges
+    teams.map do |team|
+      team_challenge_flags = pentest_challenges.map do |challenge|
+        matched_flag = defense_flags.to_a.find do |flag|
+          flag.team_id.eql?(team.id) && flag.challenge_id.eql?(challenge.id)
+        end
+        { flag: matched_flag, challenge: challenge }
+      end
+      [team, team_challenge_flags]
+    end
   end
 end

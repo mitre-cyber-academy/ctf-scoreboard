@@ -5,11 +5,11 @@ FactoryBot.define do
     user { create(:user) }
 
     factory :point_user_request do
-      team { create(:point_team) }
+      team { create(:team) }
     end
 
     factory :pentest_user_request do
-      team { create(:pentest_team) }
+      team { create(:team) }
     end
   end
 end

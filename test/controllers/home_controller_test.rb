@@ -2,7 +2,7 @@ require 'test_helper'
 
 class HomeControllerTest < ActionController::TestCase
   test 'should get index when game has been created' do
-    create(:active_point_game)
+    create(:active_game)
 
     get :index
     assert_response :success

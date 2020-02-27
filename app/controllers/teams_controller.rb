@@ -83,12 +83,8 @@ class TeamsController < ApplicationController
   private
 
   def load_categories
-    if @game.is_a?(PentestGame)
-      @defensive_points = @team.calc_defensive_points
-      @flag_categories = PentestSolvedChallenge.solves_by_category_for(@team)
-    else
-      @flag_categories = PointSolvedChallenge.solves_by_category_for(@team)
-    end
+    @defensive_points = @team.calc_defensive_points
+    @flag_categories = @team.solves_by_category
   end
 
   def check_team_captain

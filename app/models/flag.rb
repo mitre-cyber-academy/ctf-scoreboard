@@ -4,7 +4,7 @@ class Flag < ApplicationRecord
   validates :flag, presence: true
 
   def self.type_enum
-    [['ChallengeFlag'], ['PentestFlag']]
+    [['PointFlag'], ['ShareFlag'], ['DefenseFlag']]
   end
 
   validates :type, inclusion: type_enum.flatten, presence: true

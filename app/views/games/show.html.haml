@@ -1,8 +1,13 @@
 - content_for :header do
   = @game.title
 
-- if @challenges.size == 0
+- if @pentest_challenges.size == 0 && @point_challenges.size == 0
   .zero-items-text= t('game.show.no_challenges')
 - else
-  = render partial: 'games/table'
+  -# Render based on the user selected gameboard layout
+  = render partial: "games/#{@game.board_layout}_table"
+  %hr
+  -# Always render PentestChallenges. This provides us with the ability to
+  -# have Attack/Defend games with Generic challenge types on top
+  = render partial: 'games/pentest_game_table'
 = render partial: 'games/legend'

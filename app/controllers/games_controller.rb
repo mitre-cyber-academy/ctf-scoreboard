@@ -30,9 +30,12 @@ class GamesController < ApplicationController
   def terms_of_service; end
 
   def show
-    @challenges = @game&.challenges
-    ActiveRecord::Precounter.new(@challenges).precount(:solved_challenges)
-    prepare_table
+    @pentest_challenges = @game&.pentest_challenges
+    @point_challenges = @game&.point_challenges
+    ActiveRecord::Precounter.new(@point_challenges).precount(:solved_challenges)
+    ActiveRecord::Precounter.new(@pentest_challenges).precount(:solved_challenges)
+    prepare_pentest_challenge_table # Always show PentestChallenges, no matter the Gameboard type
+    prepare_challenge_table
     respond_to do |format|
       format.html
       format.markdown do
@@ -71,7 +74,7 @@ class GamesController < ApplicationController
     @flags_per_hour = SubmittedFlag.group_by_hour(:created_at).count
     @line_chart_data = [
       { name: 'Flag Submissions', data: @flags_per_hour },
-      { name: 'Challenges Solved', data: SolvedChallenge.group_by_hour(:created_at).count }
+      { name: 'Challenges Solved', data: FeedItem.solved_challenges.group_by_hour(:created_at).count }
     ]
   end
 
@@ -81,19 +84,26 @@ class GamesController < ApplicationController
 
   private
 
-  def prepare_table
+  def prepare_challenge_table
+    # What information we need depends on the game mode we are in, however
+    # we will always need a list of challenges
+    @point_challenges = @game&.point_challenges
+    if @game.jeopardy?
+      @categories = @game.categories
+    elsif @game.teams_x_challenges?
+      # prepare_teams_x_challenges_table
+    elsif @game.multiple_categories?
+      # prepare_multiple_categories_table
+    end
+  end
+
+  def prepare_pentest_challenge_table
     # The headings of the gameboard are either categories or teams, this loads based
     # on the STI model that the game is based on.
-    @headings = @game&.load_categories_or_teams
+    # @teams = @game&.teams
 
-    if @game.is_a?(PointGame)
-      @table_rows = @game&.table_rows(@headings)
-    else
-      @attack_table_heading = [OpenStruct.new(name: 'Teams'), @game&.attack_challenges].flatten
-      @design_table_heading = [OpenStruct.new(name: 'Teams'), @game&.design_phase_challenges].flatten
-      @teams_with_assoc = @game.teams_associated_with_flags_and_attack_challenges
-      @design_phase_challenges = @design_table_heading[1..-1]
-    end
+    @pentest_table_heading = [OpenStruct.new(name: 'Teams'), @game&.pentest_challenges].flatten
+    @teams_with_assoc = @game.teams_associated_with_flags_and_pentest_challenges
   end
 
   # Creates a zip from any collection of files available on the user model.

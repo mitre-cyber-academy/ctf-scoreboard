@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_14_144340) do
+ActiveRecord::Schema.define(version: 2020_02_21_221723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,11 +22,17 @@ ActiveRecord::Schema.define(version: 2020_02_14_144340) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "challenge_categories", force: :cascade do |t|
+    t.bigint "category_id"
+    t.bigint "challenge_id"
+    t.index ["category_id"], name: "index_challenge_categories_on_category_id"
+    t.index ["challenge_id"], name: "index_challenge_categories_on_challenge_id"
+  end
+
   create_table "challenges", id: :serial, force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.integer "point_value"
-    t.integer "category_id"
     t.string "achievement_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -38,11 +44,10 @@ ActiveRecord::Schema.define(version: 2020_02_14_144340) do
     t.integer "initial_shares", default: 1
     t.integer "solved_decrement_shares", default: 0
     t.integer "first_capture_point_bonus", default: 0
-    t.bigint "pentest_game_id"
     t.string "type"
     t.integer "solved_decrement_period", default: 1
-    t.boolean "design_phase", default: false
-    t.index ["pentest_game_id"], name: "index_challenges_on_pentest_game_id"
+    t.bigint "game_id"
+    t.index ["game_id"], name: "index_challenges_on_game_id"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -65,7 +70,6 @@ ActiveRecord::Schema.define(version: 2020_02_14_144340) do
     t.integer "game_id"
     t.integer "min_year_in_school", default: 0
     t.integer "max_year_in_school", default: 16
-    t.string "type"
   end
 
   create_table "feed_items", id: :serial, force: :cascade do |t|
@@ -90,8 +94,6 @@ ActiveRecord::Schema.define(version: 2020_02_14_144340) do
     t.integer "challenge_state", default: 0, null: false
     t.datetime "start_calculation_at"
     t.string "type"
-    t.boolean "design_phase", default: false
-    t.index ["design_phase"], name: "index_flags_on_design_phase"
     t.index ["team_id"], name: "index_flags_on_team_id"
   end
 
@@ -117,7 +119,7 @@ ActiveRecord::Schema.define(version: 2020_02_14_144340) do
     t.oid "completion_certificate_template"
     t.text "prizes_text"
     t.text "terms_and_conditions"
-    t.string "type"
+    t.integer "board_layout", default: 0, null: false
   end
 
   create_table "messages", id: :serial, force: :cascade do |t|
@@ -267,7 +269,9 @@ ActiveRecord::Schema.define(version: 2020_02_14_144340) do
     t.index ["transaction_id"], name: "index_versions_on_transaction_id"
   end
 
-  add_foreign_key "challenges", "games", column: "pentest_game_id"
+  add_foreign_key "challenge_categories", "categories"
+  add_foreign_key "challenge_categories", "challenges"
+  add_foreign_key "challenges", "games"
   add_foreign_key "flags", "teams"
   add_foreign_key "submitted_flags", "flags"
   add_foreign_key "teams", "divisions"
