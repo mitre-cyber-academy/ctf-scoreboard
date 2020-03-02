@@ -1,6 +1,5 @@
 language: ruby
-# Use travis CI Docker Infrastructure
-sudo: false
+os: linux
 cache: bundler
 notifications:
   email: false
