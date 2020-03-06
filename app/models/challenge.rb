@@ -17,6 +17,8 @@ class Challenge < ApplicationRecord
   # Handles the ordering of all returned challenge objects.
   default_scope -> { order(:point_value, :name) }
 
+  scope :non_pentest, -> { where.not(type: 'PentestChallenge') }
+
   attr_accessor :submitted_flag, :solved_challenges_count
 
   def self.type_enum

@@ -15,7 +15,7 @@ class Game < ApplicationRecord
     has_many :categories, dependent: :destroy
     has_many :pentest_challenges, dependent: :destroy
     has_many :defense_flags, through: :pentest_challenges
-    has_many :point_challenges, dependent: :destroy
+    has_many :point_challenges, -> { non_pentest }, dependent: :destroy, class_name: 'Challenge'
     has_many :challenges, inverse_of: :game, foreign_key: 'game_id'
     has_many :divisions, dependent: :destroy
     has_many :teams, through: :divisions

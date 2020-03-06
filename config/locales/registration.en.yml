@@ -176,7 +176,7 @@ en:
     download_not_available: 'The download you have selected is not available.'
   application:
     admin:
-      dashboard: 'Admin Dasboard'
+      dashboard: 'Admin Dashboard'
       post_message: 'Post a message'
       view_submitted_flags: 'View submitted flags'
       award_achievement: 'Award an achievement'

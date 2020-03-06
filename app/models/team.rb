@@ -2,6 +2,9 @@
 
 # Team model for holding the main user list and all invites and requests to a team.
 class Team < ApplicationRecord
+  # Set Teams to display in created_at order. This is important for the Attack Defend board
+  default_scope -> { order(:created_at) }
+
   has_paper_trail ignore: %i[created_at updated_at]
 
   # Rank is an attribute that can be added to the team model on the fly however
