@@ -73,7 +73,7 @@ class GameTest < ActiveSupport::TestCase
 
   test 'game can be deleted and cleans up appropriate relationships' do
     team = create(:team)
-    create(:point_challenge)
+    create(:standard_challenge)
     create(:pentest_challenge_with_flags)
 
     @game.destroy

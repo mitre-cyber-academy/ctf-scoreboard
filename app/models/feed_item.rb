@@ -6,10 +6,10 @@ class FeedItem < ApplicationRecord
   belongs_to :challenge, optional: true
   belongs_to :division, optional: true
 
-  scope :solved_challenges, -> { where(type: %w[PointSolvedChallenge PentestSolvedChallenge ShareSolvedChallenge]) }
+  scope :solved_challenges, -> { where(type: %w[StandardSolvedChallenge PentestSolvedChallenge ShareSolvedChallenge]) }
 
   validates :type, inclusion: %w[
-    PointSolvedChallenge
+    StandardSolvedChallenge
     PentestSolvedChallenge
     ShareSolvedChallenge
     Achievement

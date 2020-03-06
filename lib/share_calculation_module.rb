@@ -1,8 +1,15 @@
 # frozen_string_literal: true
 
-class BaseShareChallenge < Challenge
-  validates :unsolved_increment_period, numericality: { greater_than: 0 }
+# This module provides us with the ability to reuse the same share calculation logic
+# between ShareChallenges and PentestChallenges, without having to make the two
+# dependent on one another. This is important since PentestChallenges are heavily
+# calculated within their respective DefenseFlags, however ShareChallenges are mainly
+# calculated within the ShareChallenge itself.
 
+# This module assumes your model has the following methods
+# initial_shares, current_solve_time, first_solve_time, solved_decrement_period, solved_decrement_shares
+# point_value, start_time, unsolved_increment_period, unsolved_increment_points
+module ShareCalculationModule
   # Calc shares calculates the share decrease between the first solve time and current time
   def calc_shares(first_solve_time, current_solve_time)
     initial_shares - (((current_solve_time - first_solve_time) / solved_decrement_period.hours) \

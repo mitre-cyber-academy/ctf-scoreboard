@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
-class ShareChallenge < BaseShareChallenge
-  has_many :solved_challenges, foreign_key: 'challenge_id', inverse_of: :challenge, dependent: :destroy,
-                               class_name: 'ShareSolvedChallenge'
+class ShareChallenge < StandardChallenge
+  include ShareCalculationModule
+  include FlagChallengeShareModule
 
-  has_many :flags, inverse_of: :challenge, foreign_key: 'challenge_id', class_name: 'PointFlag', dependent: :destroy
+  validates :unsolved_increment_period, numericality: { greater_than: 0 }
 
-  accepts_nested_attributes_for :flags, allow_destroy: true
+  def calc_defensive_points_helper(_, _)
+    0 # There are no defensive points in a Share Challenge
+  end
 end

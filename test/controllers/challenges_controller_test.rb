@@ -5,7 +5,7 @@ class ChallengesControllerTest < ActionController::TestCase
 
   def setup
     create(:active_game)
-    @challenge = create(:point_challenge, flag_count: 3)
+    @challenge = create(:standard_challenge, flag_count: 3)
   end
 
   # TODO: Write test to verify that PentestChallenges cannot be accessed directly without providing
@@ -46,7 +46,7 @@ class ChallengesControllerTest < ActionController::TestCase
     sign_in create(:user_with_team)
     assert_difference 'SubmittedFlag.count', +1 do
       put :update, params: {
-        id: create(:point_challenge),
+        id: create(:standard_challenge),
         challenge: {
           submitted_flag: "wrong"
         }
@@ -58,7 +58,7 @@ class ChallengesControllerTest < ActionController::TestCase
 
   test 'can not submit flag with no team' do
     sign_in create(:user)
-    @challenge = create(:point_challenge)
+    @challenge = create(:standard_challenge)
     put :update, params: {
       id: @challenge,
       challenge: {
@@ -73,7 +73,7 @@ class ChallengesControllerTest < ActionController::TestCase
     assert_no_difference 'SubmittedFlag.count' do
       sign_in create(:user_with_team)
       put :update, params: {
-        id: create(:point_challenge)
+        id: create(:standard_challenge)
       }
     end
     assert :success

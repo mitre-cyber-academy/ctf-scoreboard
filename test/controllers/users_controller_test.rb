@@ -89,7 +89,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'team member can not leave team while in top ten' do
-    team = create(:team_in_top_ten_point_challenges)
+    team = create(:team_in_top_ten_standard_challenges)
     user = team.team_captain
     sign_in user
     delete :leave_team, params: { user_id: user, team_id: team }

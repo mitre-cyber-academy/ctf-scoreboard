@@ -38,12 +38,13 @@ module ChallengesHelper
   end
 
   def subheading(team, challenge)
+    point_value = pluralize(challenge.point_value(current_user&.team), 'point')
     if team
-      "#{team.team_name} - #{pluralize(challenge.point_value(current_user&.team), 'point')}"
+      "#{team.team_name} - #{point_value}"
     elsif challenge.respond_to?(:categories)
-      "#{category_names(challenge.categories)} - #{pluralize(challenge.point_value, 'point')}"
+      "#{category_names(challenge.categories)} - #{point_value}"
     else
-      pluralize(challenge.point_value, 'point')
+      point_value
     end
   end
 
@@ -51,7 +52,7 @@ module ChallengesHelper
     if challenge.is_a?(Flag)
       rails_admin.edit_path('pentest_challenge', challenge)
     else
-      rails_admin.edit_path('point_challenge', challenge)
+      rails_admin.edit_path('standard_challenge', challenge)
     end
   end
 end

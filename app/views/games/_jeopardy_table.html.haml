@@ -7,8 +7,8 @@
     - @game.max_category_size.times do |row|
       %tr
         - @category_ids.each do |category|
-          - if row < @point_challenges[category].size
-            = render partial: 'point_challenge',
-              locals: { challenge: @point_challenges[category][row] }
+          - if row < @standard_challenges[category].size
+            = render partial: 'standard_challenge',
+              locals: { challenge: @standard_challenges[category][row] }
           - else
             %td &nbsp;

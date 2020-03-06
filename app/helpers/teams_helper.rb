@@ -11,7 +11,7 @@ module TeamsHelper
     if solved_challenge.is_a?(PentestSolvedChallenge)
       solved_challenge.flag.point_value(team)
     else
-      solved_challenge.challenge.point_value
+      solved_challenge.challenge.point_value(team)
     end
   end
 

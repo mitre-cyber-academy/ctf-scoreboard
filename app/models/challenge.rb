@@ -22,7 +22,7 @@ class Challenge < ApplicationRecord
   attr_accessor :submitted_flag, :solved_challenges_count
 
   def self.type_enum
-    [['PentestChallenge'], ['ShareChallenge'], ['PointChallenge']]
+    [['PentestChallenge'], ['ShareChallenge'], ['StandardChallenge']]
   end
 
   validates :type, inclusion: type_enum.flatten, presence: true
@@ -34,6 +34,10 @@ class Challenge < ApplicationRecord
 
   def open?
     challenge_open? && game.open?
+  end
+
+  def point_value(_ = nil)
+    super()
   end
 
   def solved?(times = 1)
@@ -78,7 +82,7 @@ class Challenge < ApplicationRecord
   # to self.challenges in is set in the challenges model.
   def next_challenge
     # Order of challenges is handled by default scope in challenge.rb
-    challenges_in_category = game.point_categories_with_challenges[category_ids]
+    challenges_in_category = game.categories_with_standard_challenges[category_ids]
     index = challenges_in_category.find_index(self)
     challenges_in_category[index + 1] unless index.nil?
   end

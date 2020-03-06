@@ -15,14 +15,14 @@ class Game < ApplicationRecord
     has_many :categories, dependent: :destroy
     has_many :pentest_challenges, dependent: :destroy
     has_many :defense_flags, through: :pentest_challenges
-    has_many :point_challenges, -> { non_pentest }, dependent: :destroy, class_name: 'Challenge'
+    has_many :standard_challenges, dependent: :destroy
     has_many :challenges, inverse_of: :game, foreign_key: 'game_id'
     has_many :divisions, dependent: :destroy
     has_many :teams, through: :divisions
     has_many :users, through: :teams
     has_many :feed_items, through: :divisions
     has_many :achievements, through: :divisions
-    has_many :point_solved_challenges, through: :divisions
+    has_many :standard_solved_challenges, through: :divisions
     has_many :pentest_solved_challenges, through: :divisions
     has_many :solved_challenges, through: :divisions
   end
@@ -57,8 +57,8 @@ class Game < ApplicationRecord
     Time.now.utc > stop
   end
 
-  def point_categories_with_challenges
-    point_challenges&.group_by(&:category_ids)&.sort_by { |categories, _| -categories.length }&.to_h
+  def categories_with_standard_challenges
+    standard_challenges&.group_by(&:category_ids)&.sort_by { |categories, _| -categories.length }&.to_h
   end
 
   # This method returns either the current time in UTC or end of the game if the game is over.
@@ -95,7 +95,7 @@ class Game < ApplicationRecord
   end
 
   def max_category_size
-    point_categories_with_challenges.values.map(&:length).max || 0
+    categories_with_standard_challenges.values.map(&:length).max || 0
   end
 
   def teams_associated_with_flags_and_pentest_challenges

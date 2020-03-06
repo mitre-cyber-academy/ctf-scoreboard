@@ -122,7 +122,7 @@ class UserRequestsControllerTest < ActionController::TestCase
   end
 
   test 'team captain can not accept requests while in top ten' do
-    team_in_top_ten = create(:team_in_top_ten_point_challenges)
+    team_in_top_ten = create(:team_in_top_ten_standard_challenges)
     user_request = create(:point_user_request, team: team_in_top_ten, user: @requesting_user)
     sign_in team_in_top_ten.team_captain
     get :accept, params: { team_id: team_in_top_ten, id: user_request }

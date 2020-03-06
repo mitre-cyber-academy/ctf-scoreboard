@@ -17,10 +17,10 @@ class UserMailerTest < ActionMailer::TestCase
     @teams = create_list(:team, 5, division: @division, compete_for_prizes: true)
     @first_place_team = @teams.first
     @first_place_user = @first_place_team.team_captain
-    create(:point_solved_challenge, team: @first_place_team, challenge: create(:point_challenge, point_value: 1000))
+    create(:standard_solved_challenge, team: @first_place_team, challenge: create(:standard_challenge, point_value: 1000))
     @second_place_team = @teams.second
     @second_place_user = @second_place_team.team_captain
-    @solved_challenge = create(:point_solved_challenge, team: @second_place_team, challenge: create(:point_challenge, point_value: 500))
+    @solved_challenge = create(:standard_solved_challenge, team: @second_place_team, challenge: create(:standard_challenge, point_value: 500))
   end
 
   test 'invite user exists' do

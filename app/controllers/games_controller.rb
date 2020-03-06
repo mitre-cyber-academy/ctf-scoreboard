@@ -31,8 +31,8 @@ class GamesController < ApplicationController
 
   def show
     @pentest_challenges = @game&.pentest_challenges
-    @point_challenges = @game&.point_challenges
-    ActiveRecord::Precounter.new(@point_challenges).precount(:solved_challenges)
+    @standard_challenges = @game&.standard_challenges
+    ActiveRecord::Precounter.new(@standard_challenges).precount(:solved_challenges)
     ActiveRecord::Precounter.new(@pentest_challenges).precount(:solved_challenges)
     prepare_pentest_challenge_table # Always show PentestChallenges, no matter the Gameboard type
     prepare_challenge_table
@@ -88,9 +88,9 @@ class GamesController < ApplicationController
     # What information we need depends on the game mode we are in, however
     # we will always need a list of challenges
     if @game.jeopardy?
-      @point_challenges = @game&.point_categories_with_challenges
+      @standard_challenges = @game&.categories_with_standard_challenges
       @categories = @game.categories
-      @category_ids = @point_challenges.keys
+      @category_ids = @standard_challenges.keys
     elsif @game.teams_x_challenges?
       # prepare_teams_x_challenges_table
     elsif @game.multiple_categories?

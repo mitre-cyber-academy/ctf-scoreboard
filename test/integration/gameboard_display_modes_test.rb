@@ -5,10 +5,10 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
     create(:active_game, board_layout: :jeopardy)
     # Challenges are displayed by their number of categories, and then sorted
     # down by point value
-    chal1 = create(:point_challenge, point_value: 100, category_count: 2)
-    chal3 = create(:point_challenge, point_value: 150, category_count: 1)
-    chal2 = create(:point_challenge, point_value: 100, category_count: 0, categories: chal3.categories)
-    chal4 = create(:point_challenge, point_value: 100, category_count: 0)
+    chal1 = create(:standard_challenge, point_value: 100, category_count: 2)
+    chal3 = create(:standard_challenge, point_value: 150, category_count: 1)
+    chal2 = create(:standard_challenge, point_value: 100, category_count: 0, categories: chal3.categories)
+    chal4 = create(:standard_challenge, point_value: 100, category_count: 0)
 
     get "/game"
     # TODO: Validate the whole table looks right here, something like
@@ -49,10 +49,10 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
     create(:active_game, board_layout: :jeopardy)
     # Challenges are displayed by their number of categories, and then sorted
     # down by point value
-    create(:point_challenge, point_value: 100, category_count: 2)
-    point_chal = create(:point_challenge, point_value: 150, category_count: 1)
-    create(:point_challenge, point_value: 100, category_count: 0, categories: point_chal.categories)
-    create(:point_challenge, point_value: 100, category_count: 0)
+    create(:standard_challenge, point_value: 100, category_count: 2)
+    point_chal = create(:standard_challenge, point_value: 150, category_count: 1)
+    create(:standard_challenge, point_value: 100, category_count: 0, categories: point_chal.categories)
+    create(:standard_challenge, point_value: 100, category_count: 0)
 
     team1 = create(:team)
     team2 = create(:team)

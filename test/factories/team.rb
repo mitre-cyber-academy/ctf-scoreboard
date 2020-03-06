@@ -21,13 +21,13 @@ FactoryBot.define do
     end
 
     # TODO: Setup a helper here to create an easy way to create a team with a mix of PentestSolvedChallenges,
-    # PointSolvedChallenges, and ShareSolvedChallenges
+    # StandardSolvedChallenges, and ShareSolvedChallenges
 
     # TODO: Create a team_in_top_ten_share_challenges
 
-    factory :team_in_top_ten_point_challenges do
+    factory :team_in_top_ten_standard_challenges do
       after(:create) do |team|
-        create(:point_solved_challenge, team: team)
+        create(:standard_solved_challenge, team: team)
       end
     end
 

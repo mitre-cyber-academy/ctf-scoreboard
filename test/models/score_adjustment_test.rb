@@ -15,7 +15,7 @@ class ScoreAdjustmentTest < ActiveSupport::TestCase
 
   test 'score adjustment adds points to team' do
     team_one = create(:team)
-    solved_challenge = create(:point_solved_challenge, team: team_one)
+    solved_challenge = create(:standard_solved_challenge, team: team_one)
     assert_equal solved_challenge.challenge.point_value, team_one.score
     # TODO: Add PentestSolvedChallenge here and assert its value gets added as well
     score_adjustment = create(:score_adjustment, team: team_one, point_value: 100)

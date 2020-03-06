@@ -29,7 +29,7 @@ class TeamsHelperTest < ActionView::TestCase
 
   test 'solved challenge table point value' do
     team = create(:team)
-    solved_challenge = create(:point_solved_challenge, team: team)
+    solved_challenge = create(:standard_solved_challenge, team: team)
     assert_equal solved_challenge.challenge.point_value, solved_challenge_table_point_value(solved_challenge, team)
 
     team = create(:team)

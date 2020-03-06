@@ -206,7 +206,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'team captain can not send invites while in top ten' do
-    team = create(:team_in_top_ten_point_challenges)
+    team = create(:team_in_top_ten_standard_challenges)
     sign_in team.team_captain
     patch :invite, params: { team: { user_invites_attributes: { '0': {email: 'mitrectfnewuserfake@mail.google.com'}}}, id: team}
     assert_equal I18n.t('teams.in_top_ten'), flash[:alert]
@@ -214,7 +214,7 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'can not update team when game is open and team is in top ten' do
-    team = create(:team_in_top_ten_point_challenges)
+    team = create(:team_in_top_ten_standard_challenges)
     old_data = team.affiliation
     sign_in team.team_captain
 

@@ -1,7 +1,7 @@
 = @game.title
 = '=' * @game.title.length
 
-- @point_challenges.group_by(&:categories).each do |categories, challenges|
+- @standard_challenges.group_by(&:categories).each do |categories, challenges|
   - category_names = category_names(categories)
   = "\n\#\#\# #{category_names}\n"
   %table

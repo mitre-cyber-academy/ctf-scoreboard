@@ -87,7 +87,7 @@ class TeamTest < ActiveSupport::TestCase
 
   test 'in top ten' do
     # Make sure to test with and without a solved challenge attached to a team
-    team = create(:team_in_top_ten_point_challenges)
+    team = create(:team_in_top_ten_standard_challenges)
     assert_equal true, team.in_top_ten?, 'Team with solved challenge and in first place is not in top ten'
 
     team2 = create(:team)
@@ -130,8 +130,8 @@ class TeamTest < ActiveSupport::TestCase
 
   test 'score with team in a point division' do
     team = create(:team)
-    challenge = create(:point_challenge, categories: [@game.categories.first])
-    create(:point_solved_challenge, team: team, challenge: challenge)
+    challenge = create(:standard_challenge, categories: [@game.categories.first])
+    create(:standard_solved_challenge, team: team, challenge: challenge)
     assert_equal challenge.point_value, team.score
   end
 

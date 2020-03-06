@@ -7,7 +7,7 @@ class Division < ApplicationRecord
   has_many :feed_items, dependent: :destroy
   has_many :achievements, dependent: :destroy
   has_many :pentest_solved_challenges, dependent: :destroy
-  has_many :point_solved_challenges, dependent: :destroy
+  has_many :standard_solved_challenges, dependent: :destroy
   has_many :solved_challenges, inverse_of: :division, foreign_key: 'division_id', dependent: :destroy
   has_many :defense_flags, through: :teams
 
@@ -15,7 +15,7 @@ class Division < ApplicationRecord
 
   def ordered_teams(only_top_five = false)
     teams = calculate_team_scores
-    # last_solve_time is added to the model by the calculate_point_solved_challenge_score method
+    # last_solve_time is added to the model by the calculate_standard_solved_challenge_score method
     # teams.sort_by! { |team| [team.eligible, team.current_score, team.last_solve_time] }.reverse!
     teams.sort_by! { |team| [(team.eligible ? 1 : 0), team.current_score, team.last_solve_time] }.reverse!
     if only_top_five
@@ -41,8 +41,9 @@ class Division < ApplicationRecord
 
   # TODO: Add sorting, add fallback sort on challenge last_solve if two
   # teams have the same score
+  # TODO: Add calculate_share_solved_challenge_score here
   def calculate_team_scores
-    team_standings = calculate_point_solved_challenge_score
+    team_standings = calculate_standard_solved_challenge_score
     team_standings.merge_and_sum(calculate_pentest_solved_challenge_score)
     team_standings.map do |team, points|
       team.current_score = points.round
@@ -62,17 +63,18 @@ class Division < ApplicationRecord
   end
 
   # rubocop:disable Metrics/MethodLength
-  # This calculates the teams score for all point-based challenges (PointSolvedChallenges and ScoreAdjustments)
+  # This calculates the teams score for all point-based challenges (StandardSolvedChallenges and ScoreAdjustments)
   # This does not calculate the score for PentestChallenges
-  def calculate_point_solved_challenge_score
+  def calculate_standard_solved_challenge_score
     teams.includes(:achievements).joins(
       "LEFT JOIN feed_items AS point_feed_items
              ON point_feed_items.team_id = teams.id
-             AND point_feed_items.type IN ('PointSolvedChallenge', 'ScoreAdjustment')
-            LEFT JOIN feed_items AS pentest_feed_items
+             AND point_feed_items.type IN ('StandardSolvedChallenge', 'ScoreAdjustment')
+             LEFT JOIN feed_items AS pentest_feed_items
              ON pentest_feed_items.team_id = teams.id
              AND pentest_feed_items.type IN ('PentestSolvedChallenge')
-            LEFT JOIN challenges ON challenges.id = point_feed_items.challenge_id"
+             LEFT JOIN challenges ON challenges.id = point_feed_items.challenge_id
+             AND challenges.type IN ('StandardChallenge')"
     )
          .group('teams.id')
          .select(
