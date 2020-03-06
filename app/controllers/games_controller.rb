@@ -87,9 +87,10 @@ class GamesController < ApplicationController
   def prepare_challenge_table
     # What information we need depends on the game mode we are in, however
     # we will always need a list of challenges
-    @point_challenges = @game&.point_challenges
     if @game.jeopardy?
+      @point_challenges = @game&.point_categories_with_challenges
       @categories = @game.categories
+      @category_ids = @point_challenges.keys
     elsif @game.teams_x_challenges?
       # prepare_teams_x_challenges_table
     elsif @game.multiple_categories?

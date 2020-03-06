@@ -11,7 +11,7 @@ module GamesHelper
     'background-color: #F0F0F0;'
   end
 
-  def challenge_color(challenge, defense_team=nil)
+  def challenge_color(challenge, defense_team = nil)
     return 'color:#999999;' if own_team_challenge?(defense_team)
 
     challenge_color_for_other_team(challenge)

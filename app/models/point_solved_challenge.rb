@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class PointSolvedChallenge < SolvedChallenge
-  after_save :open_next_challenge
-
   belongs_to :flag, class_name: 'PointFlag', foreign_key: 'flag_id', optional: false, inverse_of: :solved_challenges
 
   belongs_to :challenge, class_name: 'PointChallenge', foreign_key: 'challenge_id', optional: false,

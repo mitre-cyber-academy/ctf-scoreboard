@@ -6,7 +6,13 @@ class FeedItem < ApplicationRecord
   belongs_to :challenge, optional: true
   belongs_to :division, optional: true
 
-  scope :solved_challenges, -> { where(type: %w[PointSolvedChallenge PentestSolvedChallenge ShareSolvedChallenge])}
+  scope :solved_challenges, -> { where(type: %w[PointSolvedChallenge PentestSolvedChallenge ShareSolvedChallenge]) }
 
-  validates :type, inclusion: %w[PointSolvedChallenge PentestSolvedChallenge ShareSolvedChallenge Achievement ScoreAdjustment]
+  validates :type, inclusion: %w[
+    PointSolvedChallenge
+    PentestSolvedChallenge
+    ShareSolvedChallenge
+    Achievement
+    ScoreAdjustment
+  ]
 end

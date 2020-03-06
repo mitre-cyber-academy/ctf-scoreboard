@@ -138,8 +138,8 @@ class Team < ApplicationRecord
   end
 
   def solves_by_category
-    pentest_solves = division.pentest_solved_challenges.where(team: self).joins(flag: :team).group('teams.team_name').count
-    pentest_solves.merge(solved_challenges.where(team: self).joins(challenge: :categories).group('categories.name').count)
+    ptst_solves = division.pentest_solved_challenges.where(team: self).joins(flag: :team).group('teams.team_name').count
+    ptst_solves.merge(solved_challenges.where(team: self).joins(challenge: :categories).group('categories.name').count)
   end
 
   def calc_defensive_points

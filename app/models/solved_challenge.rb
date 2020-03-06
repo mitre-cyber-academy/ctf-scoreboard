@@ -17,7 +17,7 @@ class SolvedChallenge < FeedItem
   end
 
   def game_is_open
-    errors.add(:base, I18n.t('challenges.game_not_open')) unless Game.instance.open?
+    errors.add(:base, I18n.t('challenges.game_not_open')) unless challenge.game.open?
   end
 
   def award_achievement
@@ -28,11 +28,8 @@ class SolvedChallenge < FeedItem
   end
 
   def open_next_challenge
-    challenge = self.challenge
-    challenge.categories.each do |category|
-      challenge = category.next_challenge(challenge)
-      challenge.state!('open') if challenge&.available?
-    end
+    next_challenge = challenge.next_challenge
+    next_challenge.state!('open') if next_challenge&.available?
   end
 
   def team_can_solve_challenge

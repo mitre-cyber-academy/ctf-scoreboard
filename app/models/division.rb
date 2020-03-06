@@ -8,7 +8,7 @@ class Division < ApplicationRecord
   has_many :achievements, dependent: :destroy
   has_many :pentest_solved_challenges, dependent: :destroy
   has_many :point_solved_challenges, dependent: :destroy
-  has_many :solved_challenges, foreign_key: 'division_id'
+  has_many :solved_challenges, inverse_of: :division, foreign_key: 'division_id', dependent: :destroy
   has_many :defense_flags, through: :teams
 
   validates :name, presence: true
@@ -50,7 +50,6 @@ class Division < ApplicationRecord
     end
   end
 
-
   def calculate_pentest_solved_challenge_score
     # rubocop:disable Rails/FindEach
     # rubocop reports a false positive
@@ -67,21 +66,21 @@ class Division < ApplicationRecord
   # This does not calculate the score for PentestChallenges
   def calculate_point_solved_challenge_score
     teams.includes(:achievements).joins(
-           "LEFT JOIN feed_items AS point_feed_items
+      "LEFT JOIN feed_items AS point_feed_items
              ON point_feed_items.team_id = teams.id
              AND point_feed_items.type IN ('PointSolvedChallenge', 'ScoreAdjustment')
             LEFT JOIN feed_items AS pentest_feed_items
              ON pentest_feed_items.team_id = teams.id
              AND pentest_feed_items.type IN ('PentestSolvedChallenge')
             LEFT JOIN challenges ON challenges.id = point_feed_items.challenge_id"
-         )
+    )
          .group('teams.id')
          .select(
            'COALESCE(sum(challenges.point_value), 0) + COALESCE(sum(point_feed_items.point_value), 0)
              as team_score,
            GREATEST(MAX(pentest_feed_items.created_at), MAX(point_feed_items.created_at)) as last_solve_time, teams.*'
          )
-    .map do |team|
+         .map do |team|
       [team, team.team_score]
     end.to_h
   end

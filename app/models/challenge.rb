@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Challenge < ApplicationRecord
-  # TODO: Add validator that verifies a challenge only has one category if the parent game is in JeopardyGame mode
   before_save :post_state_change_message
 
   belongs_to :game
@@ -70,6 +69,16 @@ class Challenge < ApplicationRecord
 
   def find_flag(flag_str)
     flags.find { |flag_obj| flag_obj.flag.casecmp(flag_str).zero? }
+  end
+
+  # The next challenge can have a greater than or equal to point value of the current one
+  # and has a name that comes after the current one. The order in which elements are returned
+  # to self.challenges in is set in the challenges model.
+  def next_challenge
+    # Order of challenges is handled by default scope in challenge.rb
+    challenges_in_category = game.point_categories_with_challenges[category_ids]
+    index = challenges_in_category.find_index(self)
+    challenges_in_category[index + 1] unless index.nil?
   end
 
   private

@@ -8,8 +8,6 @@ class ChallengeCategory < ApplicationRecord
   belongs_to :category
 
   def challenge_and_category_belong_to_same_game
-    unless challenge.game == category.game
-      errors.add(:challenge, I18n.t('challenge_categories.same_game'))
-    end
+    errors.add(:challenge, I18n.t('challenge_categories.same_game')) unless challenge.game == category.game
   end
 end

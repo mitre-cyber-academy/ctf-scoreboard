@@ -14,6 +14,18 @@ module ChallengesHelper
     ]
   end
 
+  def category_ids_to_names(category_ids, categories)
+    category_names(categories.select { |category| category_ids.include?(category.id) })
+  end
+
+  # Takes a list of categories and returns all their names as a comma separated string,
+  # or 'No Category' for an empty list
+  def category_names(categories)
+    return t('challenges.no_category') if categories.empty?
+
+    categories.map(&:name).join(', ')
+  end
+
   def embed(youtube_url)
     youtube_id = youtube_url.split('v=').last
     content_tag(:iframe, nil, src: "https://www.youtube.com/embed/#{youtube_id}?rel=0", frameborder: 0)
@@ -28,8 +40,8 @@ module ChallengesHelper
   def subheading(team, challenge)
     if team
       "#{team.team_name} - #{pluralize(challenge.point_value(current_user&.team), 'point')}"
-    elsif challenge.respond_to?(:category)
-      "#{challenge.category.name || "word"} - #{pluralize(challenge.point_value, 'point')}"
+    elsif challenge.respond_to?(:categories)
+      "#{category_names(challenge.categories)} - #{pluralize(challenge.point_value, 'point')}"
     else
       pluralize(challenge.point_value, 'point')
     end

@@ -6,8 +6,9 @@
 - else
   -# Render based on the user selected gameboard layout
   = render partial: "games/#{@game.board_layout}_table"
-  %hr
-  -# Always render PentestChallenges. This provides us with the ability to
-  -# have Attack/Defend games with Generic challenge types on top
-  = render partial: 'games/pentest_game_table'
+  - unless @pentest_challenges.empty?
+    %hr
+    -# Always render PentestChallenges. This provides us with the ability to
+    -# have Attack/Defend games with Generic challenge types on top
+    = render partial: 'games/pentest_game_table'
 = render partial: 'games/legend'

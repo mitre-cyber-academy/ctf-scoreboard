@@ -64,9 +64,10 @@ class ChallengesController < ApplicationController
 
   def find_challenge_by_params
     @challenge = @game.challenges.find(params[:id])
-    if @challenge.is_a?(PentestChallenge)
-      @challenge = @challenge.defense_flags.find_by(team: params[:team_id])
-      @defense_team = @challenge.team
-    end
+
+    return unless @challenge.is_a?(PentestChallenge)
+
+    @challenge = @challenge.defense_flags.find_by(team: params[:team_id])
+    @defense_team = @challenge.team
   end
 end
