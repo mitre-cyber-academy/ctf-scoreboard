@@ -27,7 +27,7 @@ class Game < ApplicationRecord
     has_many :solved_challenges, through: :divisions
   end
 
-  enum board_layout: { jeopardy: 0, teams_x_challenges: 1, multiple_categories: 2 }
+  enum board_layout: { jeopardy: 0, teams_x_challenges: 1, multiple_categories: 2, title_and_description: 3 }
 
   after_commit { Rails.cache.delete('game_instance') }
 

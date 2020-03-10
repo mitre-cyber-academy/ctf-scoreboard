@@ -1,0 +1,12 @@
+%table.table.table-bordered.table-bolded#teams-x-challenges-table
+  %thead
+    %tr
+      - @headings.each do |challenge|
+        %th.text-center{ style: "width:#{heading_width(@headings)}%; color: #{challenge_colors(challenge)[0]}" }= challenge.name
+  %tbody
+    - @teams.each do |team|
+      %tr
+        %td.text-center.break-word= link_to(display_name(team), summary_team_path(team), style: "color:inherit;")
+        - @standard_challenges.each do |challenge|
+          %td.text-center
+            = always_link_to_if_admin(challenge.open? && current_user&.team.eql?(team), challenge_text_for_team_for(challenge, team), game_challenge_path(challenge), style: "color:inherit;")

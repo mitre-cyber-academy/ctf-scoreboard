@@ -9,7 +9,7 @@ module FlagChallengeShareModule
     solved_challenges[0]
   end
 
-  def point_value(team = nil)
+  def display_point_value(team = nil)
     if solved_challenges.size.zero? # If nobody has solved
       calc_points_for_first_solve
     elsif solved_by_team?(team) # If current team has solved
@@ -69,9 +69,9 @@ module FlagChallengeShareModule
 
     challenge_point_value = calc_point_value(start_calculation_at, first_solve_time)
     total_shares = shares.values.sum
-    shares.map do |team, num_shares|
-      [team, convert_shares_to_points_for(num_shares, total_shares, challenge_point_value)]
-    end.to_h
+    shares.transform_values do |num_shares|
+      convert_shares_to_points_for(num_shares, total_shares, challenge_point_value)
+    end
   end
 
   def convert_shares_to_points_for(num_shares, total_shares, challenge_point_value)
@@ -92,5 +92,9 @@ module FlagChallengeShareModule
       calc_offensive_shares_for_solved_challenges.values.sum + potential_shares,
       calc_point_value(start_calculation_at, first_solve_time)
     )
+  end
+
+  def solved_by_team?(team)
+    solved_challenges.find { |sc| sc.team.eql?(team) }
   end
 end

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CategoryTest < ActiveSupport::TestCase
+class ChallengeTest < ActiveSupport::TestCase
   test 'next challenge in category with 3 challenges in sequence' do
     game = create(:active_game)
     category = game.categories.first

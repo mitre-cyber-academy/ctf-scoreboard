@@ -30,11 +30,11 @@ class TeamsHelperTest < ActionView::TestCase
   test 'solved challenge table point value' do
     team = create(:team)
     solved_challenge = create(:standard_solved_challenge, team: team)
-    assert_equal solved_challenge.challenge.point_value, solved_challenge_table_point_value(solved_challenge, team)
+    assert_equal solved_challenge.challenge.display_point_value, solved_challenge_table_point_value(solved_challenge, team)
 
     team = create(:team)
     solved_challenge = create(:pentest_solved_challenge, team: team)
-    assert_equal solved_challenge.flag.point_value(team), solved_challenge_table_point_value(solved_challenge, team)
+    assert_equal solved_challenge.flag.display_point_value(team), solved_challenge_table_point_value(solved_challenge, team)
   end
 
   test 'header with points' do

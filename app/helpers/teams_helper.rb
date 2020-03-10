@@ -9,9 +9,9 @@ module TeamsHelper
 
   def solved_challenge_table_point_value(solved_challenge, team)
     if solved_challenge.is_a?(PentestSolvedChallenge)
-      solved_challenge.flag.point_value(team)
+      solved_challenge.flag.display_point_value(team)
     else
-      solved_challenge.challenge.point_value(team)
+      solved_challenge.challenge.display_point_value(team)
     end
   end
 

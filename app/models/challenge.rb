@@ -36,8 +36,11 @@ class Challenge < ApplicationRecord
     challenge_open? && game.open?
   end
 
-  def point_value(_ = nil)
-    super()
+  def display_point_value(_ = nil)
+    # Some subclasses override the point_value method with a custom
+    # point value calculation, requiring a teams parameter. We don't
+    # need it here so we just throw it away
+    point_value
   end
 
   def solved?(times = 1)

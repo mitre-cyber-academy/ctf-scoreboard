@@ -127,4 +127,14 @@ class GamesControllerTest < ActionController::TestCase
     get :show
     assert_response :success
   end
+
+  [:jeopardy, :teams_x_challenges, :multiple_categories, :title_and_description].each do |board_layout|
+    test "show #{board_layout} board layout" do
+      create(:active_game, board_layout: board_layout)
+      create_list(:standard_challenge, 3)
+      create_list(:share_challenge, 3)
+      get :show
+      assert_response :success
+    end
+  end
 end

@@ -38,21 +38,15 @@ module ChallengesHelper
   end
 
   def subheading(team, challenge)
-    point_value = pluralize(challenge.point_value(current_user&.team), 'point')
+    point_value = pluralize(challenge.display_point_value(current_user&.team), 'point')
     if team
-      "#{team.team_name} - #{point_value}"
+      team.team_name.to_s
     elsif challenge.respond_to?(:categories)
-      "#{category_names(challenge.categories)} - #{point_value}"
-    else
-      point_value
-    end
+      category_names(challenge.categories).to_s
+    end + " - #{point_value}"
   end
 
   def admin_edit_url(challenge)
-    if challenge.is_a?(Flag)
-      rails_admin.edit_path('pentest_challenge', challenge)
-    else
-      rails_admin.edit_path('standard_challenge', challenge)
-    end
+    rails_admin.edit_path(challenge.type.underscore, challenge)
   end
 end

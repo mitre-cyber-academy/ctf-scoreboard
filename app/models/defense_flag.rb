@@ -49,10 +49,4 @@ class DefenseFlag < Flag
   def can_be_solved_by(team)
     challenge.can_be_solved_by(team, self)
   end
-
-  private
-
-  def solved_by_team?(team)
-    solved_challenges.find { |sc| sc.team.eql?(team) }
-  end
 end

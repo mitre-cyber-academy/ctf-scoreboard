@@ -6,6 +6,16 @@ class ShareChallenge < StandardChallenge
 
   validates :unsolved_increment_period, numericality: { greater_than: 0 }
 
+  def start_calculation_at
+    game&.start
+  end
+
+  # Share Challenges do not have a concept of teams, however the FlagChallengeShareModule
+  # requires us to return something for team
+  def team
+    nil
+  end
+
   def calc_defensive_points_helper(_, _)
     0 # There are no defensive points in a Share Challenge
   end

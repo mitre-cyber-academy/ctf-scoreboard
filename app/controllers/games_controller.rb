@@ -30,12 +30,8 @@ class GamesController < ApplicationController
   def terms_of_service; end
 
   def show
-    @pentest_challenges = @game&.pentest_challenges
-    @standard_challenges = @game&.standard_challenges
-    ActiveRecord::Precounter.new(@standard_challenges).precount(:solved_challenges)
-    ActiveRecord::Precounter.new(@pentest_challenges).precount(:solved_challenges)
     prepare_pentest_challenge_table # Always show PentestChallenges, no matter the Gameboard type
-    prepare_challenge_table
+    prepare_standard_challenge_table
     respond_to do |format|
       format.html
       format.markdown do
@@ -84,25 +80,30 @@ class GamesController < ApplicationController
 
   private
 
-  def prepare_challenge_table
+  def prepare_standard_challenge_table
     # What information we need depends on the game mode we are in, however
     # we will always need a list of challenges
-    if @game.jeopardy?
-      @standard_challenges = @game&.categories_with_standard_challenges
-      @categories = @game.categories
-      @category_ids = @standard_challenges.keys
-    elsif @game.teams_x_challenges?
-      # prepare_teams_x_challenges_table
-    elsif @game.multiple_categories?
-      # prepare_multiple_categories_table
+    if @game.jeopardy? || @game.title_and_description?
+      prepare_jeopardy_or_title_and_description_board
+    else
+      @standard_challenges = @game&.standard_challenges
+      ActiveRecord::Precounter.new(@standard_challenges).precount(:solved_challenges)
+      if @game.teams_x_challenges?
+        @headings = [OpenStruct.new(name: 'Teams'), @standard_challenges].flatten
+        @teams = @game&.teams
+      end
     end
   end
 
-  def prepare_pentest_challenge_table
-    # The headings of the gameboard are either categories or teams, this loads based
-    # on the STI model that the game is based on.
-    # @teams = @game&.teams
+  def prepare_jeopardy_or_title_and_description_board
+    @standard_challenges = @game&.categories_with_standard_challenges
+    @categories = @game.categories
+    @category_ids = @standard_challenges.keys
+  end
 
+  def prepare_pentest_challenge_table
+    @pentest_challenges = @game&.pentest_challenges
+    ActiveRecord::Precounter.new(@pentest_challenges).precount(:solved_challenges)
     @pentest_table_heading = [OpenStruct.new(name: 'Teams'), @game&.pentest_challenges].flatten
     @teams_with_assoc = @game.teams_associated_with_flags_and_pentest_challenges
   end

@@ -11,26 +11,37 @@ module GamesHelper
     'background-color: #F0F0F0;'
   end
 
-  def challenge_color(challenge, defense_team = nil)
-    return 'color:#999999;' if own_team_challenge?(defense_team)
+  def challenge_colors(challenge, defense_team = nil)
+    return %w[inherit inherit] unless challenge.respond_to?('open?')
+    return ['#999999', '#000'] if own_team_challenge?(defense_team)
 
     challenge_color_for_other_team(challenge)
+  end
+
+  def challenge_text_for_team_for(challenge, team)
+    if current_user&.team.eql?(team) && challenge.open? && challenge.can_be_solved_by(team)
+      'Click to Solve'
+    elsif !challenge.can_be_solved_by(team)
+      'Solved'
+    else
+      '-'
+    end
   end
 
   # rubocop:disable Metrics/MethodLength
   def challenge_color_for_other_team(challenge)
     if challenge.force_closed?
-      'color:#800000;'
+      ['#800000', '#eee']
     elsif challenge.get_solved_challenge_for(current_user&.team)
-      'color:#00abca;'
+      ['#00abca', '#eee']
     elsif challenge.solved?(2)
-      'color:#00cc00;'
+      ['#00cc00', '#444']
     elsif challenge.solved?(1)
-      'color:#009900;'
+      ['#009900', '#eee']
     elsif challenge.open?
-      'color:#006600;'
+      ['#006600', '#fff']
     else
-      'color:#999999;'
+      ['#999999', '#eee']
     end
   end
   # rubocop:enable Metrics/MethodLength
