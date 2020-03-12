@@ -139,8 +139,7 @@ class TeamsControllerTest < ActionController::TestCase
     assert_difference 'Team.count' do
       post :create, params: { team: { team_name: 'another_team', affiliation: 'school1', division_id: create(:hs_division) } }
     end
-    user.reload
-    assert_redirected_to team_path(user.team)
+    assert_redirected_to team_path(user.reload.team)
     assert_equal user.team.team_captain, user
   end
 

@@ -20,7 +20,6 @@
   .embed-container
     = embed(@solved_video_url)
 
--# TODO: Write a test to verify that we are able to submit a bad flag twice without receiving an error
 - if @solvable
   = form_for :challenge, url: submit_url(@defense_team, @challenge), method: "put", html: { class: "well", style: "margin-bottom:40px;" } do |f|
     .control-group

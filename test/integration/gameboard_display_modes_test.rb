@@ -14,7 +14,6 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
     chal4 = create(:standard_challenge, point_value: 100, category_count: 0)
 
     get "/game"
-    # TODO: Validate the whole table looks right here, something like
 
     assert_select 'table#jeopardy-table' do
       assert_select 'thead' do
@@ -60,16 +59,15 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
     team1 = create(:team)
     team2 = create(:team)
 
-    chal1 = create(:pentest_challenge_with_flags, flag_count: 0, point_value: 500)
-    chal2 = create(:pentest_challenge_with_flags, flag_count: 0, point_value: 400)
-    chal3 = create(:pentest_challenge_with_flags, flag_count: 0, point_value: 300)
+    chal1 = create(:pentest_challenge_with_flags, point_value: 500)
+    chal2 = create(:pentest_challenge_with_flags, point_value: 400)
+    chal3 = create(:pentest_challenge_with_flags, point_value: 300)
 
     team1_chal2_flag = chal2.defense_flags.find_by(team: team1)
     # This creates a solve for team1 against team2 on challenge #2
     create(:pentest_solved_challenge, challenge: chal2, team: team2, flag: team1_chal2_flag)
 
     get "/game"
-    # TODO: Validate the whole table looks right here, something like
 
     assert_select 'table#jeopardy-table', 1
     assert_select "h3", "Attack Defense Challenges", "This page must contain Attack Defense Challenge Text"
@@ -101,18 +99,15 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
 
   test "teams x challenges with only point challenges displays correctly no user logged in" do
     create(:active_game, board_layout: :teams_x_challenges)
-    # Challenges are displayed by their number of categories, and then sorted
-    # down by point value
+    # Challenges for teams x challenges are displayed by their point value and then name
     chal1 = create(:standard_challenge, point_value: 100, category_count: 2)
-    chal3 = create(:standard_challenge, point_value: 150, category_count: 1)
-    chal2 = create(:standard_challenge, point_value: 100, category_count: 0, categories: chal3.categories)
-    chal4 = create(:standard_challenge, point_value: 100, category_count: 0)
+    chal3 = create(:standard_challenge, name: 'c', point_value: 150, category_count: 1)
+    chal2 = create(:standard_challenge, name: 'b', point_value: 150, category_count: 0, categories: chal3.categories)
 
     team1 = create(:team)
     team2 = create(:team)
 
     get "/game"
-    # TODO: Validate the whole table looks right here, something like
 
     assert_select 'table#teams-x-challenges-table' do
       assert_select 'thead' do
@@ -121,14 +116,13 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
           assert_select 'th:nth-child(2)', chal1.name
           assert_select 'th:nth-child(3)', chal2.name
           assert_select 'th:nth-child(4)', chal3.name
-          assert_select 'th:nth-child(5)', chal4.name
         end
       end
       assert_select 'tbody' do
         assert_select 'tr' do
           assert_select 'td:nth-child(1)', display_name(team1)
           assert_select 'td:nth-child(1)', display_name(team2)
-          assert_select 'td', {count: 8, text: '-'}
+          assert_select 'td', {count: 6, text: '-'}
         end
       end
     end
@@ -137,12 +131,10 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
 
   test "teams x challenges with only point challenges displays correctly team1 logged in" do
     create(:active_game, board_layout: :teams_x_challenges)
-    # Challenges are displayed by their number of categories, and then sorted
-    # down by point value
+    # Challenges for teams x challenges are displayed by their point value and then name
     chal1 = create(:standard_challenge, point_value: 100, category_count: 2)
-    chal3 = create(:standard_challenge, point_value: 150, category_count: 1)
-    chal2 = create(:standard_challenge, point_value: 100, category_count: 0, categories: chal3.categories)
-    chal4 = create(:standard_challenge, point_value: 100, category_count: 0)
+    chal3 = create(:standard_challenge, name: 'c', point_value: 150, category_count: 1)
+    chal2 = create(:standard_challenge, name: 'b', point_value: 150, category_count: 0, categories: chal3.categories)
 
     team1 = create(:team)
     team2 = create(:team)
@@ -152,7 +144,6 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
     sign_in team1.team_captain
 
     get "/game"
-    # TODO: Validate the whole table looks right here, something like
 
     assert_select 'table#teams-x-challenges-table' do
       assert_select 'thead' do
@@ -161,7 +152,6 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
           assert_select 'th:nth-child(2)', chal1.name
           assert_select 'th:nth-child(3)', chal2.name
           assert_select 'th:nth-child(4)', chal3.name
-          assert_select 'th:nth-child(5)', chal4.name
         end
       end
       assert_select 'tbody' do
@@ -170,11 +160,10 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
           assert_select 'td:nth-child(2)', 'Click to Solve'
           assert_select 'td:nth-child(3)', 'Solved'
           assert_select 'td:nth-child(4)', 'Click to Solve'
-          assert_select 'td:nth-child(5)', 'Click to Solve'
         end
         assert_select 'tr:nth-child(2)' do
           assert_select 'td:nth-child(1)', display_name(team2)
-          assert_select 'td', {count: 4, text: '-'}
+          assert_select 'td', {count: 3, text: '-'}
         end
       end
     end
@@ -182,12 +171,10 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
 
   test "teams x challenges displays correctly team2 logged in" do
     create(:active_game, board_layout: :teams_x_challenges)
-    # Challenges are displayed by their number of categories, and then sorted
-    # down by point value
+    # Challenges for teams x challenges are displayed by their point value and then name
     chal1 = create(:standard_challenge, point_value: 100, category_count: 2)
-    chal3 = create(:standard_challenge, point_value: 150, category_count: 1)
-    chal2 = create(:standard_challenge, point_value: 100, category_count: 0, categories: chal3.categories)
-    chal4 = create(:standard_challenge, point_value: 100, category_count: 0)
+    chal3 = create(:standard_challenge, name: 'c', point_value: 150, category_count: 1)
+    chal2 = create(:standard_challenge, name: 'b', point_value: 150, category_count: 0, categories: chal3.categories)
 
     team1 = create(:team)
     team2 = create(:team)
@@ -197,7 +184,7 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
     sign_in team2.team_captain
 
     get "/game"
-    # TODO: Validate the whole table looks right here, something like
+
     assert_select 'table#teams-x-challenges-table' do
       assert_select 'thead' do
         assert_select 'tr' do
@@ -205,18 +192,18 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
           assert_select 'th:nth-child(2)', chal1.name
           assert_select 'th:nth-child(3)', chal2.name
           assert_select 'th:nth-child(4)', chal3.name
-          assert_select 'th:nth-child(5)', chal4.name
         end
       end
       assert_select 'tbody' do
         assert_select 'tr:nth-child(1)' do
           assert_select 'td:nth-child(1)', display_name(team1)
-          assert_select 'td', {count: 3, text: '-'}
+          assert_select 'td', {count: 2, text: '-'}
           assert_select 'td:nth-child(3)', 'Solved'
+
         end
         assert_select 'tr:nth-child(2)' do
           assert_select 'td:nth-child(1)', display_name(team2)
-          assert_select 'td:nth-child(n+2)', {count: 4, text: 'Click to Solve'}
+          assert_select 'td:nth-child(n+2)', {count: 3, text: 'Click to Solve'}
         end
       end
     end

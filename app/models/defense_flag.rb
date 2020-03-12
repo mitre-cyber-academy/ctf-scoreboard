@@ -3,7 +3,7 @@
 class DefenseFlag < Flag
   include FlagChallengeShareModule
 
-  # TODO: Validate uniqueness of defense flag per challenge and team
+  validates :challenge, uniqueness: { scope: :team_id, message: I18n.t('flag.challenge_must_be_unique') }
 
   belongs_to :team, inverse_of: :defense_flags, optional: false
   belongs_to :challenge, inverse_of: :defense_flags, foreign_key: 'challenge_id', class_name: 'PentestChallenge'

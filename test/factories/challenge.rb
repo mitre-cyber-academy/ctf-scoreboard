@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :challenge do
-    name { 'challenge' }
-    description { 'challenge description' }
+    name { Faker::Hacker.unique.verb }
+    description { Faker::Hacker.say_something_smart }
     point_value { 100 }
     game
     state { :open }

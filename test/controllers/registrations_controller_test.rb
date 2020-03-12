@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class RegistrationsControllerTest < ActionController::TestCase
-
-  # TODO: Ensure that no errors show up on the registraton page when upon intiial navigation
-  # (This happens if check_captcha is run on new and create for example)
-
   def setup
     create(:active_game)
     @request.env["devise.mapping"] = Devise.mappings[:user]
@@ -58,10 +54,22 @@ class RegistrationsControllerTest < ActionController::TestCase
     assert_equal I18n.t('game.after_competition'), flash[:alert]
   end
 
-  test 'new' do
+  # We accidently enabled checking of captcha on naviation to the new page once,
+  # this is to ensure we don't make that mistake again
+  test 'new has no errors' do
+    Recaptcha.configuration.skip_verify_env.delete('test')
+    Recaptcha.configure do |config|
+      config.site_key = 'whatever'
+      config.secret_key = 'whatever'
+    end
+
     get :new
     assert :success
+    assert_nil flash[:alert]
+    assert_nil flash[:recaptcha_error]
+    assert_nil flash[:error]
     # Could look for the HTML elements but not really testing any custom controller actions...
+    Recaptcha.configuration.skip_verify_env << 'test'
   end
 
   test 'create' do

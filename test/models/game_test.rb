@@ -51,8 +51,7 @@ class GameTest < ActiveSupport::TestCase
     game = create(:ended_game)
     assert game.after_competition?
   end
-  # TODO: Add test verifying the order is correct with only solved pentest challenges,
-  # only solved point challenges, and a mixture.
+
   test 'all teams information' do
     team = create(:team)
     information = @game.all_teams_information

@@ -6,9 +6,9 @@ FactoryBot.define do
       additional_member_count { 0 }
       compete_for_prizes { false }
     end
-    team_name { Faker::Team.name + rand().to_s } # Avoid team name collisions
+    team_name { Faker::Team.unique.name }
     affiliation { Faker::Educator.university }
-    division { create(:division) }
+    division { Game.instance.divisions.first }
 
     after(:build) do |team, evaluator|
       team.team_captain = create(:user, compete_for_prizes: evaluator.compete_for_prizes) unless team.team_captain
@@ -19,11 +19,6 @@ FactoryBot.define do
         team.users << create(:user)
       end
     end
-
-    # TODO: Setup a helper here to create an easy way to create a team with a mix of PentestSolvedChallenges,
-    # StandardSolvedChallenges, and ShareSolvedChallenges
-
-    # TODO: Create a team_in_top_ten_share_challenges
 
     factory :team_in_top_ten_standard_challenges do
       after(:create) do |team|

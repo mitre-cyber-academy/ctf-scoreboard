@@ -10,9 +10,8 @@ class ChallengesController < ApplicationController
   before_action :valid_captcha, :find_and_log_flag, :on_team?, only: [:update]
 
   def show
+    @solved_challenge = @challenge.get_solved_challenge_for(current_user.team)
     @solvable = @challenge.can_be_solved_by(current_user.team)
-    # TODO: Solved Challenge is currently missing, causing the flag accepted banner to never show up
-    # TODO: Add test for this
     @solved_video_url = @solved_challenge.flag.video_url if @solved_challenge
     flash.now[:notice] = I18n.t('flag.accepted') if @solved_challenge
   end
@@ -67,7 +66,7 @@ class ChallengesController < ApplicationController
 
     return unless @challenge.is_a?(PentestChallenge)
 
-    @challenge = @challenge.defense_flags.find_by(team: params[:team_id])
+    @challenge = @challenge.defense_flags.find_by!(team: params[:team_id])
     @defense_team = @challenge.team
   end
 end

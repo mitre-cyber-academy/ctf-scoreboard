@@ -6,5 +6,9 @@ class StandardChallenge < Challenge
   has_many :solved_challenges, inverse_of: :challenge, foreign_key: 'challenge_id',
                                class_name: 'StandardSolvedChallenge', dependent: :destroy
 
+  scope :share_challenges, -> { where(type: 'ShareChallenge') }
+
   accepts_nested_attributes_for :flags, allow_destroy: true
 end
+
+require_dependency Rails.root.join('app/models/share_challenge.rb')

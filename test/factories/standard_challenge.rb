@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :standard_challenge, parent: :challenge, class: 'StandardChallenge' do
     type { 'StandardChallenge' }
 
+
     after(:build) do |challenge, evaluator|
       evaluator.flag_count.times do
         create(:standard_flag, challenge: challenge)

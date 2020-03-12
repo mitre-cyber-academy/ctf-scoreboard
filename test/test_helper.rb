@@ -27,6 +27,7 @@ class ActiveSupport::TestCase
 
   teardown do
     Rails.cache.clear
+    Faker::Hacker.unique.clear
   end
 end
 

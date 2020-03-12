@@ -5,25 +5,31 @@ class ChallengesControllerTest < ActionController::TestCase
 
   def setup
     create(:active_game)
-    @challenge = create(:standard_challenge, flag_count: 3)
+    @team1 = create(:team)
+    @team2 = create(:team)
+    @standard_challenge = create(:standard_challenge, flag_count: 3)
+    @pentest_challenge = create(:pentest_challenge_with_flags)
   end
 
-  # TODO: Write test to verify that PentestChallenges cannot be accessed directly without providing
-  # a Flag ID
-
-  test 'should get show' do
+  test 'should get show for standard challenge' do
     sign_in create(:user_with_team)
     get :show, params: {
-      id: @challenge
+      id: @standard_challenge
     }
     assert_response :success
   end
 
   test 'show pentest challenge' do
-    team = create(:team)
-    challenge = create(:pentest_challenge_with_flags)
-    sign_in team.team_captain
-    get :show, params: { id: challenge, team_id: team }
+    sign_in @team1.team_captain
+    get :show, params: { id: @pentest_challenge, team_id: @team1 }
+    assert_response :success
+  end
+
+  test 'show pentest challenge fails with no team ID' do
+    sign_in @team1.team_captain
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get :show, params: { id: @pentest_challenge }
+    end
     assert_response :success
   end
 
@@ -32,9 +38,9 @@ class ChallengesControllerTest < ActionController::TestCase
     sign_in @user
     assert_difference 'SubmittedFlag.count', +1 do
       put :update, params: {
-        id: @challenge,
+        id: @standard_challenge,
         challenge: {
-          submitted_flag: @challenge.flags.sample.flag
+          submitted_flag: @standard_challenge.flags.sample.flag
         }
       }
     end
@@ -58,11 +64,11 @@ class ChallengesControllerTest < ActionController::TestCase
 
   test 'can not submit flag with no team' do
     sign_in create(:user)
-    @challenge = create(:standard_challenge)
+    @standard_challenge = create(:standard_challenge)
     put :update, params: {
-      id: @challenge,
+      id: @standard_challenge,
       challenge: {
-        submitted_flag: @challenge.flags.sample.flag
+        submitted_flag: @standard_challenge.flags.sample.flag
       }
     }
     assert :success
@@ -82,9 +88,9 @@ class ChallengesControllerTest < ActionController::TestCase
 
   test 'can not submit flag with no user' do
     put :update, params: {
-      id: @challenge,
+      id: @standard_challenge,
       challenge: {
-        submitted_flag: @challenge.flags.sample.flag
+        submitted_flag: @standard_challenge.flags.sample.flag
       }
     }
     assert :success
@@ -100,8 +106,8 @@ class ChallengesControllerTest < ActionController::TestCase
     user = create(:user_with_team)
     sign_in user
     put :update, params: {
-      id: @challenge , challenge: {
-        submitted_flag: @challenge.flags.sample.flag
+      id: @standard_challenge , challenge: {
+        submitted_flag: @standard_challenge.flags.sample.flag
       }
     }
     assert_response :success
@@ -110,13 +116,34 @@ class ChallengesControllerTest < ActionController::TestCase
   end
 
   test 'successfully submit flag to pentest challenge' do
-    team1 = create(:team)
-    team2 = create(:team)
-    # Creates a challenge for each team
-    challenge = create(:pentest_challenge_with_flags)
-    sign_in team1.team_captain
-    flag_text = challenge.defense_flags.find_by(team_id: team2.id).flag
-    put :update, params: { id: challenge, team_id: team2, challenge: { submitted_flag: flag_text } }
+    sign_in @team1.team_captain
+    flag_text = @pentest_challenge.defense_flags.find_by(team_id: @team2.id).flag
+    put :update, params: { id: @pentest_challenge, team_id: @team2, challenge: { submitted_flag: flag_text } }
+    assert_response :success
+    assert_equal I18n.t('flag.accepted'), flash[:notice]
+  end
+
+  test 'flag accepted shows on page reload for pentest challenge' do
+    create(:pentest_solved_challenge, team: @team1, challenge: @pentest_challenge, flag: @team2.defense_flags.first)
+    sign_in @team1.team_captain
+    get :show, params: { id: @pentest_challenge, team_id: @team2 }
+    assert_response :success
+    assert_equal I18n.t('flag.accepted'), flash[:notice]
+  end
+
+  test 'flag accepted shows on page reload for standard challenge' do
+    create(:standard_solved_challenge, challenge: @standard_challenge, team: @team1)
+    sign_in @team1.team_captain
+    get :show, params: { id: @standard_challenge }
+    assert_response :success
+    assert_equal I18n.t('flag.accepted'), flash[:notice]
+  end
+
+  test 'flag accepted shows on page reload for share challenge' do
+    share_chal = create(:share_challenge)
+    create(:standard_solved_challenge, challenge: share_chal, team: @team1)
+    sign_in @team1.team_captain
+    get :show, params: { id: share_chal }
     assert_response :success
     assert_equal I18n.t('flag.accepted'), flash[:notice]
   end

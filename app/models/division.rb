@@ -16,14 +16,13 @@ class Division < ApplicationRecord
   def ordered_teams(only_top_five = false)
     teams = calculate_team_scores
     # last_solve_time is added to the model by the calculate_standard_solved_challenge_score method
-    # teams.sort_by! { |team| [team.eligible, team.current_score, team.last_solve_time] }.reverse!
-    teams.sort_by! { |team| [(team.eligible ? 1 : 0), team.current_score, team.last_solve_time] }.reverse!
-    if only_top_five
-      # Then take the first 5 elements in array
-      teams[0..4]
-    else
-      teams
+    teams.sort_by! do |team|
+      [(team.eligible ? 0 : 1), -team.current_score, team.last_solve_time || game.start]
     end
+
+    return teams.take(5) if only_top_five
+
+    teams
   end
 
   def ordered_teams_with_rank
@@ -39,16 +38,22 @@ class Division < ApplicationRecord
 
   private
 
-  # TODO: Add sorting, add fallback sort on challenge last_solve if two
-  # teams have the same score
-  # TODO: Add calculate_share_solved_challenge_score here
   def calculate_team_scores
     team_standings = calculate_standard_solved_challenge_score
     team_standings.merge_and_sum(calculate_pentest_solved_challenge_score)
+    team_standings.merge_and_sum(calculate_share_solved_challenge_score)
     team_standings.map do |team, points|
       team.current_score = points.round
       team
     end
+  end
+
+  def calculate_share_solved_challenge_score
+    team_standings = {}
+    game.standard_challenges.share_challenges.each do |challenge|
+      team_standings.merge_and_sum(challenge.calc_points_for_solved_challenges)
+    end
+    team_standings
   end
 
   def calculate_pentest_solved_challenge_score
