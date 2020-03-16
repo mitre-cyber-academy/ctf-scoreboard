@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/sferik/rails_admin.git
-  revision: be399b2dad1be8c4d373ad07b95235ef2d9ba07b
+  revision: 4ef2ea42a9dbb6d900ff1435fcd23e29c1913ecd
   specs:
     rails_admin (2.0.1)
       activemodel-serializers-xml (>= 1.0)
@@ -210,7 +210,7 @@ GEM
     multipart-post (2.1.1)
     nested_form (0.3.2)
     nio4r (2.5.2)
-    nokogiri (1.10.8)
+    nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     obscenity (1.0.2)
     orm_adapter (0.5.0)
