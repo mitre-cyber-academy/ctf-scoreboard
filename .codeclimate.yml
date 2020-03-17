@@ -1,9 +1,9 @@
 ---
 engines:
   brakeman:
-    enabled: true
+    enabled: false
   bundler-audit:
-    enabled: true
+    enabled: false
   csslint:
     enabled: true
   coffeelint:
