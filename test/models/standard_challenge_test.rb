@@ -41,8 +41,8 @@ class StandardChallengeTest < ActiveSupport::TestCase
     open_challenge = create(:standard_challenge, state: :open)
     forced_challenge = create(:standard_challenge, state: :force_closed)
     assert_difference 'Message.count', +2 do
-      open_challenge.update_attributes(state: 'force_closed')
-      forced_challenge.update_attributes(state: 'open')
+      open_challenge.update(state: 'force_closed')
+      forced_challenge.update(state: 'open')
     end
     message = Message.last
     assert I18n.t('challenges.state_change_message', state: 'open'.titleize), message.title

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Game < ApplicationRecord
-  validates :title, :start, :stop, :do_not_reply_email, :contact_email, :description, presence: true
+  validates :title, :start, :stop, :contact_email, :description, presence: true
 
   validate :instance_is_singleton, :order_of_start_and_stop_date
 

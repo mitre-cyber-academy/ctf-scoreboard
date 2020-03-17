@@ -100,7 +100,7 @@ class GamesControllerTest < ActionController::TestCase
     sign_in create(:admin)
     get :show, format: :markdown
     assert_response :success
-    assert_equal "text/markdown", response.content_type
+    assert_equal "text/markdown; charset=utf-8", response.content_type
   end
 
   test 'admin can access certificate template' do

@@ -19,7 +19,6 @@ FactoryBot.define do
       description { 'MITRE CTF Game' }
       start { Time.now.utc }
       stop { Time.now.utc + 10.hours }
-      do_not_reply_email { Faker::Internet.free_email }
       contact_email { Faker::Internet.free_email }
       open_source_url { Faker::Internet.url(host: 'github.com') }
       prizes_available { false }

@@ -27,7 +27,7 @@ class UserMailerTest < ActionMailer::TestCase
     user = create(:user)
     user_invite = create(:point_user_invite, email: user.email)
     email = UserMailer.invite_user(user_invite).deliver_now
-    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [@game.contact_email], email.from
     assert_equal [user_invite.email], email.to
     assert_equal "#{@game.title}: Invite to join team #{user_invite.team.team_name}", email.subject
     assert_not_includes email.body.to_s, 'Create my account'
@@ -37,7 +37,7 @@ class UserMailerTest < ActionMailer::TestCase
   test 'invite user does not exist' do
     email = UserMailer.invite_user(@user_invite).deliver_now
 
-    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [@game.contact_email], email.from
     assert_equal [@user_invite.email], email.to
     assert_equal "#{@game.title}: Invite to join team #{@user_invite.team.team_name}", email.subject
     assert_includes email.body.to_s, 'Create my account'
@@ -55,7 +55,7 @@ class UserMailerTest < ActionMailer::TestCase
 
     assert_not ActionMailer::Base.deliveries.empty?
 
-    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [@game.contact_email], email.from
     assert_equal [@user_request.team.team_captain.email], email.to
     assert_equal "#{@game.title}: Request from #{@user_request.user.full_name} to join #{@user_request.team.team_name}", email.subject
   end
@@ -69,7 +69,7 @@ class UserMailerTest < ActionMailer::TestCase
 
     assert_not ActionMailer::Base.deliveries.empty?
 
-    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [@game.contact_email], email.from
     assert_equal [@first_place_user.email], email.to
     assert_equal "#{@game.title}: Competition Reminder", email.subject
   end
@@ -152,7 +152,7 @@ class UserMailerTest < ActionMailer::TestCase
 
     assert_not ActionMailer::Base.deliveries.empty?
 
-    assert_equal [@game.do_not_reply_email], email.from
+    assert_equal [@game.contact_email], email.from
     assert_equal [@first_place_user.email], email.to
     assert_equal "#{@game.title}: Challenges Released", email.subject
   end

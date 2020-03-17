@@ -201,6 +201,7 @@ en:
       when_to_compete_info: "This competition will run from %{start_time} until %{end_time}"
       stuck: "Help, I'm Stuck!"
       stuck_info: "We'd be happy to give you a hand if you %{contact_url}"
+      contact_us: 'contact us'
       view_team: 'View Team'
       join_team: 'Join Team'
       create_team: 'Create Team'

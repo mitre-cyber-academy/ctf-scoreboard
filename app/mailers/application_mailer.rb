@@ -5,5 +5,5 @@ class ApplicationMailer < ActionMailer::Base
 
   before_action { @game = Game.instance }
 
-  default from: -> { @game.do_not_reply_email }
+  default from: ->(*) { @game.contact_email }
 end

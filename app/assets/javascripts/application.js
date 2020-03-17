@@ -19,7 +19,6 @@
 //= require filterrific/filterrific-jquery
 //= require highcharts
 //= require chartkick
-//= require bootstrap.file-input
 
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
