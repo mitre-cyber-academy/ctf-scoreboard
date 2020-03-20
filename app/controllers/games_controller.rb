@@ -17,7 +17,12 @@ class GamesController < ApplicationController
   end
   before_action only: %i[show] do
     deny_users_to_non_html_formats
-    load_game(:categories, { standard_challenges: :solved_challenges }, { pentest_challenges: :solved_challenges }, :teams, flags: { solved_challenges: :team })
+    load_game(
+      :categories, :teams,
+      { standard_challenges: :solved_challenges },
+      { pentest_challenges: :solved_challenges },
+      flags: { solved_challenges: :team }
+    )
   end
   before_action :filter_access_before_game_open
   before_action :load_game_graph_data, only: %i[summary]

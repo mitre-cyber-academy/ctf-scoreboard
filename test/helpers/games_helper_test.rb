@@ -35,7 +35,7 @@ class GamesHelperTest < ActionView::TestCase
     challenge.update(state: :open)
     assert_equal 'Click to Solve', challenge_text_for_team_for(challenge, team)
     create(:standard_solved_challenge, challenge: challenge, team: team)
-    assert_equal 'Solved', challenge_text_for_team_for(challenge, team)
+    assert_equal 'Solved', challenge_text_for_team_for(challenge.reload, team)
     challenge.update(state: :closed)
     assert_equal 'Solved', challenge_text_for_team_for(challenge, team)
   end

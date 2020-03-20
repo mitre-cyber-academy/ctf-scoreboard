@@ -23,7 +23,7 @@ class ShareChallengeTest < ActiveSupport::TestCase
     solve_team = create(:team)
     unsolve_team = create(:team)
     solved_challenge = create(:standard_solved_challenge, team: solve_team, challenge: @challenge)
-    assert_equal 110, @challenge.display_point_value(solve_team)
+    assert_equal 110, @challenge.reload.display_point_value(solve_team)
     assert_equal 50, @challenge.display_point_value(unsolve_team)
     assert_equal 0, @challenge.calc_defensive_points, 'Share challenges should not return defensive points'
   end

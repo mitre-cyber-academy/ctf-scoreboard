@@ -60,7 +60,7 @@ class SolvedChallengeTest < ActiveSupport::TestCase
     challenge = create(:standard_challenge)
     solved_challenge = create(:standard_solved_challenge, team: @team, challenge: challenge)
 
-    solved_challenge = build(:standard_solved_challenge, team: @team, challenge: challenge)
+    solved_challenge = build(:standard_solved_challenge, team: @team, challenge: challenge.reload)
     assert_not solved_challenge.valid?
     assert_includes solved_challenge.errors.full_messages, I18n.t('challenges.already_solved')
   end
