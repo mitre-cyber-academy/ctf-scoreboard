@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2020_03_17_164157) do
     t.integer "first_capture_point_bonus", default: 0
     t.string "type"
     t.integer "solved_decrement_period", default: 1
+    t.boolean "design_phase", default: false
     t.bigint "game_id"
     t.index ["game_id"], name: "index_challenges_on_game_id"
   end
@@ -94,6 +95,8 @@ ActiveRecord::Schema.define(version: 2020_03_17_164157) do
     t.integer "challenge_state", default: 0, null: false
     t.datetime "start_calculation_at"
     t.string "type"
+    t.boolean "design_phase", default: false
+    t.index ["design_phase"], name: "index_flags_on_design_phase"
     t.index ["team_id"], name: "index_flags_on_team_id"
   end
 
