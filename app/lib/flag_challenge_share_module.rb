@@ -95,6 +95,6 @@ module FlagChallengeShareModule
   end
 
   def solved_by_team?(team)
-    solved_challenges.find { |sc| sc.team.eql?(team) }
+    solved_challenges.find { |sc| sc.team_id.eql?(team.id) }
   end
 end

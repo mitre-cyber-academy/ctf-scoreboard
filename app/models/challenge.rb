@@ -56,7 +56,7 @@ class Challenge < ApplicationRecord
   end
 
   def get_solved_challenge_for(team)
-    solved_challenges.find_by(team: team)
+    solved_challenges.find { |sc| sc.team_id.eql?(team.id) }
   end
 
   def can_be_solved_by(team)
