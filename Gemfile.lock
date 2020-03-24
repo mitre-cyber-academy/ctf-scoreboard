@@ -219,7 +219,7 @@ GEM
       request_store (~> 1.1)
     paper_trail-association_tracking (2.0.0)
     parallel (1.19.1)
-    parser (2.7.0.4)
+    parser (2.7.0.5)
       ast (~> 2.4.0)
     passenger (6.0.4)
       rack
@@ -293,7 +293,8 @@ GEM
       rexml
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.7)
-    rubocop-rails (2.4.2)
+    rubocop-rails (2.5.0)
+      activesupport
       rack (>= 1.1)
       rubocop (>= 0.72.0)
     ruby-progressbar (1.10.1)
