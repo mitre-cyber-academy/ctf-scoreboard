@@ -225,7 +225,7 @@ GEM
       rack
       rake (>= 0.8.1)
     pdf-core (0.7.0)
-    pg (1.2.2)
+    pg (1.2.3)
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
