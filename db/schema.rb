@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_17_164157) do
+ActiveRecord::Schema.define(version: 2020_04_16_180339) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -182,6 +182,7 @@ ActiveRecord::Schema.define(version: 2020_03_17_164157) do
     t.integer "division_id"
     t.boolean "eligible", default: false
     t.integer "slots_available", default: 0
+    t.index "lower((team_name)::text)", name: "index_teams_on_team_name_unique", unique: true
     t.index ["division_id"], name: "index_teams_on_division_id"
     t.index ["team_captain_id"], name: "index_teams_on_team_captain_id"
   end

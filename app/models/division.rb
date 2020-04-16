@@ -87,9 +87,7 @@ class Division < ApplicationRecord
              as team_score,
            GREATEST(MAX(pentest_feed_items.created_at), MAX(point_feed_items.created_at)) as last_solve_time, teams.*'
          )
-         .map do |team|
-      [team, team.team_score]
-    end.to_h
+         .index_with(&:team_score)
   end
   # rubocop:enable Metrics/MethodLength
 end
