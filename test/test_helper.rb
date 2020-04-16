@@ -3,9 +3,7 @@ require 'simplecov-lcov'
 
 # Generate pretty report for local inspection
 if ENV['LOCAL_COVERAGE']
-  SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
-    SimpleCov::Formatter::HTMLFormatter,
-  ])
+  SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
 end
 
 # Generate Github Actions compatible report
