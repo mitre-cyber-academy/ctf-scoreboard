@@ -1,11 +1,20 @@
-require 'coveralls'
-Coveralls.wear!('rails')
+require 'simplecov'
+require 'simplecov-lcov'
 
+# Generate pretty report for local inspection
 if ENV['LOCAL_COVERAGE']
   SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
     SimpleCov::Formatter::HTMLFormatter,
   ])
 end
+
+# Generate Github Actions compatible report
+if ENV['CI']
+  SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+  SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
+end
+
+SimpleCov.start 'rails'
 
 ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../../config/environment', __FILE__)
