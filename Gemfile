@@ -51,10 +51,11 @@ end
 group :test do
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false
-  gem 'coveralls', require: false
   gem 'rails-controller-testing'
   gem 'rubocop', require: false
   gem 'rubocop-rails'
+  gem 'simplecov', require: false
+  gem 'simplecov-lcov', require: false
 end
 
 # Gems used only for assets and not required

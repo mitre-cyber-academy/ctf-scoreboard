@@ -1,0 +1,59 @@
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+name: Test and push coverage to coveralls
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:12
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6.5
+
+      - name: Cache ruby gems
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Build and run tests
+        env:
+          DATABASE_URL: postgres://postgres:@localhost:5432/test
+          RAILS_ENV: test
+        run: |
+          bundle config path vendor/bundle
+          bundle config --local build.sassc --disable-march-tune-native
+          bundle install --jobs 4 --retry 3
+          bundle exec brakeman -qAzw1
+          bundle exec bundle-audit check --update --ignore CVE-2016-10735 CVE-2019-8331
+          RAILS_ENV=test bundle exec rails db:create
+          bundle exec rails test
+          bundle exec rubocop
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ./coverage/lcov/ctf-scoreboard.lcov
