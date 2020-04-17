@@ -1,0 +1,12 @@
+{
+    "enabledManagers": ["ruby-version"],
+    "packageRules": [
+        {
+            "managers": [
+                "ruby-version"
+            ],
+            "schedule": "at any time",
+            "automerge": true
+        }
+    ]
+}
