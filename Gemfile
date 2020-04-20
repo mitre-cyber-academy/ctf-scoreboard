@@ -54,7 +54,6 @@ group :test do
   gem 'rubocop', require: false
   gem 'rubocop-rails'
   gem 'simplecov', require: false
-  gem 'simplecov-lcov', require: false
 end
 
 # Gems used only for assets and not required

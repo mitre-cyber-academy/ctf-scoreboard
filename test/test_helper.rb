@@ -1,15 +1,9 @@
 require 'simplecov'
-require 'simplecov-lcov'
 
-# Generate pretty report for local inspection
-if ENV['LOCAL_COVERAGE']
+# Generate Pretty Report for local viewing or CI
+if ENV['CI'] || ENV['LOCAL_COVERAGE']
   SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
-end
-
-# Generate Github Actions compatible report
-if ENV['CI']
-  SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
-  SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
+  SimpleCov.minimum_coverage 100
 end
 
 SimpleCov.start 'rails'

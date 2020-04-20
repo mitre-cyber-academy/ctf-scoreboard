@@ -2,7 +2,6 @@ MITRE CTF Scoreboard
 --------------------
 
 [![Build Status](https://travis-ci.org/mitre-cyber-academy/ctf-scoreboard.svg?branch=master)](https://travis-ci.org/mitre-cyber-academy/ctf-scoreboard)
-[![Coverage Status](https://coveralls.io/repos/github/mitre-cyber-academy/ctf-scoreboard/badge.svg?branch=master)](https://coveralls.io/github/mitre-cyber-academy/ctf-scoreboard?branch=master)
 [![Code Climate](https://codeclimate.com/github/mitre-cyber-academy/ctf-scoreboard/badges/gpa.svg)](https://codeclimate.com/github/mitre-cyber-academy/ctf-scoreboard)
 
 MITRE CTF Scoreboard is a fully featured CTF platform with scoreboard and registration application built with Ruby on Rails. It is used for MITRE Capture the Flag competition website.

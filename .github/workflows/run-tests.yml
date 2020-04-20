@@ -53,8 +53,9 @@ jobs:
           bundle exec rails test
           bundle exec rubocop
 
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
+      - name: Upload coverage results
+        uses: actions/upload-artifact@master
+        if: always()
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: ./coverage/lcov/ctf-scoreboard.lcov
+          name: coverage-report
+          path: coverage
