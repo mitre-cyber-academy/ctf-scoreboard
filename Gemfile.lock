@@ -54,7 +54,7 @@ GEM
       activemodel (= 5.2.4.3)
       activesupport (= 5.2.4.3)
       arel (>= 9.0)
-    activerecord-precounter (0.3.3)
+    activerecord-precounter (0.4.0)
       activerecord (>= 5)
     activestorage (5.2.4.3)
       actionpack (= 5.2.4.3)
