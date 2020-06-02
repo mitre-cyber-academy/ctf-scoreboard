@@ -10,5 +10,3 @@ class StandardChallenge < Challenge
 
   accepts_nested_attributes_for :flags, allow_destroy: true
 end
-
-require_dependency Rails.root.join('app/models/share_challenge.rb')

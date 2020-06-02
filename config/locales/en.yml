@@ -106,6 +106,7 @@ en:
     setup_href: "https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Configuration#game"
     no_terms_and_conditions: There are no terms and conditions associated with this game.
     no_terms_of_service: There are no terms of service associated with this game.
+    attack_defend_challenges: 'Attack & Defend Challenges'
     legend:
       dark_green: 'Dark Green'
       green: 'Green'

@@ -15,12 +15,6 @@ class Team < ApplicationRecord
   # which class we are rendering in the game summary view.
   attr_accessor :rank, :current_score
 
-  # default_scope { joins(
-  #          "LEFT JOIN feed_items ON feed_items.team_id = teams.id"
-  #        ).group('teams.id').select(
-  #          'teams.*, MAX(feed_items.created_at) as last_solved_date'
-  #        ) }
-
   # This has_many is only applicable to Pentest Challenges
   has_many :defense_flags, dependent: :destroy
   has_many :feed_items, dependent: :destroy
@@ -141,8 +135,8 @@ class Team < ApplicationRecord
   end
 
   def solves_by_category
-    ptst_solves = division.pentest_solved_challenges.where(team: self).joins(flag: :team).group('teams.team_name').count
-    ptst_solves.merge(solved_challenges.where(team: self).joins(challenge: :categories).group('categories.name').count)
+    solves = division.pentest_solved_challenges.where(team: self).joins(flag: :team).group('teams.team_name').count
+    solves.merge(solved_challenges.where(team: self).joins(challenge: :categories).group('categories.name').count)
   end
 
   def calc_defensive_points

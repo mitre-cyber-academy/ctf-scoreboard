@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Challenge < ApplicationRecord
+  include StiPreload
+
   before_save :post_state_change_message
 
   belongs_to :game
@@ -52,6 +54,8 @@ class Challenge < ApplicationRecord
   end
 
   def category_list
+    return t('challenges.no_category') if categories.empty?
+
     categories.map(&:name).join(', ')
   end
 

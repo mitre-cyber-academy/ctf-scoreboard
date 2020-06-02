@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Flag < ApplicationRecord
+  include StiPreload
+
   validates :flag, presence: true
 
   def self.type_enum

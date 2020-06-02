@@ -9,9 +9,8 @@ class Game < ApplicationRecord
 
   validates :completion_certificate_template, presence: true, if: :enable_completion_certificates?
 
-  has_many :messages, dependent: :destroy
-
   with_options dependent: :destroy do
+    has_many :messages
     has_many :categories, dependent: :destroy
     has_many :pentest_challenges, dependent: :destroy
     has_many :defense_flags, through: :pentest_challenges
@@ -62,7 +61,9 @@ class Game < ApplicationRecord
   end
 
   # This method returns either the current time in UTC or end of the game if the game is over.
-  # The end of the defense time is either the end of the game or current time if we are during the game
+  # The end of the defense time is either the end of the game or current time if we are during the game.
+  # This is used to show the defensive points in a more sliding manner, instead of just showing
+  # all of the potential points a team can earn for defense, it only shows up to the current time.
   def defense_end
     open? ? Time.now.utc : stop
   end

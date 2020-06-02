@@ -44,7 +44,7 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
         end
       end
     end
-    assert_select "h3", {count: 0, text: "Attack Defense Challenges"}, "This page must not contain Attack Defense Challenge Text"
+    assert_select "h3", {count: 0, text: I18n.t('game.attack_defend_challenges')}, "This page must not contain Attack Defend Challenge Text"
   end
 
   test "jeopardy board with pentest challenges displays correctly" do
@@ -70,7 +70,7 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
     get "/game"
 
     assert_select 'table#jeopardy-table', 1
-    assert_select "h3", "Attack Defense Challenges", "This page must contain Attack Defense Challenge Text"
+    assert_select "h3", I18n.t('game.attack_defend_challenges'), "This page must contain Attack Defense Challenge Text"
     assert_select 'table#pentest-table' do
       assert_select 'thead' do
         assert_select 'tr' do
@@ -126,7 +126,7 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
         end
       end
     end
-    assert_select "h3", {count: 0, text: "Attack Defense Challenges"}, "This page must not contain Attack Defense Challenge Text"
+    assert_select "h3", {count: 0, text: I18n.t('game.attack_defend_challenges')}, "This page must not contain Attack Defense Challenge Text"
   end
 
   test "teams x challenges with only point challenges displays correctly team1 logged in" do
