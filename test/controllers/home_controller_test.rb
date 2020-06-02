@@ -2,7 +2,7 @@ require 'test_helper'
 
 class HomeControllerTest < ActionController::TestCase
   test 'should get index when game has been created' do
-    create(:active_point_game)
+    create(:active_game)
 
     get :index
     assert_response :success
@@ -19,5 +19,17 @@ class HomeControllerTest < ActionController::TestCase
     get :index
     assert_response :redirect
     assert_redirected_to @controller.rails_admin.new_path('game')
+  end
+
+  test 'should have contact us link if game has contact page' do
+    create(:active_game, contact_url: 'https://mitrecyberacademy.org/contact')
+    get :index
+    assert_select "a", text: I18n.t('home.index.contact_us'), count: 1
+  end
+
+  test 'should have no contact us link if game has contact page' do
+    create(:active_game, contact_url: "")
+    get :index
+    assert_select "a", text: I18n.t('home.index.contact_us'), count: 0
   end
 end

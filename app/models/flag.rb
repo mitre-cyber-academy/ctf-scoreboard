@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 class Flag < ApplicationRecord
+  include StiPreload
+
   validates :flag, presence: true
 
   def self.type_enum
-    [['ChallengeFlag'], ['PentestFlag']]
+    [['StandardFlag'], ['DefenseFlag']]
   end
 
   validates :type, inclusion: type_enum.flatten, presence: true

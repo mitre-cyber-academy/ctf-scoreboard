@@ -2,6 +2,9 @@
 
 # Team model for holding the main user list and all invites and requests to a team.
 class Team < ApplicationRecord
+  # Set Teams to display in created_at order. This is important for the Attack Defend board
+  default_scope -> { order(:created_at) }
+
   has_paper_trail ignore: %i[created_at updated_at]
 
   # Rank is an attribute that can be added to the team model on the fly however
@@ -12,8 +15,8 @@ class Team < ApplicationRecord
   # which class we are rendering in the game summary view.
   attr_accessor :rank, :current_score
 
-  # This has_many is only applicable to PentestGames
-  has_many :flags, class_name: 'PentestFlag', dependent: :destroy
+  # This has_many is only applicable to Pentest Challenges
+  has_many :defense_flags, dependent: :destroy
   has_many :feed_items, dependent: :destroy
   has_many :achievements, dependent: :destroy
   has_many :score_adjustments, inverse_of: :team, dependent: :destroy
@@ -131,8 +134,13 @@ class Team < ApplicationRecord
     cleanup
   end
 
+  def solves_by_category
+    solves = division.pentest_solved_challenges.where(team: self).joins(flag: :team).group('teams.team_name').count
+    solves.merge(solved_challenges.where(team: self).joins(challenge: :categories).group('categories.name').count)
+  end
+
   def calc_defensive_points
-    flags.map do |flag|
+    defense_flags.map do |flag|
       [flag.name, flag.calc_defensive_points.round]
     end.to_h
   end

@@ -10,6 +10,7 @@ class ChallengesController < ApplicationController
   before_action :valid_captcha, :find_and_log_flag, :on_team?, only: [:update]
 
   def show
+    @solved_challenge = @challenge.get_solved_challenge_for(current_user.team)
     @solvable = @challenge.can_be_solved_by(current_user.team)
     @solved_video_url = @solved_challenge.flag.video_url if @solved_challenge
     flash.now[:notice] = I18n.t('flag.accepted') if @solved_challenge
@@ -23,6 +24,7 @@ class ChallengesController < ApplicationController
     else
       flash.now[:alert] = wrong_flag_messages.sample
     end
+    @solvable = @challenge.can_be_solved_by(current_user.team)
 
     render :show
   end
@@ -37,7 +39,7 @@ class ChallengesController < ApplicationController
   end
 
   def find_challenge
-    challenges_for_game_type
+    find_challenge_by_params
     deny_if_not_admin unless @challenge.open?
   end
 
@@ -59,23 +61,12 @@ class ChallengesController < ApplicationController
     redirect_back fallback_location: user_root_path, alert: I18n.t('challenges.must_be_on_team')
   end
 
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
-  def challenges_for_game_type
-    # In a PentestGame we use PentestFlags as if they are Challenges since they are the linking objects between
-    # the team defending a flag and the challenge.
-    if @game.is_a?(PentestGame)
-      @challenge = @game.flags.find_by(challenge: params[:id])
-      if @challenge.design_phase
-        @defense_team = current_user&.team
-      else
-        @defense_team = @game.teams.find(params[:team_id])
-        @challenge = @game.flags.find_by(challenge: params[:id], team: @defense_team)
-      end
-    else
-      @challenge = @game.challenges.find(params[:id])
-    end
+  def find_challenge_by_params
+    @challenge = @game.challenges.find(params[:id])
+
+    return unless @challenge.is_a?(PentestChallenge)
+
+    @challenge = @challenge.defense_flags.find_by!(team: params[:team_id])
+    @defense_team = @challenge.team
   end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
 end

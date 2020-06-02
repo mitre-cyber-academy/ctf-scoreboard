@@ -26,20 +26,16 @@ module ChallengesHelper
   end
 
   def subheading(team, challenge)
-    if challenge.design_phase
-      "Design Phase Challenge - #{pluralize(challenge.point_value(current_user&.team), 'point')}"
-    elsif team
-      "#{team.team_name} - #{pluralize(challenge.point_value(current_user&.team), 'point')}"
-    else
-      "#{challenge.category.name} - #{challenge.point_value} points"
-    end
+    point_value = pluralize(challenge.display_point_value(current_user&.team), 'point')
+    team_or_category =  if team
+                          team.team_name.to_s
+                        elsif challenge.respond_to?(:categories)
+                          challenge.category_list
+                        end
+    team_or_category + " - #{point_value}"
   end
 
   def admin_edit_url(challenge)
-    if challenge.is_a?(Flag)
-      rails_admin.edit_path('pentest_challenge', challenge)
-    else
-      rails_admin.edit_path('point_challenge', challenge)
-    end
+    rails_admin.edit_path(challenge.type.underscore, challenge)
   end
 end

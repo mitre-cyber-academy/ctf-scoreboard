@@ -7,30 +7,29 @@ class SolvedChallenge < FeedItem
 
   after_save :award_achievement
 
-  after_save :open_next_challenge, unless: -> { Game.instance.is_a?(PentestGame) }
+  after_save :open_next_challenge
 
   belongs_to :team, optional: false, inverse_of: :solved_challenges
+  belongs_to :division, optional: false
 
   def challenge_is_open
     errors.add(:challenge, I18n.t('challenges.not_open')) unless challenge.open?
   end
 
   def game_is_open
-    errors.add(:base, I18n.t('challenges.game_not_open')) unless Game.instance.open?
+    errors.add(:base, I18n.t('challenges.game_not_open')) unless challenge.game.open?
   end
 
   def award_achievement
     # if this is the first solved challenge
-    Achievement.create(team: team, text: 'First Blood!') if Game.instance.solved_challenges.all.count == 1
+    Achievement.create(team: team, text: 'First Blood!') if challenge.game.solved_challenges.size == 1
     name = challenge.achievement_name
     Achievement.create(team: team, text: name) if name.present?
   end
 
   def open_next_challenge
-    challenge = self.challenge
-    category = challenge.category
-    challenge = category.next_challenge(challenge)
-    challenge.state!('open') if challenge&.available?
+    next_challenge = challenge.next_challenge
+    next_challenge.state!('open') if next_challenge&.available?
   end
 
   def team_can_solve_challenge

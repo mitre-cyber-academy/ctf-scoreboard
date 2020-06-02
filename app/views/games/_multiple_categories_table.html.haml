@@ -1,0 +1,13 @@
+%ul.thumbnails#multiple-categories
+  - @standard_challenges.each do |challenge|
+    %li.span3.multi-category-challenge
+      - colors = challenge_colors(challenge)
+      .thumbnail{style: "background-color: #{colors[0]}; color: #{colors[1]}"}
+        .text-center
+          %strong= challenge.name
+          .score
+            .badge.badge-inverse= challenge.display_point_value(current_user&.team)
+          .categories
+            - challenge.categories.each do |category|
+              .label.label-lg.label-important=category.name
+        = always_link_to_if_admin(challenge.open?, "", game_challenge_path(challenge), {style: 'display: none;'})

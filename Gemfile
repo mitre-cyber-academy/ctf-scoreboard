@@ -2,14 +2,11 @@
 
 source 'https://rubygems.org'
 
-ruby File.read('.ruby-version')
-
 gem 'activerecord-precounter'
 gem 'awesome_nested_fields'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap-kaminari-views'
 gem 'bootstrap-sass', '~> 2.3.2.2'
-gem 'bootstrap_file_input_rails', '>= 1.0.0'
 gem 'carrierwave-postgresql', '< 0.3.0' # Can be upgraded once https://github.com/diogob/carrierwave-postgresql/issues/33
 gem 'chartkick'
 gem 'delayed_job'
@@ -31,8 +28,8 @@ gem 'paper_trail-association_tracking'
 gem 'passenger', require: 'phusion_passenger/rack_handler'
 gem 'pg'
 gem 'prawn'
-gem 'rails', '~> 5.2.1'
-gem 'rails_admin', '~> 2.0', git: 'https://github.com/sferik/rails_admin.git'
+gem 'rails', '~> 6.0.2'
+gem 'rails_admin'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'rubyzip'
 gem 'sentry-raven'
@@ -55,7 +52,6 @@ group :test do
   gem 'rubocop', require: false
   gem 'rubocop-rails'
   gem 'simplecov', require: false
-  gem 'simplecov-lcov', require: false
 end
 
 # Gems used only for assets and not required

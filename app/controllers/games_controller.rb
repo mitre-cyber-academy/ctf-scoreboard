@@ -17,7 +17,12 @@ class GamesController < ApplicationController
   end
   before_action only: %i[show] do
     deny_users_to_non_html_formats
-    load_game(:categories, { challenges: :solved_challenges }, :teams, flags: { solved_challenges: :team })
+    load_game(
+      :categories, :teams,
+      { standard_challenges: :solved_challenges },
+      { pentest_challenges: :solved_challenges },
+      flags: { solved_challenges: :team }
+    )
   end
   before_action :filter_access_before_game_open
   before_action :load_game_graph_data, only: %i[summary]
@@ -30,9 +35,8 @@ class GamesController < ApplicationController
   def terms_of_service; end
 
   def show
-    @challenges = @game&.challenges
-    ActiveRecord::Precounter.new(@challenges).precount(:solved_challenges)
-    prepare_table
+    prepare_pentest_challenge_table # Always show PentestChallenges, no matter the Gameboard type
+    prepare_standard_challenge_table
     respond_to do |format|
       format.html
       format.markdown do
@@ -71,7 +75,7 @@ class GamesController < ApplicationController
     @flags_per_hour = SubmittedFlag.group_by_hour(:created_at).count
     @line_chart_data = [
       { name: 'Flag Submissions', data: @flags_per_hour },
-      { name: 'Challenges Solved', data: SolvedChallenge.group_by_hour(:created_at).count }
+      { name: 'Challenges Solved', data: FeedItem.solved_challenges.group_by_hour(:created_at).count }
     ]
   end
 
@@ -81,19 +85,32 @@ class GamesController < ApplicationController
 
   private
 
-  def prepare_table
-    # The headings of the gameboard are either categories or teams, this loads based
-    # on the STI model that the game is based on.
-    @headings = @game&.load_categories_or_teams
-
-    if @game.is_a?(PointGame)
-      @table_rows = @game&.table_rows(@headings)
+  def prepare_standard_challenge_table
+    # What information we need depends on the game mode we are in, however
+    # we will always need a list of challenges
+    if @game.jeopardy? || @game.title_and_description?
+      prepare_jeopardy_or_title_and_description_board
     else
-      @attack_table_heading = [OpenStruct.new(name: 'Teams'), @game&.attack_challenges].flatten
-      @design_table_heading = [OpenStruct.new(name: 'Teams'), @game&.design_phase_challenges].flatten
-      @teams_with_assoc = @game.teams_associated_with_flags_and_attack_challenges
-      @design_phase_challenges = @design_table_heading[1..-1]
+      @standard_challenges = @game&.standard_challenges
+      ActiveRecord::Precounter.new(@standard_challenges).precount(:solved_challenges)
+      if @game.teams_x_challenges?
+        @headings = [OpenStruct.new(name: 'Teams'), @standard_challenges].flatten
+        @teams = @game&.teams
+      end
     end
+  end
+
+  def prepare_jeopardy_or_title_and_description_board
+    @standard_challenges = @game&.categories_with_standard_challenges
+    @categories = @game.categories
+    @category_ids = @standard_challenges.keys
+  end
+
+  def prepare_pentest_challenge_table
+    @pentest_challenges = @game&.pentest_challenges
+    ActiveRecord::Precounter.new(@pentest_challenges).precount(:solved_challenges)
+    @pentest_table_heading = [OpenStruct.new(name: 'Teams'), @game&.pentest_challenges].flatten
+    @teams_with_assoc = @game.teams_associated_with_flags_and_pentest_challenges
   end
 
   # Creates a zip from any collection of files available on the user model.

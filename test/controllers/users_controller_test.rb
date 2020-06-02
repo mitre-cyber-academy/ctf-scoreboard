@@ -4,8 +4,8 @@ class UsersControllerTest < ActionController::TestCase
 
   def setup
     @request.env["devise.mapping"] = Devise.mappings[:user]
-    create(:active_point_game)
-    @team = create(:point_team, additional_member_count: 5)
+    create(:active_game)
+    @team = create(:team, additional_member_count: 5)
     @captain = @team.team_captain
     @non_captain = @team.users.where.not(id: @captain).first
   end
@@ -89,7 +89,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'team member can not leave team while in top ten' do
-    team = create(:point_team_in_top_ten)
+    team = create(:team_in_top_ten_standard_challenges)
     user = team.team_captain
     sign_in user
     delete :leave_team, params: { user_id: user, team_id: team }

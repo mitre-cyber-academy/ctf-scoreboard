@@ -1,19 +1,35 @@
 = @game.title
 = '=' * @game.title.length
 
-- @headings.each do |category|
-  = "\n\#\#\# #{category.name}\n"
+- @standard_challenges.group_by(&:categories).each do |categories, challenges|
+  - category_names = category_names(categories)
+  = "\n\#\#\# #{category_names}\n"
   %table
     %tr
       %th Title
       %th Value
       %th Repository
       %th Description
-    - category.challenges.each do |challenge|
+    - challenges.each do |challenge|
       %tr
         %td= challenge.name
         %td= challenge.point_value
         %td
-          %a{:href => "https://\<URL\>/\<YEAR\>-#{category.name}-#{challenge.point_value}"}
-            = "\<YEAR\>-#{category.name}-#{challenge.point_value}"
+          %a{:href => "https://\<URL\>/\<YEAR\>-#{category_names}-#{challenge.point_value}"}
+            = "\<YEAR\>-#{category_names}-#{challenge.point_value}"
+        %td= challenge.description
+
+- if @pentest_challenges
+  = "\n\#\#\# #{I18n.t('game.attack_defend_challenges')}\n"
+  %table
+    %tr
+      %th Title
+      %th Repository
+      %th Description
+    - @pentest_challenges.each do |challenge|
+      %tr
+        %td= challenge.name
+        %td
+          %a{:href => "https://\<URL\>/\<YEAR\>-#{challenge.name}"}
+            = "\<YEAR\>-#{challenge.name}"
         %td= challenge.description

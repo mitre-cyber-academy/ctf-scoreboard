@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_14_144340) do
+ActiveRecord::Schema.define(version: 2020_04_16_180339) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,11 +22,17 @@ ActiveRecord::Schema.define(version: 2020_02_14_144340) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "challenge_categories", force: :cascade do |t|
+    t.bigint "category_id"
+    t.bigint "challenge_id"
+    t.index ["category_id"], name: "index_challenge_categories_on_category_id"
+    t.index ["challenge_id"], name: "index_challenge_categories_on_challenge_id"
+  end
+
   create_table "challenges", id: :serial, force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.integer "point_value"
-    t.integer "category_id"
     t.string "achievement_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -38,11 +44,11 @@ ActiveRecord::Schema.define(version: 2020_02_14_144340) do
     t.integer "initial_shares", default: 1
     t.integer "solved_decrement_shares", default: 0
     t.integer "first_capture_point_bonus", default: 0
-    t.bigint "pentest_game_id"
     t.string "type"
     t.integer "solved_decrement_period", default: 1
     t.boolean "design_phase", default: false
-    t.index ["pentest_game_id"], name: "index_challenges_on_pentest_game_id"
+    t.bigint "game_id"
+    t.index ["game_id"], name: "index_challenges_on_game_id"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -65,7 +71,6 @@ ActiveRecord::Schema.define(version: 2020_02_14_144340) do
     t.integer "game_id"
     t.integer "min_year_in_school", default: 0
     t.integer "max_year_in_school", default: 16
-    t.string "type"
   end
 
   create_table "feed_items", id: :serial, force: :cascade do |t|
@@ -101,14 +106,12 @@ ActiveRecord::Schema.define(version: 2020_02_14_144340) do
     t.datetime "stop"
     t.text "description"
     t.text "terms_of_service"
-    t.boolean "disable_flags_an_hour_graph", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "organization"
     t.string "contact_url"
     t.text "footer"
     t.integer "team_size", default: 5
-    t.string "do_not_reply_email"
     t.string "contact_email"
     t.string "open_source_url"
     t.boolean "prizes_available", default: false
@@ -117,7 +120,7 @@ ActiveRecord::Schema.define(version: 2020_02_14_144340) do
     t.oid "completion_certificate_template"
     t.text "prizes_text"
     t.text "terms_and_conditions"
-    t.string "type"
+    t.integer "board_layout", default: 0, null: false
   end
 
   create_table "messages", id: :serial, force: :cascade do |t|
@@ -179,6 +182,7 @@ ActiveRecord::Schema.define(version: 2020_02_14_144340) do
     t.integer "division_id"
     t.boolean "eligible", default: false
     t.integer "slots_available", default: 0
+    t.index "lower((team_name)::text)", name: "index_teams_on_team_name_unique", unique: true
     t.index ["division_id"], name: "index_teams_on_division_id"
     t.index ["team_captain_id"], name: "index_teams_on_team_captain_id"
   end
@@ -267,7 +271,9 @@ ActiveRecord::Schema.define(version: 2020_02_14_144340) do
     t.index ["transaction_id"], name: "index_versions_on_transaction_id"
   end
 
-  add_foreign_key "challenges", "games", column: "pentest_game_id"
+  add_foreign_key "challenge_categories", "categories"
+  add_foreign_key "challenge_categories", "challenges"
+  add_foreign_key "challenges", "games"
   add_foreign_key "flags", "teams"
   add_foreign_key "submitted_flags", "flags"
   add_foreign_key "teams", "divisions"

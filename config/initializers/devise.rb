@@ -2,12 +2,9 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
   # ==> Mailer Configuration
-  # Configure the e-mail address which will be shown in Devise::Mailer,
-  # note that it will be overwritten if you use your own mailer class with default "from" parameter.
-  config.mailer_sender = 'do-not-reply@mitrecyberacademy.org'
 
-  # Configure the class responsible to send e-mails.
-  # config.mailer = "Devise::Mailer"
+  # Configure the parent class responsible for sending emails (this configures the "from" field)
+  config.parent_mailer = 'ApplicationMailer'
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and

@@ -1,34 +1,28 @@
 # frozen_string_literal: true
 
 class Division < ApplicationRecord
+  belongs_to :game, optional: false
+
   has_many :teams, dependent: :destroy
   has_many :feed_items, dependent: :destroy
   has_many :achievements, dependent: :destroy
-  has_many :solved_challenges, dependent: :destroy
+  has_many :pentest_solved_challenges, dependent: :destroy
+  has_many :standard_solved_challenges, dependent: :destroy
+  has_many :solved_challenges, inverse_of: :division, foreign_key: 'division_id', dependent: :destroy
+  has_many :defense_flags, through: :teams
 
   validates :name, presence: true
 
-  def self.type_enum
-    [['PentestDivision'], ['PointDivision']]
-  end
-
-  validates :type, inclusion: type_enum.flatten, presence: true
-
   def ordered_teams(only_top_five = false)
-    # They are eligible if the boolean is true
-    teams = filter_and_sort_teams(eligible: true)
-    # They are ineligible if the boolean is false
-    ineligible_teams = filter_and_sort_teams(eligible: false)
-    # Take the eligible teams [in whole competition] and appends
-    # the ineligible teams to the end of the array of eligible teams
-    teams.concat(ineligible_teams)
-    # if true return the first five in array
-    if only_top_five
-      # Then take the first 5 elements in array
-      teams[0..4]
-    else
-      teams
+    teams = calculate_team_scores
+    # last_solve_time is added to the model by the calculate_standard_solved_challenge_score method
+    teams.sort_by! do |team|
+      [(team.eligible ? 0 : 1), -team.current_score, team.last_solve_time || game.start]
     end
+
+    return teams.take(5) if only_top_five
+
+    teams
   end
 
   def ordered_teams_with_rank
@@ -44,30 +38,56 @@ class Division < ApplicationRecord
 
   private
 
-  # rubocop:disable Metrics/MethodLength
-  # Sorts the provided list of teams. This sorts directly in the database instead of getting the
-  # data out of the database and sorting in rails. It gets all feed items of type ScoreAdjustment
-  # and SolvedChallenge and sums up their values or the value of the challenge in the case of a
-  # SolvedChallenge.
-  def filter_and_sort_teams(filters)
-    teams.includes(:achievements).where(filters)
-         .joins(
-           "LEFT JOIN feed_items
-             ON feed_items.team_id = teams.id
-             AND feed_items.type IN ('PointSolvedChallenge', 'ScoreAdjustment')
-           LEFT JOIN challenges ON challenges.id = feed_items.challenge_id"
-         )
-         .group('teams.id')
-         .select(
-           'COALESCE(sum(challenges.point_value), 0) + COALESCE(sum(feed_items.point_value), 0)
-             as team_score,
-           MAX(feed_items.created_at) as last_solved_date, teams.*'
-         )
-         .order('team_score desc', 'last_solved_date asc', 'team_name asc')
-         .map do |team|
-      team.current_score = team.team_score
+  def calculate_team_scores
+    team_standings = calculate_standard_solved_challenge_score
+    team_standings.merge_and_sum(calculate_pentest_solved_challenge_score)
+    team_standings.merge_and_sum(calculate_share_solved_challenge_score)
+    team_standings.map do |team, points|
+      team.current_score = points.round
       team
     end
+  end
+
+  def calculate_share_solved_challenge_score
+    team_standings = {}
+    game.standard_challenges.share_challenges.each do |challenge|
+      team_standings.merge_and_sum(challenge.calc_points_for_solved_challenges)
+    end
+    team_standings
+  end
+
+  def calculate_pentest_solved_challenge_score
+    # rubocop:disable Rails/FindEach
+    # rubocop reports a false positive
+    team_standings = {}
+    defense_flags.preload(:solved_challenges).each do |flag|
+      team_standings.merge_and_sum(flag.calc_points_for_solved_challenges)
+    end
+    team_standings
+    # rubocop:enable Rails/FindEach
+  end
+
+  # rubocop:disable Metrics/MethodLength
+  # This calculates the teams score for all point-based challenges (StandardSolvedChallenges and ScoreAdjustments)
+  # This does not calculate the score for PentestChallenges
+  def calculate_standard_solved_challenge_score
+    teams.includes(:achievements).joins(
+      "LEFT JOIN feed_items AS point_feed_items
+             ON point_feed_items.team_id = teams.id
+             AND point_feed_items.type IN ('StandardSolvedChallenge', 'ScoreAdjustment')
+             LEFT JOIN feed_items AS pentest_feed_items
+             ON pentest_feed_items.team_id = teams.id
+             AND pentest_feed_items.type IN ('PentestSolvedChallenge')
+             LEFT JOIN challenges ON challenges.id = point_feed_items.challenge_id
+             AND challenges.type IN ('StandardChallenge')"
+    )
+         .group('teams.id')
+         .select(
+           'COALESCE(sum(challenges.point_value), 0) + COALESCE(sum(point_feed_items.point_value), 0)
+             as team_score,
+           GREATEST(MAX(pentest_feed_items.created_at), MAX(point_feed_items.created_at)) as last_solve_time, teams.*'
+         )
+         .index_with(&:team_score)
   end
   # rubocop:enable Metrics/MethodLength
 end

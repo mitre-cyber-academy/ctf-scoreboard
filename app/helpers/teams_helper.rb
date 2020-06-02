@@ -7,29 +7,11 @@ module TeamsHelper
     "#{team.team_name} (ineligible)"
   end
 
-  def category_header(game)
-    return 'Defense Team' if game.is_a?(PentestGame)
-
-    'Category'
-  end
-
-  def solved_challenge_title(game, solved_challenge)
-    if game.is_a?(PentestGame)
-      if solved_challenge.challenge.design_phase
-        'Design Phase'
-      else
-        solved_challenge.flag.team.team_name
-      end
+  def solved_challenge_table_point_value(solved_challenge, team)
+    if solved_challenge.is_a?(PentestSolvedChallenge)
+      solved_challenge.flag.display_point_value(team)
     else
-      solved_challenge.challenge.category.name
-    end
-  end
-
-  def solved_challenge_table_point_value(game, solved_challenge, team)
-    if game.is_a?(PentestGame)
-      solved_challenge.flag.point_value(team)
-    else
-      solved_challenge.challenge.point_value
+      solved_challenge.challenge.display_point_value(team)
     end
   end
 

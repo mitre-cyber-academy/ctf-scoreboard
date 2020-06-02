@@ -3,7 +3,7 @@ require 'test_helper'
 class GamesControllerTest < ActionController::TestCase
 
   def setup
-    @game = create(:active_point_game, enable_completion_certificates: true)
+    @game = create(:active_game, enable_completion_certificates: true)
   end
 
   test "should get show" do
@@ -12,7 +12,7 @@ class GamesControllerTest < ActionController::TestCase
   end
 
   test 'cannot get summary before game is open' do
-    create(:unstarted_point_game)
+    create(:unstarted_game)
 
     get :summary
     assert_redirected_to @controller.user_root_path
@@ -25,7 +25,7 @@ class GamesControllerTest < ActionController::TestCase
   end
 
   test "should get summary after game" do
-    create(:ended_point_game)
+    create(:ended_game)
 
     get :summary
     assert_response :success
@@ -100,7 +100,7 @@ class GamesControllerTest < ActionController::TestCase
     sign_in create(:admin)
     get :show, format: :markdown
     assert_response :success
-    assert_equal "text/markdown", response.content_type
+    assert_equal "text/markdown; charset=utf-8", response.content_type
   end
 
   test 'admin can access certificate template' do
@@ -113,7 +113,7 @@ class GamesControllerTest < ActionController::TestCase
 
   test 'admin redirect when certificate template unavailable' do
     @game.destroy
-    @game = create(:active_point_game)
+    @game = create(:active_game)
     sign_in create(:admin)
     get :completion_certificate_template
     assert_redirected_to rails_admin_path
@@ -122,9 +122,19 @@ class GamesControllerTest < ActionController::TestCase
 
   test 'show pentest game' do
     Game.first.destroy
-    game = create(:active_pentest_game)
-    create(:pentest_team_with_flags)
+    game = create(:active_game)
+    create(:team_with_pentest_flags)
     get :show
     assert_response :success
+  end
+
+  [:jeopardy, :teams_x_challenges, :multiple_categories, :title_and_description].each do |board_layout|
+    test "show #{board_layout} board layout" do
+      create(:active_game, board_layout: board_layout)
+      create_list(:standard_challenge, 3)
+      create_list(:share_challenge, 3)
+      get :show
+      assert_response :success
+    end
   end
 end

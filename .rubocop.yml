@@ -1,6 +1,7 @@
 require: rubocop-rails
 
 AllCops:
+  NewCops: enable
   Exclude:
     - bin/*
     - db/schema.rb
@@ -14,7 +15,11 @@ Layout/LineLength:
   Max: 120
 Metrics/BlockLength:
   Max: 35
-# Disable AmbiguousBlockAssociation since it is causing a bunch of irrelevant errors on
-# rubocop 0.48.1, this can be re-enabled once we are on a newer version of rubocop
+Style/HashEachMethods:
+  Enabled: true
+Style/HashTransformKeys:
+  Enabled: true
+Style/HashTransformValues:
+  Enabled: true
 Documentation:
   Enabled: false

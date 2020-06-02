@@ -1,0 +1,10 @@
+- @category_ids.each do |category|
+  %h1=category_ids_to_names(category, @categories)
+  - @standard_challenges[category].each do |challenge|
+    .row
+      .span12
+        %h3{style: "color: #{challenge_colors(challenge)[0]}"}= challenge.name
+        = challenge.description
+        .solve{style: 'padding-top: 10px;'}
+          = always_link_to_if_admin(challenge.open?, "View Submission Page", game_challenge_path(challenge))
+    %hr/

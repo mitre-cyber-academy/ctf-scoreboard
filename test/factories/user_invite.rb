@@ -5,11 +5,11 @@ FactoryBot.define do
     email { Faker::Internet.free_email }
 
     factory :point_user_invite do
-      team { create(:point_team) }
+      team { create(:team) }
     end
 
     factory :pentest_user_invite do
-      team { create(:pentest_team) }
+      team { create(:team) }
     end
   end
 end

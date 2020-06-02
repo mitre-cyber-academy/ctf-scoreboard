@@ -19,7 +19,7 @@
       %p
         %b
           %u= t('home.index.stuck')
-      %p= t('home.index.stuck_info', contact_url: link_to('contact us', @game.contact_url))
+      %p= raw(t('home.index.stuck_info', contact_url: link_to(t('home.index.contact_us'), @game.contact_url)))
   - unless @game.after_competition?
     - if user_signed_in?
       .btn-toolbar

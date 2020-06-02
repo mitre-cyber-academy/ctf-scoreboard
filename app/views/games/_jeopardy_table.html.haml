@@ -1,0 +1,14 @@
+%table.table.table-bordered.table-bolded#jeopardy-table
+  %thead
+    %tr
+      - @category_ids.each do |category|
+        %th.text-center{ style: "width:#{heading_width(@category_ids)}%;" }=category_ids_to_names(category, @categories)
+  %tbody
+    - @game.max_category_size.times do |row|
+      %tr
+        - @category_ids.each do |category|
+          - if row < @standard_challenges[category].size
+            = render partial: 'standard_challenge',
+              locals: { challenge: @standard_challenges[category][row] }
+          - else
+            %td &nbsp;

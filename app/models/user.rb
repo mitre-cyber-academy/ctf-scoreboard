@@ -3,8 +3,6 @@
 # User model, uses devise to manage registrations. Each user has a team reference which is
 # set to nil until they are added to a team.
 class User < ApplicationRecord
-  include ActionView::Helpers::UserHelper
-
   has_paper_trail only: %i[
     email
     team_id

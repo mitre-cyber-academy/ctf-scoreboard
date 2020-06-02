@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
+# The test environment is used exclusively to run your application's
+# test suite. You never need to work with it otherwise. Remember that
+# your test database is "scratch space" for the test suite and is wiped
+# and recreated between test runs. Don't rely on the data there!
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # The test environment is used exclusively to run your application's
-  # test suite. You never need to work with it otherwise. Remember that
-  # your test database is "scratch space" for the test suite and is wiped
-  # and recreated between test runs. Don't rely on the data there!
   config.cache_classes = true
 
   # Do not eager load code on boot. This avoids loading your whole application
@@ -23,6 +24,7 @@ Rails.application.configure do
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
+  config.cache_store = :null_store
 
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = false
@@ -30,7 +32,7 @@ Rails.application.configure do
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
 
-  # Store uploaded files on the local file system in a temporary directory
+  # Store uploaded files on the local file system in a temporary directory.
   config.active_storage.service = :test
 
   config.action_mailer.perform_caching = false
@@ -46,13 +48,9 @@ Rails.application.configure do
   # For testing use the inline queue adapter.
   config.active_job.queue_adapter = :inline
 
-  # Raises error for missing translations
+  # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 
   # Set default URL for mailer to mimic production
   config.action_mailer.default_url_options = { host: 'test.mitrecyberacademy.org' }
-
-  ENV['S3_KEY'] = 'fakekey'
-  ENV['S3_SECRET'] = 'fakesecret'
-  ENV['S3_BUCKET'] = 'ctfbucket'
 end

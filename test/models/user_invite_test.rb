@@ -2,9 +2,9 @@ require 'test_helper'
 
 class UserInviteTest < ActiveSupport::TestCase
   def setup
-    @game = create(:active_point_game)
+    @game = create(:active_game)
     @email = 'mitrectf+test@gmail.com'
-    @team = create(:point_team)
+    @team = create(:team)
     @user_to_invite = create(:user, email: @email)
   end
 
