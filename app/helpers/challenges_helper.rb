@@ -16,7 +16,7 @@ module ChallengesHelper
 
   def embed(youtube_url)
     youtube_id = youtube_url.split('v=').last
-    content_tag(:iframe, nil, src: "https://www.youtube.com/embed/#{youtube_id}?rel=0", frameborder: 0)
+    tag.iframe(nil, src: "https://www.youtube.com/embed/#{youtube_id}?rel=0", frameborder: 0)
   end
 
   def submit_url(team, challenge)

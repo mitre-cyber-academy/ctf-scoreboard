@@ -8,7 +8,7 @@ class Division < ApplicationRecord
   has_many :achievements, dependent: :destroy
   has_many :pentest_solved_challenges, dependent: :destroy
   has_many :standard_solved_challenges, dependent: :destroy
-  has_many :solved_challenges, inverse_of: :division, foreign_key: 'division_id', dependent: :destroy
+  has_many :solved_challenges, inverse_of: :division, dependent: :destroy
   has_many :defense_flags, through: :teams
 
   validates :name, presence: true

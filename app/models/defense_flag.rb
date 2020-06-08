@@ -6,7 +6,7 @@ class DefenseFlag < Flag
   validates :challenge, uniqueness: { scope: :team_id, message: I18n.t('flag.challenge_must_be_unique') }
 
   belongs_to :team, inverse_of: :defense_flags, optional: false
-  belongs_to :challenge, inverse_of: :defense_flags, foreign_key: 'challenge_id', class_name: 'PentestChallenge'
+  belongs_to :challenge, inverse_of: :defense_flags, class_name: 'PentestChallenge'
 
   has_many :solved_challenges, -> { ordered }, inverse_of: :flag, foreign_key: 'flag_id',
                                                class_name: 'PentestSolvedChallenge', dependent: :destroy
