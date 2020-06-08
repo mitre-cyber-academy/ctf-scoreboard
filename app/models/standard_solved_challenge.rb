@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class StandardSolvedChallenge < SolvedChallenge
-  belongs_to :flag, class_name: 'StandardFlag', foreign_key: 'flag_id', optional: false, inverse_of: :solved_challenges
+  belongs_to :flag, class_name: 'StandardFlag', optional: false, inverse_of: :solved_challenges
 
-  belongs_to :challenge, class_name: 'StandardChallenge', foreign_key: 'challenge_id', optional: false,
+  belongs_to :challenge, class_name: 'StandardChallenge', optional: false,
                          inverse_of: :solved_challenges
 
   def team_can_solve_challenge
