@@ -55,6 +55,7 @@ class Challenge < ApplicationRecord
 
   def category_list
     return I18n.t('challenges.no_category') if categories.empty?
+
     categories.map(&:name).join(', ')
   end
 
