@@ -3,14 +3,14 @@
     .alert.alert-error
       %a.close{"data-dismiss" => "alert", :href => "#"} ×
       = pluralize(resource.errors.count, "error")
-      prohibited your user from being updated:
+      = t('users.edit.error')
       %ul.errors
         - resource.errors.full_messages.each do |msg|
           %li= msg
   %label.label-custom
-    Note: Fields marked with
-    %span{:style => "color: red;"} *
-    can not be blank.
+    = t('users.new.required_fields_notice_1')
+    %span{:style => "color: red;"} * 
+    = t('users.new.required_fields_notice_2')
   .control-group
     = f.label :full_name, :class => "control-label-required"
     .controls
@@ -38,7 +38,7 @@
     .controls
       = f.password_field :password, :input_html => {:autofocus => true}, :class => "textarea"
   .control-group
-    = f.label :password_confirmation, "Confirm Password", :class => required_for_update?(on_update_page)
+    = f.label :password_confirmation, t('users.edit.label.password_confirmation_2'), :class => required_for_update?(on_update_page)
     .controls
       = f.password_field :password_confirmation, :class => "textarea"
   .control-group#compete-for-prizes
@@ -57,7 +57,7 @@
       .controls
         = f.text_field :age, :class => "textarea"
   .control-group
-    = f.label :area_of_study, "Major/area of study", :class => "control-label"
+    = f.label :area_of_study, t('users.edit.label.major_area_of_study'), :class => "control-label"
     .controls
       = f.text_field :area_of_study, :class => "textarea"
   -# If a user is updating their information then on_update_page should be passed to the partial as true,

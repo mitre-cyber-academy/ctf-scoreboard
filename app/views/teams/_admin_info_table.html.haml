@@ -5,9 +5,12 @@
     %table.table.table-bordered.table-striped
       %thead
         %tr
-          %th User ID
-          %th Name
-          %th Email
+          %th 
+            = t('teams.show.admin_info_table.user_id')
+          %th 
+            = t('teams.show.admin_info_table.name')
+          %th
+            = t('teams.show.admin_info_table.email')
       %tbody
         - @team.users.each do |user|
           %tr

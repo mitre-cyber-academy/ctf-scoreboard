@@ -1,5 +1,5 @@
 - content_for :header do
-  Terms of Service
+  = t('application.terms_of_use.terms_of_service_name')
 
 - if @game&.terms_of_service.blank?
   = t('game.no_terms_of_service')

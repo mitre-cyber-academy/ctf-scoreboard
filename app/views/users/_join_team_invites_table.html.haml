@@ -5,11 +5,11 @@
   %thead
   %tr
     %th
-      Team Name
+      = t('teams.invite.incomming_invites_table.team_name_header')
     %th
-      Invited On
+      = t('teams.invite.incomming_invites_table.invited_on_header')
     %th
-      Accept/Reject
+      = t('teams.invite.incomming_invites_table.accept_reject_header')
   - @pending_invites.each do |current|
     %tbody
       %tr{:class=>'warning'}

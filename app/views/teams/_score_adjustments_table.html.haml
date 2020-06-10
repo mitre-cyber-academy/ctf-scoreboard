@@ -2,9 +2,12 @@
   %thead
     %tr
       %th #
-      %th Points
-      %th Description
-      %th When
+      %th
+        = t('teams.summary.score_adjustments_table.points_adjustment_header')
+      %th
+        = t('teams.summary.score_adjustments_table.discription_adjustment_header')
+      %th
+        = t('teams.summary.score_adjustments_table.when_adjustment_header')
   %tbody
     - @score_adjustments.each_with_index do |adjustment, i|
       %tr

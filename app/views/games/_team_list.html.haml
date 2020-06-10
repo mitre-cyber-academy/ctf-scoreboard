@@ -1,14 +1,14 @@
 - if teams.nil? or teams.size.eql? 0
-  .zero-items-text No Teams
-- else
+  .zero-items-text
+    = t('game.team_list.no_teams')
   - max = 0
   %table.table.table-bordered.table-striped
     %thead
       %tr
         %th{ :style => "width:50px;" } #
-        %th Name
-        %th{ :style => "width:100px;" } Achievements
-        %th{ :style => "width:100px;" } Points
+        %th=t('game.team_list.team_name') # The team's name
+        %th{ :style => "width:100px;" }= t('game.team_list.team_achievements') # The team's achievements
+        %th{ :style => "width:100px;" }= t('game.team_list.team_points') # The number of points the team has
         %th{ :style => "width:50%;" }
     %tbody
       - teams.each_with_index do |t, i|
@@ -30,4 +30,4 @@
     - if @view_all_teams_link
       %tr
         %td{align: 'center', colspan: '5', style: 'text-align: center;'}
-          = link_to 'View all Teams', game_teams_path
+          = link_to t('game.view_all_teams'), game_teams_path

@@ -2,14 +2,14 @@
   %thead
   %tr
     %th.span2
-      Email
+      = t('teams.invite.invite_requests_table.email_header')
     %th
-      Prize Eligible?
+      = t('teams.invite.invite_requests_table.prize_eligible_header')
     %th
-      Requested On
+      = t('teams.invite.invite_requests_table.requested_on_header')
     - if @team_captain
       %th
-        Accept?
+        = t('teams.invite.invite_requests_table.accept_request_header')
   - @pending_requests.each do |current|
     %tbody
       %tr{:class=>'warning'}

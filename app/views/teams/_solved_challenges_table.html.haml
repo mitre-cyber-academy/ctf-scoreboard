@@ -2,9 +2,12 @@
   %thead
     %tr
       %th #
-      %th Challenge
-      %th Points
-      %th When
+      %th
+        = t('teams.summary.solved_challenges_table.challenge_header')
+      %th
+        = t('teams.summary.solved_challenges_table.points_header')
+      %th
+        = t('teams.summary.solved_challenges_table.when_header')
   %tbody
     - @team.solved_challenges.each_with_index do |s, i|
       %tr

@@ -31,20 +31,77 @@ en:
               uniqueness: 'Email address previously invited to team.'
   achievements:
     index:
+      header: 'Achievements'
       zero_items_text: 'No achievements have been awarded'
+      table_header_achievement_name: 'Name'
+      table_header_unlocked_by: 'Unlocked By'
+      table_header_when: 'When'
   teams:
     edit:
+      header: 'Edit your Team'
       legend: 'New Team Information'
       note: 'All fields are required.'
+    new:
+      header: 'Create a Team'
+      show:
+        label:
+          team_prize_eligibility_status: 'Team Prize Eligibility Status'
+          team_division_status: 'Team Division Status'
+    invite:
+      invite_requests_table:
+        email_header: 'Email'
+        prize_eligible_header: 'Prize Eligible?'
+        requested_on_header: 'Requested On'
+        accept_request_header: 'Accept?'
+      invites_table:
+        email_header: 'Email'
+        prize_eligible_header: 'Prize Eligible?'
+        division_header: 'Division'
+        cancel_invite_header: 'Cancel Invite'
+      incomming_invites_table:
+        team_name_header: 'Team Name'
+        invited_on_header: 'Invited On'
+        accept_reject_header: 'Accept/Reject'
+      requested_join_team_table:
+        team_name_header: 'Team Name'
+        requested_on_header: 'Requested On'
+        cancel_request_header: 'Cancel'
+    admin_info_table:
+      user_id: 'User ID'
+      name: 'Name'
+      email: 'Email'
+    defensive_points_table:
+      challenge_header: 'Challenge'
+      points_header: 'Points'
+    team_users_table:
+      team_leader_header: 'Lead'
+      email_header: 'Email'
+      grade_header: 'School Level'
+      division_header: 'Appropriate Division'
+      prize_eligibility_header: 'Prize Eligible'
+      remove_user_header: 'Remove'
+      change_captian_header: 'Change Captian'
+      compete_for_prizes_true: 'Yes'
+      compete_for_prizes_false: 'No'
     summary:
       zero_items_text: 'Nothing to report'
       solved_challenges_header: 'Solved Challenges'
       solved_challenges_chart_header: 'Solved Challenges Breakdown'
       defensive_points_header: 'Defensive Points'
+      division_name: '%{division} Division'
+      solved_challenge: 'solved challenge'
       team_members_header: 'Team Members'
       per_user_statistics_header: 'Per User Statistics'
       flag_submissions_header: 'Team Flag Submissions'
       score_adjustments_header: 'Score Adjustments'
+      score_adjustments_table:
+        points_adjustment_header: 'Points'
+        discription_adjustment_header: 'Description'
+        when_adjustment_header: 'When'
+      solved_challenges_table:
+        challenge_header: 'Challenge'
+        points_header: 'Points'
+        when_header: 'When'
     captain_removed_player: 'Player was successfully removed.'
     player_removed_self: 'You have successfully left the team.'
     already_on_team_create: 'You cannot create a new team while already being a member of one.'
@@ -65,11 +122,15 @@ en:
       promote_confirm: 'Are you sure you want to promote a new team captain? You will immediately lose all captain privileges.'
       eligible_help: 'This user has not yet registered and their division is unknown at this time.'
       cancel_invite_confirm: 'Are you sure you want to cancel this invitation?'
+      cancel_invite:
+        confirm: 'Are you sure you want to cancel this invitation?'
       reject_request_confirm: 'Are you sure you want to reject this request?'
       invite_button: 'Invite Member'
       currently_selected_division: "You have currently selected %{division} for your team."
       division_true: 'This division is acceptable for your team.'
       division_false: "Your team is not eligible to compete in this division. Consider changing your team's division to match that of the most senior member of your team, or removing the member(s) causing your division to be incorrect."
+      team_eligibility_status_header: "Team Prize Eligibility Status"
+
       eligible_currently: 'Your team is currently'
       eligible_true: 'competing for prizes. Your team will not be competing for prizes if any users on the team indicate they do not wish to compete for prizes, or the team is moved to an inappropriate division.'
       eligible_false: 'competing for prizes. One or more team members has indicated they do not want to compete for prizes. Please contact the users marked as ineligible above.'
@@ -82,6 +143,7 @@ en:
       eligible: 'Yes'
       ineligible: 'No'
       subheading: "Affiliation: %{aff}"
+
   requests:
     sent_successful: 'Team join request was successfully sent.'
     accepted_another: 'User has accepted another teams invitation, sorry!'
@@ -104,10 +166,22 @@ en:
     after_competition: 'This action is not available after the game is over.'
     setup: 'Finish setting up the scoreboard by creating a game. Not all fields are required, and you can always change them later! Learn more at %{href}'
     setup_href: "https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Configuration#game"
-    no_terms_and_conditions: There are no terms and conditions associated with this game.
-    no_terms_of_service: There are no terms of service associated with this game.
     attack_defend_challenges: 'Attack & Defend Challenges'
+    view_all_teams: 'View all Teams'
+    admin_view_submission_page: 'View Submission Page'
+    team_list:
+      header: 'Team List'
+      no_teams: 'No Teams'
+      team_name: 'Name'
+      team_achievements: 'Achievements'
+      team_points: 'Points'
+    show_markdown:
+      markdown_title: 'Title'
+      markdown_value: 'Value'
+      markdown_repository: 'Repository'
+      markdown_description: 'Description'
     legend:
+      legend_name: 'Legend'
       dark_green: 'Dark Green'
       green: 'Green'
       light_green: 'Light Green'
@@ -120,6 +194,10 @@ en:
       blue_desc: 'Solved by your team'
       gray_desc: 'Unavailable'
       red_desc: 'Locked'
+    summary:
+      header: 'Game Summary'
+      topfive: 'Top 5 Teams'
+      submissions_title: 'Flag Submissions'  
     show:
       table_title: 'Challenges'
       no_challenges: 'No Challenges'
@@ -129,8 +207,14 @@ en:
   challenges:
     show:
       no_desc: 'No description'
+    description_name: 'Description'
     not_open: 'must be open.'
     no_category: 'No Category'
+    solved_team_name_table_header: 'Team'
+    solved_division_name_table_header: 'Division'
+    solved_when_table_header: 'When'
+    submit_flag: 'Submit Flag'
+    admin_edit_challenge: 'Edit %{challengename}'
     game_not_open: 'The game must be open.'
     already_solved: 'This team has already solved this challenge the allowed number of times.'
     must_be_on_team: 'You must be on a team to submit a flag.'
@@ -143,10 +227,15 @@ en:
      successfully competed as a member of Team %{team_name},
      achieving %{score} points and finishing %{rank} out of %{team_size} teams."
     edit:
+      edit_account_header: 'Edit Account'
       label:
         password: 'Password'
         password_confirmation: 'Confirm new password'
+        password_confirmation_2: 'Confirm Password'
         password_change: 'Change password'
+        current_password_placeholder: 'Current Password'
+        delete_account: 'Delete Account'
+        major_area_of_study: "Major/Area of study"
       help:
         affiliation: 'If you are a student, please list your school. If you are an industry professional please list your professional organization.'
         state: 'Enter the state in which you are a resident.'
@@ -157,12 +246,23 @@ en:
         transcript: 'Please provide us with a copy of your unofficial transcript in PDF format'
         password: 'We need your current password to update your account information.'
         destroy: 'Deleting your account will remove you from your team. In order to rejoin a team you will have to be re-invited.'
+      password:
+        password_edit_header: 'Change your password'
+        forgot_password_header: 'Forgot your password'
+        retrieve_access_instructions: 'Resend instructions'
+        resend_unlock_instructions: 'Resend unlcok instructions'
+      error: "prohibited your user from being updated:"
     destroy:
       confirm: 'Are you sure you want to delete your account?'
     new:
+      required_fields_notice_1: 'Note: Fields marked with'
+      required_fields_notice_2: 'can not be blank.'
+      register: 'Register for the CTF'
       confirmations_legend: 'Resend Confirmation Instructions'
       password_reset_legend: 'Send a Password Reset'
       sessions_legend: 'Login'
+    activation:
+      activation_header: 'Activate your Account'
     join_team:
       header: 'Join a Team'
       pending_team_invites_header: 'Pending Team Invitations'
@@ -172,7 +272,17 @@ en:
       requests_header_desc: 'Teams that you have requested to join'
       delete_request_confirmation: 'Are you sure you want to delete this request?'
       search_for_team_header: 'Search for a Team'
-
+      reset_filters: 'Reset Filters'
+      teams_table:
+        name_header: 'Name'
+        affiliation_header: 'Affiliation'
+        spots_header: 'Spots Available'
+        division_header: 'Division'
+        request_join_header: 'Request to Join'
+        request_join_button: 'Request'
+    login:
+      login_header: 'Access Your Account'
+      remember_login: 'Remember Me'
   admin:
     should_not_do_action: 'Admins should use the Rails Admin console to perform administrative actions.'
     download_not_available: 'The download you have selected is not available.'
@@ -194,8 +304,14 @@ en:
     open_source_statement_1: 'Gameboard and registration software is '
     open_source_statement_2: ' free to use!'
     github_link: 'https://github.com/mitre-cyber-academy/ctf-scoreboard'
-    terms_of_service: 'Terms of Service'
-    no_terms_and_conditions: 'Terms and Conditions'
+    terms_of_use:
+      terms_of_service_name: 'Terms of Service'
+      terms_and_conditions_name: 'Terms and Conditions'
+      no_terms_and_conditions: There are no terms and conditions associated with this game.
+      no_terms_of_service: There are no terms of service associated with this game.
+  messages:
+    messages_header: 'Messages'
+    no_messages: 'No Messages'
   home:
     index:
       when_to_compete: 'When to compete'
@@ -207,4 +323,11 @@ en:
       join_team: 'Join Team'
       create_team: 'Create Team'
       edit_team: 'Edit Team'
+      login_or_register: 'Log in / Register'
+      login: 'Log in'
       register: 'Register'
+      back_to_top: 'Back to top'
+      catchprase:
+        before_completion: 'Register for the CTF'
+        game_open: 'Competition in Progress'
+        game_completed: 'Competition has Completed'

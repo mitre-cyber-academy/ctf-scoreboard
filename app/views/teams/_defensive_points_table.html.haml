@@ -5,8 +5,10 @@
   %table.table.table-bordered.table-striped
     %thead
       %tr
-        %th Challenge
-        %th Points
+        %th 
+          = t('teams.defensive_points_table.challenge_header')
+        %th
+          = t('teams.defensive_points_table.points_header')
     %tbody
       - @defensive_points.each do |name, value|
         %tr

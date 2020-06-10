@@ -4,11 +4,11 @@
 .container
   .catchphrase
     - if @game.before_competition?
-      %h2 Register for the CTF
+      %h2= t('home.index.catchprase.before_completion')
     - elsif @game.open?
-      %h2 Competition in Progress
+      %h2= t('home.index.catchprase.game_open')
     - else
-      %h2 Competition has Completed
+      %h2= t('home.index.catchprase.game_completed')
   .maincontent.row-fluid.indent-40px-left
     = sanitize(Kramdown::Document.new(@game&.description).to_html)
     %p

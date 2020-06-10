@@ -2,14 +2,14 @@
   %thead
   %tr
     %th.span2
-      Email
+      = t('teams.invite.invites_table.email_header')
     %th
-      Prize Eligible?
+      = t('teams.invite.invites_table.prize_eligible_header')
     %th
-      Division
+      = t('teams.invite.invites_table.division_header')
     - if @team_captain
       %th
-        Cancel Invite
+        = t('teams.invite.invites_table.cancel_invite_header')
   - @pending_invites.each do |current|
     %tbody
       %tr{:class=>'warning'}
