@@ -45,7 +45,8 @@
 %hr
 .row
   .span6
-    %h4 
+    %h4
+      = t('teams.show.team_eligibility_status_header')
     = t('teams.show.label.team_prize_eligibility_status')
     = t('teams.show.eligible_currently')
     - if @team.eligible?
