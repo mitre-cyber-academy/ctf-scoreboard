@@ -55,5 +55,5 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'test.mitrecyberacademy.org' }
 
   # Ensure that both regular and mail locale files are loaded
-  config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+  config.i18n.load_path += Dir[Rails.root.join('config/locales/**/*.{rb,yml}')]
 end
