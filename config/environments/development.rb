@@ -69,5 +69,5 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   # Ensure that both regular and mail locale files are loaded
-  config.i18n.load_path += Dir[Rails.root.join('config/locales/**/*.{rb,yml}')]
+  config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
 end
