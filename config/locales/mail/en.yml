@@ -1,28 +1,34 @@
 en:
   user_mailer:
     completion_reminder:
+      title: '%{title}: Competition Reminder'
       greeting: 'Hello %{fullname}!'
       reminder_line_1: 'This is a reminder for the upcoming %{organization} %{title} which will start at %{starttime}.'
       reminder_line_2: 'Click the link below to login and check your account'
     invite_user:
+      title: '%{title}: Invite to join team %{teamname}'
       greeting: 'Hello %{email}!'
       invite_line_1: 'You have been invited to join the team'
       invite_line_2: 'for the upcoming %{organization} %{title}'
       register: 'Click the link below to register an account to view the invitation.'
       view: 'Click the link below to view the invitiation.'
     message_notification:
+      title: '%{title} New Message: %{messagetitle}'
       greeting: 'Hello %{fullname}'
       view_all: 'View all Messages on Scoreboard'
     open_source:
+      title: '%{title}: Challenges Released'
       greeting: 'Hello %{fullname}'
       view_solutions: 'All solved challenges from %{title} have been released with solutions '
       location_name: 'here'
       goodbye: 'Have a great day!'
     ranking:
+      title: '%{title}: Congratulations! '
       greeting: 'Hello %{fullname}!'
       ranking_line: 'Congratulations on completing %{title}! Your team, %{team} came ranked %{ranked}.'
       thanks: 'Thanks for participating!'
     user_request:
+      title: '%{title}: Request from %{fullname} to join %{teamname}'
       greeting: 'Hello %{fullname}!'
       request_line_1: '%{username} has requested to join your team %{team}'
       request_line_2: 'Click the link below to view and accept or reject the request.'

@@ -4,19 +4,19 @@ class UserMailer < ApplicationMailer
   def invite_user(user_invite)
     @invite = user_invite
     @team = @invite.team
-    mail(to: @invite.email, subject: "#{@game.title}: Invite to join team #{@team.team_name}")
+    mail(to: @invite.email, subject: I18n.t('user_mailer.invite_user.title', title: @game.title, teamname: @team.team_name))
   end
 
   def user_request(user_request)
     @team = user_request.team
     @captain = @team.team_captain
     @user = user_request.user
-    mail(to: @captain.email, subject: "#{@game.title}: Request from #{@user.full_name} to join #{@team.team_name}")
+    mail(to: @captain.email, subject: I18n.t('user_mailer.user_request.title', title: @game.title, fullname: @user.full_name, teamname: @team.team_name))
   end
 
   def competition_reminder(user)
     @user = user
-    mail(to: @user.email, subject: "#{@game.title}: Competition Reminder")
+    mail(to: @user.email, subject: I18n.t('user_mailer.completion_reminder.title', title: @game.title))
   end
 
   # Assumes user is on a team
@@ -30,17 +30,17 @@ class UserMailer < ApplicationMailer
       attachments['Competition Certificate.pdf'] = @user.generate_certificate(@rank).read
     end
 
-    mail(to: @user.email, subject: "#{@game.title}: Congratulations!")
+    mail(to: @user.email, subject: I18n.t('user_mailer.ranking.title', title: @game.title))
   end
 
   def open_source(user)
     @user = user
-    mail(to: @user.email, subject: "#{@game.title}: Challenges Released")
+    mail(to: @user.email, subject: I18n.t('user_mailer.open_source.title', title: @game.title))
   end
 
   def message_notification(user, message)
     @user = user
     @message = message
-    mail(to: @user.email, subject: "#{@game.title} New Message: #{message.title}")
+    mail(to: @user.email, subject: I18n.t('user_mailer.message_notification.title', title: @game.title, messagetitle: @message.title))
   end
 end

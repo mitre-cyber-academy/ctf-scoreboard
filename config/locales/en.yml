@@ -197,7 +197,12 @@ en:
     summary:
       header: 'Game Summary'
       topfive: 'Top 5 Teams'
-      submissions_title: 'Flag Submissions'  
+      submissions_title: 'Flag Submissions'
+      flag_submissions_graph:
+        flags_submitted: 'Flag Submissions'
+        challenges_solved: 'Challenges Solved'
+      challenge_table:
+        teams_header: 'Teams'
     show:
       table_title: 'Challenges'
       no_challenges: 'No Challenges'
@@ -208,17 +213,25 @@ en:
     show:
       no_desc: 'No description'
     description_name: 'Description'
+    point_value_singular: 'Point'
+    error_singular: 'error'
     not_open: 'must be open.'
     no_category: 'No Category'
     solved_team_name_table_header: 'Team'
     solved_division_name_table_header: 'Division'
     solved_when_table_header: 'When'
     submit_flag: 'Submit Flag'
+    team_ineligible_for_prizes: 'ineligible'
+    solve_state:
+      click_to_solve: 'Click to Solve'
+      solved: 'Solved'
+      unavailable_solve_state: '-'
     admin_edit_challenge: 'Edit %{challengename}'
     game_not_open: 'The game must be open.'
     already_solved: 'This team has already solved this challenge the allowed number of times.'
     must_be_on_team: 'You must be on a team to submit a flag.'
     state_change_message: 'The challenge is now %{state}'
+    first_winner: 'First Blood!'
   challenge_categories:
     same_game: 'must belong to the same game as category.'
   users:
@@ -298,6 +311,8 @@ en:
       messages: 'Messages'
       achievements: 'Achievements'
       summary: 'Summary'
+      greeting: 'Hello, '
+    game_name_if_organization_not_set: 'Gameboard'
     log_out: 'Log out'
     log_in: 'Log in'
     edit_account: 'Edit Account'

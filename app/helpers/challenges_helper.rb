@@ -26,7 +26,7 @@ module ChallengesHelper
   end
 
   def subheading(team, challenge)
-    point_value = pluralize(challenge.display_point_value(current_user&.team), 'point')
+    point_value = pluralize(challenge.display_point_value(current_user&.team), I18n.t('challenges.point_value_singular'))
     team_or_category =  if team
                           team.team_name.to_s
                         elsif challenge.respond_to?(:categories)
