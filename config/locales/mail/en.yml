@@ -1,2 +1,48 @@
 en:
-  
+  user_mailer:
+    completion_reminder:
+      greeting: 'Hello %{fullname}!'
+      reminder_line_1: 'This is a reminder for the upcoming %{organization} %{title} which will start at %{starttime}.'
+      reminder_line_2: 'Click the link below to login and check your account'
+    invite_user:
+      greeting: 'Hello %{email}!'
+      invite_line_1: 'You have been invited to join the team'
+      invite_line_2: 'for the upcoming %{organization} %{title}'
+      register: 'Click the link below to register an account to view the invitation.'
+      view: 'Click the link below to view the invitiation.'
+    message_notification:
+      greeting: 'Hello %{fullname}'
+      view_all: 'View all Messages on Scoreboard'
+    open_source:
+      greeting: 'Hello %{fullname}'
+      view_solutions: 'All solved challenges from %{title} have been released with solutions '
+      location_name: 'here'
+      goodbye: 'Have a great day!'
+    ranking:
+      greeting: 'Hello %{fullname}!'
+      ranking_line: 'Congratulations on completing %{title}! Your team, %{team} came ranked %{ranked}.'
+      thanks: 'Thanks for participating!'
+    user_request:
+      greeting: 'Hello %{fullname}!'
+      request_line_1: '%{username} has requested to join your team %{team}'
+      request_line_2: 'Click the link below to view and accept or reject the request.'
+      view_team_dashboard: 'View Team Dashboard'
+  user:
+    mail:
+      reset_password:
+        greeting: 'Hello %{fullname}!'
+        reset_password_line_1: 'Someone has requested a link to change your password, and you can do this through the link below.'
+        change_password_link: 'Change my password'
+        change_password_line_2: 'If you did not request this, please ignore this email.'
+        change_password_line_3: 'Your password will not change until you access the link above and create a new one.'
+      confirmation:
+        greeting: 'Hello %{fullname}!'
+        confirmation_line_1: 'Thank you for registering for our upcoming CTF event.'
+        confirmation_line_2: 'If you wish to finish this registration, please use the link below.'
+        confirm_account: 'Confirm my account'
+        error: 'If you feel you have received this message in error, please do not click the link above.'
+      unlock_instructions:
+        greeting: 'Hello %{fullname}!'
+        unlock_line_1: 'Your account has been locked due to an excessive amount of unsuccessful sign in attempts.'
+        unlock_line_2: 'Click the link below to unlock your account:'
+        unlock_account_link: 'Unlock my account'

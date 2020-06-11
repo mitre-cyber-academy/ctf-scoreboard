@@ -1,11 +1,11 @@
 %p
-  Hello #{@user.full_name}!
+  = t('user_mailer.ranking.greeting', fullname: @user.full_name)
 %p
-  Congratulations on completing #{@game.title}! Your team, #{@user.team.team_name} came ranked #{@rank.ordinalize}.
+  = t('user_mailer.ranking.ranking_line', title: @game.title, team: @user.team.team_name, ranked: @rank.ordinalize)
 - if (@rank.eql? 1) && @team.eligible? && @game.prizes_available? && !@game.prizes_text.blank?
   = sanitize(Kramdown::Document.new(@game.prizes_text).to_html)
 - if (@team.score > 0) && @user.interested_in_employment? && !@game.recruitment_text.blank?
   = sanitize(Kramdown::Document.new(@game.recruitment_text).to_html)
 %p
-  Thanks for participating!
+  = t('user_mailer.ranking.thanks')
 %p= @game.organization
