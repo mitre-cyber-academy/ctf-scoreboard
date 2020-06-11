@@ -70,7 +70,7 @@ class GamesController < ApplicationController
     signed_in_not_admin = !current_user&.admin?
     @active_division = signed_in_not_admin && current_user&.team ? current_user&.team&.division : @divisions.first
   end
-
+  # rubocop:disable LineLength
   def load_game_graph_data
     @flags_per_hour = SubmittedFlag.group_by_hour(:created_at).count
     @line_chart_data = [
@@ -78,6 +78,7 @@ class GamesController < ApplicationController
       { name: I18n.t('game.summary.flag_submissions_graph.challenges_solved'), data: FeedItem.solved_challenges.group_by_hour(:created_at).count }
     ]
   end
+  # rubocop:enable LineLength
 
   def deny_users_to_non_html_formats
     deny_if_not_admin unless request.format.html?
@@ -105,13 +106,14 @@ class GamesController < ApplicationController
     @categories = @game.categories
     @category_ids = @standard_challenges.keys
   end
-
+  # rubocop:enable LineLength
   def prepare_pentest_challenge_table
     @pentest_challenges = @game&.pentest_challenges
     ActiveRecord::Precounter.new(@pentest_challenges).precount(:solved_challenges)
     @pentest_table_heading = [OpenStruct.new(name: I18n.t('game.summary.challenge_table.teams_header')), @game&.pentest_challenges].flatten
     @teams_with_assoc = @game.teams_associated_with_flags_and_pentest_challenges
   end
+  # rubocop:enable LineLength
 
   # Creates a zip from any collection of files available on the user model.
   # For example, create_zip_of('resume') will create a zip of all resumes

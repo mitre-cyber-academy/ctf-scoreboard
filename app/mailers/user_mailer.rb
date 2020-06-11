@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+# rubocop:disable LineLength
 class UserMailer < ApplicationMailer
   def invite_user(user_invite)
     @invite = user_invite
@@ -44,3 +44,4 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: I18n.t('user_mailer.message_notification.title', title: @game.title, messagetitle: @message.title))
   end
 end
+# rubocop:enable LineLength

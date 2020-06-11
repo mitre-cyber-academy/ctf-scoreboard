@@ -22,7 +22,9 @@ class SolvedChallenge < FeedItem
 
   def award_achievement
     # if this is the first solved challenge
+    # rubocop:disable LineLength
     Achievement.create(team: team, text: I18n.t('challenges.first_winner')) if challenge.game.solved_challenges.size == 1
+    # rubocop:enable LineLength
     name = challenge.achievement_name
     Achievement.create(team: team, text: name) if name.present?
   end

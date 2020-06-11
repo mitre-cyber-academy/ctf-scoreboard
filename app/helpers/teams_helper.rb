@@ -4,7 +4,7 @@ module TeamsHelper
   def display_name(team)
     return team.team_name if team.eligible?
 
-    "#{team.team_name} (" + I18n.t('challenges.team_ineligible_for_prizes') + ")"
+    "#{team.team_name} (" + I18n.t('challenges.team_ineligible_for_prizes') + ')'
   end
 
   def solved_challenge_table_point_value(solved_challenge, team)
