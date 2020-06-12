@@ -146,11 +146,11 @@ class Team < ApplicationRecord
   end
 
   def submitted_flags_per_hour
-    submitted_flags.group_by_hour('submitted_flags.created_at', format: '%l:%M %p').count || 0
+    submitted_flags.group_by_hour(:created_at, format: '%a %b %e %I:%M %p').count || 0
   end
 
   def solved_challenges_per_hour
-    solved_challenges.group_by_hour('feed_items.created_at', format: '%l:%M %p').count || 0
+    solved_challenges.group_by_hour(:created_at, format: '%a %b %e %I:%M %p').count || 0
   end
 
   private
