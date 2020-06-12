@@ -1,6 +1,7 @@
 - if teams.nil? or teams.size.eql? 0
   .zero-items-text
     = t('game.team_list.no_teams')
+- else
   - max = 0
   %table.table.table-bordered.table-striped
     %thead
