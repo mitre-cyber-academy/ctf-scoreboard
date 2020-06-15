@@ -74,8 +74,13 @@ class GamesController < ApplicationController
   def load_game_graph_data
     @flags_per_hour = SubmittedFlag.group_by_hour(:created_at).count
     @line_chart_data = [
-      { name: I18n.t('game.summary.flag_submissions_graph.flags_submitted'), data: @flags_per_hour },
-      { name: I18n.t('game.summary.flag_submissions_graph.challenges_solved'), data: FeedItem.solved_challenges.group_by_hour(:created_at).count }
+      {
+        name: I18n.t('game.summary.flag_submissions_graph.flags_submitted'), data: @flags_per_hour
+      },
+      {
+        name: I18n.t('game.summary.flag_submissions_graph.challenges_solved'),
+        data: FeedItem.solved_challenges.group_by_hour(:created_at).count
+      }
     ]
   end
 
@@ -85,6 +90,7 @@ class GamesController < ApplicationController
 
   private
 
+  # rubocop:disable Metrics/MethodLength
   def prepare_standard_challenge_table
     # What information we need depends on the game mode we are in, however
     # we will always need a list of challenges
@@ -94,11 +100,14 @@ class GamesController < ApplicationController
       @standard_challenges = @game&.standard_challenges
       ActiveRecord::Precounter.new(@standard_challenges).precount(:solved_challenges)
       if @game.teams_x_challenges?
-        @headings = [OpenStruct.new(name: I18n.t('game.summary.challenge_table.teams_header')), @standard_challenges].flatten
+        @headings = [
+          OpenStruct.new(name: I18n.t('game.summary.challenge_table.teams_header')), @standard_challenges
+        ].flatten
         @teams = @game&.teams
       end
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def prepare_jeopardy_or_title_and_description_board
     @standard_challenges = @game&.categories_with_standard_challenges
@@ -109,7 +118,9 @@ class GamesController < ApplicationController
   def prepare_pentest_challenge_table
     @pentest_challenges = @game&.pentest_challenges
     ActiveRecord::Precounter.new(@pentest_challenges).precount(:solved_challenges)
-    @pentest_table_heading = [OpenStruct.new(name: I18n.t('game.summary.challenge_table.teams_header')), @game&.pentest_challenges].flatten
+    @pentest_table_heading = [
+      OpenStruct.new(name: I18n.t('game.summary.challenge_table.teams_header')), @game&.pentest_challenges
+    ].flatten
     @teams_with_assoc = @game.teams_associated_with_flags_and_pentest_challenges
   end
 

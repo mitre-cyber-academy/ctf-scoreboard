@@ -12,7 +12,7 @@ AllCops:
 ClassLength:
   Max: 150
 Layout/LineLength:
-  Max: 160
+  Max: 120
 Metrics/BlockLength:
   Max: 35
 Style/HashEachMethods:
