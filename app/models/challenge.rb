@@ -38,6 +38,10 @@ class Challenge < ApplicationRecord
     challenge_open? && game.open?
   end
 
+  def sponsored?(_ = nil)
+    sponsored
+  end
+
   def display_point_value(_ = nil)
     # Some subclasses override the point_value method with a custom
     # point value calculation, requiring a teams parameter. We don't

@@ -123,6 +123,11 @@ en:
     show:
       table_title: 'Challenges'
       no_challenges: 'No Challenges'
+      challenges_table:
+        sponsor_header: 'Sponsor'
+        name_header: 'Name'
+        category_header: 'Category'
+        points_header: 'Points'
   flag:
     accepted: 'Flag accepted!'
     challenge_must_be_unique: 'must be unique per defensive team.'
@@ -172,7 +177,6 @@ en:
       requests_header_desc: 'Teams that you have requested to join'
       delete_request_confirmation: 'Are you sure you want to delete this request?'
       search_for_team_header: 'Search for a Team'
-
   admin:
     should_not_do_action: 'Admins should use the Rails Admin console to perform administrative actions.'
     download_not_available: 'The download you have selected is not available.'
