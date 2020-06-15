@@ -30,4 +30,7 @@
     - if @view_all_teams_link
       %tr
         %td{align: 'center', colspan: '5', style: 'text-align: center;'}
-          = link_to 'View all Teams', game_teams_path
+          - if !display_all
+            = link_to 'Show More Teams', game_summary_path(:display_all => "true")
+          - else
+            =  link_to 'Show Less Teams', game_summary_path(:display_all => "false")
