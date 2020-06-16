@@ -1,20 +1,10 @@
 - content_for :header do
   Game Summary
-- if params[:display_all].nil?
-  - display_all = false
-- else
-  - if params[:display_all] == "true"
-    - display_all = true
-  - else
-    - display_all = false
 
 %h3.muted
-  - if display_all == true
-    Teams List
-  - else
-    Top 5 Teams
+  Teams Summary
 %br/
-= render partial: "games/divisions", locals: { divisions: @game.divisions, active_division: @active_division, only_top_five: !display_all}
+= render partial: "games/divisions", locals: { divisions: @game.divisions, active_division: @active_division, only_top_five: false}
 %hr
 / Only show the flags per hour count when we have more than 1 datapoint to show
 - if @flags_per_hour.count > 1

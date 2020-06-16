@@ -19,7 +19,7 @@
       - if score > max
         - max = score
       - percent = score.to_f / max.to_f * 100.0
-        %tr
+        %tr{i > 4 ? {class: "hide"} : {}}
           %td= i + 1
           %td.break-word= link_to display_name(t), summary_team_path(t)
           %td= t.achievements.size
@@ -30,8 +30,4 @@
     - if @view_all_teams_link
       %tr
         %td{align: 'center', colspan: '5', style: 'text-align: center;'}
-          - if !display_all
-            = link_to 'Show More Teams', game_summary_path(:display_all => "true")
-          - else
-            =  link_to 'Show Less Teams', game_summary_path(:display_all => "false")
-            
+          = link_to 'Show/Hide Teams', "#", :class => "toggler"
