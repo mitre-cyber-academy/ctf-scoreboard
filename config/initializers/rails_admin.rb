@@ -25,14 +25,13 @@ RailsAdmin.config do |config|
       except ['Challenge', 'FeedItem', 'SolvedChallenge', 'Flag'] # Block users from adding items from their parent classes instead of their own classes
     end
     export
-    history_index
     bulk_delete
     # member actions
     show
-    edit
+    edit do
+      except ['Challenge', 'FeedItem', 'SolvedChallenge', 'Flag'] # Block users editing items from their parent classes instead of their own classes (because there are different variables for each challenge type which can't be displayed)
+    end
     delete
-    history_show
-    show_in_app
   end
 
   config.model 'Game' do
@@ -79,13 +78,16 @@ RailsAdmin.config do |config|
     configure :year_in_school do
       searchable false
     end
-
     list do
       scopes [nil, :interested_in_employment]
     end
   end
 
   config.model 'Category' do
+    edit do
+      field :name
+      field :game
+    end # Users should change challenge categories from the challenge itself
     list do
       field :name
       field :created_at
@@ -104,6 +106,26 @@ RailsAdmin.config do |config|
   end
 
   config.model 'PentestChallenge' do
+    edit do
+      field :name
+      field :description
+      field :point_value
+      field :achievement_name
+      field :state
+      field :defense_period
+      field :defense_points
+      field :unsolved_increment_period
+      field :unsolved_increment_points
+      field :initial_shares
+      field :solved_decrement_shares
+      field :first_capture_point_bonus
+      field :design_phase
+      field :game_id
+      field :sponsored
+      field :sponsor
+      field :category_ids
+      field :defense_flags
+    end
     list do
       field :name
       field :description
@@ -114,6 +136,24 @@ RailsAdmin.config do |config|
   end
 
   config.model 'StandardChallenge' do
+    edit do
+      field :name
+      field :description
+      field :point_value
+      field :achievement_name
+      field :state
+      field :unsolved_increment_period
+      field :unsolved_increment_points
+      field :initial_shares
+      field :solved_decrement_shares
+      field :first_capture_point_bonus
+      field :design_phase
+      field :game_id
+      field :sponsored
+      field :sponsor
+      field :category_ids
+      field :flags
+    end
     list do
       field :name
       field :description
@@ -124,6 +164,24 @@ RailsAdmin.config do |config|
   end
 
   config.model 'ShareChallenge' do
+    edit do
+      field :name
+      field :description
+      field :point_value
+      field :achievement_name
+      field :state
+      field :unsolved_increment_period
+      field :unsolved_increment_points
+      field :initial_shares
+      field :solved_decrement_shares
+      field :first_capture_point_bonus
+      field :design_phase
+      field :game_id
+      field :sponsored
+      field :sponsor
+      field :category_ids
+      field :flags
+    end
     list do
       field :name
       field :description
@@ -138,9 +196,18 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Division' do
+    edit do
+      field :name
+      field :game
+      field :min_year_in_school
+      field :max_year_in_school
+      field :teams
+    end
     list do
       field :name
       field :teams
+      field :min_year_in_school
+      field :max_year_in_school
     end
   end
 
@@ -155,6 +222,13 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Achievement' do
+    edit do
+      field :user
+      field :team
+      field :text
+      field :challenge
+      field :point_value
+    end
     list do
       field :user
       field :team
@@ -165,6 +239,13 @@ RailsAdmin.config do |config|
   end
 
   config.model 'ScoreAdjustment' do
+    edit do
+      field :user
+      field :team
+      field :text
+      field :challenge
+      field :point_value
+    end
     list do
       field :user
       field :team
@@ -185,6 +266,14 @@ RailsAdmin.config do |config|
   end
 
   config.model 'PentestSolvedChallenge' do
+    edit do
+      field :user
+      field :team
+      field :division
+      field :challenge
+      field :point_value
+      field :flag
+    end
     list do
       field :user
       field :team
@@ -195,6 +284,14 @@ RailsAdmin.config do |config|
   end
 
   config.model 'StandardSolvedChallenge' do
+    edit do
+      field :user
+      field :team
+      field :division
+      field :challenge
+      field :point_value
+      field :flag
+    end
     list do
       field :user
       field :team
@@ -214,6 +311,16 @@ RailsAdmin.config do |config|
   end
 
   config.model 'DefenseFlag' do
+    edit do
+      field :challenge
+      field :flag
+      field :api_url
+      field :video_url
+      field :team
+      field :challenge_state
+      field :start_calculation_at
+      field :design_phase
+    end
     list do
       field :challenge
       field :flag
@@ -223,6 +330,16 @@ RailsAdmin.config do |config|
   end
 
   config.model 'StandardFlag' do
+    edit do
+      field :challenge
+      field :flag
+      field :api_url
+      field :video_url
+      field :team
+      field :challenge_state
+      field :start_calculation_at
+      field :design_phase
+    end
     list do
       field :challenge
       field :flag
@@ -232,11 +349,158 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Game' do
+    edit do
+      field :title
+      field :start
+      field :stop
+      field :description
+      field :board_layout
+      field :team_size
+      field :organization
+      field :contact_email
+      field :prizes_available
+      field :enable_completion_certificates
+      field :footer
+      field :contact_url
+      field :recruitment_text
+      field :open_source_url
+      field :terms_of_service
+      field :terms_and_conditions
+    end
     list do
       field :title
       field :start
       field :stop
       field :description
+      field :board_layout
+      field :prizes_available
+      field :enable_completion_certificates
+    end
+  end
+
+  config.model 'Message' do
+    edit do
+      field :title
+      field :text
+      field :game
+      field :email_message
+    end
+    list do
+      field :title
+      field :text
+      field :game
+      field :email_message
+    end
+  end
+
+  config.model 'SubmittedFlag' do
+    edit do
+      field :challenge
+      field :user
+      field :text
+    end
+    list do
+      field :challenge
+      field :user
+      field :text
+    end
+  end
+
+  config.model 'PentestSubmittedFlag' do
+    edit do
+      field :challenge
+      field :user
+      field :text
+      field :flag
+    end
+    list do
+      field :challenge
+      field :user
+      field :text
+      field :flag
+    end
+  end
+
+  config.model 'Team' do
+    edit do
+      field :team_name
+      field :affiliation
+      field :team_captain_id
+      field :division
+      field :eligible
+    end
+    list do
+      field :team_name
+      field :affiliation
+      field :team_captian
+      field :division
+    end
+  end
+
+  config.model 'User' do
+    edit do
+      field :full_name
+      field :email
+      field :affiliation
+      field :year_in_school.to_s
+      field :age
+      field :area_of_study
+      field :location
+      field :personal_email
+      field :state
+      field :compete_for_prizes
+      field :country
+      field :interested_in_employment
+      field :resume
+      field :transcript
+      field :password
+      field :password_confirmation
+      field :reset_password_sent_at
+      field :remember_created_at
+      field :current_sign_in_at
+      field :current_sign_in_ip
+      field :last_sign_in_ip
+      field :confirmed_at
+      field :confirmation_sent_at
+      field :unconfirmed_email
+      field :submitted_flags
+    end
+    list do
+      field :full_name
+      field :email
+      field :age
+      field :current_sign_in_at
+      field :sign_in_count
+      field :interested_in_employment
+    end
+  end
+
+  config.model 'UserInvite' do
+    edit do
+      field :email
+      field :team
+      field :user
+      field :status
+    end
+    list do
+      field :email
+      field :team
+      field :user
+      field :status
+    end
+  end
+
+  config.model 'UserRequest' do
+    edit do
+      field :team
+      field :user
+      field :status
+    end
+    list do
+      field :team
+      field :user
+      field :created_at
+      field :status
     end
   end
 
