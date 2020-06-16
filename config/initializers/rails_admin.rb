@@ -16,6 +16,25 @@ RailsAdmin.config do |config|
     redirect_to main_app.root_path unless current_user.try(:admin?)
   end
 
+  config.actions do
+    # root actions
+    dashboard                     # mandatory
+    # collection actions 
+    index                         # mandatory
+    new do
+      except ['Challenge', 'FeedItem', 'SolvedChallenge', 'Flag'] # Block users from adding items from their parent classes instead of their own classes
+    end
+    export
+    history_index
+    bulk_delete
+    # member actions
+    show
+    edit
+    delete
+    history_show
+    show_in_app
+  end
+
   config.model 'Game' do
     show do
       [:resumes, :transcripts].each do |title|
@@ -63,6 +82,161 @@ RailsAdmin.config do |config|
 
     list do
       scopes [nil, :interested_in_employment]
+    end
+  end
+
+  config.model 'Category' do
+    list do
+      field :name
+      field :created_at
+      field :updated_at
+    end
+  end
+
+  config.model 'Challenge' do
+    list do
+      field :name
+      field :description
+      field :categories
+      field :point_value
+      field :created_at
+    end
+  end
+
+  config.model 'PentestChallenge' do
+    list do
+      field :name
+      field :description
+      field :categories
+      field :point_value
+      field :created_at
+    end
+  end
+
+  config.model 'StandardChallenge' do
+    list do
+      field :name
+      field :description
+      field :categories
+      field :point_value
+      field :created_at
+    end
+  end
+
+  config.model 'ShareChallenge' do
+    list do
+      field :name
+      field :description
+      field :categories
+      field :point_value
+      field :created_at
+    end
+  end
+
+  config.model 'ChallengeCategory' do
+    visible false
+  end
+
+  config.model 'Division' do
+    list do
+      field :name
+      field :teams
+    end
+  end
+
+  config.model 'FeedItem' do
+    list do
+      field :user
+      field :team
+      field :division
+      field :text
+      field :challenge
+    end
+  end
+
+  config.model 'Achievement' do
+    list do
+      field :user
+      field :team
+      field :division
+      field :text
+      field :challenge
+    end
+  end
+
+  config.model 'ScoreAdjustment' do
+    list do
+      field :user
+      field :team
+      field :division
+      field :text
+      field :challenge
+    end
+  end
+
+  config.model 'SolvedChallenge' do
+    list do
+      field :user
+      field :team
+      field :division
+      field :text
+      field :challenge
+    end
+  end
+
+  config.model 'PentestSolvedChallenge' do
+    list do
+      field :user
+      field :team
+      field :division
+      field :text
+      field :challenge
+    end
+  end
+
+  config.model 'StandardSolvedChallenge' do
+    list do
+      field :user
+      field :team
+      field :division
+      field :text
+      field :challenge
+    end
+  end
+
+  config.model 'Flag' do
+    list do
+      field :challenge_id
+      field :flag
+      field :api_url
+      field :video_url
+    end
+  end
+
+  config.model 'DefenseFlag' do
+    list do
+      field :challenge
+      field :flag
+      field :api_url
+      field :video_url
+    end
+  end
+
+  config.model 'StandardFlag' do
+    list do
+      field :challenge
+      field :flag
+      field :api_url
+      field :video_url
+    end
+  end
+
+  config.model 'Game' do
+    list do
+      field :title
+      field :start
+      field :stop
+      field :description
     end
   end
 
