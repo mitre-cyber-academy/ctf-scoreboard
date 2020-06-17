@@ -10,6 +10,7 @@
         %td= always_link_to_if_admin(s.challenge.open?, s.challenge.name, game_challenge_path(s.challenge))
         %td= solved_challenge_table_point_value(s, @team)
         %td= view_time_format(s.created_at)
-    %tr
-      %td{align: 'center', colspan: '3', style: 'text-align: center;'}
-        = link_to "Show/Hide", "#", :class => "toggler"
+    - if @team.solved_challenges.size > 5
+      %tr
+        %td{align: 'center', colspan: '3', style: 'text-align: center;'}
+          = link_to "Show/Hide", "#", :class => "toggler"
