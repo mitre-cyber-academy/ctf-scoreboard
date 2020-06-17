@@ -320,8 +320,8 @@ en:
     open_source_statement_2: ' free to use!'
     github_link: 'https://github.com/mitre-cyber-academy/ctf-scoreboard'
     terms_of_use:
-      terms_of_service_name: 'Terms of Service'
-      terms_and_conditions_name: 'Terms and Conditions'
+      terms_of_service: 'Terms of Service'
+      terms_and_conditions: 'Terms and Conditions'
       no_terms_and_conditions: There are no terms and conditions associated with this game.
       no_terms_of_service: There are no terms of service associated with this game.
   messages:
