@@ -2,7 +2,7 @@
   .break-word= header_with_points(@team)
 
 - content_for :subheading do
-  = t('teams.show.subheading', aff: @team.affiliation)
+  = t('teams.show.subheading', affiliation: @team.affiliation)
 
 %table.table.table-condensed.table-striped
   %thead

@@ -142,7 +142,7 @@ en:
       pending_invites_header: 'Pending User Invites'
       eligible: 'Yes'
       ineligible: 'No'
-      subheading: "Affiliation: %{aff}"
+      subheading: "Affiliation: %{affiliation}"
 
   requests:
     sent_successful: 'Team join request was successfully sent.'
