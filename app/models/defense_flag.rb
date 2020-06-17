@@ -42,6 +42,18 @@ class DefenseFlag < Flag
     !force_closed? && challenge.open?
   end
 
+  def sponsored
+    challenge.sponsored
+  end
+
+  def sponsor_logo
+    challenge.sponsor_logo
+  end
+
+  def sponsor_description
+    challenge.sponsor_description
+  end
+
   def find_flag(flag_str)
     return self if flag_str == flag
   end
