@@ -18,23 +18,32 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
     assert_select 'table#jeopardy-table' do
       assert_select 'thead' do
         assert_select 'tr' do
-          assert_select 'th:nth-child(1)', 'Sponsor'
-          assert_select 'th:nth-child(2)', 'Name'
-          assert_select 'th:nth-child(3)', 'Category'
-          assert_select 'th:nth-child(4)', 'Points'
+          assert_select 'th:nth-child(1)', chal1.categories.map(&:name).join(', ')
+          assert_select 'th:nth-child(2)', chal2.categories.map(&:name).join(', ')
+          assert_select 'th:nth-child(3)', 'No Category'
         end
       end
       assert_select 'tbody' do
         assert_select 'tr:nth-child(1)' do
-          assert_select 'tr:nth-child(1)' do
-            assert_select 'td:nth-child(2) a[href=?]', game_challenge_path(chal1), text: chal1.name
-            assert_select 'td:nth-child(3)', chal1.categories.map(&:name).join(', ')
-            assert_select 'td:nth-child(4)', '100'
-          end
+          assert_select 'td:nth-child(1) a[href=?]', game_challenge_path(chal1),
+            {count: 1, text: chal1.point_value.to_s}
+          assert_select 'td:nth-child(2) a[href=?]', game_challenge_path(chal2),
+            {count: 1, text: chal2.point_value.to_s}
+          assert_select 'td:nth-child(3) a[href=?]', game_challenge_path(chal4),
+            {count: 1, text: chal4.point_value.to_s}
+        end
+        assert_select 'tr:nth-child(2)' do
+          # This is a non-breaking space, not an actual space.
+          # They look the same but must be copy-pasted to actually pass testing
+          assert_select 'td:nth-child(1)', ' '
+          assert_select 'td:nth-child(2) a[href=?]', game_challenge_path(chal3),
+            {count: 1, text: chal3.point_value.to_s}
+          # This is a non-breaking space, not an actual space.
+          # They look the same but must be copy-pasted to actually pass testing
+          assert_select 'td:nth-child(3)', ' '
         end
       end
     end
-    
     assert_select "h3", {count: 0, text: I18n.t('game.attack_defend_challenges')}, "This page must not contain Attack Defend Challenge Text"
   end
 
