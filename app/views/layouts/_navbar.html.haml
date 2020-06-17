@@ -18,3 +18,6 @@
         = always_link_to_if_admin(@game.open?, t('application.navbar.summary'), game_summary_path)
       %li
         = link_to_unless(@game.contact_url.blank?, t('application.navbar.contact'), @game.contact_url, target: '_blank'){}
+      - if @arbitrary_pages.any?
+        - @arbitrary_pages.each do |page|
+          %li= link_to File.basename(page, ".*").split('.').first.capitalize, '/arbitrary/' + File.basename(page, ".*")

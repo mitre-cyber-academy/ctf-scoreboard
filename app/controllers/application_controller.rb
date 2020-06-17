@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   before_action :store_user_location, if: :storable_location?
   before_action :set_paper_trail_whodunnit
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_arbitrary_pages
   helper :all
 
   def user_root_path
@@ -62,6 +63,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def set_arbitrary_pages
+    @arbitrary_pages = Dir['app/views/arbitrary/*']
+  end
 
   def preload_helper(*preload_objects)
     pl = ActiveRecord::Associations::Preloader.new
