@@ -1,12 +1,14 @@
 %table.table.table-bordered.table-bolded#jeopardy-table
   %thead
     %tr
-      %th.text-center{ style: "width: 25%;" }= t('game.show.challenges_table.sponsor_header')
-      %th.text-center{ style: "width: 50%;" }= t('game.show.challenges_table.name_header')
-      %th.text-center{ style: "width: 15%;" }= t('game.show.challenges_table.category_header')
-      %th.text-center{ style: "width: 10%;" }= t('game.show.challenges_table.points_header')
+      - @category_ids.each do |category|
+        %th.text-center{ style: "width:#{heading_width(@category_ids)}%;" }=category_ids_to_names(category, @categories)
   %tbody
     - @game.max_category_size.times do |row|
-      - @category_ids.each do |category|
-        = render partial: 'standard_challenge',
-          locals: { category: category, challenge: @standard_challenges[category][row] }
+      %tr
+        - @category_ids.each do |category|
+          - if row < @standard_challenges[category].size
+            = render partial: 'standard_challenge',
+              locals: { challenge: @standard_challenges[category][row] }
+          - else
+            %td &nbsp;

@@ -1,9 +1,1 @@
-- unless challenge.nil?
-  %tr
-    - if challenge.sponsored?
-      %td.text-center= challenge.sponsor
-    - else
-      %td.text-center &nbsp;
-    %td.text-center{ style: "color: #{challenge_colors(challenge)[0]}" }= always_link_to_if_admin(challenge.open?, challenge.name, game_challenge_path(challenge), style: "color:inherit;")
-    %td.text-center= category_ids_to_names(category, @categories)
-    %td.text-center= challenge.point_value
+%td.text-center{ style: "color: #{challenge_colors(challenge)[0]}" }= always_link_to_if_admin(challenge.open?, challenge.display_point_value(current_user&.team), game_challenge_path(challenge), style: "color:inherit;")
