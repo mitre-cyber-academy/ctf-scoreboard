@@ -90,7 +90,6 @@ class GamesController < ApplicationController
 
   private
 
-  # rubocop:disable Metrics/MethodLength
   def prepare_standard_challenge_table
     # What information we need depends on the game mode we are in, however
     # we will always need a list of challenges
@@ -99,15 +98,16 @@ class GamesController < ApplicationController
     else
       @standard_challenges = @game&.standard_challenges
       ActiveRecord::Precounter.new(@standard_challenges).precount(:solved_challenges)
-      if @game.teams_x_challenges?
-        @headings = [
-          OpenStruct.new(name: I18n.t('game.summary.challenge_table.teams_header')), @standard_challenges
-        ].flatten
-        @teams = @game&.teams
-      end
+      prepare_teams_x_challenges_table if @game.teams_x_challenges?
     end
   end
-  # rubocop:enable Metrics/MethodLength
+
+  def prepare_teams_x_challenges_table
+    @headings = [
+      OpenStruct.new(name: I18n.t('game.summary.challenge_table.teams_header')), @standard_challenges
+    ].flatten
+    @teams = @game&.teams
+  end
 
   def prepare_jeopardy_or_title_and_description_board
     @standard_challenges = @game&.categories_with_standard_challenges
