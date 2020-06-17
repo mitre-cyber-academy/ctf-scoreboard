@@ -21,8 +21,8 @@ class TeamsController < ApplicationController
   def summary
     @score_adjustments = @team.score_adjustments
     @team_flag_submissions = [
-      { name: 'Flag Submissions', data: @team.submitted_flags_per_hour },
-      { name: 'Challenges Solved', data: @team.solved_challenges_per_hour }
+      { name: 'Flag Submissions', data: @team.submitted_flags_per_hour(@game.graph_group_method) },
+      { name: 'Challenges Solved', data: @team.solved_challenges_per_hour(@game.graph_group_method) }
     ]
   end
 

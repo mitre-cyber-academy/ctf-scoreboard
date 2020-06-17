@@ -70,6 +70,16 @@ class GameTest < ActiveSupport::TestCase
     @game.teams_associated_with_flags_and_pentest_challenges
   end
 
+  test 'game graph method returns proper time period' do
+    @game.update(start: 3.weeks.ago, stop: 1.week.ago)
+    # A 2 week long ended game should use the :day grouping method
+    assert_equal :day, @game.graph_group_method
+
+    @game.update(start: 10.days.ago, stop: 5.days.ago)
+    # A 5 day long ended game should use the :hour grouping method
+    assert_equal :hour, @game.graph_group_method
+  end
+
   test 'game can be deleted and cleans up appropriate relationships' do
     team = create(:team)
     create(:standard_challenge)

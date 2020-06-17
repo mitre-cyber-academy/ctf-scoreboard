@@ -72,10 +72,11 @@ class GamesController < ApplicationController
   end
 
   def load_game_graph_data
-    @flags_per_hour = SubmittedFlag.group_by_hour(:created_at).count
+    group_method = @game.graph_group_method
+    @flags_per_hour = SubmittedFlag.group_by_period(group_method, :created_at).count
     @line_chart_data = [
       { name: 'Flag Submissions', data: @flags_per_hour },
-      { name: 'Challenges Solved', data: FeedItem.solved_challenges.group_by_hour(:created_at).count }
+      { name: 'Challenges Solved', data: FeedItem.solved_challenges.group_by_period(group_method, :created_at).count }
     ]
   end
 

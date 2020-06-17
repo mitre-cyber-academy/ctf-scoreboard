@@ -145,12 +145,12 @@ class Team < ApplicationRecord
     end.to_h
   end
 
-  def submitted_flags_per_hour
-    submitted_flags.group_by_hour('submitted_flags.created_at', format: '%l:%M %p').count || 0
+  def submitted_flags_per_hour(group_method)
+    submitted_flags.group_by_period(group_method, :created_at).count || 0
   end
 
-  def solved_challenges_per_hour
-    solved_challenges.group_by_hour('feed_items.created_at', format: '%l:%M %p').count || 0
+  def solved_challenges_per_hour(group_method)
+    solved_challenges.group_by_period(group_method, :created_at).count || 0
   end
 
   private
