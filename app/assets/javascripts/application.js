@@ -19,6 +19,7 @@
 //= require filterrific/filterrific-jquery
 //= require highcharts
 //= require chartkick
+//= require Chart.bundle
 
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
