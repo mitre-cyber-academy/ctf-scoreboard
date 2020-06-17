@@ -24,7 +24,8 @@ class DefenseFlag < Flag
 
   # Without allow_nil rails_admin cannot load defense_flag new page
   delegate :name, :description, :first_capture_point_bonus, :calc_point_value, :calc_shares,
-           :calc_defensive_points_helper, to: :challenge, allow_nil: true
+           :calc_defensive_points_helper, :sponsored, :sponsor_logo, :sponsor_description,
+           to: :challenge, allow_nil: true
 
   def force_closed?
     super || challenge.force_closed?
@@ -40,18 +41,6 @@ class DefenseFlag < Flag
 
   def open?
     !force_closed? && challenge.open?
-  end
-
-  def sponsored
-    challenge.sponsored
-  end
-
-  def sponsor_logo
-    challenge.sponsor_logo
-  end
-
-  def sponsor_description
-    challenge.sponsor_description
   end
 
   def find_flag(flag_str)
