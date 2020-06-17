@@ -33,14 +33,8 @@ class GameboardDisplayModesTest < ActionDispatch::IntegrationTest
             {count: 1, text: chal4.point_value.to_s}
         end
         assert_select 'tr:nth-child(2)' do
-          # This is a non-breaking space, not an actual space.
-          # They look the same but must be copy-pasted to actually pass testing
-          assert_select 'td:nth-child(1)', ' '
           assert_select 'td:nth-child(2) a[href=?]', game_challenge_path(chal3),
             {count: 1, text: chal3.point_value.to_s}
-          # This is a non-breaking space, not an actual space.
-          # They look the same but must be copy-pasted to actually pass testing
-          assert_select 'td:nth-child(3)', ' '
         end
       end
     end
