@@ -134,6 +134,7 @@ en:
   challenges:
     show:
       no_desc: 'No description'
+      sponsor: 'Sponsor'
     not_open: 'must be open.'
     no_category: 'No Category'
     game_not_open: 'The game must be open.'

@@ -20,6 +20,13 @@
   .embed-container
     = embed(@solved_video_url)
 
+- if @challenge.sponsored
+  %h3= t('challenges.show.sponsor')
+  - unless @challenge.sponsor_logo.empty?
+    = image_tag(@challenge.sponsor_logo, :alt => "sponsor logo")
+  - unless @challenge.sponsor_description.empty?
+    %p= sanitize(Kramdown::Document.new(@challenge.sponsor_description).to_html)
+
 - if @solvable
   = form_for :challenge, url: submit_url(@defense_team, @challenge), method: "put", html: { class: "well", style: "margin-bottom:40px;" } do |f|
     .control-group
