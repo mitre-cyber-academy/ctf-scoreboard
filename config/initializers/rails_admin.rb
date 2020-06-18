@@ -48,6 +48,32 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model 'PentestChallenge' do
+    configure :load_js, :hidden do
+      def render
+        bindings[:view].render partial: 'show_hide_js'
+      end
+    end
+  end
+
+  config.model 'StandardChallenge' do
+    configure :load_js, :hidden do
+      def render
+        bindings[:view].render partial: 'show_hide_js'
+      end
+    end
+  end
+
+  config.model 'ShareChallenge' do
+    configure :load_js, :hidden do
+      def render
+        bindings[:view].render partial: 'show_hide_js'
+      end
+    end
+  end
+
+  
+
   config.model 'Message' do
     configure :email_message do
       help 'Check this box to also email the message to all competitors'
