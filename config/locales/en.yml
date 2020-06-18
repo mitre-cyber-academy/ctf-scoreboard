@@ -107,6 +107,7 @@ en:
     no_terms_and_conditions: There are no terms and conditions associated with this game.
     no_terms_of_service: There are no terms of service associated with this game.
     attack_defend_challenges: 'Attack & Defend Challenges'
+    zoom_help: '(To zoom, click and drag on the X-axis)'
     legend:
       dark_green: 'Dark Green'
       green: 'Green'

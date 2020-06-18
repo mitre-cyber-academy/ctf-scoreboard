@@ -82,11 +82,11 @@ module FlagChallengeShareModule
   private
 
   def calc_points_for_first_solve
-    first_capture_point_bonus + calc_point_value(start_calculation_at, Time.now.utc)
+    first_capture_point_bonus + calc_point_value(start_calculation_at, Game.instance.defense_end)
   end
 
   def calc_points_for_solve
-    potential_shares = calc_shares(first_solve_time, Time.now.utc)
+    potential_shares = calc_shares(first_solve_time, Game.instance.defense_end)
     convert_shares_to_points_for(
       potential_shares,
       calc_offensive_shares_for_solved_challenges.values.sum + potential_shares,
