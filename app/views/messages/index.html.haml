@@ -2,7 +2,7 @@
   = t('messages.messages_header')
 - if @messages.count == 0
   .zero-items-text
-  = t('messages.no_messages')
+  %h4= t('messages.no_messages')
 - else
   - @messages.each do |m|
     %div.message

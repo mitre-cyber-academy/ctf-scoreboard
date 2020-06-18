@@ -328,6 +328,7 @@ en:
     no_messages: 'No Messages'
   home:
     index:
+      description: 'Description'
       when_to_compete: 'When to compete'
       when_to_compete_info: "This competition will run from %{start_time} until %{end_time}"
       stuck: "Help, I'm Stuck!"

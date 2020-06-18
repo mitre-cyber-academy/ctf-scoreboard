@@ -1,7 +1,7 @@
 - content_for :header do
   = t('achievements.index.header')
 - if @achievements.count == 0
-  .zero-items-text= t('achievements.index.zero_items_text')
+  %h4.zero-items-text= t('achievements.index.zero_items_text')
 - else
   %table.table.table-bordered.table-striped
     %thead

@@ -10,6 +10,9 @@
     - else
       %h2= t('home.index.catchprase.game_completed')
   .maincontent.row-fluid.indent-40px-left
+    %p
+      %b
+        %u= t('home.index.description')
     = sanitize(Kramdown::Document.new(@game&.description).to_html)
     %p
       %b
