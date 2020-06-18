@@ -66,6 +66,30 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model 'PentestChallenge' do
+    configure :load_js, :hidden do
+      def render
+        bindings[:view].render partial: 'show_hide_js'
+      end
+    end
+  end
+
+  config.model 'StandardChallenge' do
+    configure :load_js, :hidden do
+      def render
+        bindings[:view].render partial: 'show_hide_js'
+      end
+    end
+  end
+
+  config.model 'ShareChallenge' do
+    configure :load_js, :hidden do
+      def render
+        bindings[:view].render partial: 'show_hide_js'
+      end
+    end
+  end
+
   # If you want to track changes on your models:
   # config.audit_with :history, 'User'
 

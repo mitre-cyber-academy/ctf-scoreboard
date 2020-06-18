@@ -1,10 +1,53 @@
 :javascript
   $(document).ready(function() {
-    document.getElementById('game_prizes_text_field').style.display = "none";
-    document.getElementById('game_completion_certificate_template_field').style.display = "none";
+    // Hide toggleable fields
+    try {
+      document.getElementById('game_prizes_text_field').style.display = "none";
+      document.getElementById('game_completion_certificate_template_field').style.display = "none";
+    }
+    catch {}
 
-    document.getElementById('game_enable_completion_certificates').addEventListener('change', toggleDisplayCert);
-    document.getElementById('game_prizes_available').addEventListener('change', toggleDisplayPrizes);
+    try {
+      document.getElementById('pentest_challenge_sponsor_field').style.display = "none";
+      document.getElementById('pentest_challenge_sponsor_logo_field').style.display = "none";
+      document.getElementById('pentest_challenge_sponsor_description_field').style.display = "none";
+    }
+    catch {}
+
+    try{
+      document.getElementById('standard_challenge_sponsor_field').style.display = "none";
+      document.getElementById('standard_challenge_sponsor_logo_field').style.display = "none";
+      document.getElementById('standard_challenge_sponsor_description_field').style.display = "none";
+    }
+    catch {}
+
+    try{
+      document.getElementById('share_challenge_sponsor_field').style.display = "none";
+      document.getElementById('share_challenge_sponsor_logo_field').style.display = "none";
+      document.getElementById('share_challenge_sponsor_description_field').style.display = "none";
+    }
+    catch {}
+
+    // Listen for sponsorship tickbox
+    try {
+      document.getElementById('game_enable_completion_certificates').addEventListener('change', toggleDisplayCert);
+      document.getElementById('game_prizes_available').addEventListener('change', toggleDisplayPrizes);
+    }
+    catch {}
+    
+    try{
+      document.getElementById('pentest_challenge_sponsored').addEventListener('change', togglePentestChallengeSponsored)
+    }
+    catch {}
+    
+    try {
+      document.getElementById('standard_challenge_sponsored').addEventListener('change', toggleStandardChallengeSponsored)
+    }
+    catch {}
+    try {
+      document.getElementById('share_challenge_sponsored').addEventListener('change', toggleShareChallengeSponsored)
+    }
+    catch {}
 
     function toggleDisplayCert() {
       if (document.getElementById('game_enable_completion_certificates').checked) {
@@ -19,6 +62,42 @@
         document.getElementById('game_prizes_text_field').style.display = "";
       } else {
         document.getElementById('game_prizes_text_field').style.display = "none";
+      }
+    }
+
+    function toggleStandardChallengeSponsored() {
+      if (document.getElementById('pentest_challenge_sponsored').checked) {
+        document.getElementById('pentest_challenge_sponsor_field').style.display = "";
+        document.getElementById('pentest_challenge_sponsor_logo_field').style.display = "";
+        document.getElementById('pentest_challenge_sponsor_description_field').style.display = "";
+      } else {
+        document.getElementById('pentest_challenge_sponsor_field').style.display = "none";
+        document.getElementById('pentest_challenge_sponsor_logo_field').style.display = "none";
+        document.getElementById('pentest_challenge_sponsor_description_field').style.display = "none";
+      }
+    }
+
+    function toggleStandardChallengeSponsored() {
+      if (document.getElementById('standard_challenge_sponsored').checked) {
+        document.getElementById('standard_challenge_sponsor_field').style.display = "";
+        document.getElementById('standard_challenge_sponsor_logo_field').style.display = "";
+        document.getElementById('standard_challenge_sponsor_description_field').style.display = "";
+      } else {
+        document.getElementById('standard_challenge_sponsor_field').style.display = "none";
+        document.getElementById('standard_challenge_sponsor_logo_field').style.display = "none";
+        document.getElementById('standard_challenge_sponsor_description_field').style.display = "none";
+      }
+    }
+
+    function toggleShareChallengeSponsored() {
+      if (document.getElementById('share_challenge_sponsored_field').checked) {
+        document.getElementById('share_challenge_sponsor_field').style.display = "";
+        document.getElementById('share_challenge_sponsor_logo_field').style.display = "";
+        document.getElementById('share_challenge_sponsor_description_field').style.display = "";
+      } else {
+        document.getElementById('share_challenge_sponsor_field').style.display = "none";
+        document.getElementById('share_challenge_sponsor_logo_field').style.display = "none";
+        document.getElementById('share_challenge_sponsor_description_field').style.display = "none";
       }
     }
   });
