@@ -143,7 +143,6 @@ en:
       eligible: 'Yes'
       ineligible: 'No'
       subheading: "Affiliation: %{affiliation}"
-
   requests:
     sent_successful: 'Team join request was successfully sent.'
     accepted_another: 'User has accepted another teams invitation, sorry!'
@@ -180,6 +179,7 @@ en:
       markdown_value: 'Value'
       markdown_repository: 'Repository'
       markdown_description: 'Description'
+    zoom_help: '(To zoom, click and drag on the X-axis)'
     legend:
       legend_name: 'Legend'
       dark_green: 'Dark Green'

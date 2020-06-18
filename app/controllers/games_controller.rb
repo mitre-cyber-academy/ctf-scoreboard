@@ -72,18 +72,22 @@ class GamesController < ApplicationController
   end
 
   def load_game_graph_data
-    @flags_per_hour = SubmittedFlag.group_by_hour(:created_at).count
+    group_method = @game.graph_group_method
+    @flags_per_hour = SubmittedFlag.group_by_period(group_method, :created_at).count
+    prepare_line_chart_data
+  end
+
+  def prepare_line_chart_data
     @line_chart_data = [
       {
         name: I18n.t('game.summary.flag_submissions_graph.flags_submitted'), data: @flags_per_hour
       },
       {
         name: I18n.t('game.summary.flag_submissions_graph.challenges_solved'),
-        data: FeedItem.solved_challenges.group_by_hour(:created_at).count
+        data: FeedItem.solved_challenges.group_by_period(group_method, :created_at).count
       }
     ]
   end
-
   def deny_users_to_non_html_formats
     deny_if_not_admin unless request.format.html?
   end

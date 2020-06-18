@@ -10,4 +10,6 @@
 - if @flags_per_hour.count > 1
   %h3.muted
     = t('game.summary.submissions_title')
-    = line_chart @line_chart_data, colors: ['#b8d12f', '#00abca']
+  = line_chart(@line_chart_data, library: {chart: {zoomType: 'x'}}, colors: ['#b8d12f', '#00abca'])
+  %p.muted
+    = t('game.zoom_help')

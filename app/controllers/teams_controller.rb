@@ -20,12 +20,21 @@ class TeamsController < ApplicationController
 
   def summary
     @score_adjustments = @team.score_adjustments
-    @team_flag_submissions = [
-      { name: I18n.t('game.summary.flag_submissions_graph.flags_submitted'), data: @team.submitted_flags_per_hour },
-      { name: I18n.t('game.summary.flag_submissions_graph.challenges_solved'), data: @team.solved_challenges_per_hour }
-    ]
+    prepare_team_flag_submissions
   end
 
+  def prepare_team_flag_submissions
+    @team_flag_submissions = [
+      {
+        name: I18n.t('game.summary.flag_submissions_graph.flags_submitted'),
+        data: @team.submitted_flags_per_hour(@game.graph_group_method)
+      },
+      {
+        name: I18n.t('game.summary.flag_submissions_graph.challenges_solved'),
+        data: @team.solved_challenges_per_hour(@game.graph_group_method)
+      }
+    ]
+  end
   def destroy; end
 
   def new
