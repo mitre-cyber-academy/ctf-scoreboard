@@ -316,8 +316,7 @@ en:
     log_out: 'Log out'
     log_in: 'Log in'
     edit_account: 'Edit Account'
-    open_source_statement_1: 'Gameboard and registration software is '
-    open_source_statement_2: ' free to use!'
+    open_source_statement: 'Gameboard and registration software is %{repo:available} free to use!'
     github_link: 'https://github.com/mitre-cyber-academy/ctf-scoreboard'
     terms_of_use:
       terms_of_service: 'Terms of Service'

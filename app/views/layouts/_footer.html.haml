@@ -5,10 +5,7 @@
         = t('home.index.back_to_top')
     %p
       = "#{sanitize(@game.footer)} |" unless @game&.footer.blank?
-      = link_to t('application.terms_of_use.terms_of_service_name'), terms_of_service_game_path
+      = link_to t('application.terms_of_use.terms_of_service'), terms_of_service_game_path
       |
-      = link_to t('application.terms_of_use.terms_and_conditions_name'), terms_and_conditions_game_path
-    %p
-      = t('application.open_source_statement_1')
-      = link_to 'available', t('application.github_link')
-      = t('application.open_source_statement_2')
+      = link_to t('application.terms_of_use.terms_and_conditions'), terms_and_conditions_game_path
+    = it('application.open_source_statement', repo: It.link(t('application.github_link')))
