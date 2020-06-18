@@ -88,6 +88,7 @@ class GamesController < ApplicationController
       }
     ]
   end
+
   def deny_users_to_non_html_formats
     deny_if_not_admin unless request.format.html?
   end

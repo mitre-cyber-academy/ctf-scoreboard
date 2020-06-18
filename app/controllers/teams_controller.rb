@@ -35,6 +35,7 @@ class TeamsController < ApplicationController
       }
     ]
   end
+
   def destroy; end
 
   def new
