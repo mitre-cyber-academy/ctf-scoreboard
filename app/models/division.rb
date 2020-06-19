@@ -72,20 +72,31 @@ class Division < ApplicationRecord
   # This does not calculate the score for PentestChallenges
   def calculate_standard_solved_challenge_score
     teams.includes(:achievements).joins(
-      "LEFT JOIN feed_items AS point_feed_items
-             ON point_feed_items.team_id = teams.id
-             AND point_feed_items.type IN ('StandardSolvedChallenge', 'ScoreAdjustment')
-             LEFT JOIN feed_items AS pentest_feed_items
-             ON pentest_feed_items.team_id = teams.id
-             AND pentest_feed_items.type IN ('PentestSolvedChallenge')
-             LEFT JOIN challenges ON challenges.id = point_feed_items.challenge_id
-             AND challenges.type IN ('StandardChallenge')"
+      "LEFT JOIN LATERAL
+          (
+            SELECT
+              COALESCE(sum(challenges.point_value), 0) + COALESCE(sum(feed_items.point_value), 0) as team_score,
+              MAX(feed_items.created_at) as last_solve_time
+            FROM feed_items
+            LEFT JOIN challenges
+              ON challenges.id = feed_items.challenge_id
+              AND challenges.type IN ('StandardChallenge')
+            WHERE feed_items.team_id = teams.id
+            AND feed_items.type IN ('StandardSolvedChallenge', 'ScoreAdjustment')
+          ) AS point_feed_items ON true
+          LEFT JOIN LATERAL
+          (
+            SELECT MAX(feed_items.created_at) as last_solve_time
+            FROM feed_items
+            WHERE feed_items.team_id = teams.id
+            AND feed_items.type IN ('PentestSolvedChallenge')
+          ) AS pentest_feed_items ON true"
     )
          .group('teams.id')
          .select(
-           'COALESCE(sum(challenges.point_value), 0) + COALESCE(sum(point_feed_items.point_value), 0)
-             as team_score,
-           GREATEST(MAX(pentest_feed_items.created_at), MAX(point_feed_items.created_at)) as last_solve_time, teams.*'
+           'COALESCE(sum(point_feed_items.team_score), 0) as team_score,
+            GREATEST(MAX(pentest_feed_items.last_solve_time), MAX(point_feed_items.last_solve_time)) as last_solve_time,
+            teams.*'
          )
          .index_with(&:team_score)
   end
