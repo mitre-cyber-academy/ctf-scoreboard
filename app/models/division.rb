@@ -71,7 +71,7 @@ class Division < ApplicationRecord
   # This calculates the teams score for all point-based challenges (StandardSolvedChallenges and ScoreAdjustments)
   # This does not calculate the score for PentestChallenges
   def calculate_standard_solved_challenge_score
-    teams.includes(:achievements).joins(
+    teams.joins(
       "LEFT JOIN feed_items AS point_feed_items
              ON point_feed_items.team_id = teams.id
              AND point_feed_items.type IN ('StandardSolvedChallenge', 'ScoreAdjustment')
