@@ -4,12 +4,9 @@
 %table.table.table-condensed.table-striped
   %thead
   %tr
-    %th
-      Team Name
-    %th
-      Requested On
-    %th
-      Cancel
+    %th= t('teams.invite.requested_join_team_table.team_name_header')
+    %th= t('teams.invite.requested_join_team_table.requested_on_header')
+    %th= t('teams.invite.requested_join_team_table.cancel_request_header')
   - @pending_requests.each do |current|
     %tbody
       %tr{:class=>'warning'}

@@ -1,4 +1,4 @@
-%p Hello #{@user.full_name}!
+%p= t('user_mailer.message_notification.greeting', fullname: @user.full_name)
 %p= @message.text
-%p= link_to 'View all Messages on Scoreboard', game_messages_url
+%p= link_to t('user_mailer.message_notification.view_all'), game_messages_url
 

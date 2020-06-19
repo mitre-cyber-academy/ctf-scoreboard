@@ -4,7 +4,7 @@ module TeamsHelper
   def display_name(team)
     return team.team_name if team.eligible?
 
-    "#{team.team_name} (ineligible)"
+    "#{team.team_name} (" + I18n.t('challenges.team_ineligible_for_prizes') + ')'
   end
 
   def solved_challenge_table_point_value(solved_challenge, team)
@@ -22,6 +22,6 @@ module TeamsHelper
   end
 
   def header_with_points(team)
-    "#{display_name(team)} - #{team.score} points"
+    "#{display_name(team)} - #{team.score} " + pluralize(team.score, I18n.t('challenges.point_value_singular'))
   end
 end

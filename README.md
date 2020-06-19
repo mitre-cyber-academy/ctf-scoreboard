@@ -6,44 +6,46 @@ MITRE CTF Scoreboard
 
 MITRE CTF Scoreboard is a fully featured CTF platform with scoreboard and registration application built with Ruby on Rails. It is used for MITRE Capture the Flag competition website.
 
-### Installation ###
+### Installation
 
-#### Development ####
+#### Development
 
-See wiki instructions for creating a local [development installation](https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Development-Installation) of the scoreboard.
+See [wiki instructions](https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Development-Installation) for creating a local development installation of the scoreboard.
 
-##### Testing
+#### Testing
 
 Once you have installed the application using the development steps shown above, the tests can be run by running `bundle exec rake test`.
 
 To generate a local code coverage report in `coverage/index.html` set the `$LOCAL_COVERAGE` environment variable: `export LOCAL_COVERAGE=true`
 
-#### Production ####
+#### Production
 
-Follow the wiki instructions for creating a [production installation](https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Production-Installation) of the scoreboard.
+Follow the [wiki instructions](https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Production-Installation) for creating a production installation of the scoreboard.
 
-### Automated Emails ###
+### Automated Emails
 
-Automated emails can be setup by adding
-`min hour * * * /bin/bash -l -c 'cd /path/to/ctf-scoreboard && RAILS_ENV=production bundle exec rake email:automated_email --silent'`
-where `min`, `hour`, and `path/to/ctf-scoreboard` are replaced with the values you prefer.
+Automated emails can be setup by adding the crontab:
+
+```min hour * * * /bin/bash -l -c 'cd /path/to/ctf-scoreboard && RAILS_ENV=production bundle exec rake email:automated_email --silent'```
+
+Where `min`, `hour`, and `path/to/ctf-scoreboard` are replaced with the values you prefer.
 If the project is being hosted on Heroku a daily task can be created using the Heroku Scheduler to run `rake email:automated_email`
 
-### Screenshots ###
+### Screenshots
 
-Gameboard
+#### Gameboard
 
 ![gameboard](https://i.imgur.com/UgkPX5q.png)
 
-Administration: dashboard
+#### Administration Dashboard
 
 ![admin dashboard](https://i.imgur.com/lzj7U3m.png)
 
-Administration: add challenge
+#### Administration Dashboard -> Add challenge
 
 ![add challenge](https://i.imgur.com/ZRyimTp.png)
 
-More screenshots available on the [wiki](https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Screenshots).
+##### More screenshots available on the [wiki](https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Screenshots).
 
 ### License ###
 

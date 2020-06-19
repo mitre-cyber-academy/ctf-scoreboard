@@ -1,8 +1,8 @@
 %p
-  Hello #{@resource.full_name}!
-  Thank you for registering for our upcoming CTF event.
-  %p If you wish to finish this registration, please use the link below.
+  = t('user_mailer.confirmation.greeting', fullname: @user.full_name)
+  = t('user_mailer.confirmation.confirmation_line_1')
+  %p= t('user_mailer.confirmation.confirmation_line_2')
 
-%p= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @token)
+%p= link_to t('user_mailer.confirmation.confirm_account'), confirmation_url(@resource, :confirmation_token => @token)
 
-%p If you feel you have received this message in error, please do not click the link above.
+%p= t('user_mailer.confirmation.error')
