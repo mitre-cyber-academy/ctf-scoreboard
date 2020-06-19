@@ -7,14 +7,17 @@
   - if @game
     %ul.nav
       %li{:class => active_navbar?(game_path) }
-        = always_link_to_if_admin(@game.open?, t('application.navbar.challenges'), game_path){}
+        = link_to(game_path) do
+          = t('application.navbar.challenges')
       %li{:class => active_navbar?(game_messages_path) }
         = link_to(game_messages_path) do
           = t('application.navbar.messages')
           %span.badge.badge-important= unread_messages(@unread_message_count)
       %li{:class => active_navbar?(game_achievements_path) }
-        = always_link_to_if_admin(@game.open?, t('application.navbar.achievements'), game_achievements_path)
+        = link_to(game_achievements_path) do
+          = t('application.navbar.achievements')
       %li{:class => active_navbar?(game_summary_path) }
-        = always_link_to_if_admin(@game.open?, t('application.navbar.summary'), game_summary_path)
+        = link_to(game_summary_path) do
+          = t('application.navbar.summary')
       %li
         = link_to_unless(@game.contact_url.blank?, t('application.navbar.contact'), @game.contact_url, target: '_blank'){}
