@@ -7,7 +7,7 @@ gem 'awesome_nested_fields'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap-kaminari-views'
 gem 'bootstrap-sass', '~> 2.3.2.2'
-gem "bullet"
+gem 'bullet'
 gem 'carrierwave-postgresql', '< 0.3.0' # Can be upgraded once https://github.com/diogob/carrierwave-postgresql/issues/33
 gem 'chartkick'
 gem 'delayed_job'
