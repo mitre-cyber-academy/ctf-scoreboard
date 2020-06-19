@@ -7,8 +7,7 @@
 %hr
 / Only show the flags per hour count when we have more than 1 datapoint to show
 - if @flags_per_hour.count > 1
-  %h3
-    = t('game.summary.submissions_title')
+  %h3= t('game.summary.submissions_title')
   = line_chart(@line_chart_data, library: {chart: {zoomType: 'x'}}, colors: ['#b8d12f', '#00abca'])
   %p.muted
     = t('game.zoom_help')
