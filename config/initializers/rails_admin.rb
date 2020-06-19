@@ -67,25 +67,31 @@ RailsAdmin.config do |config|
   end
 
   config.model 'PentestChallenge' do
-    configure :load_js, :hidden do
-      def render
-        bindings[:view].render partial: 'show_hide_js'
+    edit do
+      configure :load_js, :hidden do
+        def render
+          bindings[:view].render partial: 'show_hide_js'
+        end
       end
     end
   end
 
   config.model 'StandardChallenge' do
-    configure :load_js, :hidden do
-      def render
-        bindings[:view].render partial: 'show_hide_js'
+    edit do
+      configure :load_js, :hidden do
+        def render
+          bindings[:view].render partial: 'show_hide_js'
+        end
       end
     end
   end
 
   config.model 'ShareChallenge' do
-    configure :load_js, :hidden do
-      def render
-        bindings[:view].render partial: 'show_hide_js'
+    edit do
+      configure :load_js, :hidden do
+        def render
+          bindings[:view].render partial: 'show_hide_js'
+        end
       end
     end
   end
