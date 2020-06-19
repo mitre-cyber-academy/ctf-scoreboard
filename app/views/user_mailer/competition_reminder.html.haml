@@ -1,9 +1,9 @@
 %p
-  Hello #{@user.full_name}!
+  = t('user_mailer.completion_reminder.greeting', fullname: @user.full_name)
 %p.pull-right#clock
   %aS
     #time_remaining
-      This is a reminder for the upcoming #{@game.organization} #{@game.title} which will start at #{@game.start}.
-%p Click the link below to login and check your account
+      = t('user_mailer.completion_reminder.reminder_line_1', organization: @game.organization, title: @game.title, starttime: @game.start)
+%p= t('user_mailer.completion_reminder.reminder_line_2')
 %p #{link_to @game.title, home_index_url}.
 = render partial: 'layouts/countdown', locals: { endTime: @game.stop }

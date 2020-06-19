@@ -1,7 +1,7 @@
 -# For PentestGames, @challenge here can actually be a flag object since Pentest challenges belong to teams + challenges and are linked by a flag object.
-
+-# 
 - content_for :admin_menu do
-  %li= link_to "Edit #{@challenge.name}", admin_edit_url(@challenge)
+  %li= link_to t('challenges.admin_edit_challenge', challengename: @challenge.name), admin_edit_url(@challenge)
 
 - content_for :header do
   = @challenge.name
@@ -10,8 +10,7 @@
   = subheading(@defense_team, @challenge)
 
 %div{ :style => "margin-bottom:40px;" }
-  %h3
-    Description
+  %h3= t('challenges.description_name')
   - if @challenge.description.blank?
     = t('challenges.show.no_desc')
   - else
@@ -23,7 +22,8 @@
 - if @solvable
   = form_for :challenge, url: submit_url(@defense_team, @challenge), method: "put", html: { class: "well", style: "margin-bottom:40px;" } do |f|
     .control-group
-      %p Submit Flag
+      %p
+        = t('challenges.submit_flag')
     .control-group
       .controls
         = f.text_field :submitted_flag, :class => "span5"
@@ -35,9 +35,9 @@
     %thead
       %tr
         %th #
-        %th Team
-        %th Division
-        %th When
+        %th= t('challenges.solved_team_name_table_header')
+        %th= t('challenges.solved_division_name_table_header')
+        %th= t('challenges.solved_when_table_header')
     %tbody
       - @solved_by.each_with_index do |e, i|
         %tr

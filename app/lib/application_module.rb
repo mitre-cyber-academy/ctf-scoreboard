@@ -8,7 +8,7 @@
 # and view 'helper methods' into a helper.
 module ApplicationModule
   def user_logged_in?
-    redirect_to root_path, alert: 'You must first login.' if current_user.nil?
+    redirect_to root_path, alert: I18n.t('users.login_required') if current_user.nil?
   end
 
   def team_captain?

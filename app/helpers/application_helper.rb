@@ -12,11 +12,11 @@ module ApplicationHelper
   end
 
   def greeting_for_dropdown(current_user)
-    'Hello ' + (truncate(current_user.full_name, length: 30) || 'Admin')
+    I18n.t('application.navbar.greeting') + (truncate(current_user.full_name, length: 30) || 'Admin')
   end
 
   def organization_for_navbar(game)
-    game&.organization || 'Gameboard'
+    game&.organization || I18n.t('application.game_name_if_organization_not_set')
   end
 
   def unread_messages(num_unread)
@@ -28,6 +28,6 @@ module ApplicationHelper
   end
 
   def amount_of_errors(alerts)
-    pluralize(alerts.length, 'error') + ':'
+    pluralize(alerts.length, I18n.t('challenges.error_singular')) + ':'
   end
 end
