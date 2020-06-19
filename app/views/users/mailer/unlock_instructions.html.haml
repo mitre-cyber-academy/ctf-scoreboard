@@ -1,4 +1,4 @@
-%p= t('user.mail.unlock_instructions.greeting', fullname: @user.full_name)
-%p= t('user.mail.unlock_instructions.unlock_line_1')
-%p= t('user.mail.unlock_instructions.unlock_line_2')
-%p= link_to t('user.mail.unlock_instructions.unlock_account_link'), unlock_url(@resource, :unlock_token => @resource.unlock_token)
+%p= t('user_mailer.unlock_instructions.greeting', fullname: @user.full_name)
+%p= t('user_mailer.unlock_instructions.unlock_line_1')
+%p= t('user_mailer.unlock_instructions.unlock_line_2')
+%p= link_to t('user_mailer.unlock_instructions.unlock_account_link'), unlock_url(@resource, :unlock_token => @resource.unlock_token)

@@ -91,9 +91,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # Ensure that both regular and mail locale files are loaded
-  config.i18n.load_path += Dir[Rails.root.join('config/locales/**/*.{rb,yml}')]
-
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector
   # middleware. The `delay` is used to determine how long to wait after a write
