@@ -10,8 +10,7 @@
   = subheading(@defense_team, @challenge)
 
 %div{ :style => "margin-bottom:40px;" }
-  %h3
-    = t('challenges.description_name')
+  %h3= t('challenges.description_name')
   - if @challenge.description.blank?
     = t('challenges.show.no_desc')
   - else
@@ -36,12 +35,9 @@
     %thead
       %tr
         %th #
-        %th
-          = t('challenges.solved_team_name_table_header')
-        %th
-          = t('challenges.solved_division_name_table_header')
-        %th
-          = t('challenges.solved_when_table_header')
+        %th= t('challenges.solved_team_name_table_header')
+        %th= t('challenges.solved_division_name_table_header')
+        %th= t('challenges.solved_when_table_header')
     %tbody
       - @solved_by.each_with_index do |e, i|
         %tr

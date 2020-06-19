@@ -7,16 +7,11 @@
 %table.table.table-condensed.table-striped
   %thead
   %tr
-    %th.span1
-      = t('teams.team_users_table.team_leader_header')
-    %th 
-      = t('teams.team_users_table.email_header')
-    %th 
-      = t('teams.team_users_table.grade')
-    %th.span2 
-      = t('teams.team_users_table.prize_eligibility_header')
-    %th 
-      = t('teams.team_users_table.remove_user_header')
+    %th.span1= t('teams.team_users_table.team_leader_header')
+    %th= t('teams.team_users_table.email_header')
+    %th= t('teams.team_users_table.grade')
+    %th.span2= t('teams.team_users_table.prize_eligibility_header')
+    %th= t('teams.team_users_table.remove_user_header')
     - if @team_captain
       %th
         = t('teams.team_users_table.change_captian_header')

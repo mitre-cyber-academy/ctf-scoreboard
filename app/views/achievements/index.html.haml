@@ -6,12 +6,9 @@
   %table.table.table-bordered.table-striped
     %thead
       %tr
-        %th
-          = t('achievements.index.table_header_achievement_name')
-        %th
-          = t('achievements.index.table_header_unlocked_by')
-        %th 
-          =  t('achievements.index.table_header_when')
+        %th= t('achievements.index.table_header_achievement_name')
+        %th= t('achievements.index.table_header_unlocked_by')
+        %th= t('achievements.index.table_header_when')
     %tbody
       - @achievements.each do |a|
         %tr

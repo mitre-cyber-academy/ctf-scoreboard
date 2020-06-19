@@ -1,15 +1,11 @@
 %table.table.table-condensed.table-striped.table-overflow
   %thead
   %tr
-    %th.span2
-      = t('teams.invite.invite_requests_table.email_header')
-    %th
-      = t('teams.invite.invite_requests_table.prize_eligible_header')
-    %th
-      = t('teams.invite.invite_requests_table.requested_on_header')
+    %th.span2= t('teams.invite.invite_requests_table.email_header')
+    %th= t('teams.invite.invite_requests_table.prize_eligible_header')
+    %th= t('teams.invite.invite_requests_table.requested_on_header')
     - if @team_captain
-      %th
-        = t('teams.invite.invite_requests_table.accept_request_header')
+      %th= t('teams.invite.invite_requests_table.accept_request_header')
   - @pending_requests.each do |current|
     %tbody
       %tr{:class=>'warning'}
