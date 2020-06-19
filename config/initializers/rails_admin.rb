@@ -123,6 +123,8 @@ RailsAdmin.config do |config|
       field :game
       field :sponsored
       field :sponsor
+      field :sponsor_logo
+      field :sponsor_description
       field :category_ids
       field :defense_flags
     end
@@ -151,6 +153,8 @@ RailsAdmin.config do |config|
       field :game
       field :sponsored
       field :sponsor
+      field :sponsor_logo
+      field :sponsor_description
       field :category_ids
       field :flags
     end
@@ -179,6 +183,8 @@ RailsAdmin.config do |config|
       field :game
       field :sponsored
       field :sponsor
+      field :sponsor_logo
+      field :sponsor_description
       field :category_ids
       field :flags
     end
