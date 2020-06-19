@@ -120,7 +120,7 @@ RailsAdmin.config do |config|
       field :solved_decrement_shares
       field :first_capture_point_bonus
       field :design_phase
-      field :game_id
+      field :game
       field :sponsored
       field :sponsor
       field :category_ids
@@ -148,7 +148,7 @@ RailsAdmin.config do |config|
       field :solved_decrement_shares
       field :first_capture_point_bonus
       field :design_phase
-      field :game_id
+      field :game
       field :sponsored
       field :sponsor
       field :category_ids
@@ -176,7 +176,7 @@ RailsAdmin.config do |config|
       field :solved_decrement_shares
       field :first_capture_point_bonus
       field :design_phase
-      field :game_id
+      field :game
       field :sponsored
       field :sponsor
       field :category_ids
@@ -335,7 +335,6 @@ RailsAdmin.config do |config|
       field :flag
       field :api_url
       field :video_url
-      field :team
       field :challenge_state
       field :start_calculation_at
       field :design_phase
