@@ -39,12 +39,6 @@ RailsAdmin.config do |config|
           help "Required - Must be in UTC."
         end
       end
-
-      configure :load_js, :hidden do
-        def render
-          bindings[:view].render partial: 'show_hide_js'
-        end
-      end
     end
   end
 
@@ -68,11 +62,6 @@ RailsAdmin.config do |config|
 
   config.model 'PentestChallenge' do
     edit do
-      configure :load_js, :hidden do
-        def render
-          bindings[:view].render partial: 'show_hide_js'
-        end
-      end
       [:sponsor, :sponsor_logo, :sponsor_description].each do |title|
         configure title do
           css_class do
@@ -90,11 +79,6 @@ RailsAdmin.config do |config|
 
   config.model 'StandardChallenge' do
     edit do
-      configure :load_js, :hidden do
-        def render
-          bindings[:view].render partial: 'show_hide_js'
-        end
-      end
       [:sponsor, :sponsor_logo, :sponsor_description].each do |title|
         configure title do
           css_class do
@@ -112,11 +96,7 @@ RailsAdmin.config do |config|
 
   config.model 'ShareChallenge' do
     edit do
-      configure :load_js, :hidden do
-        def render
-          bindings[:view].render partial: 'show_hide_js'
-        end
-      end
+
       [:sponsor, :sponsor_logo, :sponsor_description].each do |title|
         configure title do
           css_class do
