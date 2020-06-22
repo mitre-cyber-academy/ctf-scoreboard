@@ -1,4 +1,4 @@
-$( document ).ready(function() {
+$(document).on('rails_admin.dom_ready', function() {
   // Run if we're in the challenge page
   if($('.sponsorship_fields_toggler').length){
     toggleSponsorField()
