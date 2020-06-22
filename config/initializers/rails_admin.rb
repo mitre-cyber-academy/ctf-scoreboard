@@ -73,6 +73,18 @@ RailsAdmin.config do |config|
           bindings[:view].render partial: 'show_hide_js'
         end
       end
+      [:sponsor, :sponsor_logo, :sponsor_description].each do |title|
+        configure title do
+          css_class do
+            "#{self.name}_field sponsorship_fields_toggle"
+          end
+        end
+      end
+      configure :sponsored do
+        css_class do
+          "#{self.name}_field sponsorship_fields_toggler"
+        end
+      end
     end
   end
 
@@ -83,6 +95,18 @@ RailsAdmin.config do |config|
           bindings[:view].render partial: 'show_hide_js'
         end
       end
+      [:sponsor, :sponsor_logo, :sponsor_description].each do |title|
+        configure title do
+          css_class do
+            "#{self.name}_field sponsorship_fields_toggle"
+          end
+        end
+      end
+      configure :sponsored do
+        css_class do
+          "#{self.name}_field sponsorship_fields_toggler"
+        end
+      end
     end
   end
 
@@ -91,6 +115,18 @@ RailsAdmin.config do |config|
       configure :load_js, :hidden do
         def render
           bindings[:view].render partial: 'show_hide_js'
+        end
+      end
+      [:sponsor, :sponsor_logo, :sponsor_description].each do |title|
+        configure title do
+          css_class do
+            "#{self.name}_field sponsorship_fields_toggle"
+          end
+        end
+      end
+      configure :sponsored do
+        css_class do
+          "#{self.name}_field sponsorship_fields_toggler"
         end
       end
     end
