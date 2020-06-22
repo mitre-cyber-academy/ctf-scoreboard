@@ -31,10 +31,6 @@ class DivisionTest < ActiveSupport::TestCase
     assert eligible_team_locations.index(true) < eligible_team_locations.index(false)
   end
 
-  test 'top five eligible players' do
-    ordered_teams = @division.ordered_teams(true)
-    assert_operator 5, :>=, ordered_teams.size
-  end
 
   # Since the team score is proxied through the division, it makes sense to test it along with the
   # other division code

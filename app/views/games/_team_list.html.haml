@@ -6,9 +6,9 @@
     %thead
       %tr
         %th{ :style => "width:50px;" } #
-        %th Name
-        %th{ :style => "width:100px;" } Achievements
-        %th{ :style => "width:100px;" } Points
+        %th=t('game.team_list.team_name') # The team's name
+        %th{ :style => "width:100px;" }= t('game.team_list.team_achievements') # The team's achievements
+        %th{ :style => "width:100px;" }= t('game.team_list.team_points') # The number of points the team has
         %th{ :style => "width:50%;" }
     %tbody
       - teams.each_with_index do |t, i|

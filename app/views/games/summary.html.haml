@@ -1,8 +1,8 @@
 - content_for :header do
-  Game Summary
+  = t('game.summary.header')
 
 %h3.muted
-  Teams Summary
+  = t('game.summary.topfive')
 %br/
 = render partial: "games/divisions", locals: { divisions: @game.divisions, active_division: @active_division}
 %hr

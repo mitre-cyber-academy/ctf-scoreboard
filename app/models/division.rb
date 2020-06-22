@@ -13,16 +13,13 @@ class Division < ApplicationRecord
 
   validates :name, presence: true
 
-  def ordered_teams(only_top_five = false)
+  def ordered_teams()
     teams = calculate_team_scores
     # last_solve_time is added to the model by the calculate_standard_solved_challenge_score method
     teams.sort_by! do |team|
       [(team.eligible ? 0 : 1), -team.current_score, team.last_solve_time || game.start]
     end
-
-    return teams.take(5) if only_top_five
-
-    teams
+    return teams
   end
 
   def ordered_teams_with_rank
