@@ -1,13 +1,13 @@
 - content_for :header do
-  = t('game.summary.header')
+  Game Summary
 
-%h3= t('game.summary.topfive')
+%h3.muted
+  Teams Summary
 %br/
-= render partial: "games/divisions", locals: { divisions: @game.divisions, active_division: @active_division, only_top_five: true }
+= render partial: "games/divisions", locals: { divisions: @game.divisions, active_division: @active_division}
 %hr
 / Only show the flags per hour count when we have more than 1 datapoint to show
 - if @flags_per_hour.count > 1
-  %h3= t('game.summary.submissions_title')
-  = line_chart(@line_chart_data, library: {chart: {zoomType: 'x'}}, colors: ['#b8d12f', '#00abca'])
-  %p.muted
-    = t('game.zoom_help')
+  %h3.muted
+    Flag Submissions
+    = line_chart @line_chart_data, colors: ['#b8d12f', '#00abca']

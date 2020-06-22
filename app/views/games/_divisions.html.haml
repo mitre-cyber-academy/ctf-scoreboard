@@ -8,7 +8,7 @@
     .tab-content
       - divisions.each do |d|
         .tab-pane{ :class => ('active' if active_division.eql? d), :id => "division-#{d.id}-tab" }
-          = render partial: "games/team_list", locals: { teams: d.ordered_teams(only_top_five) }
+          = render partial: "games/team_list", locals: { teams: d.ordered_teams()}
 - else
   .container-fluid
-    = render partial: "games/team_list", locals: { teams: divisions.first&.ordered_teams(only_top_five)}
+    = render partial: "games/team_list", locals: { teams: divisions.first&.ordered_teams()}

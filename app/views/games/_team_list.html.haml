@@ -1,15 +1,14 @@
 - if teams.nil? or teams.size.eql? 0
-  .zero-items-text
-    %h4= t('game.team_list.no_teams')
+  .zero-items-text No Teams
 - else
   - max = 0
   %table.table.table-bordered.table-striped
     %thead
       %tr
         %th{ :style => "width:50px;" } #
-        %th=t('game.team_list.team_name') # The team's name
-        %th{ :style => "width:100px;" }= t('game.team_list.team_achievements') # The team's achievements
-        %th{ :style => "width:100px;" }= t('game.team_list.team_points') # The number of points the team has
+        %th Name
+        %th{ :style => "width:100px;" } Achievements
+        %th{ :style => "width:100px;" } Points
         %th{ :style => "width:50%;" }
     %tbody
       - teams.each_with_index do |t, i|
@@ -20,7 +19,7 @@
       - if score > max
         - max = score
       - percent = score.to_f / max.to_f * 100.0
-        %tr
+        %tr{i > 4 ? {class: "hide"} : {}}
           %td= i + 1
           %td.break-word= link_to display_name(t), summary_team_path(t)
           %td= t.achievements.size
@@ -31,4 +30,4 @@
     - if @view_all_teams_link
       %tr
         %td{align: 'center', colspan: '5', style: 'text-align: center;'}
-          = link_to t('game.view_all_teams'), game_teams_path
+          = link_to 'Show/Hide Teams', "#", :class => "toggler"
