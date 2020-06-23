@@ -20,8 +20,8 @@
     = embed(@solved_video_url)
 
 - if @challenge.sponsored
-  %div{ :id => "sponsorInfo", :style => "margin-bottom:40px;" }
-    %h3{:id => 'sponsorName'}= t('challenges.show.sponsor')
+  %div#sponsorInfo{ :style => "margin-bottom:40px;" }
+    %h3#sponsorName= t('challenges.show.sponsor')
     - unless @challenge.sponsor_logo.empty?
       = image_tag(@challenge.sponsor_logo, :id => "sponsorLogo")
     - unless @challenge.sponsor_description.empty?
