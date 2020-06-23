@@ -23,9 +23,9 @@ class ChallengeDisplayModesTest < ActionDispatch::IntegrationTest
         assert_select 'div#sponsorInfo' do
             assert_select 'h3', 'Sponsor'
             assert_select 'img' do
-                assert_select '[src=?]', 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Mitre_Corporation_logo.svg/220px-Mitre_Corporation_logo.svg.png'
+                assert_select '[src=?]', challenge1.sponsor_logo
             end
-            assert_select 'p', 'The Mitre Corporation is an American not-for-profit organization based in Bedford, Massachusetts, and McLean, Virginia.'
+            assert_select 'p', challenge1.sponsor_description
         end
     end
 end
