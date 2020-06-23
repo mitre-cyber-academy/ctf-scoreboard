@@ -22,6 +22,6 @@ module TeamsHelper
   end
 
   def header_with_points(team)
-    "#{display_name(team)} - #{team.score} " + pluralize(team.score, I18n.t('challenges.point_value_singular'))
+    "#{display_name(team)} - " + pluralize(team.score, I18n.t('challenges.point_value_singular'))
   end
 end

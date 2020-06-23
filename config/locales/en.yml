@@ -80,7 +80,7 @@ en:
       division_header: 'Appropriate Division'
       prize_eligibility_header: 'Prize Eligible'
       remove_user_header: 'Remove'
-      change_captian_header: 'Change Captian'
+      change_captian_header: 'Change Captain'
       compete_for_prizes_true: 'Yes'
       compete_for_prizes_false: 'No'
     summary:
@@ -268,7 +268,7 @@ en:
         password_edit_header: 'Change your password'
         forgot_password_header: 'Forgot your password'
         retrieve_access_instructions: 'Resend instructions'
-        resend_unlock_instructions: 'Resend unlcok instructions'
+        resend_unlock_instructions: 'Resend unlock instructions'
       error: "prohibited your user from being updated:"
     destroy:
       confirm: 'Are you sure you want to delete your account?'
