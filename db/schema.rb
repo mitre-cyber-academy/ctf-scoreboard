@@ -49,9 +49,9 @@ ActiveRecord::Schema.define(version: 2020_06_23_173255) do
     t.boolean "design_phase", default: false
     t.bigint "game_id"
     t.boolean "sponsored", default: false, null: false
-    t.text "sponsor", default: ""
-    t.text "sponsor_logo", default: "", null: false
-    t.text "sponsor_description", default: "", null: false
+    t.text "sponsor", default: ''
+    t.text "sponsor_logo", default: '', null: false
+    t.text "sponsor_description", default: '', null: false
     t.index ["game_id"], name: "index_challenges_on_game_id"
   end
 
