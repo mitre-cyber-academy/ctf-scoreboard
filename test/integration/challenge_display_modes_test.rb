@@ -9,8 +9,6 @@ class ChallengeDisplayModesTest < ActionDispatch::IntegrationTest
         # Challenges are displayed by their number of categories, and then sorted
         # down by point value
         challenge1 = create(:standard_challenge,
-            point_value: 100,
-            category_count: 2,
             sponsored: true,
             sponsor: 'MITRE',
             sponsor_logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Mitre_Corporation_logo.svg/220px-Mitre_Corporation_logo.svg.png',
@@ -19,7 +17,8 @@ class ChallengeDisplayModesTest < ActionDispatch::IntegrationTest
         team = create(:team)
         sign_in team.team_captain
 
-        get "/game/challenges/" + challenge1.id.to_s
+        get "/game/challenges/#{challenge1.id}"
+
         assert_select 'div#sponsorInfo' do
             assert_select 'h3', 'Sponsor'
             assert_select 'img' do
