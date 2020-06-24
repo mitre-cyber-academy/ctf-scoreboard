@@ -49,6 +49,10 @@ ActiveRecord::Schema.define(version: 2020_06_24_162213) do
     t.boolean "design_phase", default: false
     t.bigint "game_id"
     t.datetime "challenge_end"
+    t.boolean "sponsored", default: false, null: false
+    t.text "sponsor", default: ''
+    t.text "sponsor_logo", default: '', null: false
+    t.text "sponsor_description", default: '', null: false
     t.index ["game_id"], name: "index_challenges_on_game_id"
   end
 
@@ -122,6 +126,7 @@ ActiveRecord::Schema.define(version: 2020_06_24_162213) do
     t.text "prizes_text"
     t.text "terms_and_conditions"
     t.integer "board_layout", default: 0, null: false
+    t.boolean "registration_enabled", default: true, null: false
   end
 
   create_table "messages", id: :serial, force: :cascade do |t|
