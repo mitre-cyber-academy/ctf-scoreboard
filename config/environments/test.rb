@@ -53,4 +53,9 @@ Rails.application.configure do
 
   # Set default URL for mailer to mimic production
   config.action_mailer.default_url_options = { host: 'test.mitrecyberacademy.org' }
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+  end
 end
