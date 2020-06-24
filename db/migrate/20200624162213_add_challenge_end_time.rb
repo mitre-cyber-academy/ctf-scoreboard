@@ -1,5 +1,5 @@
 class AddChallengeEndTime < ActiveRecord::Migration[6.0]
   def change
-    add_column :games, :datetime, :datetime
+    add_column :challenges, :challenge_end, :datetime
   end
 end
