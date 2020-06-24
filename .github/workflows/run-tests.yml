@@ -61,7 +61,7 @@ jobs:
           path: coverage
 
       - name: Upload bullet log
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@v2
         if: always()
         with:
           name: bullet-log
