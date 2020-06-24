@@ -6,6 +6,12 @@ class RegistrationsController < Devise::RegistrationsController
   before_action :prevent_action_after_game, only: %i[new create]
   before_action :prevent_action_if_registration_closed, only: %i[new create]
 
+  def prevent_action_if_registration_closed
+    return if @game.registration_enabled
+
+    redirect_back fallback_location: user_root_path, alert: I18n.t('game.registration_closed')
+  end
+
   def new
     super
   end
