@@ -54,6 +54,14 @@ class RegistrationsControllerTest < ActionController::TestCase
     assert_equal I18n.t('game.after_competition'), flash[:alert]
   end
 
+  test 'cannot register for game when registration closed' do
+    game = create(:active_game, registration_enabled: false)
+
+    get :new
+    assert_redirected_to @controller.user_root_path
+    assert_equal I18n.t('game.registration_closed'), flash[:alert]
+  end
+
   # We accidently enabled checking of captcha on naviation to the new page once,
   # this is to ensure we don't make that mistake again
   test 'new has no errors' do
