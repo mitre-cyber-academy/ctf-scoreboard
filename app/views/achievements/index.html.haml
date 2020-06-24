@@ -1,14 +1,14 @@
 - content_for :header do
-  Achievements
+  = t('achievements.index.header')
 - if @achievements.count == 0
-  .zero-items-text= t('achievements.index.zero_items_text')
+  %h4.zero-items-text= t('achievements.index.zero_items_text')
 - else
   %table.table.table-bordered.table-striped
     %thead
       %tr
-        %th Name
-        %th Unlocked By
-        %th When
+        %th= t('achievements.index.table_header_achievement_name')
+        %th= t('achievements.index.table_header_unlocked_by')
+        %th= t('achievements.index.table_header_when')
     %tbody
       - @achievements.each do |a|
         %tr

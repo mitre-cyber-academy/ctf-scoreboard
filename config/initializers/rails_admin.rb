@@ -57,12 +57,6 @@ RailsAdmin.config do |config|
           help "Required - Must be in UTC."
         end
       end
-
-      configure :load_js, :hidden do
-        def render
-          bindings[:view].render partial: 'show_hide_js'
-        end
-      end
     end
   end
 
@@ -107,6 +101,18 @@ RailsAdmin.config do |config|
 
   config.model 'PentestChallenge' do
     edit do
+      [:sponsor, :sponsor_logo, :sponsor_description].each do |title|
+        configure title do
+          css_class do
+            "#{self.name}_field sponsorship_fields_toggle"
+          end
+        end
+      end
+      configure :sponsored do
+        css_class do
+          "#{self.name}_field sponsorship_fields_toggler"
+        end
+      end
       field :name
       field :description
       field :point_value
@@ -120,11 +126,11 @@ RailsAdmin.config do |config|
       field :solved_decrement_shares
       field :first_capture_point_bonus
       field :design_phase
-      field :game
       field :sponsored
       field :sponsor
       field :sponsor_logo
       field :sponsor_description
+      field :game
       field :category_ids
       field :defense_flags
     end
@@ -136,9 +142,20 @@ RailsAdmin.config do |config|
       field :created_at
     end
   end
-
   config.model 'StandardChallenge' do
     edit do
+      [:sponsor, :sponsor_logo, :sponsor_description].each do |title|
+        configure title do
+          css_class do
+            "#{self.name}_field sponsorship_fields_toggle"
+          end
+        end
+      end
+      configure :sponsored do
+        css_class do
+          "#{self.name}_field sponsorship_fields_toggler"
+        end
+      end
       field :name
       field :description
       field :point_value
@@ -150,11 +167,11 @@ RailsAdmin.config do |config|
       field :solved_decrement_shares
       field :first_capture_point_bonus
       field :design_phase
-      field :game
       field :sponsored
       field :sponsor
       field :sponsor_logo
       field :sponsor_description
+      field :game
       field :category_ids
       field :flags
     end
@@ -169,6 +186,18 @@ RailsAdmin.config do |config|
 
   config.model 'ShareChallenge' do
     edit do
+      [:sponsor, :sponsor_logo, :sponsor_description].each do |title|
+        configure title do
+          css_class do
+            "#{self.name}_field sponsorship_fields_toggle"
+          end
+        end
+      end
+      configure :sponsored do
+        css_class do
+          "#{self.name}_field sponsorship_fields_toggler"
+        end
+      end
       field :name
       field :description
       field :point_value
@@ -180,11 +209,11 @@ RailsAdmin.config do |config|
       field :solved_decrement_shares
       field :first_capture_point_bonus
       field :design_phase
-      field :game
       field :sponsored
       field :sponsor
       field :sponsor_logo
       field :sponsor_description
+      field :game
       field :category_ids
       field :flags
     end

@@ -35,7 +35,7 @@ class Game < ApplicationRecord
   end
 
   def instance_is_singleton
-    singleton = Game.instance
+    singleton = Game.all.first
     errors.add(:base, I18n.t('game.too_many')) if self != singleton && !singleton.nil?
   end
 

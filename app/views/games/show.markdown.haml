@@ -6,10 +6,10 @@
   = "\n\#\#\# #{category_names}\n"
   %table
     %tr
-      %th Title
-      %th Value
-      %th Repository
-      %th Description
+      %th= t('game.show_markdown.markdown_title')
+      %th= t('game.show_markdown.markdown_value')
+      %th= t('game.show_markdown.markdown_repository')
+      %th= t('game.show_markdown.markdown_description')
     - challenges.each do |challenge|
       %tr
         %td= challenge.name
@@ -23,9 +23,9 @@
   = "\n\#\#\# #{I18n.t('game.attack_defend_challenges')}\n"
   %table
     %tr
-      %th Title
-      %th Repository
-      %th Description
+      %th= t('game.show_markdown.markdown_title')
+      %th= t('game.show_markdown.markdown_repository')
+      %th= t('game.show_markdown.markdown_description')
     - @pentest_challenges.each do |challenge|
       %tr
         %td= challenge.name

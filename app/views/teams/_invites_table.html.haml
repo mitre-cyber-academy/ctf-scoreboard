@@ -1,15 +1,11 @@
 %table.table.table-condensed.table-striped.table-overflow
   %thead
   %tr
-    %th.span2
-      Email
-    %th
-      Prize Eligible?
-    %th
-      Division
+    %th.span2= t('teams.invite.invites_table.email_header')
+    %th= t('teams.invite.invites_table.prize_eligible_header')
+    %th= t('teams.invite.invites_table.division_header')
     - if @team_captain
-      %th
-        Cancel Invite
+      %th= t('teams.invite.invites_table.cancel_invite_header')
   - @pending_invites.each do |current|
     %tbody
       %tr{:class=>'warning'}
