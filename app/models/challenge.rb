@@ -34,8 +34,16 @@ class Challenge < ApplicationRecord
     state.eql? 'open'
   end
 
+  def before_close?
+    unless challenge_end.nil?
+      time = Time.now.utc
+      return time < challenge_end
+    end
+    true
+  end
+
   def open?
-    challenge_open? && game.open?
+    challenge_open? && before_close? && game.open?
   end
 
   def display_point_value(_ = nil)
