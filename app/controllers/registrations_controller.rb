@@ -3,8 +3,7 @@
 class RegistrationsController < Devise::RegistrationsController
   before_action :load_game, :load_message_count
   before_action :check_captcha, only: %i[create]
-  before_action :prevent_action_after_game, only: %i[new create]
-  before_action :prevent_action_if_registration_closed, only: %i[new create]
+  before_action :prevent_action_after_game, :prevent_action_if_registration_closed, only: %i[new create]
 
   def prevent_action_if_registration_closed
     return if @game.registration_enabled
