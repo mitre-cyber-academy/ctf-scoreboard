@@ -393,7 +393,9 @@ RailsAdmin.config do |config|
       field :organization
       field :contact_email
       field :prizes_available
+      field :prizes_text
       field :enable_completion_certificates
+      field :completion_certificate_template
       field :footer
       field :contact_url
       field :recruitment_text

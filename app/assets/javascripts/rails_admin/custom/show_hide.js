@@ -15,10 +15,9 @@ $(document).on('rails_admin.dom_ready', function() {
 
   // Wrapper for all showing/hiding of sponsors
   function toggleSponsorField() {
+    var elements = $(".sponsorship_fields_toggle")
     var checkbox_id = $('.sponsorship_fields_toggler').find('input')[1].id
-    showOrHide(checkbox_id, 'standard_challenge_sponsor_field')
-    showOrHide(checkbox_id, 'standard_challenge_sponsor_logo_field')
-    showOrHide(checkbox_id, 'standard_challenge_sponsor_description_field')
+    elements.toArray().forEach(element => showOrHide(checkbox_id, element.id))
   }
 
   // Wrapper for all showing/hiding of game prizes/completion certificates
