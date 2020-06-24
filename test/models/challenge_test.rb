@@ -12,7 +12,7 @@ class ChallengeTest < ActiveSupport::TestCase
     assert_nil chal3.next_challenge
   end
 
-  test 'game is closed when its passed closing time' do
+  test 'challenge is closed when its passed closing time' do
     game = create(:active_game)
     challenge = create(:standard_challenge, challenge_end: Time.current - 1.days)
 
