@@ -36,7 +36,7 @@ class Challenge < ApplicationRecord
 
   def before_close?
     return Time.now.utc < challenge_end unless challenge_end.nil?
-    
+
     true
   end
 
