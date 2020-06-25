@@ -113,14 +113,10 @@ RailsAdmin.config do |config|
           "#{self.name}_field sponsorship_fields_toggler"
         end
       end
-      configure :challenge_categories do
-        hide
-      end
-      configure :submitted_flags do
-        hide
-      end
-      configure :solved_challenges do
-        hide
+      [:challenge_categories, :submitted_flags, :solved_challenges].each do |field|
+        configure field do
+          hide
+        end
       end
     end
     list do
@@ -146,29 +142,10 @@ RailsAdmin.config do |config|
           "#{self.name}_field sponsorship_fields_toggler"
         end
       end
-      configure :challenge_categories do
-        hide
-      end
-      configure :submitted_flags do
-        hide
-      end
-      configure :solved_challenges do
-        hide
-      end
-      configure :unsolved_increment_period do
-        hide
-      end
-      configure :unsolved_increment_points do
-        hide
-      end
-      configure :initial_shares do
-        hide
-      end
-      configure :solved_decrement_shares do
-        hide
-      end
-      configure :first_capture_point_bonus do
-        hide
+      [:challenge_categories, :submitted_flags, :solved_challenges, :unsolved_increment_period, :unsolved_increment_points, :initial_shares, :solved_decrement_shares, :first_capture_point_bonus].each do |field|
+        configure field do
+          hide
+        end
       end
     end
     list do
@@ -194,14 +171,10 @@ RailsAdmin.config do |config|
           "#{self.name}_field sponsorship_fields_toggler"
         end
       end
-      configure :challenge_categories do
-        hide
-      end
-      configure :submitted_flags do
-        hide
-      end
-      configure :solved_challenges do
-        hide
+      [:challenge_categories, :submitted_flags, :solved_challenges].each do |field|
+        configure field do
+          hide
+        end
       end
     end
     list do
