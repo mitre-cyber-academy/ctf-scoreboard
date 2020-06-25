@@ -113,26 +113,15 @@ RailsAdmin.config do |config|
           "#{self.name}_field sponsorship_fields_toggler"
         end
       end
-      field :name
-      field :description
-      field :point_value
-      field :achievement_name
-      field :state
-      field :defense_period
-      field :defense_points
-      field :unsolved_increment_period
-      field :unsolved_increment_points
-      field :initial_shares
-      field :solved_decrement_shares
-      field :first_capture_point_bonus
-      field :design_phase
-      field :sponsored
-      field :sponsor
-      field :sponsor_logo
-      field :sponsor_description
-      field :game
-      field :category_ids
-      field :defense_flags
+      configure :challenge_categories do
+        hide
+      end
+      configure :submitted_flags do
+        hide
+      end
+      configure :solved_challenges do
+        hide
+      end
     end
     list do
       field :name
@@ -142,6 +131,7 @@ RailsAdmin.config do |config|
       field :created_at
     end
   end
+
   config.model 'StandardChallenge' do
     edit do
       [:sponsor, :sponsor_logo, :sponsor_description].each do |title|
@@ -156,24 +146,15 @@ RailsAdmin.config do |config|
           "#{self.name}_field sponsorship_fields_toggler"
         end
       end
-      field :name
-      field :description
-      field :point_value
-      field :achievement_name
-      field :state
-      field :unsolved_increment_period
-      field :unsolved_increment_points
-      field :initial_shares
-      field :solved_decrement_shares
-      field :first_capture_point_bonus
-      field :design_phase
-      field :sponsored
-      field :sponsor
-      field :sponsor_logo
-      field :sponsor_description
-      field :game
-      field :category_ids
-      field :flags
+      configure :challenge_categories do
+        hide
+      end
+      configure :submitted_flags do
+        hide
+      end
+      configure :solved_challenges do
+        hide
+      end
     end
     list do
       field :name
@@ -198,24 +179,15 @@ RailsAdmin.config do |config|
           "#{self.name}_field sponsorship_fields_toggler"
         end
       end
-      field :name
-      field :description
-      field :point_value
-      field :achievement_name
-      field :state
-      field :unsolved_increment_period
-      field :unsolved_increment_points
-      field :initial_shares
-      field :solved_decrement_shares
-      field :first_capture_point_bonus
-      field :design_phase
-      field :sponsored
-      field :sponsor
-      field :sponsor_logo
-      field :sponsor_description
-      field :game
-      field :category_ids
-      field :flags
+      configure :challenge_categories do
+        hide
+      end
+      configure :submitted_flags do
+        hide
+      end
+      configure :solved_challenges do
+        hide
+      end
     end
     list do
       field :name
