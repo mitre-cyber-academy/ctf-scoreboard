@@ -82,6 +82,23 @@ class TeamsController < ApplicationController
     end
   end
 
+  def looking_for_members
+    @team = Team.find_by(id: params[:id].to_i)
+    looking = params[:team][:look_for_member] == '1' ? true : false
+
+    if looking
+      msg = I18n.t('teams.lookformembers.lookformember_on')
+    else
+      msg = I18n.t('teams.lookformembers.lookformember_off')
+    end
+
+    if @team.update_attribute(:look_for_member, looking)
+      redirect_to @team, notice: msg
+    else
+      redirect_to team_path(@team), alert: @team.errors.messages.map { |_, msg| msg }.join(', ')
+    end
+  end
+
   def team_editable?
     team_captain? && !@team.full?
   end

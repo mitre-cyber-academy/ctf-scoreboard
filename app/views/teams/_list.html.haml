@@ -21,11 +21,12 @@
               %th= t('users.join_team.teams_table.request_join_header')
           %tbody
             - teams.each do |team|
-              - unless team.users.size.zero?
-                %tr
-                  %td= team.team_name
-                  %td= team.affiliation
-                  %td= team.slots_available
-                  %td= team.division.name
-                  %td= button_to t('users.join_team.teams_table.request_join_button'), team_user_requests_path(team), :class => "btn btn-default"
+              - if team.look_for_member? && !team.full?
+                - if !team.users.size.zero?
+                  %tr
+                    %td= team.team_name
+                    %td= team.affiliation
+                    %td= team.slots_available
+                    %td= team.division.name
+                    %td= button_to t('users.join_team.teams_table.request_join_button'), team_user_requests_path(team), :class => "btn btn-default"
   = paginate teams, :theme => 'twitter-bootstrap' # provided by kaminari

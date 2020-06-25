@@ -66,6 +66,11 @@ en:
         team_name_header: 'Team Name'
         requested_on_header: 'Requested On'
         cancel_request_header: 'Cancel'
+    lookformembers:
+      lookformember_header: 'Looking for Members'
+      lookformember_on: 'Looking For Members is Turned ON'
+      lookformember_off: 'Looking For Members is Turned OFF'
+      full_team: 'This Team Does Not Have Open Member Slots'
     admin_info_table:
       user_id: 'User ID'
       name: 'Name'

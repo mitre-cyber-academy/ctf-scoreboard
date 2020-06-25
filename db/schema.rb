@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_16_180339) do
+ActiveRecord::Schema.define(version: 2020_06_24_162309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,10 @@ ActiveRecord::Schema.define(version: 2020_04_16_180339) do
     t.integer "solved_decrement_period", default: 1
     t.boolean "design_phase", default: false
     t.bigint "game_id"
+    t.boolean "sponsored", default: false, null: false
+    t.text "sponsor", default: ""
+    t.text "sponsor_logo", default: "", null: false
+    t.text "sponsor_description", default: "", null: false
     t.index ["game_id"], name: "index_challenges_on_game_id"
   end
 
@@ -182,6 +186,7 @@ ActiveRecord::Schema.define(version: 2020_04_16_180339) do
     t.integer "division_id"
     t.boolean "eligible", default: false
     t.integer "slots_available", default: 0
+    t.boolean "look_for_member", default: true
     t.index "lower((team_name)::text)", name: "index_teams_on_team_name_unique", unique: true
     t.index ["division_id"], name: "index_teams_on_division_id"
     t.index ["team_captain_id"], name: "index_teams_on_team_captain_id"
