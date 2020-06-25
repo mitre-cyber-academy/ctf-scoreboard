@@ -155,6 +155,21 @@ RailsAdmin.config do |config|
       configure :solved_challenges do
         hide
       end
+      configure :unsolved_increment_period do
+        hide
+      end
+      configure :unsolved_increment_points do
+        hide
+      end
+      configure :initial_shares do
+        hide
+      end
+      configure :solved_decrement_shares do
+        hide
+      end
+      configure :first_capture_point_bonus do
+        hide
+      end
     end
     list do
       field :name
