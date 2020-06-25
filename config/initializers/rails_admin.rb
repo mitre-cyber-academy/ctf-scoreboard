@@ -46,7 +46,17 @@ RailsAdmin.config do |config|
     end
 
     edit do
-      [:teams, :challenges, :users, :feed_items, :divisions, :messages, :solved_challenges, :categories, :achievements].each do |field|
+      [
+        :teams,
+        :challenges,
+        :users,
+        :feed_items,
+        :divisions,
+        :messages,
+        :solved_challenges,
+        :categories,
+        :achievements
+      ].each do |field|
         configure field do
           hide
         end
@@ -101,7 +111,11 @@ RailsAdmin.config do |config|
 
   config.model 'PentestChallenge' do
     edit do
-      [:sponsor, :sponsor_logo, :sponsor_description].each do |title|
+      [
+        :sponsor,
+        :sponsor_logo,
+        :sponsor_description
+      ].each do |title|
         configure title do
           css_class do
             "#{self.name}_field sponsorship_fields_toggle"
@@ -113,7 +127,11 @@ RailsAdmin.config do |config|
           "#{self.name}_field sponsorship_fields_toggler"
         end
       end
-      [:challenge_categories, :submitted_flags, :solved_challenges].each do |field|
+      [
+        :challenge_categories,
+        :submitted_flags,
+        :solved_challenges
+      ].each do |field|
         configure field do
           hide
         end
@@ -130,7 +148,11 @@ RailsAdmin.config do |config|
 
   config.model 'StandardChallenge' do
     edit do
-      [:sponsor, :sponsor_logo, :sponsor_description].each do |title|
+      [
+        :sponsor,
+        :sponsor_logo,
+        :sponsor_description
+      ].each do |title|
         configure title do
           css_class do
             "#{self.name}_field sponsorship_fields_toggle"
@@ -142,7 +164,16 @@ RailsAdmin.config do |config|
           "#{self.name}_field sponsorship_fields_toggler"
         end
       end
-      [:challenge_categories, :submitted_flags, :solved_challenges, :unsolved_increment_period, :unsolved_increment_points, :initial_shares, :solved_decrement_shares, :first_capture_point_bonus].each do |field|
+      [
+        :challenge_categories,
+        :submitted_flags,
+        :solved_challenges,
+        :unsolved_increment_period,
+        :unsolved_increment_points,
+        :initial_shares,
+        :solved_decrement_shares,
+        :first_capture_point_bonus
+      ].each do |field|
         configure field do
           hide
         end
@@ -159,7 +190,11 @@ RailsAdmin.config do |config|
 
   config.model 'ShareChallenge' do
     edit do
-      [:sponsor, :sponsor_logo, :sponsor_description].each do |title|
+      [
+        :sponsor,
+        :sponsor_logo,
+        :sponsor_description
+      ].each do |title|
         configure title do
           css_class do
             "#{self.name}_field sponsorship_fields_toggle"
@@ -171,7 +206,11 @@ RailsAdmin.config do |config|
           "#{self.name}_field sponsorship_fields_toggler"
         end
       end
-      [:challenge_categories, :submitted_flags, :solved_challenges].each do |field|
+      [
+        :challenge_categories,
+        :submitted_flags,
+        :solved_challenges
+      ].each do |field|
         configure field do
           hide
         end
