@@ -28,10 +28,10 @@ $(document).on('rails_admin.dom_ready', function() {
   // Show or hide based off a checkbox
   function showOrHide(checkboxId, fieldToToggle){
     if(document.getElementById(checkboxId).checked){
-      $(fieldToToggle).hide()
+      $(fieldToToggle).show()
     }
     else{
-      $(fieldToToggle).show()
+      $(fieldToToggle).hide()
     }
   }
 });
