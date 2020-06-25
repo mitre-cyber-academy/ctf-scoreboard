@@ -162,6 +162,7 @@ en:
     date_mismatch: 'The start date must be before the end date.'
     before_competition: 'This action is not available until the game is open.'
     after_competition: 'This action is not available after the game is over.'
+    registration_closed: 'This action is not available because registration is closed.'
     setup: 'Finish setting up the scoreboard by creating a game. Not all fields are required, and you can always change them later! Learn more at %{href}'
     setup_href: "https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Configuration#game"
     attack_defend_challenges: 'Attack & Defend Challenges'
