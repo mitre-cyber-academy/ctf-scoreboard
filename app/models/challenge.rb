@@ -35,13 +35,19 @@ class Challenge < ApplicationRecord
   end
 
   def before_close?
-    return Time.now.utc < challenge_end unless challenge_end.nil?
+    return Time.now.utc < close_challenge_at unless close_challenge_at.nil?
+
+    true
+  end
+
+  def after_open?
+    return Time.now.utc > open_challenge_at unless open_challenge_at.nil?
 
     true
   end
 
   def open?
-    challenge_open? && before_close? && game.open?
+    challenge_open? && before_close? && after_open? && game.open?
   end
 
   def display_point_value(_ = nil)
