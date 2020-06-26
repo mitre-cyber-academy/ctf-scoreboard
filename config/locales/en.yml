@@ -102,6 +102,7 @@ en:
         challenge_header: 'Challenge'
         points_header: 'Points'
         when_header: 'When'
+        show_hide_btn: 'Show/Hide'
     captain_removed_player: 'Player was successfully removed.'
     player_removed_self: 'You have successfully left the team.'
     already_on_team_create: 'You cannot create a new team while already being a member of one.'
@@ -173,6 +174,7 @@ en:
       team_name: 'Name'
       team_achievements: 'Achievements'
       team_points: 'Points'
+      team_show_hide_btn: 'Show/Hide Teams'
     show_markdown:
       markdown_title: 'Title'
       markdown_value: 'Value'

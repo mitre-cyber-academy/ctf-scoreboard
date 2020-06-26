@@ -14,4 +14,4 @@
     - if @team.solved_challenges.size > 5
       %tr
         %td{align: 'center', colspan: '3', style: 'text-align: center;'}
-          = link_to "Show/Hide", "#", :class => "toggler"
+          = link_to t('teams.summary.solved_challenges_table.show_hide_btn'), "#", :class => "toggler"
