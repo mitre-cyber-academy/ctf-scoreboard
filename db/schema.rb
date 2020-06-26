@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_26_145909) do
+ActiveRecord::Schema.define(version: 2020_06_23_173255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,6 +125,7 @@ ActiveRecord::Schema.define(version: 2020_06_26_145909) do
     t.text "prizes_text"
     t.text "terms_and_conditions"
     t.integer "board_layout", default: 0, null: false
+    t.boolean "registration_enabled", default: true, null: false
   end
 
   create_table "messages", id: :serial, force: :cascade do |t|

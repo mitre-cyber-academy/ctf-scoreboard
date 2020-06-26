@@ -35,7 +35,7 @@
               = link_to t('home.index.join_team'), join_team_users_path, :class => "btn btn-large btn-primary"
             .btn-group
               = link_to t('home.index.create_team'), new_team_path, :class => "btn btn-large btn-primary"
-    - else
+    - elsif @game.registration_enabled
       .btn-toolbar
         .pagination-centered
           .btn-group
