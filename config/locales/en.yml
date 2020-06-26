@@ -80,7 +80,7 @@ en:
       division_header: 'Appropriate Division'
       prize_eligibility_header: 'Prize Eligible'
       remove_user_header: 'Remove'
-      change_captian_header: 'Change Captian'
+      change_captian_header: 'Change Captain'
       compete_for_prizes_true: 'Yes'
       compete_for_prizes_false: 'No'
     summary:
@@ -162,6 +162,7 @@ en:
     date_mismatch: 'The start date must be before the end date.'
     before_competition: 'This action is not available until the game is open.'
     after_competition: 'This action is not available after the game is over.'
+    registration_closed: 'This action is not available because registration is closed.'
     setup: 'Finish setting up the scoreboard by creating a game. Not all fields are required, and you can always change them later! Learn more at %{href}'
     setup_href: "https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Configuration#game"
     attack_defend_challenges: 'Attack & Defend Challenges'
@@ -205,12 +206,18 @@ en:
     show:
       table_title: 'Challenges'
       no_challenges: 'No Challenges'
+      challenges_table:
+        sponsor_header: 'Sponsor'
+        name_header: 'Name'
+        category_header: 'Category'
+        points_header: 'Points'
   flag:
     accepted: 'Flag accepted!'
     challenge_must_be_unique: 'must be unique per defensive team.'
   challenges:
     show:
       no_desc: 'No description'
+      sponsor: 'Sponsor'
     description_name: 'Description'
     point_value_singular: 'Point'
     error_singular: 'error'
@@ -262,7 +269,7 @@ en:
         password_edit_header: 'Change your password'
         forgot_password_header: 'Forgot your password'
         retrieve_access_instructions: 'Resend instructions'
-        resend_unlock_instructions: 'Resend unlcok instructions'
+        resend_unlock_instructions: 'Resend unlock instructions'
       error: "prohibited your user from being updated:"
     destroy:
       confirm: 'Are you sure you want to delete your account?'
