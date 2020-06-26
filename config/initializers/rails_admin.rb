@@ -39,12 +39,6 @@ RailsAdmin.config do |config|
           help "Required - Must be in UTC."
         end
       end
-
-      configure :load_js, :hidden do
-        def render
-          bindings[:view].render partial: 'show_hide_js'
-        end
-      end
     end
   end
 
@@ -63,6 +57,58 @@ RailsAdmin.config do |config|
 
     list do
       scopes [nil, :interested_in_employment]
+    end
+  end
+
+  config.model 'PentestChallenge' do
+    edit do
+      [:sponsor, :sponsor_logo, :sponsor_description].each do |title|
+        configure title do
+          css_class do
+            "#{self.name}_field sponsorship_fields_toggle"
+          end
+        end
+      end
+      configure :sponsored do
+        css_class do
+          "#{self.name}_field sponsorship_fields_toggler"
+        end
+      end
+    end
+  end
+
+  config.model 'StandardChallenge' do
+    edit do
+      [:sponsor, :sponsor_logo, :sponsor_description].each do |title|
+        configure title do
+          css_class do
+            "#{self.name}_field sponsorship_fields_toggle"
+          end
+        end
+      end
+      configure :sponsored do
+        css_class do
+          "#{self.name}_field sponsorship_fields_toggler"
+        end
+      end
+    end
+  end
+
+  config.model 'ShareChallenge' do
+    edit do
+
+      [:sponsor, :sponsor_logo, :sponsor_description].each do |title|
+        configure title do
+          css_class do
+            "#{self.name}_field sponsorship_fields_toggle"
+          end
+        end
+      end
+      configure :sponsored do
+        css_class do
+          "#{self.name}_field sponsorship_fields_toggler"
+        end
+      end
     end
   end
 

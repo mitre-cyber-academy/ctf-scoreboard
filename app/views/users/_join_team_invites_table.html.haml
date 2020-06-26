@@ -4,12 +4,9 @@
 %table.table.table-condensed.table-striped
   %thead
   %tr
-    %th
-      Team Name
-    %th
-      Invited On
-    %th
-      Accept/Reject
+    %th= t('teams.invite.incomming_invites_table.team_name_header')
+    %th= t('teams.invite.incomming_invites_table.invited_on_header')
+    %th= t('teams.invite.incomming_invites_table.accept_reject_header')
   - @pending_invites.each do |current|
     %tbody
       %tr{:class=>'warning'}

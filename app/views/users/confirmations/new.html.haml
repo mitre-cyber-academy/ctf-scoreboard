@@ -1,5 +1,5 @@
 - content_for :header do
-  Activate your Account
+  = t('users.activation.activation_header')
 
 %legend= t('users.new.confirmations_legend')
 = form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post, :class => "user-reset-form" }) do |user|

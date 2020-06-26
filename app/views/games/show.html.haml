@@ -2,7 +2,7 @@
   = @game.title
 
 - if @pentest_challenges.size == 0 && @standard_challenges.size == 0
-  .zero-items-text= t('game.show.no_challenges')
+  %h4.zero-items-text= t('game.show.no_challenges')
 - else
   -# Render based on the user selected gameboard layout
   = render partial: "games/#{@game.board_layout}_table"

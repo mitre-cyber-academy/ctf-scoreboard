@@ -1,7 +1,7 @@
 - content_for :header do
-  Terms and Conditions
+  = t('application.terms_of_use.terms_and_conditions')
 
 - if @game&.terms_and_conditions.blank?
-  = t('game.no_terms_and_conditions')
+  = t('application.terms_of_use.no_terms_and_conditions')
 - else
   = sanitize(Kramdown::Document.new(@game&.terms_and_conditions).to_html)

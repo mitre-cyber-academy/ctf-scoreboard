@@ -20,11 +20,11 @@ module GamesHelper
 
   def challenge_text_for_team_for(challenge, team)
     if current_user&.team.eql?(team) && challenge.open? && challenge.can_be_solved_by(team)
-      'Click to Solve'
+      I18n.t('challenges.solve_state.click_to_solve')
     elsif !challenge.can_be_solved_by(team)
-      'Solved'
+      I18n.t('challenges.solve_state.solved')
     else
-      '-'
+      I18n.t('challenges.solve_state.unavailable_solve_state')
     end
   end
 

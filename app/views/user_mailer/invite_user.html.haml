@@ -1,12 +1,12 @@
 %p
-  Hello #{@invite.email}!
+  = t('user_mailer.invite_user.greeting', email: @invite.email)
 %p
-  You have been invited to join the team
+  = t('user_mailer.invite_user.invite_line_1')
   %b #{@team.team_name}
-  for the upcoming #{@game.organization} #{@game.title}
+  = t('user_mailer.invite_user.invite_line_2', organization: @game.organization, title: @game.title)
 - if @invite.user.nil?
-  %p Click the link below to register an account to view the invitation.
+  %p= t('user_mailer.invite_user.register')
   %p= link_to 'Create my account', new_user_registration_url(:email => @invite.email)
 - else
-  %p Click the link below to view the invitiation.
+  %p= t('user_mailer.invite_user.view')
   %p= link_to 'View invitation', join_team_users_url

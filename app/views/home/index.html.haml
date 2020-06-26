@@ -4,12 +4,15 @@
 .container
   .catchphrase
     - if @game.before_competition?
-      %h2 Register for the CTF
+      %h2= t('home.index.catchprase.before_completion')
     - elsif @game.open?
-      %h2 Competition in Progress
+      %h2= t('home.index.catchprase.game_open')
     - else
-      %h2 Competition has Completed
+      %h2= t('home.index.catchprase.game_completed')
   .maincontent.row-fluid.indent-40px-left
+    %p
+      %b
+        %u= t('home.index.description')
     = sanitize(Kramdown::Document.new(@game&.description).to_html)
     %p
       %b
@@ -32,7 +35,7 @@
               = link_to t('home.index.join_team'), join_team_users_path, :class => "btn btn-large btn-primary"
             .btn-group
               = link_to t('home.index.create_team'), new_team_path, :class => "btn btn-large btn-primary"
-    - else
+    - elsif @game.registration_enabled
       .btn-toolbar
         .pagination-centered
           .btn-group

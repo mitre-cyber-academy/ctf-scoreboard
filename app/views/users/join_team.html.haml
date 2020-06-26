@@ -1,9 +1,9 @@
 - content_for :header do
   = t('users.join_team.header')
 - unless @pending_invites.empty?
-  = render partial: 'users/_join_team_invites_table'
+  = render partial: 'users/join_team_invites_table'
 - unless @pending_requests.empty?
-  = render partial: 'users/_join_team_requests_table'
+  = render partial: 'users/join_team_requests_table'
 %h3= t('users.join_team.search_for_team_header')
 = form_for_filterrific @filterrific, html: { class: 'form_for_filterrific' } do |f|
   .well
