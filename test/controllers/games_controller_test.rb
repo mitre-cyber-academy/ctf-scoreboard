@@ -39,7 +39,7 @@ class GamesControllerTest < ActionController::TestCase
       get :summary
 
       assert_response :success
-      assert_select "div.zero-items-text", {:count=>1, :text=>"No Teams"}, "No Teams text is missing from Team show page"
+      assert_select "div.zero-items-text", {:count=>1, :text=>"Nothing to report"}, "No Teams text is missing from Team show page"
     end
   end
 
