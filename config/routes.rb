@@ -41,13 +41,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # Custom route for looking for member
-  resources :teams do
-    member do
-      patch :looking_for_members
-    end
-  end
-
   # game
   resource :game, only: %i[show] do
     get :resumes

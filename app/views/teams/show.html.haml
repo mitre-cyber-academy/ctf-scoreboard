@@ -38,14 +38,6 @@
               = link_to team_user_promote_path(current.team_id, current), method: :get, data: { confirm: t('teams.show.promote_confirm') } do
                 %i.icon-star
 
-- if @team_captain
-  %hr
-  %h4= t('teams.lookformembers.lookformember_header')
-  - if team_editable?
-    = form_for @team, {:url => looking_for_members_team_path} do |f|
-      = f.check_box :look_for_member, :onchange => 'this.form.submit();'
-  - else
-    %h4{:style => 'text-align:center'}= t('teams.lookformembers.full_team')
 %hr
 .row
   .span6
