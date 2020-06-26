@@ -195,7 +195,7 @@ en:
       red_desc: 'Locked'
     summary:
       header: 'Game Summary'
-      topfive: 'Top 5 Teams'
+      teams_summary: 'Teams Summary'
       submissions_title: 'Flag Submissions'
       flag_submissions_graph:
         flags_submitted: 'Flag Submissions'

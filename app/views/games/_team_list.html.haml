@@ -1,5 +1,5 @@
 - if teams.nil? or teams.size.eql? 0
-  .zero-items-text No Teams
+  .zero-items-text= t('teams.summary.zero_items_text')
 - else
   - max = 0
   %table.table.table-bordered.table-striped
@@ -14,7 +14,7 @@
       - max_score = teams.first.current_score
       / We pass in starting_rank here to start the list at the proper index
       = render partial: 'games/team_list_tbody', locals: { teams: teams.slice(0..4), starting_rank: 1, max_score: max_score }
-      / This part of the list is hidden until the user clicks the 'Show/Hide Teams' button below 
+      / This part of the list is hidden until the user clicks the 'Show/Hide Teams' button below
       = render partial: 'games/team_list_tbody', locals: { |
                teams: teams.slice(5..),                    |
                starting_rank: 6,                           |

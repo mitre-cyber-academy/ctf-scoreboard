@@ -2,12 +2,12 @@
   = t('game.summary.header')
 
 %h3.muted
-  = t('game.summary.topfive')
+  = t('game.summary.teams_summary')
 %br/
 = render partial: "games/divisions", locals: { divisions: @game.divisions, active_division: @active_division}
 %hr
 / Only show the flags per hour count when we have more than 1 datapoint to show
 - if @flags_per_hour.count > 1
   %h3.muted
-    Flag Submissions
+    = t('teams.summary.flag_submissions_header')
     = line_chart @line_chart_data, colors: ['#b8d12f', '#00abca']
