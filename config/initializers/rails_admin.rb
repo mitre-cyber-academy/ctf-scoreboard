@@ -130,7 +130,8 @@ RailsAdmin.config do |config|
       [
         :challenge_categories,
         :submitted_flags,
-        :solved_challenges
+        :solved_challenges,
+        :type
       ].each do |field|
         configure field do
           hide
@@ -170,8 +171,12 @@ RailsAdmin.config do |config|
         :solved_challenges,
         :unsolved_increment_period,
         :unsolved_increment_points,
+        :defense_period,
+        :defense_points,
+        :type,
         :initial_shares,
         :solved_decrement_shares,
+        :solved_decrement_period,
         :first_capture_point_bonus
       ].each do |field|
         configure field do
@@ -209,7 +214,8 @@ RailsAdmin.config do |config|
       [
         :challenge_categories,
         :submitted_flags,
-        :solved_challenges
+        :solved_challenges,
+        :type
       ].each do |field|
         configure field do
           hide
@@ -369,7 +375,6 @@ RailsAdmin.config do |config|
       field :flag
       field :api_url
       field :video_url
-      field :challenge_state
       field :start_calculation_at
       field :design_phase
     end
@@ -460,7 +465,7 @@ RailsAdmin.config do |config|
     edit do
       field :team_name
       field :affiliation
-      field :team_captain_id
+      field :team_captain
       field :division
       field :eligible
     end
