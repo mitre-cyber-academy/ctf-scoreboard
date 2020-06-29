@@ -14,7 +14,7 @@ class ChallengeTest < ActiveSupport::TestCase
 
   test 'challenge is closed when its passed closing time' do
     game = create(:active_game)
-    challenge = create(:standard_challenge, challenge_end: Time.current - 1.days)
+    challenge = create(:standard_challenge, close_challenge_at: Time.current - 1.days)
 
     assert_not challenge.before_close?
   end
