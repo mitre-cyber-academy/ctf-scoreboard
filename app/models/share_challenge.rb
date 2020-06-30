@@ -7,7 +7,11 @@ class ShareChallenge < StandardChallenge
   validates :unsolved_increment_period, numericality: { greater_than: 0 }
 
   def start_calculation_at
-    game&.start
+    open_challenge_at || game&.start
+  end
+
+  def stop_calculation_at
+    close_challenge_at || game&.stop
   end
 
   # Share Challenges do not have a concept of teams, however the FlagChallengeShareModule
