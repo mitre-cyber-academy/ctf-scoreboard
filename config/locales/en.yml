@@ -316,6 +316,7 @@ en:
       messages: 'Messages'
       achievements: 'Achievements'
       summary: 'Summary'
+      contact: 'Contact'
       greeting: 'Hello, '
     game_name_if_organization_not_set: 'Gameboard'
     log_out: 'Log out'
