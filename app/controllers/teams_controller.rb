@@ -45,7 +45,6 @@ class TeamsController < ApplicationController
 
   def show
     @team_captain = team_captain?
-    @team = Team.find_by(id: params[:id].to_i)
     # Filter for only pending invites and requests.
     @pending_invites = @team.user_invites.pending
     @pending_requests = @team.user_requests.pending
