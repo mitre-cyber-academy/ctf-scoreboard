@@ -6,15 +6,15 @@
 
 %table.table.table-condensed.table-striped
   %thead
-  %tr
-    %th.span1= t('teams.team_users_table.team_leader_header')
-    %th= t('teams.team_users_table.email_header')
-    %th= t('teams.team_users_table.grade')
-    %th.span2= t('teams.team_users_table.prize_eligibility_header')
-    %th= t('teams.team_users_table.remove_user_header')
-    - if @team_captain
-      %th
-        = t('teams.team_users_table.change_captian_header')
+    %tr
+      %th.span1= t('teams.team_users_table.team_leader_header')
+      %th= t('teams.team_users_table.email_header')
+      %th= t('teams.team_users_table.grade_header')
+      %th.span2= t('teams.team_users_table.prize_eligibility_header')
+      %th= t('teams.team_users_table.remove_user_header')
+      - if @team_captain
+        %th
+          = t('teams.team_users_table.change_captian_header')
   - @team.users.each do |current|
     %tbody
       %tr{ :class=>'success' }
@@ -25,9 +25,9 @@
         %td=current.division
         %td
           -if current.compete_for_prizes
-            = t('teams.show.team_users_table.compete_for_prizes_true')
+            = t('teams.team_users_table.compete_for_prizes_true')
           -else
-            = t('teams.show.team_users_table.compete_for_prizes_false')
+            = t('teams.team_users_table.compete_for_prizes_false')
         %td
           - if current_user.can_remove?(current)
             = link_to team_user_leave_team_path(current.team, current), method: :delete, data: { confirm: t('teams.show.remove_user_confirm') } do
@@ -41,8 +41,7 @@
 .row
   .span6
     %h4
-      = t('teams.show.team_eligibility_status_header')
-    = t('teams.show.label.team_prize_eligibility_status')
+      = t('teams.show.team_prize_eligibility_status')
     = t('teams.show.eligible_currently')
     - if @team.eligible?
       = t('teams.show.eligible_true')
@@ -51,7 +50,7 @@
       = t('teams.show.eligible_false')
   .span6
     %h4
-      = t('teams.show.label.team_division_status')
+      = t('teams.show.team_division_status')
     = t('teams.show.currently_selected_division', division: @team.division.name)
     - if @team.appropriate_division_level?
       = t('teams.show.division_true')

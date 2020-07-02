@@ -46,4 +46,89 @@ class TeamNewJoinDisplayModesTest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  test 'team page displays correctly' do
+    team = create(:team, team_name: 'Example Team', division: create(:division, name: 'Example Division'))
+    chal = create(:standard_challenge, point_value: 100, category_count: 2)
+    create(:standard_solved_challenge, challenge: chal, team: team)
+    user = team.team_captain
+    user.compete_for_prizes = false
+    sign_in user
+
+    get "/teams/#{team.id}"
+
+    assert_select 'h1', /Example Team/
+    assert_select 'h1', /ineligible/
+    assert_select 'h1', /100/
+
+    assert_select 'table[class=table\ table-condensed\ table-striped]' do
+      assert_select 'thead' do
+        assert_select 'tr' do
+          assert_select 'th:nth-child(1)', I18n.t('teams.team_users_table.team_leader_header')
+          assert_select 'th:nth-child(2)', I18n.t('teams.team_users_table.email_header')
+          assert_select 'th:nth-child(3)', I18n.t('teams.team_users_table.grade_header')
+          assert_select 'th:nth-child(4)', I18n.t('teams.team_users_table.prize_eligibility_header')
+          assert_select 'th:nth-child(5)', I18n.t('teams.team_users_table.remove_user_header')
+          assert_select 'th:nth-child(6)', I18n.t('teams.team_users_table.change_captian_header')
+        end
+      end
+      assert_select 'tbody' do
+        assert_select 'td:nth-child(1)' do
+          assert_select 'i'
+        end
+        assert_select 'td:nth-child(2)', team.team_captain.email
+        assert_select 'td:nth-child(4)', 'No'
+        assert_select 'td:nth-child(5)' do
+          assert_select 'i'
+        end
+        assert_select 'td:nth-child(6)'
+      end
+    end
+
+    assert_select 'body' do
+      assert_select 'div[class=container]' do
+        assert_select 'div:nth-child(1)' do
+          assert_select 'div:nth-child(1)' do
+            assert_select 'h4', I18n.t('teams.show.team_prize_eligibility_status')
+          end
+          assert_select 'div:nth-child(1)', /Your team is currently/
+          assert_select 'div:nth-child(1)', /NOT/
+          assert_select 'div:nth-child(1)', /competing for prizes/
+        end
+      end
+      assert_select 'div:nth-child(2)' do
+        assert_select 'h4', I18n.t('teams.show.team_division_status')
+      end
+      assert_select 'div:nth-child(2)', /Example Division/
+    end
+  end
+
+  test 'solved challenges show on team summary page' do
+    team = create(:team)
+    chal = create(:standard_challenge, point_value: 100, category_count: 2)
+    solve = create(:standard_solved_challenge, challenge: chal, team: team)
+    user = team.team_captain
+    sign_in user
+
+    get "/teams/#{team.id}/summary"
+
+    assert_select 'table[class=table\ table-bordered\ table-striped]' do
+      assert_select 'thead' do
+        assert_select 'tr' do
+          assert_select 'th:nth-child(1)', I18n.t('teams.summary.solved_challenges_table.challenge_header')
+          assert_select 'th:nth-child(2)', I18n.t('teams.summary.solved_challenges_table.points_header')
+          assert_select 'th:nth-child(3)', I18n.t('teams.summary.solved_challenges_table.when_header')
+        end
+      end
+      assert_select 'tbody' do
+        assert_select 'tr' do
+          assert_select 'td:nth-child(1)' do
+            assert_select 'a[href=\/game\/challenges\/' + chal.id.to_s + ']'
+          end
+          assert_select 'td:nth-child(2)', '100'
+          assert_select 'td:nth-child(3)', solve.created_at.strftime('%B %e at %l:%M %p %Z')
+        end
+      end
+    end
+  end
 end
