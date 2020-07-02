@@ -223,6 +223,52 @@ class TeamsControllerTest < ActionController::TestCase
     assert_redirected_to @controller.user_root_path
   end
 
+  test "solved challenges table displays correctly with 0 solved challenges" do
+    user = create(:user_with_team)
+    StandardSolvedChallenge.destroy_all
+    create_list(:standard_challenge, 0, team: user.team)
+    sign_in user
+    get :show, params: { id: user.team }
+    assert_response :success
+    assert_select "div.zero-items-text#noSolvedChallengesText", {:count=>1, :text=>"Nothing to report"}, "Nothing to Report text is missing from Team Solved Challenges Table"
+  end
+
+  [1, 3, 5, 6].each do |challenge_count|
+    test "solved challenges table displays correctly with #{challenge_count} solved challenges" do
+      user = create(:user_with_team)
+      sign_in user
+      StandardSolvedChallenge.destroy_all
+      create_list(:standard_solved_challenge, challenge_count, team: user.team)
+      get :show, params: { id: user.team }
+      assert_response :success
+      assert_select 'tbody' do
+        StandardSolvedChallenge.all.each do |sc|
+          assert_select 'tr' do
+            assert_select 'td', "#{sc.challenge.name}", "Solved Challenge name missing from team's solved challenges table"
+            assert_select 'td', "#{sc.challenge.display_point_value(user.team)}", "Solved Challenge point value missing from team's solved challnges table"
+            assert_select 'td', "#{sc.created_at.strftime('%B %e at %l:%M %p %Z')}", "Solved Challenge time missing from team's solved challenges table"
+          end
+        end
+      end
+    end
+  end
+
+  test "solved challenges table show button displays when num solved challenges is greater than 5" do
+    user = create(:user_with_team)
+    sign_in user
+    StandardSolvedChallenge.destroy_all
+    create_list(:standard_solved_challenge, 6, team: user.team)
+    get :show, params: { id: user.team }
+    assert_response :success
+    if user.team.solved_challenges.size > 5
+      assert_select 'tr#showBtnRow' do
+        assert_select 'td' do
+          assert_select 'a.toggler', I18n.t('teams.summary.solved_challenges_table.show_hide_btn'), "Show/Hide button missing from Solved Challenges table"
+        end
+      end
+    end
+  end
+
   test 'update a team when game is closed' do
     create(:unstarted_game)
     user = create(:user_with_team)

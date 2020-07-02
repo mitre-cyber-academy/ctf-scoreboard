@@ -12,6 +12,6 @@
              tbody_class: 'hide'                              |
       }                                                       |
     - if @team.solved_challenges.size > 5
-      %tr
+      %tr{:id => "showBtnRow"}
         %td{align: 'center', colspan: '3', style: 'text-align: center;'}
           = link_to t('teams.summary.solved_challenges_table.show_hide_btn'), "#", :class => "toggler"

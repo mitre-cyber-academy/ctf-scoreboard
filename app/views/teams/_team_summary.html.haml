@@ -10,7 +10,7 @@
   %div.span5
     %h3.muted= t('teams.summary.solved_challenges_header')
     - if @team.solved_challenges.size == 0
-      .zero-items-text= t('teams.summary.zero_items_text')
+      .zero-items-text{:id => "noSolvedChallengesText"}= t('teams.summary.zero_items_text')
     - else
       = render partial: 'teams/solved_challenges_table'
   %div.span7
