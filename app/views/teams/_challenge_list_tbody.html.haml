@@ -1,7 +1,7 @@
 - tbody_class ||= ''
 
 %tbody{class: tbody_class}
-  - teams&.each&.with_index(starting_rank) do |s, i|
+  - teams&.each&.with_index(starting_index) do |s, i|
     %tr
       %td= always_link_to_if_admin(s.challenge.open?, s.challenge.name, game_challenge_path(s.challenge))
       %td= solved_challenge_table_point_value(s, @team)
