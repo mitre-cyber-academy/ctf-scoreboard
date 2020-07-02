@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TeamNewJoinDisplayModesTest < ActionDispatch::IntegrationTest
+class TeamDisplayModesTest < ActionDispatch::IntegrationTest
   include TeamsHelper
   include Devise::Test::IntegrationHelpers
 

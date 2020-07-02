@@ -75,7 +75,7 @@ class ApplicationDisplayModesTest < ActionDispatch::IntegrationTest
     assert_select 'h2', /Competition in Progress/
   end
 
-  test 'game information is displayed correctly' do
+  test 'game description is displayed correctly' do
     get "/"
 
     assert_select 'div[class=maincontent\ row-fluid\ indent-40px-left]' do
