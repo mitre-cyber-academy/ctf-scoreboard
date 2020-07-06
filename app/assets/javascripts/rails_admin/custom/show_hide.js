@@ -16,7 +16,9 @@ $(document).on('rails_admin.dom_ready', function() {
   // Wrapper for all showing/hiding of sponsors
   function toggleSponsorField() {
     var checkbox_id = $('.sponsorship_fields_toggler').find('input')[1].id
-    showOrHide(checkbox_id, '.sponsorship_fields_toggle')
+    showOrHide(checkbox_id, 'standard_challenge_sponsor_field')
+    showOrHide(checkbox_id, 'standard_challenge_sponsor_logo_field')
+    showOrHide(checkbox_id, 'standard_challenge_sponsor_description_field')
   }
 
   // Wrapper for all showing/hiding of game prizes/completion certificates
@@ -28,10 +30,10 @@ $(document).on('rails_admin.dom_ready', function() {
   // Show or hide based off a checkbox
   function showOrHide(checkboxId, fieldToToggle){
     if(document.getElementById(checkboxId).checked){
-      $(fieldToToggle).show()
+      document.getElementById(fieldToToggle).style.display = "";
     }
     else{
-      $(fieldToToggle).hide()
+      document.getElementById(fieldToToggle).style.display = "none";
     }
   }
 });
