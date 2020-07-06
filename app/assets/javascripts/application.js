@@ -15,6 +15,7 @@
 //= require_tree .
 //= require jquery.nested-fields
 // Loads all Bootstrap javascripts
+//= require popper
 //= require bootstrap
 //= require filterrific/filterrific-jquery
 //= require highcharts

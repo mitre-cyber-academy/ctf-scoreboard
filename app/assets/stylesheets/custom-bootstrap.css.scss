@@ -3,7 +3,6 @@ $btnPrimaryBackground: #5d8cb6;
 $btnPrimaryBackgroundHighlight: #39546c;
 @import "bootstrap";
 body { padding-top: 60px; }
-@import "bootstrap-responsive";
 
 .breadcrumb {
   text-align:left;
@@ -38,7 +37,7 @@ th.text-center {
   margin-top:-20px;
 }
 .control-label-required {
-	@extend .control-label;
+	@extend .control-label !optional;
 	font-weight:bold;
 }
 .control-label-required:before {
