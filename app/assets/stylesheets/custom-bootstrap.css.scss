@@ -2,7 +2,6 @@
 $btnPrimaryBackground: #5d8cb6;
 $btnPrimaryBackgroundHighlight: #39546c;
 @import "bootstrap";
-body { padding-top: 60px; }
 
 .breadcrumb {
   text-align:left;
@@ -33,9 +32,6 @@ th.text-center {
   text-overflow: ellipsis;
 }
 
-.remove_top_padding {
-  margin-top:-20px;
-}
 .control-label-required {
 	@extend .control-label !optional;
 	font-weight:bold;
@@ -63,6 +59,10 @@ td form {
   position: relative;
   color: #fff;
   text-align: center;
+  border-top-left-radius: 0rem;
+  border-top-right-radius: 0rem;
+  border-bottom-right-radius: 0rem;
+  border-bottom-left-radius: 0rem;
   text-shadow: 0 1px 3px rgba(0,0,0,.4), 0 0 30px rgba(0,0,0,.075);
   background: #476988; /* Old browsers */
   background: rgb(71, 105, 136);
@@ -262,6 +262,9 @@ td form {
 }
 .well-small {
 	min-height:10px;
+}
+.white {
+  color: #fff;
 }
 @media (max-width: 767px) {
 	.bigheader {

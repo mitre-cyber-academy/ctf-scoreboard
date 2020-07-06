@@ -6,12 +6,8 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
-    .navbar.navbar-fixed-top.navbar-inverse
-      .navbar-inner
-        .container
-          = render partial: 'layouts/navbar'
-          = render partial: 'layouts/dropdown'
-    %header#subpage.jumbotron.masthead.remove_top_padding
+    = render partial: 'layouts/navbar'
+    %header#subpage.jumbotron.masthead
       .container
         %h1
           = yield :header
