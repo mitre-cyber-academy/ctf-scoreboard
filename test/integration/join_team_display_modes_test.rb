@@ -55,7 +55,7 @@ class JoinTeamDisplayModesTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "teams not looking for members display on join teams page table" do
+  test "teams not looking for members display on the join teams page table" do
     game = create(:active_game, board_layout: :jeopardy)
     user = create(:user)
     sign_in user
