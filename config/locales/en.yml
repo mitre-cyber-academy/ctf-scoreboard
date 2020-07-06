@@ -69,7 +69,7 @@ en:
     defensive_points_table:
       challenge_header: 'Challenge'
       points_header: 'Points'
-    team_users_table:
+    users_table:
       team_leader_header: 'Lead'
       email_header: 'Email'
       grade_header: 'School Level'

@@ -64,12 +64,12 @@ class TeamDisplayModesTest < ActionDispatch::IntegrationTest
     assert_select 'table[class=table\ table-condensed\ table-striped]' do
       assert_select 'thead' do
         assert_select 'tr' do
-          assert_select 'th:nth-child(1)', I18n.t('teams.team_users_table.team_leader_header')
-          assert_select 'th:nth-child(2)', I18n.t('teams.team_users_table.email_header')
-          assert_select 'th:nth-child(3)', I18n.t('teams.team_users_table.grade_header')
-          assert_select 'th:nth-child(4)', I18n.t('teams.team_users_table.prize_eligibility_header')
-          assert_select 'th:nth-child(5)', I18n.t('teams.team_users_table.remove_user_header')
-          assert_select 'th:nth-child(6)', I18n.t('teams.team_users_table.change_captian_header')
+          assert_select 'th:nth-child(1)', I18n.t('teams.users_table.team_leader_header')
+          assert_select 'th:nth-child(2)', I18n.t('teams.users_table.email_header')
+          assert_select 'th:nth-child(3)', I18n.t('teams.users_table.grade_header')
+          assert_select 'th:nth-child(4)', I18n.t('teams.users_table.prize_eligibility_header')
+          assert_select 'th:nth-child(5)', I18n.t('teams.users_table.remove_user_header')
+          assert_select 'th:nth-child(6)', I18n.t('teams.users_table.change_captian_header')
         end
       end
       assert_select 'tbody' do

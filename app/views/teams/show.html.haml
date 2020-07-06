@@ -7,14 +7,14 @@
 %table.table.table-condensed.table-striped
   %thead
     %tr
-      %th.span1= t('teams.team_users_table.team_leader_header')
-      %th= t('teams.team_users_table.email_header')
-      %th= t('teams.team_users_table.grade_header')
-      %th.span2= t('teams.team_users_table.prize_eligibility_header')
-      %th= t('teams.team_users_table.remove_user_header')
+      %th.span1= t('teams.users_table.team_leader_header')
+      %th= t('teams.users_table.email_header')
+      %th= t('teams.users_table.grade_header')
+      %th.span2= t('teams.users_table.prize_eligibility_header')
+      %th= t('teams.users_table.remove_user_header')
       - if @team_captain
         %th
-          = t('teams.team_users_table.change_captian_header')
+          = t('teams.users_table.change_captian_header')
   - @team.users.each do |current|
     %tbody
       %tr{ :class=>'success' }
@@ -25,9 +25,9 @@
         %td=current.division
         %td
           -if current.compete_for_prizes
-            = t('teams.team_users_table.compete_for_prizes_true')
+            = t('teams.users_table.compete_for_prizes_true')
           -else
-            = t('teams.team_users_table.compete_for_prizes_false')
+            = t('teams.users_table.compete_for_prizes_false')
         %td
           - if current_user.can_remove?(current)
             = link_to team_user_leave_team_path(current.team, current), method: :delete, data: { confirm: t('teams.show.remove_user_confirm') } do
