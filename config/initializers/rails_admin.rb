@@ -455,7 +455,7 @@ RailsAdmin.config do |config|
     list do
       field :team_name
       field :affiliation
-      field :team_captian
+      field :team_captain
       field :division
     end
   end

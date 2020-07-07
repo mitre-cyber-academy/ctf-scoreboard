@@ -129,6 +129,8 @@ GEM
       multipart-post (>= 1.2, < 3)
     ffi (1.13.0)
     filterrific (5.2.1)
+    font-awesome-rails (4.7.0.5)
+      railties (>= 3.2, < 6.1)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
     geocoder (1.6.3)
@@ -379,6 +381,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   filterrific
+  font-awesome-rails
   formtastic
   geocoder
   groupdate

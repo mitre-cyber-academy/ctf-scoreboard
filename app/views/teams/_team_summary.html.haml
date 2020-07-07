@@ -1,35 +1,40 @@
-%h3.muted= t('teams.summary.flag_submissions_header')
-- if @team.solved_challenges.size > 0
-  = line_chart @team_flag_submissions, library: {chart: {zoomType: 'x'}}, colors: ['#b8d12f', '#00abca']
-  %p.muted
-    = t('game.zoom_help')
-- else
-  .zero-items-text= t('teams.summary.zero_items_text')
+.container
+  .row
+    .col-sm
+      %h3.muted= t('teams.summary.flag_submissions_header')
+      - if @team.solved_challenges.size > 0
+        = line_chart @team_flag_submissions, library: {chart: {zoomType: 'x'}}, colors: ['#b8d12f', '#00abca']
+        %p.muted
+          = t('game.zoom_help')
+      - else
+        .zero-items-text= t('teams.summary.zero_items_text')
 %hr
-%div.row
-  %div.span5
-    %h3.muted= t('teams.summary.solved_challenges_header')
-    - if @team.solved_challenges.size == 0
-      .zero-items-text= t('teams.summary.zero_items_text')
-    - else
-      = render partial: 'teams/solved_challenges_table'
-  %div.span7
-    %h3.muted= t('teams.summary.solved_challenges_chart_header')
-    - if @team.solved_challenges.size == 0
-      .zero-items-text= t('teams.summary.zero_items_text')
-    - else
-      = pie_chart @flag_categories
+.container
+  .row
+    .col-sm
+      %h3.muted= t('teams.summary.solved_challenges_header')
+      - if @team.solved_challenges.size == 0
+        .zero-items-text= t('teams.summary.zero_items_text')
+      - else
+        = render partial: 'teams/solved_challenges_table'
+    .col-sm
+      %h3.muted= t('teams.summary.solved_challenges_chart_header')
+      - if @team.solved_challenges.size == 0
+        .zero-items-text= t('teams.summary.zero_items_text')
+      - else
+        = pie_chart @flag_categories
 %hr
-%div.row
-  %div.span5
-    - if @defensive_points
-      = render partial: 'teams/defensive_points_table'
-  %div.span7
-    %h3.muted= t('teams.summary.score_adjustments_header')
-    - if @score_adjustments.size == 0
-      .zero-items-text= t('teams.summary.zero_items_text')
-    - else
-      = render partial: 'teams/score_adjustments_table'
+.container
+  .row
+    .col-sm
+      - if @defensive_points
+        = render partial: 'teams/defensive_points_table'
+    .col-sm
+      %h3.muted= t('teams.summary.score_adjustments_header')
+      - if @score_adjustments.size == 0
+        .zero-items-text= t('teams.summary.zero_items_text')
+      - else
+        = render partial: 'teams/score_adjustments_table'
 - if current_user&.admin?
   = render partial: 'teams/admin_info_table'
 %br

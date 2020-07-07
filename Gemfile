@@ -13,6 +13,7 @@ gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'devise'
 gem 'filterrific'
+gem "font-awesome-rails"
 gem 'formtastic'
 gem 'geocoder'
 gem 'groupdate'

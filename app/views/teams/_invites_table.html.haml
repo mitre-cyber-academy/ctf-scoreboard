@@ -27,4 +27,4 @@
         - if @team_captain
           %td
             = link_to team_user_invite_path(@team, current), method: :delete, data: { confirm: t('teams.show.cancel_invite.confirm') } do
-              %i.icon-remove
+              = fa_icon 'ban'

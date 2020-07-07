@@ -4,14 +4,14 @@
   .form-group
     = f.label :team_name, :class => "control-label"
     .controls
-      = f.text_field :team_name, :class => "form-control textarea", maxlength: 255
+      = f.text_field :team_name, :class => "form-control w-50 textarea", maxlength: 255
   .form-group
     = f.label :affiliation, :class => "control-label"
     .controls
-      = f.text_field :affiliation, :class => "form-control textarea", maxlength: 255
+      = f.text_field :affiliation, :class => "form-control w-50 textarea", maxlength: 255
   .form-group
     = f.label :division, :class => "control-label"
     .controls
-      = f.collection_select :division_id, @divisions, :id, :name, {}, {:class => 'form-control'}
+      = f.collection_select :division_id, @divisions, :id, :name, {}, {:class => 'form-control w-50'}
   .controls
     = button_tag "Submit", :class => "btn btn-primary"

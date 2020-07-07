@@ -18,6 +18,7 @@
         %a.dropdown-item{:href => team_path(current_user.team_id)}= t('home.index.view_team')
         - if current_user.team_captain?
           %a.dropdown-item{:href => edit_team_path(current_user.team_id)}= t('home.index.edit_team')
+        .dropdown-divider
       - else
         %a.dropdown-item{:href => join_team_users_path}= t('home.index.join_team')
         %a.dropdown-item{:href => new_team_path}= t('home.index.create_team')
