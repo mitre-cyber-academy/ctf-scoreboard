@@ -7,8 +7,9 @@
       %li.nav-item
         %a.nav-link{:href => game_path}= t('application.navbar.challenges')
       %li.nav-item
-        %a.nav-link{:href => game_messages_path}= t('application.navbar.messages')
-        %span.badge.badge-important= unread_messages(@unread_message_count)
+        %form.form-inline
+          %a.nav-link{:href => game_messages_path}= t('application.navbar.messages')
+          %span.badge.badge-important.text-info= unread_messages(@unread_message_count)
       %li.nav-item
         %a.nav-link{:href => game_achievements_path}= t('application.navbar.achievements')
       %li.nav-item
