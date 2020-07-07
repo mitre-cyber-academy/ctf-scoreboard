@@ -1,22 +1,23 @@
 %hr
-%div.row
-  %div.span5
-    %h3.muted= t('teams.summary.team_members_header')
-    %table.table.table-bordered.table-striped
-      %thead
-        %tr
-          %th= t('teams.show.admin_info_table.user_id')
-          %th= t('teams.show.admin_info_table.name')
-          %th= t('teams.show.admin_info_table.email')
-      %tbody
-        - @team.users.each do |user|
+.container
+  .row
+    .col-sm
+      %h3.muted= t('teams.summary.team_members_header')
+      %table.table.table-bordered.table-striped
+        %thead
           %tr
-            %td= link_to user.id, rails_admin.show_path('user', user)
-            %td= user.full_name
-            %td= user.email
-  %div.span7
-    %h3.muted= t('teams.summary.per_user_statistics_header')
-    - if @team.solved_challenges.size == 0
-      .zero-items-text= t('teams.summary.zero_items_text')
-    - else
-      = column_chart @per_user_stats, legend: 'bottom', xtitle: "User ID", stacked: true, colors: ['#b8d12f', '#00abca']
+            %th= t('teams.show.admin_info_table.user_id')
+            %th= t('teams.show.admin_info_table.name')
+            %th= t('teams.show.admin_info_table.email')
+        %tbody
+          - @team.users.each do |user|
+            %tr
+              %td= link_to user.id, rails_admin.show_path('user', user)
+              %td= user.full_name
+              %td= user.email
+    .col-sm
+      %h3.muted= t('teams.summary.per_user_statistics_header')
+      - if @team.solved_challenges.size == 0
+        .zero-items-text= t('teams.summary.zero_items_text')
+      - else
+        = column_chart @per_user_stats, legend: 'bottom', xtitle: "User ID", stacked: true, colors: ['#b8d12f', '#00abca']
