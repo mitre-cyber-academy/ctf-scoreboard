@@ -38,7 +38,7 @@ class TeamDisplayModesTest < ActionDispatch::IntegrationTest
     get "/users/join_team"
 
     assert_select 'form[id=filterrific_filter]' do
-      assert_select 'div[class=row]' do
+      assert_select 'div[class=form-group\ row]' do
         assert_select 'div:nth-child(1)', /Team Name/
         assert_select 'div:nth-child(2)', /Affiliation/
         assert_select 'div:nth-child(3)', /Location/
