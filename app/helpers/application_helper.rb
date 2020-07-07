@@ -23,10 +23,6 @@ module ApplicationHelper
     num_unread unless num_unread&.eql? 0
   end
 
-  def active_navbar?(page)
-    'active' if current_page? page
-  end
-
   def amount_of_errors(alerts)
     pluralize(alerts.length, I18n.t('challenges.error_singular')) + ':'
   end
