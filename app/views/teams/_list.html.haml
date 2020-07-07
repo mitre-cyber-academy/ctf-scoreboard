@@ -21,7 +21,7 @@
               %th= t('users.join_team.teams_table.request_join_header')
           %tbody
             - teams.each do |team|
-              - unless team.users.size.zero?
+              - if team.looking_for_members? && !team.users.size.zero?
                 %tr
                   %td= team.team_name
                   %td= team.affiliation
