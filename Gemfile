@@ -5,15 +5,15 @@ source 'https://rubygems.org'
 gem 'activerecord-precounter'
 gem 'awesome_nested_fields'
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'bootstrap-kaminari-views'
 gem 'bootstrap', '~> 4.5.0'
+gem 'bootstrap-kaminari-views'
 gem 'carrierwave-postgresql', '< 0.3.0' # Can be upgraded once https://github.com/diogob/carrierwave-postgresql/issues/33
 gem 'chartkick'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'devise'
 gem 'filterrific'
-gem "font-awesome-rails"
+gem 'font-awesome-rails'
 gem 'formtastic'
 gem 'geocoder'
 gem 'groupdate'
