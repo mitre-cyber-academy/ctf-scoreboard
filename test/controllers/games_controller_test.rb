@@ -31,6 +31,38 @@ class GamesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  [0, 1].each do |num|
+    test "summary page displays successfully with 0 teams and #{num} divisions" do
+      Division.destroy_all
+      create_list(:division, num)
+
+      get :summary
+
+      assert_response :success
+      assert_select "div.zero-items-text", {:count=>1, :text=>I18n.t('teams.summary.zero_teams_text')}, "Nothing to Report text is missing from Team Summary page"
+    end
+  end
+
+  [1, 4, 5, 6].each do |team_count|
+    test "summary page displays correctly with #{team_count} teams" do
+      Team.destroy_all
+      create_list(:team, team_count, compete_for_prizes: true)
+
+      get :summary
+
+      assert_response :success
+      assert_select 'tbody' do
+        Team.all.each.with_index(1) do |team, idx|
+          assert_select "tr" do
+            assert_select "td", {:count=>1, :text=>"#{idx}"},
+                          "#{team_count} teams was created but no #{idx} entry was found in the table"
+            assert_select "td", {:count=>1, :text=>"#{team.team_name}"}
+          end
+        end
+      end
+    end
+  end
+
   test 'guest and user cannot access resume unless they are an admin' do
     user = create(:user_with_resume)
     assert_raises(ActiveRecord::RecordNotFound) do
@@ -137,4 +169,6 @@ class GamesControllerTest < ActionController::TestCase
       assert_response :success
     end
   end
+
+
 end
