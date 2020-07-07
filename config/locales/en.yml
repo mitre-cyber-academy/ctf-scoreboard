@@ -252,8 +252,10 @@ en:
         current_password_placeholder: 'Current Password'
         delete_account: 'Delete Account'
         major_area_of_study: "Major/Area of study"
+      submit: 'Submit'
       help:
         affiliation: 'If you are a student, please list your school. If you are an industry professional please list your professional organization.'
+        year_in_school: 'Enter your current education status.'
         state: 'Enter the state in which you are a resident.'
         compete_for_prizes: 'Prize distribution may be restricted to qualifying teams. Check terms and conditions for full details and to see if you qualify.'
         interested_in_employment: 'Are you interested receiving internship or employment emails from %{organization}?'

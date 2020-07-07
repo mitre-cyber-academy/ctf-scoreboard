@@ -1,15 +1,13 @@
-.control-group
-  .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('users.edit.help.resume') }
+.form-group
+  .col-xs-2
     = f.label :resume, :class => "control-label"
-    .controls
-      = f.file_field :resume
-.control-group
-  .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('users.edit.help.transcript') }
+    = f.file_field :resume, :class => "col-sm-10"
+.form-group
+  .col-xs-2
     = f.label :unofficial_transcript, :class => "control-label"
-    .controls
-      = f.file_field :transcript
-.control-group
+    = f.file_field :transcript, :class => "col-sm-10"
+.form-group
   .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('users.edit.help.password') }
-    = f.label :current_password, :class => "control-label-required"
+    = f.label :current_password, :class => "form-control-file control-label-required"
     .controls
-      = f.password_field :current_password, :class => "textarea"
+      = f.password_field :current_password, :class => "form-control textarea"

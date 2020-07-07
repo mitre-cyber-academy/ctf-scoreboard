@@ -13,8 +13,9 @@
         %a.nav-link{:href => game_achievements_path}= t('application.navbar.achievements')
       %li.nav-item
         %a.nav-link{:href => game_summary_path}= t('application.navbar.summary')
-      - unless @game.contact_url.blank?
-        %li.nav-item
-          %a.nav-link{:href => @game.contact_url}= t('application.navbar.contact')
+      - unless @game.nil?
+        - unless @game.contact_url.nil?
+          %li.nav-item
+            %a.nav-link{:href => @game.contact_url}= t('application.navbar.contact')
     %form.form-inline.my-2.my-lg-0
       = render partial: 'layouts/dropdown'

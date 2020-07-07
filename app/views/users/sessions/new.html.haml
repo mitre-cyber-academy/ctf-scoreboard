@@ -2,24 +2,24 @@
   = t('users.login.login_header')
 %legend= t('users.new.sessions_legend')
 = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-horizontal"}) do |f|
-  .control-group
+  .form-group
     = f.label :email, :class => "control-label"
     .controls
-      = f.email_field :email, :tabindex => "1"
+      = f.email_field :email, :tabindex => "1", :class => "form-control w-25" 
       = render 'users/shared/create_user_link'
-  .control-group
+  .form-group
     = f.label :password, :class => "control-label"
     .controls
-      = f.password_field :password, :tabindex => "2"
+      = f.password_field :password, :tabindex => "2", :class => "form-control w-25" 
       = render 'users/shared/reset_your_password'
   - if devise_mapping.rememberable?
-    .control-group
+    .form-group
       .controls
         = f.label :remember_me, :class => "checkbox" do
           = f.check_box :remember_me, :class => "checkbox"
           = t('users.login.remember_login')
   .controls
-    = button_tag "Submit", :class => "btn", :tabindex => "3"
+    = button_tag "Submit", :class => "btn btn-primary", :tabindex => "3"
   %br/
   .controls
     = render 'users/shared/resend_confirmation_email'
