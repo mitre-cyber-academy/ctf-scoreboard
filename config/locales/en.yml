@@ -85,6 +85,7 @@ en:
       compete_for_prizes_false: 'No'
     summary:
       zero_items_text: 'Nothing to report'
+      zero_teams_text: 'No Teams'
       solved_challenges_header: 'Solved Challenges'
       solved_challenges_chart_header: 'Solved Challenges Breakdown'
       defensive_points_header: 'Defensive Points'
@@ -102,6 +103,7 @@ en:
         challenge_header: 'Challenge'
         points_header: 'Points'
         when_header: 'When'
+        show_hide_btn: 'Show/Hide'
     captain_removed_player: 'Player was successfully removed.'
     player_removed_self: 'You have successfully left the team.'
     already_on_team_create: 'You cannot create a new team while already being a member of one.'
@@ -174,6 +176,7 @@ en:
       team_name: 'Name'
       team_achievements: 'Achievements'
       team_points: 'Points'
+      team_show_hide_btn: 'Show/Hide Teams'
     show_markdown:
       markdown_title: 'Title'
       markdown_value: 'Value'
@@ -196,7 +199,7 @@ en:
       red_desc: 'Locked'
     summary:
       header: 'Game Summary'
-      topfive: 'Top 5 Teams'
+      teams_summary: 'Teams Summary'
       submissions_title: 'Flag Submissions'
       flag_submissions_graph:
         flags_submitted: 'Flag Submissions'
