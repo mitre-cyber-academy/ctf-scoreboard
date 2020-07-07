@@ -10,7 +10,7 @@ class JoinTeamDisplayModesTest < ActionDispatch::IntegrationTest
     sign_in user
     Team.destroy_all
     create_list(:team, 10, compete_for_prizes: true)
-    get "/users/join_team"
+    get join_team_users_path
     assert_response :success
     assert_select 'table.table.table-hover.table-bordered' do
       assert_select 'thead' do
@@ -41,7 +41,7 @@ class JoinTeamDisplayModesTest < ActionDispatch::IntegrationTest
     sign_in user
     Team.destroy_all
     create(:team, compete_for_prizes: true, looking_for_members: true)
-    get "/users/join_team"
+    get join_team_users_path
     assert_response :success
     assert_select 'tbody' do
       Team.all.each do |t|
@@ -61,7 +61,7 @@ class JoinTeamDisplayModesTest < ActionDispatch::IntegrationTest
     sign_in user
     Team.destroy_all
     create(:team, compete_for_prizes: true, looking_for_members: false)
-    get "/users/join_team"
+    get join_team_users_path
     assert_response :success
     assert_select 'tbody' do
       Team.all.each do |t|
