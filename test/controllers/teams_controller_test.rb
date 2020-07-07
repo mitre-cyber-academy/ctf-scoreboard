@@ -230,7 +230,7 @@ class TeamsControllerTest < ActionController::TestCase
     sign_in user
     get :show, params: { id: user.team }
     assert_response :success
-    assert_select "div.zero-items-text#noSolvedChallengesText", {:count=>1, :text=>"Nothing to report"}, "Nothing to Report text is missing from Team Solved Challenges Table"
+    assert_select "div.zero-items-text", {:count=>4, :text=>"Nothing to report"}, "Nothing to Report text is missing"
   end
 
   [1, 3, 5, 6].each do |challenge_count|

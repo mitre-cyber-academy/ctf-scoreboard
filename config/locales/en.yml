@@ -85,6 +85,7 @@ en:
       compete_for_prizes_false: 'No'
     summary:
       zero_items_text: 'Nothing to report'
+      zero_teams_text: 'No Teams'
       solved_challenges_header: 'Solved Challenges'
       solved_challenges_chart_header: 'Solved Challenges Breakdown'
       defensive_points_header: 'Defensive Points'
