@@ -10,13 +10,10 @@ class SummaryDisplayModesTest < ActionDispatch::IntegrationTest
 
   test 'summary header shows on summary page' do
     get "/game/summary"
-
-    assert_select 'h1', /Game Summary/
-  end
-
-  test 'no teams show when there are no teams' do
-    get "/game/summary"
-    assert_select 'h4', /No Teams/
+    
+    Team.destroy_all
+    assert_select 'h1', /Game Summary/, 'Game summary header should show on the game summary page'
+    assert_select 'h4', /No Teams/, 'No teams should show when there are no teams on the game summary page'
   end
 
   test 'summary table displays correctly' do

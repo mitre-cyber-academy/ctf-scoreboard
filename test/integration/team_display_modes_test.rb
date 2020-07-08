@@ -7,15 +7,8 @@ class TeamDisplayModesTest < ActionDispatch::IntegrationTest
   def setup
     @game = create(:active_game)
   end
-
-  test 'team creation header shows when visiting team creation page' do
-    sign_in create(:user)
-    get "/teams/new"
-
-    assert_select 'h1', /Create a Team/
-  end
-
-  test 'ensure that there is a form on the team creation page' do
+  
+  test 'team creation page' do
     sign_in create(:user)
     get "/teams/new"
 
