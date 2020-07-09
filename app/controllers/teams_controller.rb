@@ -12,7 +12,7 @@ class TeamsController < ApplicationController
   before_action :check_team_captain, :load_user_team, only: %i[update edit invite]
   before_action :prevent_action_after_game, except: %i[index show summary]
   before_action :deny_team_in_top_ten, :update_team, only: %i[update invite]
-  before_action :load_team_by_id, :load_solved_challenges, only: %i[show summary]
+  before_action :load_team_by_id, only: %i[show summary]
   before_action :load_admin_stats, only: %i[summary]
   before_action :load_categories, only: %i[summary]
 
@@ -20,6 +20,7 @@ class TeamsController < ApplicationController
 
   def summary
     @score_adjustments = @team.score_adjustments
+    @solved_challenges = @team.solved_challenges
     prepare_team_flag_submissions
   end
 
@@ -48,7 +49,7 @@ class TeamsController < ApplicationController
     # Filter for only pending invites and requests.
     @pending_invites = @team.user_invites.pending
     @pending_requests = @team.user_requests.pending
-    load_solved_challenges
+    @solved_challenges = @team.solved_challenges
     flash.now[:notice] = I18n.t('teams.full_team') if @team.full?
     summary
   end
@@ -140,9 +141,5 @@ class TeamsController < ApplicationController
 
   def load_user_team
     @team = current_user.team
-  end
-
-  def load_solved_challenges
-    @solved_challenges = @team.solved_challenges unless @team.nil?
   end
 end
