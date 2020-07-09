@@ -1,4 +1,7 @@
-%p Hello #{@user.full_name}!
 %p
-  All solved challenges from #{@game.title} have been released with solutions #{link_to 'here', @game.open_source_url}.
-%p Have a great day!
+  = t('user_mailer.open_source.greeting', fullname: @user.full_name)
+%p
+  = t('user_mailer.open_source.view_solutions', title: @game.title)
+  = link_to 'here', @game.open_source_url
+%p 
+  = t('user_mailer.open_source.goodbye')

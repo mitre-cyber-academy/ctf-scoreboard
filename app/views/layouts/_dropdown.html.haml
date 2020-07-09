@@ -28,13 +28,18 @@
           = link_to t('application.edit_account'), edit_user_registration_path, :method => :get
           = link_to t('application.log_out'), destroy_user_session_path, :method => :delete
   - else
-    %li.dropdown
-      %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-        Log in / Register
-        %b.caret
-      %ul.dropdown-menu
-        %li
-          =link_to t('application.log_in'), new_user_session_path
-        %li.divider
-        %li
-          =link_to t('home.index.register'), new_user_registration_path
+    - unless @game.nil?
+      %li.dropdown
+        %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+          - if @game.registration_enabled
+            = t('home.index.login_or_register')
+          - else
+            = t('home.index.login')
+          %b.caret
+        %ul.dropdown-menu
+          %li
+            =link_to t('application.log_in'), new_user_session_path
+            - if @game.registration_enabled
+              %li.divider
+              %li
+                =link_to t('home.index.register'), new_user_registration_path

@@ -50,7 +50,7 @@ en:
       new_user: 'Register a new user'
     unlocks:
       resend: 'Resend unlock instructions'
-      missing_instructions: "Didn't receieve unlock instructions?"
+      missing_instructions: "Didn't receive unlock instructions?"
       send_instructions: 'You will receive an email with instructions about how to unlock your account in a few minutes.'
       unlocked: 'Your account has been unlocked successfully. Please sign in to continue.'
       send_paranoid_instructions: 'If your account exists, you will receive an email with instructions about how to unlock it in a few minutes.'

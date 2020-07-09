@@ -1,7 +1,8 @@
 - content_for :header do
-  Messages
+  = t('messages.messages_header')
 - if @messages.count == 0
-  .zero-items-text No Messages
+  .zero-items-text
+  %h4= t('messages.no_messages')
 - else
   - @messages.each do |m|
     %div.message

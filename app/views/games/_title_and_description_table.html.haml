@@ -6,5 +6,5 @@
         %h3{style: "color: #{challenge_colors(challenge)[0]}"}= challenge.name
         = challenge.description
         .solve{style: 'padding-top: 10px;'}
-          = always_link_to_if_admin(challenge.open?, "View Submission Page", game_challenge_path(challenge))
+          = always_link_to_if_admin(challenge.open?, t('game.admin_view_submission_page'), game_challenge_path(challenge))
     %hr/

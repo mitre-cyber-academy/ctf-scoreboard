@@ -1,6 +1,8 @@
 %h3.muted= t('teams.summary.flag_submissions_header')
 - if @team.solved_challenges.size > 0
-  = line_chart @team_flag_submissions, colors: ['#b8d12f', '#00abca']
+  = line_chart @team_flag_submissions, library: {chart: {zoomType: 'x'}}, colors: ['#b8d12f', '#00abca']
+  %p.muted
+    = t('game.zoom_help')
 - else
   .zero-items-text= t('teams.summary.zero_items_text')
 %hr

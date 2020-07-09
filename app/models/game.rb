@@ -35,7 +35,7 @@ class Game < ApplicationRecord
   end
 
   def instance_is_singleton
-    singleton = Game.instance
+    singleton = Game.all.first
     errors.add(:base, I18n.t('game.too_many')) if self != singleton && !singleton.nil?
   end
 
@@ -54,6 +54,12 @@ class Game < ApplicationRecord
 
   def after_competition?
     Time.now.utc > stop
+  end
+
+  # As the game progresses, this returns a reasonable grouping for the different graphs in the application.
+  # One such graph is on the Team Summary page and the other is the Game Summary
+  def graph_group_method
+    ((defense_end - start) / 1.day).days < 1.week ? :hour : :day
   end
 
   def categories_with_standard_challenges
