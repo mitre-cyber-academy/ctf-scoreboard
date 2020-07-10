@@ -4,7 +4,7 @@
 - content_for :subheading do
   = t('teams.show.subheading', affiliation: @team.affiliation)
 
-%table.table.table-condensed.table-striped#usertable
+%table.table.table-condensed.table-striped.table-hover#usertable
   %thead
     %tr
       %th.span1= t('teams.users_table.team_leader_header')
