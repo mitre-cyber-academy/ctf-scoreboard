@@ -15,6 +15,7 @@ class SummaryDisplayModesTest < ActionDispatch::IntegrationTest
   end
 
   test 'no teams show when there are no teams' do
+    Team.destroy_all
     get "/game/summary"
     assert_select 'h4', /No Teams/
   end
