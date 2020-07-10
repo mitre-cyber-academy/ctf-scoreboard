@@ -20,6 +20,7 @@ class TeamsController < ApplicationController
 
   def summary
     @score_adjustments = @team.score_adjustments
+    @solved_challenges = @team.solved_challenges
     prepare_team_flag_submissions
   end
 
@@ -45,10 +46,10 @@ class TeamsController < ApplicationController
 
   def show
     @team_captain = team_captain?
-    @team = Team.find_by(id: params[:id].to_i)
     # Filter for only pending invites and requests.
     @pending_invites = @team.user_invites.pending
     @pending_requests = @team.user_requests.pending
+    @solved_challenges = @team.solved_challenges
     flash.now[:notice] = I18n.t('teams.full_team') if @team.full?
     summary
   end

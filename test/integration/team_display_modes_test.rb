@@ -61,7 +61,7 @@ class TeamDisplayModesTest < ActionDispatch::IntegrationTest
     assert_select 'h1', /ineligible/
     assert_select 'h1', /100/
 
-    assert_select 'table[class=table\ table-condensed\ table-striped]' do
+    assert_select 'table[class=table\ table-condensed\ table-striped\ table-hover]' do
       assert_select 'thead' do
         assert_select 'tr' do
           assert_select 'th:nth-child(1)', I18n.t('teams.users_table.team_leader_header')
@@ -112,7 +112,7 @@ class TeamDisplayModesTest < ActionDispatch::IntegrationTest
 
     get "/teams/#{team.id}/summary"
 
-    assert_select 'table[class=table\ table-bordered\ table-striped]' do
+    assert_select 'table[class=table\ table-bordered\ table-striped\ table-hover]' do
       assert_select 'thead' do
         assert_select 'tr' do
           assert_select 'th:nth-child(1)', I18n.t('teams.summary.solved_challenges_table.challenge_header')
