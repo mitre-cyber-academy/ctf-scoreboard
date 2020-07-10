@@ -40,7 +40,6 @@ en:
     edit:
       header: 'Edit your Team'
       legend: 'New Team Information'
-      note: 'All fields are required.'
       required_fields_notice_1: 'Note: Fields marked with'
       required_fields_notice_2: 'can not be blank.'
     new:
