@@ -2,7 +2,7 @@
   = t('users.edit.password.password_edit_header')
 = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f|
   - if resource.errors.any?
-    .alert.alert-error
+    .alert.alert-danger
       %a.close{"data-dismiss" => "alert", :href => "#"} ×
       = pluralize(resource.errors.count, "error")
       = t('users.edit.error')

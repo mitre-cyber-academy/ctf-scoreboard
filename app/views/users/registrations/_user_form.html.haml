@@ -1,6 +1,6 @@
 = form_for(resource, as: resource_name, url: registration_path(resource_name), :html => { :multipart => "true", :class => "form-horizontal"}) do |f|
   - if resource.errors.any?
-    .alert.alert-error
+    .alert.alert-danger
       %a.close{"data-dismiss" => "alert", :href => "#"} ×
       = pluralize(resource.errors.count, "error")
       = t('users.edit.error')
