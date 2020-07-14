@@ -33,7 +33,6 @@ then
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
         # Install PostgreSQL
-        # TODO: Add support for more package managers
         if ! command -v psql &> /dev/null
         then
             if [[ $EUID -ne 0 ]]
