@@ -9,6 +9,7 @@ rvmkeys="409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0
 rubyversion=`cat .ruby-version`
 rvmDownloadLink="https://get.rvm.io"
 
+USER=$(whoami) # This isn't always set
 interactive=1
 
 while [ "$1" != "" ]; do
@@ -35,7 +36,13 @@ then
         # TODO: Add support for more package managers
         if ! command -v psql &> /dev/null
         then
-            sudo apt install -y postgresql libpq-dev
+            if [[ $EUID -ne 0 ]]
+            then
+                sudo apt install -y postgresql libpq-dev
+            else
+                apt install -y postgresql libpq-dev
+            fi
+            pg_ctlcluster 12 main start
         else
             echo "Sorry, but I don't know your package manager. Please install postgresql on your own."
             exit
@@ -60,9 +67,15 @@ then
     then
         # Install bundler
         gpg2 --keyserver $keyserver --recv-keys $rvmkeys
-        curl -sSL $rvmDownloadLink | bash -s stable --ruby &> /dev/null
-        source $HOME/.rvm/scripts/rvm
-        rvm install $rubyversion
+        curl -sSL $rvmDownloadLink | bash -s stable --ruby
+
+	if [[ $EUID -ne 0 ]]
+        then
+               source $HOME/.rvm/scripts/rvm
+	else
+               source /usr/local/rvm/scripts/rvm
+	fi
+	rvm install $rubyversion
     else
         echo "Unable to find ruby installation because it is not installed or not in path. Please ensure that bundler is in your \$PATH or that you have loaded RVM."
         exit
@@ -81,12 +94,11 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     echo "Creating role for $USER"
-    sudo -u postgres createuser -s $USER
+    runuser -l postgres -c "createuser -s $USER"
     echo "Creating tables..."
     rails db:create
     echo "Loading schema..."
     rails db:schema:load
-    
     if [[ "$interactive" == 1 ]];
     then
         echo "Creating administrator user... Please fill out the credentials you want to use to login to the admin account."
