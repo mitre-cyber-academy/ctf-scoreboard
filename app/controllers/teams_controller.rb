@@ -12,7 +12,7 @@ class TeamsController < ApplicationController
   before_action :check_team_captain, :load_user_team, only: %i[update edit invite]
   before_action :prevent_action_after_game, except: %i[index show summary]
   before_action :deny_team_in_top_ten, :update_team, only: %i[update invite]
-  before_action :load_team_by_id, only: %i[show summary]
+  before_action :load_team, only: %i[show summary]
   before_action :load_admin_stats, only: %i[summary]
   before_action :load_categories, only: %i[summary]
 
@@ -20,7 +20,6 @@ class TeamsController < ApplicationController
 
   def summary
     @score_adjustments = @team.score_adjustments
-    @solved_challenges = @team.solved_challenges
     prepare_team_flag_submissions
   end
 
@@ -120,8 +119,9 @@ class TeamsController < ApplicationController
     @team.update(team_params)
   end
 
-  def load_team_by_id
+  def load_team
     @team = Team.find_by(id: params[:id].to_i)
+    @solved_challenges = @team.solved_challenges
     redirect_back(fallback_location: game_summary_path, alert: I18n.t('teams.does_not_exist')) unless @team
   end
 
