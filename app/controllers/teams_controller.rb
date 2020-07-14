@@ -48,7 +48,6 @@ class TeamsController < ApplicationController
     # Filter for only pending invites and requests.
     @pending_invites = @team.user_invites.pending
     @pending_requests = @team.user_requests.pending
-    @solved_challenges = @team.solved_challenges
     flash.now[:notice] = I18n.t('teams.full_team') if @team.full?
     summary
   end
@@ -121,7 +120,7 @@ class TeamsController < ApplicationController
 
   def load_team
     @team = Team.find_by(id: params[:id].to_i)
-    @solved_challenges = @team.solved_challenges
+    @solved_challenges = @team.solved_challenges unless @team.nil?
     redirect_back(fallback_location: game_summary_path, alert: I18n.t('teams.does_not_exist')) unless @team
   end
 
