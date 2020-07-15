@@ -42,11 +42,7 @@ en:
       legend: 'New Team Information'
       note: 'All fields are required.'
     new:
-      header: 'Create a Team'
-      show:
-        label:
-          team_prize_eligibility_status: 'Team Prize Eligibility Status'
-          team_division_status: 'Team Division Status'
+      header: 'Create a Team'   
     invite:
       invite_requests_table:
         email_header: 'Email'
@@ -73,7 +69,7 @@ en:
     defensive_points_table:
       challenge_header: 'Challenge'
       points_header: 'Points'
-    team_users_table:
+    users_table:
       team_leader_header: 'Lead'
       email_header: 'Email'
       grade_header: 'School Level'
@@ -129,7 +125,8 @@ en:
       currently_selected_division: "You have currently selected %{division} for your team."
       division_true: 'This division is acceptable for your team.'
       division_false: "Your team is not eligible to compete in this division. Consider changing your team's division to match that of the most senior member of your team, or removing the member(s) causing your division to be incorrect."
-      team_eligibility_status_header: "Team Prize Eligibility Status"
+      team_eligibility_status: 'Team Prize Eligibility Status'
+      team_division_status: 'Team Division Status'
       eligible_currently: 'Your team is currently'
       eligible_true: 'competing for prizes. Your team will not be competing for prizes if any users on the team indicate they do not wish to compete for prizes, or the team is moved to an inappropriate division.'
       eligible_false: 'competing for prizes. One or more team members has indicated they do not want to compete for prizes. Please contact the users marked as ineligible above.'
@@ -310,6 +307,7 @@ en:
       messages: 'Messages'
       achievements: 'Achievements'
       summary: 'Summary'
+      contact: 'Contact'
       greeting: 'Hello, '
     game_name_if_organization_not_set: 'Gameboard'
     log_out: 'Log out'
