@@ -40,8 +40,7 @@ en:
     edit:
       header: 'Edit your Team'
       legend: 'New Team Information'
-      required_fields_notice_1: 'Note: Fields marked with'
-      required_fields_notice_2: 'can not be blank.'
+      required_fields_notice_html: 'Note: Fields marked with <span style="color:red;">*</span> can not be blank.'
     new:
       header: 'Create a Team'
       show:
@@ -278,8 +277,6 @@ en:
     destroy:
       confirm: 'Are you sure you want to delete your account?'
     new:
-      required_fields_notice_1: 'Note: Fields marked with'
-      required_fields_notice_2: 'can not be blank.'
       register: 'Register for the CTF'
       confirmations_legend: 'Resend Confirmation Instructions'
       password_reset_legend: 'Send a Password Reset'
