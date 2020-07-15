@@ -258,6 +258,7 @@ td form {
 .media .pull-left {
 	margin-right:15px;
 }
+
 .media {
   margin-bottom:20px;
   min-height:150px /*Make sure to change this if the thumbnail size changes for media */
@@ -276,10 +277,10 @@ td form {
 .white {
   color: #fff;
 }
-@media (max-width: 767px) {
+@media (max-device-width: 767px) {
 	.bigheader {
 	 display:none;
-	}
+  }
 	#subpage h1 {
 	 font-size:30px;
 	 padding-left:22px;
