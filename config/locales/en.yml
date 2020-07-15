@@ -40,7 +40,6 @@ en:
     edit:
       header: 'Edit your Team'
       legend: 'New Team Information'
-      required_fields_notice_html: 'Note: Fields marked with <span style="color:red;">*</span> can not be blank.'
     new:
       header: 'Create a Team'
       show:
@@ -405,3 +404,5 @@ en:
       unlock_line_1: 'Your account has been locked due to an excessive amount of unsuccessful sign in attempts.'
       unlock_line_2: 'Click the link below to unlock your account:'
       unlock_account_link: 'Unlock my account'
+  forms:
+    required_fields_notice_html: 'Note: Fields marked with <span style="color:red;">*</span> can not be blank.'

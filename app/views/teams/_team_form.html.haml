@@ -1,7 +1,7 @@
 =form_for @team, :html => { :class => "form-horizontal"} do |f|
   %legend= t('teams.edit.legend')
   %label.label-custom
-    = t('teams.edit.required_fields_notice_html')
+    = t('forms.required_fields_notice_html')
   .control-group
     = f.label :team_name, :class => "control-label-required"
     .controls
