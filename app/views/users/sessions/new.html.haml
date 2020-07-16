@@ -4,21 +4,18 @@
 = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-horizontal"}) do |f|
   .form-group
     = f.label :email, :class => "control-label"
-    .controls
-      = f.email_field :email, :tabindex => "1", :class => "form-control w-25" 
-      = render 'users/shared/create_user_link'
+    = f.email_field :email, :tabindex => "1", :class => "form-control w-50" 
+    = render 'users/shared/create_user_link'
   .form-group
     = f.label :password, :class => "control-label"
-    .controls
-      = f.password_field :password, :tabindex => "2", :class => "form-control w-25" 
-      = render 'users/shared/reset_your_password'
+    = f.password_field :password, :tabindex => "2", :class => "form-control w-50" 
+    = render 'users/shared/reset_your_password'
   - if devise_mapping.rememberable?
     .form-group
-      .controls
-        = f.label :remember_me, :class => "checkbox" do
-          = f.check_box :remember_me, :class => "checkbox"
-          = t('users.login.remember_login')
-  .controls
+      .form-check
+        = f.check_box :remember_me, :class => "form-check-input"
+        %label.form-check-label= t('users.login.remember_login')
+  .form-group
     = button_tag "Submit", :class => "btn btn-primary", :tabindex => "3"
   %br/
   .controls

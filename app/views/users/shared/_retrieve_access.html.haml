@@ -9,6 +9,6 @@
 = user.label :email, :class => "control-label-required"
 .input-append
   = user.email_field :email, :id => "appendedInputButton"
-  = user.submit t('users.edit.password.retrieve_access_instructions'), :class => "btn"
+  = user.submit t('users.edit.password.retrieve_access_instructions'), :class => "btn btn-primary"
 %br/
 = render "users/shared/links"
