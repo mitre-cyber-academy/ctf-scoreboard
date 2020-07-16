@@ -5,7 +5,6 @@
 
 $(document).ready ->
   $('.toggler').click (e) ->
-    e.preventDefault()
-    $('.hide').toggle()
+    $('#hiddenUntilToggle').toggleClass("d-none");
     return
   return

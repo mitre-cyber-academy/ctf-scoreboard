@@ -1,6 +1,6 @@
 - tbody_class ||= ''
 
-%tbody{class: tbody_class}
+%tbody{class: tbody_class, id: tbody_id}
   - teams&.each&.with_index(starting_rank) do |t, i|
     - score = t.current_score
     - percent = score.to_f / max_score.to_f * 100.0

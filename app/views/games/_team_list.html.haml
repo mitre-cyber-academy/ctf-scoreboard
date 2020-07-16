@@ -14,13 +14,14 @@
       / Get the first teams score and use that as the full score bar
       - max_score = teams.first.current_score
       / We pass in starting_rank here to start the list at the proper index
-      = render partial: 'games/team_list_tbody', locals: { teams: teams.slice(0..4), starting_rank: 1, max_score: max_score }
+      = render partial: 'games/team_list_tbody', locals: { teams: teams.slice(0..5), starting_rank: 1, max_score: max_score, tbody_id: '' }
       / This part of the list is hidden until the user clicks the 'Show/Hide Teams' button below
       = render partial: 'games/team_list_tbody', locals: { |
-               teams: teams.slice(5..),                    |
-               starting_rank: 6,                           |
+               teams: teams.slice(6..),                    |
+               starting_rank: 7,                           |
                max_score: max_score,                       |
-               tbody_class: 'hide'                         |
+               tbody_id: 'hiddenUntilToggle',              |
+               tbody_class: 'd-none'                       |
         }                                                  |
     - if teams.count > 5
       %tr
