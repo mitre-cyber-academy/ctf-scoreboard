@@ -5,39 +5,41 @@
 - unless @pending_requests.empty?
   = render partial: 'users/join_team_requests_table'
 %h3= t('users.join_team.search_for_team_header')
+
 = form_for_filterrific @filterrific, html: { class: 'form_for_filterrific' } do |f|
-  .container
-    .form-group.row
-      .col-xs-2.w-25
-        Team Name
-        = f.text_field(                                      |
-            :filter_team_name,                               |
-            class: 'filterrific-periodically-observed form-control span3' |
-          )                                                  |
-      .col-xs-2.w-25
-        Affiliation
-        = f.text_field(                                                   |
-            :filter_affiliation,                                          |
-            class: 'filterrific-periodically-observed form-control span3' |
-          )                                                  |
-      .col-xs-2.w-25
-        Location
-        = f.select(                                    |
-            :location,                                 |
-            @filterrific.select_options[:location],    |
-            { :include_blank => '- Any -' },           |
-            :class => "span2 form-control",       |
-          )                                            |
-      .col-xs-2.w-25
-        Division
-        = f.select(                                    |
-            :division,                                 |
-            @filterrific.select_options[:division],    |
-            { :include_blank => '- Any -' },           |
-            :class => "span3 form-control",       |
-          )                                            |
-      .span1
-        = render_filterrific_spinner
+  .card.card-body.bg-light
+    .container
+      .form-group.row
+        .col-xs-2.w-25
+          Team Name
+          = f.text_field(                                      |
+              :filter_team_name,                               |
+              class: 'filterrific-periodically-observed form-control span3' |
+            )                                                  |
+        .col-xs-2.w-25
+          Affiliation
+          = f.text_field(                                                   |
+              :filter_affiliation,                                          |
+              class: 'filterrific-periodically-observed form-control span3' |
+            )                                                  |
+        .col-xs-2.w-25
+          Location
+          = f.select(                                    |
+              :location,                                 |
+              @filterrific.select_options[:location],    |
+              { :include_blank => '- Any -' },           |
+              :class => "span2 form-control",       |
+            )                                            |
+        .col-xs-2.w-25
+          Division
+          = f.select(                                    |
+              :division,                                 |
+              @filterrific.select_options[:division],    |
+              { :include_blank => '- Any -' },           |
+              :class => "span3 form-control",       |
+            )                                            |
+        .span1
+          = render_filterrific_spinner
 
 = render(                                 |
 partial: 'teams/list',                    |

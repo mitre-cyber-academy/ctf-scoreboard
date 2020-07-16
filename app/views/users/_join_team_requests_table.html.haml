@@ -14,4 +14,4 @@
         %td=current.created_at.strftime("%b %d %Y")
         %td
           = link_to team_user_request_path(current.team, current), method: :delete, data: {confirm: t('users.join_team.delete_request_confirmation')} do
-            %i.icon-remove
+            = fa_icon 'remove'

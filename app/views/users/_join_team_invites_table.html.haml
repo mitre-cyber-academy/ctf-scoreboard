@@ -16,4 +16,4 @@
           = link_to accept_team_user_invite_path(current.team, current) do
             = fa_icon 'check'
           = link_to team_user_invite_path(current.team, current), method: :delete, data: {confirm: t('users.join_team.delete_invite_confirmation')} do
-            = fa_icon 'times'
+            = fa_icon 'remove'

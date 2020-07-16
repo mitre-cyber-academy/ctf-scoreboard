@@ -18,6 +18,6 @@
         - if @team_captain
           %td
             = link_to accept_team_user_request_path(@team,current) do
-              %i.icon-ok
+              =fa_icon 'check'
             = link_to team_user_request_path(@team, current), method: :delete, data: { confirm: t('teams.show.reject_request_confirm') } do
-              %i.icon-remove
+              =fa_icon 'remove'

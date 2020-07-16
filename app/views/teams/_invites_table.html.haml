@@ -15,13 +15,13 @@
         %td
           - if current.user.nil?
             .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('teams.show.eligible_help') }
-              %i.icon-question-sign
+              = fa_icon 'question-circle'
           - else
             = eligible?(current)
         %td
           - if current.user.nil?
             .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('teams.show.eligible_help') }
-              %i.icon-question-sign
+              = fa_icon 'question-circle'
           - else
             = current.user.division
         - if @team_captain
