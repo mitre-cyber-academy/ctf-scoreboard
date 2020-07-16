@@ -1,10 +1,10 @@
 .container
   .row
     .col-sm
-      %h3.muted= t('teams.summary.flag_submissions_header')
+      %h3.text-muted= t('teams.summary.flag_submissions_header')
       - if @team.solved_challenges.size > 0
         = line_chart @team_flag_submissions, library: {chart: {zoomType: 'x'}}, colors: ['#b8d12f', '#00abca']
-        %p.muted
+        %p.text-muted
           = t('game.zoom_help')
       - else
         .zero-items-text= t('teams.summary.zero_items_text')
@@ -12,13 +12,13 @@
 .container
   .row
     .col-sm
-      %h3.muted= t('teams.summary.solved_challenges_header')
+      %h3.text-muted= t('teams.summary.solved_challenges_header')
       - if @team.solved_challenges.size == 0
         .zero-items-text= t('teams.summary.zero_items_text')
       - else
         = render partial: 'teams/solved_challenges_table'
     .col-sm
-      %h3.muted= t('teams.summary.solved_challenges_chart_header')
+      %h3.text-muted= t('teams.summary.solved_challenges_chart_header')
       - if @team.solved_challenges.size == 0
         .zero-items-text= t('teams.summary.zero_items_text')
       - else
@@ -30,7 +30,7 @@
       - if @defensive_points
         = render partial: 'teams/defensive_points_table'
     .col-sm
-      %h3.muted= t('teams.summary.score_adjustments_header')
+      %h3.text-muted= t('teams.summary.score_adjustments_header')
       - if @score_adjustments.size == 0
         .zero-items-text= t('teams.summary.zero_items_text')
       - else

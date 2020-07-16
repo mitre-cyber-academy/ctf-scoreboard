@@ -2,7 +2,7 @@
 .container
   .row
     .col-sm
-      %h3.muted= t('teams.summary.team_members_header')
+      %h3.text-muted= t('teams.summary.team_members_header')
       %table.table.table-bordered.table-striped.table-hover
         %thead
           %tr
@@ -16,7 +16,7 @@
               %td= user.full_name
               %td= user.email
     .col-sm
-      %h3.muted= t('teams.summary.per_user_statistics_header')
+      %h3.text-muted= t('teams.summary.per_user_statistics_header')
       - if @team.solved_challenges.size == 0
         .zero-items-text= t('teams.summary.zero_items_text')
       - else
