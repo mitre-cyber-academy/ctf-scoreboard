@@ -261,7 +261,7 @@ en:
         year_in_school: 'Enter your current education status.'
         state: 'Enter the state in which you are a resident.'
         compete_for_prizes: 'Prize distribution may be restricted to qualifying teams. Check terms and conditions for full details and to see if you qualify.'
-        interested_in_employment: 'Are you interested receiving internship or employment emails from %{organization}?'
+        interested_in_employment: 'Are you interested receiving internship or employment emails?'
         age: 'Age will be used in aggregate statistics and are held confidentially.'
         resume: 'Please provide us with a copy of your resume in PDF format'
         transcript: 'Please provide us with a copy of your unofficial transcript in PDF format'

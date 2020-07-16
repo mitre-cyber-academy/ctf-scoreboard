@@ -1,13 +1,13 @@
+%hr.divider-hr.w-50.mb-3
 .form-group
-  .col-xs-2
-    = f.label :resume, :class => "control-label"
-    = f.file_field :resume, :class => "col-sm-10"
+  = f.label :resume, :class => "control-label"
+  = f.file_field :resume, :class => "col-sm-10"
 .form-group
-  .col-xs-2
-    = f.label :unofficial_transcript, :class => "control-label"
-    = f.file_field :transcript, :class => "col-sm-10"
+  = f.label :unofficial_transcript, :class => "control-label"
+  = f.file_field :transcript, :class => "col-sm-10"
+%hr.divider-hr.w-50.mb-3.mt-3
 .form-group
-  .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('users.edit.help.password') }
-    = f.label :current_password, :class => "form-control-file control-label-required"
-    .controls
-      = f.password_field :current_password, :class => "form-control textarea"
+  = f.label :current_password, :class => "form-control-file control-label-required"
+  = f.password_field :current_password, :class => "form-control textarea w-50"
+  %small.form-text.text-muted.w-50
+    = t('users.edit.help.password')
