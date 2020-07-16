@@ -4,12 +4,13 @@
       %th= t('teams.summary.solved_challenges_table.challenge_header')
       %th= t('teams.summary.solved_challenges_table.points_header')
       %th= t('teams.summary.solved_challenges_table.when_header')
-    = render partial: 'teams/challenge_list_tbody', locals: { teams: @solved_challenges.slice(0..4), starting_index: 1 }
+    = render partial: 'teams/challenge_list_tbody', locals: { teams: @solved_challenges.slice(0..4), starting_index: 1, tbody_id: '' }
     / This part of the list is hidden until the user clicks the "Show/Hide" button below
     = render partial: 'teams/challenge_list_tbody', locals: { |
              teams: @team.solved_challenges.slice(5..),       |
              starting_index: 6,                               |
-             tbody_class: 'hide'                              |
+             tbody_id: 'hiddenUntilToggle',                   |
+             tbody_class: 'd-none'                            |
       }                                                       |
     - if @solved_challenges.size > 5
       %tr{:id => "showBtnRow"}
