@@ -5,15 +5,15 @@
   #navbarSupportedContent.collapse.navbar-collapse
     %ul.navbar-nav.mr-auto
       %li.nav-item
-        %a.nav-link{:href => game_path}= t('application.navbar.challenges')
+        %a.nav-link{:href => game_path, :class => active_navbar?(game_path)}= t('application.navbar.challenges')
       %li.nav-item
         %form.form-inline
-          %a.nav-link{:href => game_messages_path}= t('application.navbar.messages')
+          %a.nav-link{:href => game_messages_path, :class => active_navbar?(game_messages_path)}= t('application.navbar.messages')
           %span.badge.badge-important.text-info= unread_messages(@unread_message_count)
       %li.nav-item
-        %a.nav-link{:href => game_achievements_path}= t('application.navbar.achievements')
+        %a.nav-link{:href => game_achievements_path, :class => active_navbar?(game_achievements_path)}= t('application.navbar.achievements')
       %li.nav-item
-        %a.nav-link{:href => game_summary_path}= t('application.navbar.summary')
+        %a.nav-link{:href => game_summary_path, :class => active_navbar?(game_summary_path)}= t('application.navbar.summary')
       - unless @game.nil?
         - unless @game.contact_url.nil?
           %li.nav-item
