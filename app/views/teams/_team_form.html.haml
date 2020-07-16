@@ -15,7 +15,7 @@
     .controls
       = f.collection_select :division_id, @divisions, :id, :name
   .control-group
-    = f.label :looking_for_members, :class => "control-label"
+    = f.label :looking_for_members, :class => "control-label", "data-placement" => "top", "data-toggle" => "tooltip", :title => I18n.t('teams.edit.looking_for_members_tooltip')
     .controls
       = f.check_box :looking_for_members
   .controls
