@@ -4,7 +4,7 @@
       %th= t('teams.summary.solved_challenges_table.challenge_header')
       %th= t('teams.summary.solved_challenges_table.points_header')
       %th= t('teams.summary.solved_challenges_table.when_header')
-    = render partial: 'teams/challenge_list_tbody', locals: { teams: @solved_challenges.slice(0..4), starting_index: 1, tbody_id: '' }
+    = render partial: 'teams/challenge_list_tbody', locals: { teams: @solved_challenges.slice(0..4), starting_index: 1 }
     / This part of the list is hidden until the user clicks the "Show/Hide" button below
     = render partial: 'teams/challenge_list_tbody', locals: { |
              teams: @team.solved_challenges.slice(5..),       |

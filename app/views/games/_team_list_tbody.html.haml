@@ -1,4 +1,5 @@
 - tbody_class ||= ''
+- tbody_id ||= ''
 
 %tbody{class: tbody_class, id: tbody_id}
   - teams&.each&.with_index(starting_rank) do |t, i|
