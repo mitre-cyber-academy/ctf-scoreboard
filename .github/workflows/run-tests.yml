@@ -36,6 +36,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gems-
 
+      - name: Install hunspell library
+        run: |
+          apt install -y hunspell
+
       - name: Install ruby gems
         run: |
           bundle config path vendor/bundle
