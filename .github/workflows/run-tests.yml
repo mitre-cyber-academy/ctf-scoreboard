@@ -36,13 +36,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gems-
 
-      - name: Install hunspell library
-        run: |
-          sudo apt update
-          sudo apt install -y hunspell
-
       - name: Install ruby gems
         run: |
+          sudo apt install -y hunspell
           bundle config path vendor/bundle
           bundle config --local build.sassc --disable-march-tune-native
           bundle install --jobs 4 --retry 3
