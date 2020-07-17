@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Difficulty:
+  = @survey.difficulty
+%p
+  %b Realism:
+  = @survey.realism
+%p
+  %b Interest:
+  = @survey.interest
+%p
+  %b Comment:
+  = @survey.comment
+%p
+  %b Submitted flag:
+  = @survey.submitted_flag_id
+
+= link_to 'Edit', edit_survey_path(@survey)
+\|
+= link_to 'Back', surveys_path

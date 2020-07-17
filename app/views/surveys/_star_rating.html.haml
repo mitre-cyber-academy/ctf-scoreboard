@@ -1,0 +1,13 @@
+%span.star-cb-group
+  = f.radio_button category, 5, { :name => "#{category}", :id => "#{star_5}", :onclick => "setRating('survey_#{category}', '5')" }
+  %label{:for => "#{star_5}"} 5
+  = f.radio_button category, 4, { :name => "#{category}", :id => "#{star_4}", :onclick => "setRating('survey_#{category}', '4')" }
+  %label{:for => "#{star_4}"} 4
+  = f.radio_button category, 3, { :name => "#{category}", :id => "#{star_3}", :onclick => "setRating('survey_#{category}', '3')" }
+  %label{:for => "#{star_3}"} 3
+  = f.radio_button category, 2, { :name => "#{category}", :id => "#{star_2}", :onclick => "setRating('survey_#{category}', '2')" }
+  %label{:for => "#{star_2}"} 2
+  = f.radio_button category, 1, { :name => "#{category}", :id => "#{star_1}", :onclick => "setRating('survey_#{category}', '1')" }
+  %label{:for => "#{star_1}"} 1
+  = f.radio_button category, 0, { :name => "#{category}", :id => "#{star_0}", :class => "star-cb-clear", :onclick => "setRating('survey_#{category}', '0')", :checked => true }
+  %label{:for => "#{star_0}"} 0

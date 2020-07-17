@@ -1,0 +1,6 @@
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+
+function setRating(id, rating) {
+  document.getElementById(id).value = rating;
+};

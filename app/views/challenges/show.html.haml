@@ -1,5 +1,5 @@
 -# For PentestGames, @challenge here can actually be a flag object since Pentest challenges belong to teams + challenges and are linked by a flag object.
--# 
+-#
 - content_for :admin_menu do
   %li= link_to t('challenges.admin_edit_challenge', challengename: @challenge.name), admin_edit_url(@challenge)
 
@@ -28,7 +28,7 @@
       = sanitize(Kramdown::Document.new(@challenge.sponsor_description).to_html)
 
 - if @solvable
-  = form_for :challenge, url: submit_url(@defense_team, @challenge), method: "put", html: { class: "well", style: "margin-bottom:40px;" } do |f|
+  = form_for :challenge, url: submit_url(@defense_team, @challenge), method: "put", html: { class: "well form-inline", style: "margin-bottom:40px;" } do |f|
     .control-group
       %p
         = t('challenges.submit_flag')
@@ -38,6 +38,11 @@
     .control-group
       = invisible_recaptcha_tags text: 'Submit', :class => "btn btn-primary"
 
+- if @flag_found
+  %hr/
+  = render partial: "surveys/form"
+  %hr/
+  
 - if @solved_by.length > 0
   %table.table.table-bordered.table-striped
     %thead

@@ -2,6 +2,7 @@
 
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
+  resources :surveys
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   get 'home/index'

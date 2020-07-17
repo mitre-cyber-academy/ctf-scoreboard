@@ -21,10 +21,11 @@ class ChallengesController < ApplicationController
       @solved_challenge = @flag_found.save_solved_challenge(current_user)
       @solved_video_url = @flag_found.video_url
       flash.now[:notice] = I18n.t('flag.accepted')
+      @survey = Survey.new
+      @survey.submitted_flag_id = @submitted_flag.id
     else
       flash.now[:alert] = wrong_flag_messages.sample
     end
-    @solvable = @challenge.can_be_solved_by(current_user.team)
 
     render :show
   end
@@ -51,7 +52,9 @@ class ChallengesController < ApplicationController
     flag = params[:challenge]&.[](:submitted_flag) # Safe navigation on a hash
     return if flag.nil?
 
-    SubmittedFlag.create(user: current_user, challenge: @challenge, text: flag) unless current_user.admin?
+    unless current_user.admin?
+      @submitted_flag = SubmittedFlag.create(user: current_user, challenge: @challenge, text: flag)
+    end
     @flag_found = @challenge.find_flag(flag)
   end
 

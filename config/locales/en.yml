@@ -407,3 +407,8 @@ en:
       unlock_line_1: 'Your account has been locked due to an excessive amount of unsuccessful sign in attempts.'
       unlock_line_2: 'Click the link below to unlock your account:'
       unlock_account_link: 'Unlock my account'
+  surveys:
+    submitted: 'Survey Submitted!'
+    new:
+      header: 'Review Solved Challenge'
+      submit_btn: 'Submit Survey'
