@@ -3,4 +3,4 @@
 
 function setRating(id, rating) {
   document.getElementById(id).value = rating;
-};
+}
