@@ -38,7 +38,7 @@ jobs:
 
       - name: Install hunspell library
         run: |
-          wget https://snapshot.debian.org/archive/debian/20170114T033658Z/pool/main/h/hunspell/hunspell_1.5.4-1_amd64.deb https://snapshot.debian.org/archive/debian/20170114T033658Z/pool/main/h/hunspell/hunspell-tools_1.5.4-1_amd64.deb https://snapshot.debian.org/archive/debian/20170114T033658Z/pool/main/h/hunspell/libhunspell-1.5-0_1.5.4-1_amd64.deb https://snapshot.debian.org/archive/debian/20180506T055759Z/pool/main/r/readline/libreadline7_7.0-5_amd64.deb
+          wget https://snapshot.debian.org/archive/debian/20170114T033658Z/pool/main/h/hunspell/hunspell_1.5.4-1_amd64.deb https://snapshot.debian.org/archive/debian/20170114T033658Z/pool/main/h/hunspell/hunspell-tools_1.5.4-1_amd64.deb https://snapshot.debian.org/archive/debian/20170114T033658Z/pool/main/h/hunspell/libhunspell-1.5-0_1.5.4-1_amd64.deb https://snapshot.debian.org/archive/debian/20180506T055759Z/pool/main/r/readline/libreadline7_7.0-5_amd64.deb https://snapshot.debian.org/archive/debian/20200229T152633Z/pool/main/n/ncurses/libtinfo6_6.2-1_amd64.deb
           sudo apt install ./*.deb
 
       - name: Install ruby gems
