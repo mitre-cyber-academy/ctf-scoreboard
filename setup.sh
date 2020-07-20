@@ -3,9 +3,6 @@
 postgresDownloadLink="https://get.enterprisedb.com/postgresql/postgresql-10.13-1-linux-x64.run"
 postgresOutfile="postgres.run"
 
-keyserver="hkp://pool.sks-keyservers.net"
-rvmkeys="409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB"
-
 rubyversion=`cat .ruby-version`
 rvmDownloadLink="https://get.rvm.io"
 
@@ -65,7 +62,8 @@ then
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
         # Install bundler
-        gpg2 --keyserver $keyserver --recv-keys $rvmkeys
+        curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
+        curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import -
         curl -sSL $rvmDownloadLink | bash -s stable --ruby
 
 	if [[ $EUID -ne 0 ]]
@@ -92,6 +90,7 @@ fi
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
+    ./wait-for-postgres.sh db
     echo "Creating role for $USER"
     runuser -l postgres -c "createuser -s $USER"
     echo "Creating tables..."
