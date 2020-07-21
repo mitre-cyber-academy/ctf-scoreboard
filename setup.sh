@@ -13,6 +13,8 @@ while [ "$1" != "" ]; do
     case $1 in
         -a | --unattended )    interactive=0
                                 ;;
+        -s | --setupdb )    setupdb=0
+                                ;;
     esac
     shift
 done
@@ -34,9 +36,9 @@ then
         then
             if [[ $EUID -ne 0 ]]
             then
-                sudo apt install -y postgresql libpq-dev
+                sudo apt install -y postgresql-client libpq-dev
             else
-                apt install -y postgresql libpq-dev
+                apt install -y postgresql-client libpq-dev
             fi
             pg_ctlcluster 12 main start
         else
@@ -88,9 +90,9 @@ else
     REPLY="y"
 fi
 echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    ./wait-for-postgres.sh db
+if [[ "$setupdb" == 0 ]];
+then    
+    rails db:environment:set RAILS_ENV=development
     echo "Creating role for $USER"
     runuser -l postgres -c "createuser -s $USER"
     echo "Creating tables..."

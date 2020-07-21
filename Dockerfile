@@ -1,4 +1,4 @@
-FROM postgres
+FROM ruby
 
 WORKDIR /usr/src/app
 
@@ -12,4 +12,5 @@ RUN DEBIAN_FRONTEND="noninteractive" bash ./setup.sh -a
 
 EXPOSE 3000
 
-CMD bash -c "source /usr/local/rvm/scripts/rvm; pg_ctlcluster 12 main start; bundle exec rails s -b 0.0.0.0"
+CMD bash -c "source /usr/local/rvm/scripts/rvm; bundle exec rails s -b 0.0.0.0"
+
