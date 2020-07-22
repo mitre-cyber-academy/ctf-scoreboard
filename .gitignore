@@ -36,3 +36,4 @@ node_modules/
 logfile
 
 /config/master.key
+/nginx/certs/*
