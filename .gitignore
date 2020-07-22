@@ -34,3 +34,5 @@ coverage
 
 node_modules/
 logfile
+
+/config/master.key

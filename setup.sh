@@ -15,6 +15,8 @@ while [ "$1" != "" ]; do
                                 ;;
         -s | --setupdb )    setupdb=0
                                 ;;
+        -p | --production )    production=0
+                                ;;
     esac
     shift
 done
@@ -36,9 +38,9 @@ then
         then
             if [[ $EUID -ne 0 ]]
             then
-                sudo apt install -y postgresql-client libpq-dev
+                sudo apt install -y postgresql-client libpq-dev nano
             else
-                apt install -y postgresql-client libpq-dev
+                apt install -y postgresql-client libpq-dev nano
             fi
             pg_ctlcluster 12 main start
         else
@@ -108,4 +110,9 @@ then
         echo "Creating administrator user..."
         rails db:create_admin NAME="Administrator" EMAIL="admin@admin.com" PASS="ChangeMe123"
     fi
+fi
+if [[ "$production" == 0 ]];
+then
+    rails db:environment:set RAILS_ENV=production
+    EDITOR="nano" rails credentials:edit
 fi
