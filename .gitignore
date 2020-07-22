@@ -36,4 +36,5 @@ node_modules/
 logfile
 
 /config/master.key
-/nginx/certs/*
+/nginx/certs/ssl_certificate.certs
+/nginx/certs/ssl_certificate_key.key
