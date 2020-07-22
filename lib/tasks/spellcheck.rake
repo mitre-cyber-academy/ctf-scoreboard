@@ -26,8 +26,8 @@ task spellcheck: :environment do
   extracted.each do |item|
     phrases << item.split(/\W+/)
   end
-
-  FFI::Hunspell.dict do |dict|
+  
+  FFI::Hunspell.dict('en_US') do |dict|
     phrases.each do |phrase|
       phrase.each do |word|
         unless whitelist.include? word
