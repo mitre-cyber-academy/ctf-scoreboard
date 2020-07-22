@@ -127,23 +127,6 @@ RailsAdmin.config do |config|
           "#{self.name}_field sponsorship_fields_toggler"
         end
       end
-      [
-        :challenge_categories,
-        :submitted_flags,
-        :solved_challenges,
-        :type
-      ].each do |field|
-        configure field do
-          hide
-        end
-      end
-    end
-    list do
-      field :name
-      field :description
-      field :categories
-      field :point_value
-      field :created_at
     end
   end
 
