@@ -123,6 +123,8 @@ GEM
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.13.1)
+    ffi-hunspell (0.5.0)
+      ffi (~> 1.0)
     filterrific (5.2.1)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
@@ -148,7 +150,6 @@ GEM
       haml (>= 4.0, < 6)
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
-    hunspell (1.1.0)
     i18n (1.8.3)
       concurrent-ruby (~> 1.0)
     jquery-rails (4.4.0)
@@ -379,6 +380,8 @@ DEPENDENCIES
   devise
   factory_bot_rails
   faker
+  ffi
+  ffi-hunspell
   filterrific
   formtastic
   geocoder
@@ -386,7 +389,6 @@ DEPENDENCIES
   haml-rails
   highcharts-rails
   highline
-  hunspell
   jquery-rails
   kaminari
   kramdown

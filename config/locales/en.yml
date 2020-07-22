@@ -368,7 +368,7 @@ en:
       invite_line_1: 'You have been invited to join the team'
       invite_line_2: 'for the upcoming %{organization} %{title}'
       register: 'Click the link below to register an account to view the invitation.'
-      view: 'Click the link below to view the invitiation.'
+      view: 'Click the link below to view the invitation.'
     message_notification:
       title: '%{title} New Message: %{messagetitle}'
       greeting: 'Hello %{fullname}'

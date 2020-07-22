@@ -2,7 +2,7 @@
 
 require 'yaml'
 require 'rubygems' # import gem package manager
-require 'Hunspell' # inject Hunspell class to Ruby namespace
+require 'ffi/hunspell' # inject Hunspell class to Ruby namespace
 
 def extract_strings(data, extracted, prefix = '')
   if data.is_a?(Hash)
@@ -16,10 +16,10 @@ end
 
 task spellcheck: :environment do
   data = YAML.load_file('config/locales/en.yml')
-  sp = Hunspell.new('en_US.aff', 'en_US.dic')
+  
   extracted = []
   phrases = []
-  whitelist = %w[aff create_admin github href https mitre cyber ctf challengename full_name team_name team_size CTF Gameboard start_time end_time contact_url]
+  whitelist = %w[aff create_admin github href https mitre cyber ctf starttime challengename full_name fullname team_name teamname team_size messagetitle CTF Gameboard start_time end_time contact_url]
 
   extract_strings(data, extracted)
 
@@ -27,10 +27,12 @@ task spellcheck: :environment do
     phrases << item.split(/\W+/)
   end
 
-  phrases.each do |phrase|
-    phrase.each do |word|
-      unless whitelist.include? word
-        puts "Is i18n '#{word}' correct? Did you mean: #{sp.suggest(word).join(', ')}" if sp.spellcheck(word) == false
+  FFI::Hunspell.dict do |dict|
+    phrases.each do |phrase|
+      phrase.each do |word|
+        unless whitelist.include? word
+          puts "Is i18n '#{word}' correct? Did you mean: #{dict.suggest(word)}" if dict.check?(word) == false
+        end
       end
     end
   end
