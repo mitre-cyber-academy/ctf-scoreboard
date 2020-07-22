@@ -6,7 +6,7 @@ namespace :db do
   desc 'Setup administrator in the database'
   task create_admin: :environment do
     puts 'This task will create a user account and make that user an administrator of the scoreboard.'
-    if ENV['NAME'].empty? || ENV['EMAIL'].empty? || ENV['PASS'].empty?
+    if ENV['NAME'].nil? || ENV['EMAIL'].nil? || ENV['PASS'].nil?
       ui = HighLine.new
       name = ui.ask('Your Name: ')
       email = ui.ask('Your Email: ')
