@@ -2,7 +2,6 @@
 
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
-  resources :surveys
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   get 'home/index'
@@ -57,6 +56,10 @@ Rails.application.routes.draw do
     resources :teams, only: [] do
       resources :challenges, only: %i[show update]
     end
+  end
+
+  resource :surveys, only: %i[create] do
+    post :create
   end
 
   get '/game/summary' => 'games#summary'
