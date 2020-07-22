@@ -16,17 +16,18 @@ end
 
 task spellcheck: :environment do
   data = YAML.load_file('config/locales/en.yml')
-  
+
   extracted = []
   phrases = []
-  whitelist = %w[aff create_admin github href https mitre cyber ctf starttime challengename full_name fullname team_name teamname team_size messagetitle CTF Gameboard start_time end_time contact_url]
+  whitelist = %w[aff create_admin github href https mitre cyber ctf starttime challengename full_name
+                 fullname team_name teamname team_size messagetitle CTF Gameboard start_time end_time contact_url]
 
   extract_strings(data, extracted)
 
   extracted.each do |item|
     phrases << item.split(/\W+/)
   end
-  
+
   FFI::Hunspell.dict('en_US') do |dict|
     phrases.each do |phrase|
       phrase.each do |word|
