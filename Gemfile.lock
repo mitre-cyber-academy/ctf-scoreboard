@@ -380,6 +380,7 @@ DEPENDENCIES
   devise
   factory_bot_rails
   faker
+  ffi
   ffi-hunspell
   filterrific
   formtastic
