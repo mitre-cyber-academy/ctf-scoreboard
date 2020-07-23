@@ -15,14 +15,17 @@ def extract_strings(data, extracted, prefix = '')
 end
 
 task spellcheck: :environment do
-  data = YAML.load_file('config/locales/en.yml')
-
+  
+  foundTypo = false
   extracted = []
   phrases = []
-  whitelist = %w[create_admin github href https mitre cyber ctf starttime challengename full_name
-                 fullname team_name teamname team_size messagetitle CTF Gameboard start_time end_time contact_url]
-
-  extract_strings(data, extracted)
+  whitelist = %w[create_admin href https mitre cyber ctf github starttime challengename full_name
+                 fullname team_name teamname team_size messagetitle CTF Gameboard start_time
+                 end_time contact_url Didn]
+  I18n.load_path.each do |localization|
+    data = YAML.load_file(localization) if localization.include?(Rails.root.to_s)
+    extract_strings(data, extracted) if localization.include?(Rails.root.to_s)
+  end
 
   extracted.each do |item|
     phrases << item.split(/\W+/)
@@ -32,9 +35,13 @@ task spellcheck: :environment do
     phrases.each do |phrase|
       phrase.each do |word|
         unless whitelist.include? word
-          puts "Is i18n '#{word}' correct? Did you mean: #{dict.suggest(word)}" if dict.check?(word) == false
+          if dict.check?(word) == false then
+            puts "Is i18n '#{word}' correct? Did you mean: #{dict.suggest(word)}"
+            foundTypo = true
+          end
         end
       end
     end
   end
+  exit(1) if foundTypo
 end
