@@ -16,6 +16,7 @@ services:
     environment:
       DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD}@db/registration_production
       RAILS_ENV: production
+    env_file: .env-prod
     restart: unless-stopped
     command: /bin/sh -c "rm -f tmp/pids/server.pid && rails assets:precompile && bundle exec rails s -p 3000 -b '0.0.0.0'"
     ports:
