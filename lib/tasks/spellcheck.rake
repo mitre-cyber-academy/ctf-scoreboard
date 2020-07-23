@@ -15,8 +15,7 @@ def extract_strings(data, extracted, prefix = '')
 end
 
 task spellcheck: :environment do
-  
-  foundTypo = false
+  found_typo = false
   extracted = []
   phrases = []
   whitelist = %w[create_admin href https mitre cyber ctf github starttime challengename full_name
@@ -34,14 +33,14 @@ task spellcheck: :environment do
   FFI::Hunspell.dict('en_US') do |dict|
     phrases.each do |phrase|
       phrase.each do |word|
-        unless whitelist.include? word
-          if dict.check?(word) == false then
-            puts "Is i18n '#{word}' correct? Did you mean: #{dict.suggest(word)}"
-            foundTypo = true
-          end
-        end
+        next if whitelist.include? word
+
+        next unless dict.check?(word) == false
+
+        puts "Is i18n '#{word}' correct? Did you mean: #{dict.suggest(word)}"
+        found_typo = true
       end
     end
   end
-  exit(1) if foundTypo
+  exit(1) if found_typo
 end
