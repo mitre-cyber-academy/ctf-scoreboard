@@ -48,7 +48,6 @@ end
 group :test do
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false
-  gem 'ffi'
   gem 'ffi-hunspell'
   gem 'rails-controller-testing'
   gem 'rubocop', require: false
