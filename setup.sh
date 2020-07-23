@@ -93,10 +93,13 @@ else
 fi
 echo
 if [[ "$setupdb" == 0 ]];
-then    
-    rails db:environment:set RAILS_ENV=development
-    echo "Creating role for $USER"
-    runuser -l postgres -c "createuser -s $USER"
+then
+    if [[ "$production" == 0 ]];
+    then
+        rails db:environment:set RAILS_ENV=production
+    else
+        rails db:environment:set RAILS_ENV=development
+    fi
     echo "Creating tables..."
     rails db:create
     echo "Loading schema..."
@@ -104,15 +107,9 @@ then
     if [[ "$interactive" == 1 ]];
     then
         echo "Creating administrator user... Please fill out the credentials you want to use to login to the admin account."
-        read -p "Would you like to load the database now? (THIS WILL DESTROY ANY DATA IN THE DATABASE) [Y/n] " -n 1 -r
         rails db:create_admin
     else
         echo "Creating administrator user..."
         rails db:create_admin NAME="Administrator" EMAIL="admin@admin.com" PASS="ChangeMe123"
     fi
-fi
-if [[ "$production" == 0 ]];
-then
-    rails db:environment:set RAILS_ENV=production
-    EDITOR="nano" rails credentials:edit
 fi
