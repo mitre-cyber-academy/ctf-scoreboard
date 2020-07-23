@@ -19,7 +19,7 @@ task spellcheck: :environment do
 
   extracted = []
   phrases = []
-  whitelist = %w[aff create_admin github href https mitre cyber ctf starttime challengename full_name
+  whitelist = %w[create_admin github href https mitre cyber ctf starttime challengename full_name
                  fullname team_name teamname team_size messagetitle CTF Gameboard start_time end_time contact_url]
 
   extract_strings(data, extracted)
