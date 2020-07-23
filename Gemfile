@@ -12,8 +12,6 @@ gem 'chartkick'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'devise'
-gem 'ffi'
-gem 'ffi-hunspell'
 gem 'filterrific'
 gem 'formtastic'
 gem 'geocoder'
@@ -50,6 +48,7 @@ end
 group :test do
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false
+  gem 'ffi-hunspell', require: false
   gem 'rails-controller-testing'
   gem 'rubocop', require: false
   gem 'rubocop-rails'
