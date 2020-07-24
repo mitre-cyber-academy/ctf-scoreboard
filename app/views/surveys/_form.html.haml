@@ -10,42 +10,15 @@
 
   .field
     = f.label :difficulty
-    = render partial: "surveys/star_rating", locals: { |
-            star_5: "rating_difficulty_5",             |
-            star_4: "rating_difficulty_4",             |
-            star_3: "rating_difficulty_3",             |
-            star_2: "rating_difficulty_2",             |
-            star_1: "rating_difficulty_1",             |
-            star_0: "rating_difficulty_0",             |
-            category: :difficulty,                     |
-            f: f                                       |
-      }                                                |
+    = render partial: "surveys/star_rating", locals: { category: :difficulty, f: f }
     = f.hidden_field :difficulty
   .field
     = f.label :realism
-    = render partial: "surveys/star_rating", locals: { |
-            star_5: "rating_realism_5",                |
-            star_4: "rating_realism_4",                |
-            star_3: "rating_realism_3",                |
-            star_2: "rating_realism_2",                |
-            star_1: "rating_realism_1",                |
-            star_0: "rating_realism_0",                |
-            category: :realism,                        |
-            f: f                                       |
-      }                                                |
+    = render partial: "surveys/star_rating", locals: { category: :realism, f: f }
     = f.hidden_field :realism
   .field
     = f.label :interest
-    = render partial: "surveys/star_rating", locals: { |
-            star_5: "rating_interest_5",               |
-            star_4: "rating_interest_4",               |
-            star_3: "rating_interest_3",               |
-            star_2: "rating_interest_2",               |
-            star_1: "rating_interest_1",               |
-            star_0: "rating_interest_0",               |
-            category: :interest,                       |
-            f: f                                       |
-      }                                                |
+    = render partial: "surveys/star_rating", locals: { category: :interest, f: f }
     = f.hidden_field :interest
   .field
     = f.label :comment

@@ -3,7 +3,7 @@
 class SubmittedFlag < ApplicationRecord
   belongs_to :user
   belongs_to :challenge
-  has_many :surveys, dependent: :destroy
+  has_one :survey, dependent: :destroy
 
   validates :text, presence: true
 
