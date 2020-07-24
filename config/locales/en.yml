@@ -43,10 +43,6 @@ en:
       note: 'All fields are required.'
     new:
       header: 'Create a Team'
-      show:
-        label:
-          team_prize_eligibility_status: 'Team Prize Eligibility Status'
-          team_division_status: 'Team Division Status'
     invite:
       invite_requests_table:
         email_header: 'Email'
@@ -73,7 +69,7 @@ en:
     defensive_points_table:
       challenge_header: 'Challenge'
       points_header: 'Points'
-    team_users_table:
+    users_table:
       team_leader_header: 'Lead'
       email_header: 'Email'
       grade_header: 'School Level'
@@ -85,6 +81,7 @@ en:
       compete_for_prizes_false: 'No'
     summary:
       zero_items_text: 'Nothing to report'
+      zero_teams_text: 'No Teams'
       solved_challenges_header: 'Solved Challenges'
       solved_challenges_chart_header: 'Solved Challenges Breakdown'
       defensive_points_header: 'Defensive Points'
@@ -102,6 +99,7 @@ en:
         challenge_header: 'Challenge'
         points_header: 'Points'
         when_header: 'When'
+        show_hide_btn: 'Show/Hide'
     captain_removed_player: 'Player was successfully removed.'
     player_removed_self: 'You have successfully left the team.'
     already_on_team_create: 'You cannot create a new team while already being a member of one.'
@@ -129,7 +127,8 @@ en:
       currently_selected_division: "You have currently selected %{division} for your team."
       division_true: 'This division is acceptable for your team.'
       division_false: "Your team is not eligible to compete in this division. Consider changing your team's division to match that of the most senior member of your team, or removing the member(s) causing your division to be incorrect."
-      team_eligibility_status_header: "Team Prize Eligibility Status"
+      team_prize_eligibility_status: "Team Prize Eligibility Status"
+      team_division_status: 'Team Division Status'
       eligible_currently: 'Your team is currently'
       eligible_true: 'competing for prizes. Your team will not be competing for prizes if any users on the team indicate they do not wish to compete for prizes, or the team is moved to an inappropriate division.'
       eligible_false: 'competing for prizes. One or more team members has indicated they do not want to compete for prizes. Please contact the users marked as ineligible above.'
@@ -174,6 +173,7 @@ en:
       team_name: 'Name'
       team_achievements: 'Achievements'
       team_points: 'Points'
+      team_show_hide_btn: 'Show/Hide Teams'
     show_markdown:
       markdown_title: 'Title'
       markdown_value: 'Value'
@@ -196,7 +196,7 @@ en:
       red_desc: 'Locked'
     summary:
       header: 'Game Summary'
-      topfive: 'Top 5 Teams'
+      teams_summary: 'Teams Summary'
       submissions_title: 'Flag Submissions'
       flag_submissions_graph:
         flags_submitted: 'Flag Submissions'
@@ -317,6 +317,7 @@ en:
       messages: 'Messages'
       achievements: 'Achievements'
       summary: 'Summary'
+      contact: 'Contact'
       greeting: 'Hello, '
     game_name_if_organization_not_set: 'Gameboard'
     log_out: 'Log out'
