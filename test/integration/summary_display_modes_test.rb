@@ -8,23 +8,18 @@ class SummaryDisplayModesTest < ActionDispatch::IntegrationTest
     @game = create(:active_game)
   end
 
-  test 'summary header shows on summary page' do
+  test 'No teams show header shows on summary page when there are no teams' do
     get "/game/summary"
-
-    assert_select 'h1', /Game Summary/
-  end
-
-  test 'no teams show when there are no teams' do
     Team.destroy_all
-    get "/game/summary"
-    assert_select 'h4', /No Teams/
+    assert_select 'h1', /Game Summary/, 'Game summary header should show on the game summary page'
+    assert_select 'h4', /No Teams/, 'No teams should show when there are no teams on the game summary page'
   end
 
   test 'summary table displays correctly' do
     team = create(:team)
     sign_in create(:user)
     get "/game/summary"
-    puts team.achievements 
+    puts team.achievements
     assert_select 'table[class=table\ table-bordered\ table-striped\ table-hover]' do
       assert_select 'thead' do
         assert_select 'tr' do
