@@ -39,7 +39,7 @@ class GamesControllerTest < ActionController::TestCase
       get :summary
 
       assert_response :success
-      assert_select "div.zero-items-text", {:count=>1, :text=>I18n.t('teams.summary.zero_teams_text')}, "Nothing to Report text is missing from Team Summary page"
+      assert_select "h4.zero-items-text", {:count=>1, :text=>I18n.t('teams.summary.zero_teams_text')}, "Nothing to Report text is missing from Team Summary page"
     end
   end
 
