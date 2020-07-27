@@ -40,7 +40,7 @@ en:
     edit:
       header: 'Edit your Team'
       legend: 'New Team Information'
-      looking_for_members_tooltip: 'When the looking for members checkbox is checked, your team will be displayed as a joinable team for those on the join teams page'
+      looking_for_members_tooltip: 'When this box is checked, your team will be displayed for users searching to join a team. When unchecked you will still be able to invite new users to your team by email.'
     new:
       header: 'Create a Team'
       show:
