@@ -21,7 +21,9 @@ task spellcheck: :environment do
   whitelist = %w[create_admin href https mitre cyber ctf github starttime challengename full_name
                  fullname team_name teamname team_size messagetitle CTF Gameboard start_time
                  end_time contact_url Didn]
-  Dir[Rails.root.join('config/locales/*.yml')].each do |localization|
+  I18n.load_path.each do |localization|
+    next unless localization.include?(Rails.root.to_s) && localization.exclude?('vendor/')
+
     data = YAML.load_file(localization)
     extract_strings(data, extracted)
   end
