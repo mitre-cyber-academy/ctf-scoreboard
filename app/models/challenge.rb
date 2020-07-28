@@ -11,6 +11,7 @@ class Challenge < ApplicationRecord
   has_many :categories, through: :challenge_categories
 
   has_many :submitted_flags, dependent: :destroy
+  has_many :file_submissions, dependent: :destroy
 
   enum state: { closed: 0, open: 1, force_closed: 2 }
 
@@ -24,7 +25,7 @@ class Challenge < ApplicationRecord
   attr_accessor :submitted_flag, :solved_challenges_count
 
   def self.type_enum
-    [['PentestChallenge'], ['ShareChallenge'], ['StandardChallenge']]
+    [['PentestChallenge'], ['ShareChallenge'], ['StandardChallenge'], ['FileSubmissionChallenge']]
   end
 
   validates :type, inclusion: type_enum.flatten, presence: true
