@@ -13,7 +13,9 @@ while [ "$1" != "" ]; do
     case $1 in
         -a | --unattended )    interactive=0
                                 ;;
-        -s | --setupdb )    setupdb=0
+        -s | --setupdb )       setupdb=0
+                                ;;
+        -i | --install-deps )  installdeps=0
                                 ;;
         -p | --production )    production=0
                                 ;;
@@ -21,65 +23,69 @@ while [ "$1" != "" ]; do
     shift
 done
 
-# Check if PostgreSQL is installed
-if ! command -v psql &> /dev/null
+if [[ "$installdeps" == 0 ]];
 then
-    # Ask the user if they want to install RVM and setup bundler
-    if [[ "$interactive" == 1 ]]; then
-        read -p "PostgreSQL could not be found. Would you like to install PostgreSQL now? [Y/n] " -n 1 -r
-    else
-        REPLY="y"
-    fi
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]
+    # Check if PostgreSQL is installed
+    if ! command -v psql &> /dev/null
     then
-        # Install PostgreSQL
-        if ! command -v psql &> /dev/null
-        then
-            if [[ $EUID -ne 0 ]]
-            then
-                sudo apt install -y postgresql-client libpq-dev nano
-            else
-                apt install -y postgresql-client libpq-dev nano
-            fi
-            pg_ctlcluster 12 main start
+        # Ask the user if they want to install RVM and setup bundler
+        if [[ "$interactive" == 1 ]]; then
+            read -p "PostgreSQL could not be found. Would you like to install PostgreSQL now? [Y/n] " -n 1 -r
         else
-            echo "Sorry, but I don't know your package manager. Please install postgresql on your own."
+            REPLY="y"
+        fi
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]
+        then
+            # Install PostgreSQL
+            if ! command -v psql &> /dev/null
+            then
+                if [[ $EUID -ne 0 ]]
+                then
+                    sudo apt install -y postgresql-client libpq-dev nano
+                else
+                    apt install -y postgresql-client libpq-dev nano
+                fi
+                pg_ctlcluster 12 main start
+            else
+                echo "Sorry, but I don't know your package manager. Please install postgresql on your own."
+                exit
+            fi
+        else
+            echo "Unable to find PostgreSQL installation because it is not installed or psql is not in path."
             exit
         fi
-    else
-        echo "Unable to find PostgreSQL installation because it is not installed or psql is not in path."
-        exit
     fi
-fi
 
-# Check if bundler is installed
-if ! command -v bundle &> /dev/null
-then
-    # Ask the user if they want to install RVM and setup bundler
-    if [[ "$interactive" == 1 ]]; then
-        read -p "Ruby bundler could not be found. Would you like to install RVM now? (This will run the bash script at get.rvm.io) [Y/n] " -n 1 -r
-    else
-        REPLY="y"
-    fi
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]
+
+    # Check if bundler is installed
+    if ! command -v bundle &> /dev/null
     then
-        # Install bundler
-        curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
-        curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import -
-        curl -sSL $rvmDownloadLink | bash -s stable --ruby
-
-	if [[ $EUID -ne 0 ]]
+        # Ask the user if they want to install RVM and setup bundler
+        if [[ "$interactive" == 1 ]]; then
+            read -p "Ruby bundler could not be found. Would you like to install RVM now? (This will run the bash script at get.rvm.io) [Y/n] " -n 1 -r
+        else
+            REPLY="y"
+        fi
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]
         then
-               source $HOME/.rvm/scripts/rvm
-	else
-               source /usr/local/rvm/scripts/rvm
-	fi
-	rvm install $rubyversion
-    else
-        echo "Unable to find ruby installation because it is not installed or not in path. Please ensure that bundler is in your \$PATH or that you have loaded RVM."
-        exit
+            # Install bundler
+            curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
+            curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import -
+            curl -sSL $rvmDownloadLink | bash -s stable --ruby
+
+        if [[ $EUID -ne 0 ]]
+            then
+                source $HOME/.rvm/scripts/rvm
+        else
+                source /usr/local/rvm/scripts/rvm
+        fi
+        rvm install $rubyversion
+        else
+            echo "Unable to find ruby installation because it is not installed or not in path. Please ensure that bundler is in your \$PATH or that you have loaded RVM."
+            exit
+        fi
     fi
 fi
 
