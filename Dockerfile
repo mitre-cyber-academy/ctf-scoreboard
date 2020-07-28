@@ -1,4 +1,4 @@
-FROM ruby
+FROM ruby:2.7
 
 WORKDIR /usr/src/app
 
@@ -12,5 +12,5 @@ RUN DEBIAN_FRONTEND="noninteractive" bash ./setup.sh -a
 
 EXPOSE 3000
 
-CMD bash -c "source /usr/local/rvm/scripts/rvm; bundle exec rails s -b 0.0.0.0"
+CMD bash -c "bundle exec rails s -b 0.0.0.0"
 
