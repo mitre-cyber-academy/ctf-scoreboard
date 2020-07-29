@@ -23,7 +23,7 @@
   %div#sponsorInfo{ :style => "margin-bottom:40px;" }
     %h3#sponsorName= t('challenges.show.sponsor')
     - unless @challenge.sponsor_logo.empty?
-      = image_tag(@challenge.sponsor_logo, :id => "sponsorLogo")
+      = image_tag(@challenge.sponsor_logo, :id => "sponsorLogo", :class => "w-25")
     - unless @challenge.sponsor_description.empty?
       = sanitize(Kramdown::Document.new(@challenge.sponsor_description).to_html)
 
