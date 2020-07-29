@@ -6,6 +6,6 @@
 $(document).ready ->
   $('.toggler').click (e) ->
     $('#hiddenUntilToggle').toggleClass("d-none")
-    e.preventDefault();
+    e.preventDefault()
     return
   return
