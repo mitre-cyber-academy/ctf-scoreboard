@@ -28,7 +28,7 @@
       = sanitize(Kramdown::Document.new(@challenge.sponsor_description).to_html)
 
 - if @solvable
-  = form_for :challenge, url: submit_url(@defense_team, @challenge), method: "put", html: { class: "well", style: "margin-bottom:40px;" } do |f|
+  = form_for :challenge, url: submit_url(@defense_team, @challenge), method: "put", html: { class: "card card-body bg-light", style: "margin-bottom:40px;" } do |f|
     .form-group
       .col-xs-2
       = f.label t('challenges.submit_flag')
