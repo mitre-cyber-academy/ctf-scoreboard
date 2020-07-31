@@ -16,8 +16,8 @@ namespace :db do
     if user.save
       puts "User account '#{email}' created."
     else
-      puts
       puts 'Problem creating user account:'
+      puts
       puts user.errors.full_messages
     end
   end
