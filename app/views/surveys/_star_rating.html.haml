@@ -1,6 +1,5 @@
-%span.star-cb-group
-  - [5, 4, 3, 2, 1].each do |rating|
-    = f.radio_button category, rating, { :name => "#{category}", :id => "#{category}_#{rating}", :onclick => "setRating('survey_#{category}', '#{rating}')" }
-    %label{:for => "#{category}_#{rating}"}
-  = f.radio_button category, 0, { :name => "#{category}", :id => "#{category}_0", :class => "star-cb-clear", :onclick => "setRating('survey_#{category}', '0')", :checked => true }
-  %label{:for => "#{category}_0"} 0
+.rating
+  %span.star-cb-group
+    - [5, 4, 3, 2, 1].each do |rating|
+      = f.radio_button category, rating, { :name => "survey[#{category}]", :id => "#{category}_#{rating}", :value => rating }
+      %label{:for => "#{category}_#{rating}"}
