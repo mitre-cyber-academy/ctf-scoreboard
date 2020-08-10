@@ -62,5 +62,5 @@
     = render partial: 'users/registrations/update_user_form', locals: { f: f }
   .controls
     = invisible_recaptcha_tags text: 'Submit', :class => "btn btn-primary"
-//- if on_update_page
-//  = render partial: 'users/registrations/delete_user_form'
+  - if on_update_page
+    = render partial: 'users/registrations/delete_user_form'
