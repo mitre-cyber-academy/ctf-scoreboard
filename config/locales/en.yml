@@ -1,24 +1,3 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
   activerecord:
     errors:
@@ -26,382 +5,432 @@ en:
         user_invite:
           attributes:
             email:
-              blank: 'You cannot invite your invisible friend.'
-              invalid: 'address is not valid.'
-              uniqueness: 'Email address previously invited to team.'
+              blank: You cannot invite your invisible friend.
+              invalid: address is not valid.
+              uniqueness: Email address previously invited to team.
   achievements:
     index:
-      header: 'Achievements'
-      zero_items_text: 'No achievements have been awarded'
-      table_header_achievement_name: 'Name'
-      table_header_unlocked_by: 'Unlocked By'
-      table_header_when: 'When'
+      header: Achievements
+      zero_items_text: No achievements have been awarded
+      table_header_achievement_name: Name
+      table_header_unlocked_by: Unlocked By
+      table_header_when: When
   teams:
     edit:
-      header: 'Edit your Team'
-      legend: 'New Team Information'
-      note: 'All fields are required.'
+      header: Edit your Team
+      legend: New Team Information
+      note: All fields are required.
     new:
-      header: 'Create a Team'
+      header: Create a Team
     invite:
       invite_requests_table:
-        email_header: 'Email'
-        prize_eligible_header: 'Prize Eligible?'
-        requested_on_header: 'Requested On'
-        accept_request_header: 'Accept?'
+        email_header: Email
+        prize_eligible_header: Prize Eligible?
+        requested_on_header: Requested On
+        accept_request_header: Accept?
       invites_table:
-        email_header: 'Email'
-        prize_eligible_header: 'Prize Eligible?'
-        division_header: 'Division'
-        cancel_invite_header: 'Cancel Invite'
+        email_header: Email
+        prize_eligible_header: Prize Eligible?
+        division_header: Division
+        cancel_invite_header: Cancel Invite
       incomming_invites_table:
-        team_name_header: 'Team Name'
-        invited_on_header: 'Invited On'
-        accept_reject_header: 'Accept/Reject'
+        team_name_header: Team Name
+        invited_on_header: Invited On
+        accept_reject_header: Accept/Reject
       requested_join_team_table:
-        team_name_header: 'Team Name'
-        requested_on_header: 'Requested On'
-        cancel_request_header: 'Cancel'
+        team_name_header: Team Name
+        requested_on_header: Requested On
+        cancel_request_header: Cancel
     admin_info_table:
-      user_id: 'User ID'
-      name: 'Name'
-      email: 'Email'
+      user_id: User ID
+      name: Name
+      email: Email
     defensive_points_table:
-      challenge_header: 'Challenge'
-      points_header: 'Points'
+      challenge_header: Challenge
+      points_header: Points
     users_table:
-      team_leader_header: 'Lead'
-      email_header: 'Email'
-      grade_header: 'School Level'
-      division_header: 'Appropriate Division'
-      prize_eligibility_header: 'Prize Eligible'
-      remove_user_header: 'Remove'
-      change_captian_header: 'Change Captain'
+      team_leader_header: Lead
+      email_header: Email
+      grade_header: School Level
+      division_header: Appropriate Division
+      prize_eligibility_header: Prize Eligible
+      remove_user_header: Remove
+      change_captian_header: Change Captain
       compete_for_prizes_true: 'Yes'
       compete_for_prizes_false: 'No'
     summary:
-      zero_items_text: 'Nothing to report'
-      zero_teams_text: 'No Teams'
-      solved_challenges_header: 'Solved Challenges'
-      solved_challenges_chart_header: 'Solved Challenges Breakdown'
-      defensive_points_header: 'Defensive Points'
+      zero_items_text: Nothing to report
+      zero_teams_text: No Teams
+      solved_challenges_header: Solved Challenges
+      solved_challenges_chart_header: Solved Challenges Breakdown
+      defensive_points_header: Defensive Points
       division_name: '%{division} Division'
-      solved_challenge: 'solved challenge'
-      team_members_header: 'Team Members'
-      per_user_statistics_header: 'Per User Statistics'
-      flag_submissions_header: 'Team Flag Submissions'
-      score_adjustments_header: 'Score Adjustments'
+      solved_challenge: solved challenge
+      team_members_header: Team Members
+      per_user_statistics_header: Per User Statistics
+      flag_submissions_header: Team Flag Submissions
+      score_adjustments_header: Score Adjustments
       score_adjustments_table:
-        points_adjustment_header: 'Points'
-        discription_adjustment_header: 'Description'
-        when_adjustment_header: 'When'
+        points_adjustment_header: Points
+        discription_adjustment_header: Description
+        when_adjustment_header: When
       solved_challenges_table:
-        challenge_header: 'Challenge'
-        points_header: 'Points'
-        when_header: 'When'
-        show_hide_btn: 'Show/Hide'
-    captain_removed_player: 'Player was successfully removed.'
-    player_removed_self: 'You have successfully left the team.'
-    already_on_team_create: 'You cannot create a new team while already being a member of one.'
-    already_on_team_join: 'You cannot join another team while already being a member of one.'
-    full_team: 'Your team currently has the max number of players allowed for our competition.'
-    create_successful: 'Team was successfully created.'
-    update_successful: 'Team was successfully updated.'
-    invalid_permissions: 'You must first be a member of a team in order to view it.'
-    captain_must_promote: 'You must promote another member of your team to captain before leaving.'
-    promoted_captain: 'A new team captain has been promoted.'
-    cannot_promote_captain: 'You cannot promote this user to be the captain.'
-    must_be_team_captain: 'You must be the team captain to perform this action.'
-    must_be_on_team: 'You must be on a team to view other teams.'
-    in_top_ten: 'This team is currently locked since it is in the top ten for its division.'
-    does_not_exist: 'No such team exists.'
+        challenge_header: Challenge
+        points_header: Points
+        when_header: When
+        show_hide_btn: Show/Hide
+    captain_removed_player: Player was successfully removed.
+    player_removed_self: You have successfully left the team.
+    already_on_team_create: You cannot create a new team while already being a member of one.
+    already_on_team_join: You cannot join another team while already being a member of one.
+    full_team: >-
+      Your team currently has the max number of players allowed for our
+      competition.
+    create_successful: Team was successfully created.
+    update_successful: Team was successfully updated.
+    invalid_permissions: You must first be a member of a team in order to view it.
+    captain_must_promote: You must promote another member of your team to captain before leaving.
+    promoted_captain: A new team captain has been promoted.
+    cannot_promote_captain: You cannot promote this user to be the captain.
+    must_be_team_captain: You must be the team captain to perform this action.
+    must_be_on_team: You must be on a team to view other teams.
+    in_top_ten: This team is currently locked since it is in the top ten for its division.
+    does_not_exist: No such team exists.
     show:
-      remove_user_confirm: 'Are you sure you want to remove this player from your team?'
-      promote_confirm: 'Are you sure you want to promote a new team captain? You will immediately lose all captain privileges.'
-      eligible_help: 'This user has not yet registered and their division is unknown at this time.'
-      cancel_invite_confirm: 'Are you sure you want to cancel this invitation?'
+      remove_user_confirm: Are you sure you want to remove this player from your team?
+      promote_confirm: >-
+        Are you sure you want to promote a new team captain? You will
+        immediately lose all captain privileges.
+      eligible_help: >-
+        This user has not yet registered and their division is unknown at this
+        time.
+      cancel_invite_confirm: Are you sure you want to cancel this invitation?
       cancel_invite:
-        confirm: 'Are you sure you want to cancel this invitation?'
-      reject_request_confirm: 'Are you sure you want to reject this request?'
-      invite_button: 'Invite Member'
-      currently_selected_division: "You have currently selected %{division} for your team."
-      division_true: 'This division is acceptable for your team.'
-      division_false: "Your team is not eligible to compete in this division. Consider changing your team's division to match that of the most senior member of your team, or removing the member(s) causing your division to be incorrect."
-      team_prize_eligibility_status: "Team Prize Eligibility Status"
-      team_division_status: 'Team Division Status'
-      eligible_currently: 'Your team is currently'
-      eligible_true: 'competing for prizes. Your team will not be competing for prizes if any users on the team indicate they do not wish to compete for prizes, or the team is moved to an inappropriate division.'
-      eligible_false: 'competing for prizes. One or more team members has indicated they do not want to compete for prizes. Please contact the users marked as ineligible above.'
-      eligible_false_not: 'NOT'
-      pending_requests_false: 'There are no pending requests to join your team at this time.'
-      pending_invites_false: 'There are no pending invitations to join your team at this time.'
-      pending_requests_header: 'Pending User Requests'
-      invite_member_header: 'Invite a Team Member'
-      pending_invites_header: 'Pending User Invites'
+        confirm: Are you sure you want to cancel this invitation?
+      reject_request_confirm: Are you sure you want to reject this request?
+      invite_button: Invite Member
+      currently_selected_division: 'You have currently selected %{division} for your team.'
+      division_true: This division is acceptable for your team.
+      division_false: >-
+        Your team is not eligible to compete in this division. Consider changing
+        your team's division to match that of the most senior member of your
+        team, or removing the member(s) causing your division to be incorrect.
+      team_prize_eligibility_status: Team Prize Eligibility Status
+      team_division_status: Team Division Status
+      eligible_currently: Your team is currently
+      eligible_true: >-
+        competing for prizes. Your team will not be competing for prizes if any
+        users on the team indicate they do not wish to compete for prizes, or
+        the team is moved to an inappropriate division.
+      eligible_false: >-
+        competing for prizes. One or more team members has indicated they do not
+        want to compete for prizes. Please contact the users marked as
+        ineligible above.
+      eligible_false_not: NOT
+      pending_requests_false: There are no pending requests to join your team at this time.
+      pending_invites_false: There are no pending invitations to join your team at this time.
+      pending_requests_header: Pending User Requests
+      invite_member_header: Invite a Team Member
+      pending_invites_header: Pending User Invites
       eligible: 'Yes'
       ineligible: 'No'
-      subheading: "Affiliation: %{affiliation}"
+      subheading: 'Affiliation: %{affiliation}'
   requests:
-    sent_successful: 'Team join request was successfully sent.'
+    sent_successful: Team join request was successfully sent.
     accepted_another: 'User has accepted another teams invitation, sorry!'
-    accepted_successful: 'User request was successfully accepted.'
-    rejected_successful: 'User request was successfully rejected.'
-    too_many_players: 'You must remove a different player in order to accept this request.'
-    already_pending: 'already has a pending request for this team.'
+    accepted_successful: User request was successfully accepted.
+    rejected_successful: User request was successfully rejected.
+    too_many_players: You must remove a different player in order to accept this request.
+    already_pending: already has a pending request for this team.
   invites:
-    invite_successful: 'Team invite successfully sent.'
-    invalid_permissions: 'You do not have permission to accept this invite.'
-    accepted_successful: 'User invite was successfully accepted.'
-    rejected_successful: 'User invitation was successfully rejected.'
-    full_team: 'This team currently does not have any more open slots. Please try again later.'
+    invite_successful: Team invite successfully sent.
+    invalid_permissions: You do not have permission to accept this invite.
+    accepted_successful: User invite was successfully accepted.
+    rejected_successful: User invitation was successfully rejected.
+    full_team: >-
+      This team currently does not have any more open slots. Please try again
+      later.
   game:
-    must_be_admin: "The scoreboard has not finished set up! You must be an administrator to setup the scoreboard. Log in with existing administrator credentials to continue set up. If this is the initial setup of the scoreboard, run `bundle exec rake db:create_admin` from the web server's command line to create an administrator account."
-    closed: 'The game is currently closed.'
-    too_many: 'You may not create more than one game.'
-    date_mismatch: 'The start date must be before the end date.'
-    before_competition: 'This action is not available until the game is open.'
-    after_competition: 'This action is not available after the game is over.'
-    registration_closed: 'This action is not available because registration is closed.'
-    setup: 'Finish setting up the scoreboard by creating a game. Not all fields are required, and you can always change them later! Learn more at %{href}'
-    setup_href: "https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Configuration#game"
-    attack_defend_challenges: 'Attack & Defend Challenges'
-    view_all_teams: 'View all Teams'
-    admin_view_submission_page: 'View Submission Page'
+    must_be_admin: >-
+      The scoreboard has not finished set up! You must be an administrator to
+      setup the scoreboard. Log in with existing administrator credentials to
+      continue set up. If this is the initial setup of the scoreboard, run
+      `bundle exec rake db:create_admin` from the web server's command line to
+      create an administrator account.
+    closed: The game is currently closed.
+    too_many: You may not create more than one game.
+    date_mismatch: The start date must be before the end date.
+    before_competition: This action is not available until the game is open.
+    after_competition: This action is not available after the game is over.
+    registration_closed: This action is not available because registration is closed.
+    setup: >-
+      Finish setting up the scoreboard by creating a game. Not all fields are
+      required, and you can always change them later! Learn more at %{href}
+    setup_href: >-
+      https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Configuration#game
+    attack_defend_challenges: Attack & Defend Challenges
+    view_all_teams: View all Teams
+    admin_view_submission_page: View Submission Page
     team_list:
-      header: 'Team List'
-      no_teams: 'No Teams'
-      team_name: 'Name'
-      team_achievements: 'Achievements'
-      team_points: 'Points'
-      team_show_hide_btn: 'Show/Hide Teams'
+      header: Team List
+      no_teams: No Teams
+      team_name: Name
+      team_achievements: Achievements
+      team_points: Points
+      team_show_hide_btn: Show/Hide Teams
     show_markdown:
-      markdown_title: 'Title'
-      markdown_value: 'Value'
-      markdown_repository: 'Repository'
-      markdown_description: 'Description'
+      markdown_title: Title
+      markdown_value: Value
+      markdown_repository: Repository
+      markdown_description: Description
     zoom_help: '(To zoom, click and drag on the X-axis)'
     legend:
-      legend_name: 'Legend'
-      dark_green: 'Dark Green'
-      green: 'Green'
-      light_green: 'Light Green'
-      blue: 'Blue'
-      gray: 'Gray'
-      red: 'Red'
-      dark_green_desc: 'Unsolved by any team'
-      green_desc: 'Solved by one team'
-      light_green_desc: 'Solved by multiple teams'
-      blue_desc: 'Solved by your team'
-      gray_desc: 'Unavailable'
-      red_desc: 'Locked'
+      legend_name: Legend
+      dark_green: Dark Green
+      green: Green
+      light_green: Light Green
+      blue: Blue
+      gray: Gray
+      red: Red
+      dark_green_desc: Unsolved by any team
+      green_desc: Solved by one team
+      light_green_desc: Solved by multiple teams
+      blue_desc: Solved by your team
+      gray_desc: Unavailable
+      red_desc: Locked
     summary:
-      header: 'Game Summary'
-      teams_summary: 'Teams Summary'
-      submissions_title: 'Flag Submissions'
+      header: Game Summary
+      teams_summary: Teams Summary
+      submissions_title: Flag Submissions
       flag_submissions_graph:
-        flags_submitted: 'Flag Submissions'
-        challenges_solved: 'Challenges Solved'
+        flags_submitted: Flag Submissions
+        challenges_solved: Challenges Solved
       challenge_table:
-        teams_header: 'Teams'
+        teams_header: Teams
     show:
-      table_title: 'Challenges'
-      no_challenges: 'No Challenges'
+      table_title: Challenges
+      no_challenges: No Challenges
       challenges_table:
-        sponsor_header: 'Sponsor'
-        name_header: 'Name'
-        category_header: 'Category'
-        points_header: 'Points'
+        sponsor_header: Sponsor
+        name_header: Name
+        category_header: Category
+        points_header: Points
   flag:
-    accepted: 'Flag accepted!'
-    challenge_must_be_unique: 'must be unique per defensive team.'
+    accepted: Flag accepted!
+    challenge_must_be_unique: must be unique per defensive team.
   challenges:
     show:
-      no_desc: 'No description'
-      sponsor: 'Sponsor'
-    description_name: 'Description'
-    point_value_singular: 'Point'
-    error_singular: 'error'
-    not_open: 'must be open.'
-    no_category: 'No Category'
-    solved_team_name_table_header: 'Team'
-    solved_division_name_table_header: 'Division'
-    solved_when_table_header: 'When'
-    submit_flag: 'Submit Flag'
-    team_ineligible_for_prizes: 'ineligible'
+      no_desc: No description
+      sponsor: Sponsor
+    description_name: Description
+    point_value_singular: Point
+    error_singular: error
+    not_open: must be open.
+    no_category: No Category
+    solved_team_name_table_header: Team
+    solved_division_name_table_header: Division
+    solved_when_table_header: When
+    submit_flag: Submit Flag
+    team_ineligible_for_prizes: ineligible
     solve_state:
-      click_to_solve: 'Click to Solve'
-      solved: 'Solved'
+      click_to_solve: Click to Solve
+      solved: Solved
       unavailable_solve_state: '-'
     admin_edit_challenge: 'Edit %{challengename}'
-    game_not_open: 'The game must be open.'
-    already_solved: 'This team has already solved this challenge the allowed number of times.'
-    must_be_on_team: 'You must be on a team to submit a flag.'
+    game_not_open: The game must be open.
+    already_solved: This team has already solved this challenge the allowed number of times.
+    must_be_on_team: You must be on a team to submit a flag.
     state_change_message: 'The challenge is now %{state}'
-    first_winner: 'First Blood!'
+    first_winner: First Blood!
   challenge_categories:
-    same_game: 'must belong to the same game as category.'
+    same_game: must belong to the same game as category.
   users:
-    login_required: 'You must login in order to perform this action.'
-    team_completion_cert_string: "This is to certify that %{full_name}
-     successfully competed as a member of Team %{team_name},
-     achieving %{score} points and finishing %{rank} out of %{team_size} teams."
+    login_required: You must login in order to perform this action.
+    team_completion_cert_string: >-
+      This is to certify that %{full_name} successfully competed as a member of
+      Team %{team_name}, achieving %{score} points and finishing %{rank} out of
+      %{team_size} teams.
     edit:
-      edit_account_header: 'Edit Account'
+      edit_account_header: Edit Account
       label:
-        password: 'Password'
-        password_confirmation: 'Confirm new password'
-        password_confirmation_2: 'Confirm Password'
-        password_change: 'Change password'
-        current_password_placeholder: 'Current Password'
-        delete_account: 'Delete Account'
-        major_area_of_study: "Major/Area of study"
+        password: Password
+        password_confirmation: Confirm new password
+        password_confirmation_2: Confirm Password
+        password_change: Change password
+        current_password_placeholder: Current Password
+        delete_account: Delete Account
+        major_area_of_study: Major/Area of study
       help:
-        affiliation: 'If you are a student, please list your school. If you are an industry professional please list your professional organization.'
-        state: 'Enter the state in which you are a resident.'
-        compete_for_prizes: 'Prize distribution may be restricted to qualifying teams. Check terms and conditions for full details and to see if you qualify.'
-        interested_in_employment: 'Are you interested receiving internship or employment emails from %{organization}?'
-        age: 'Age will be used in aggregate statistics and are held confidentially.'
-        resume: 'Please provide us with a copy of your resume in PDF format'
-        transcript: 'Please provide us with a copy of your unofficial transcript in PDF format'
-        password: 'We need your current password to update your account information.'
-        destroy: 'Deleting your account will remove you from your team. In order to rejoin a team you will have to be re-invited.'
+        affiliation: >-
+          If you are a student, please list your school. If you are an industry
+          professional please list your professional organization.
+        state: Enter the state in which you are a resident.
+        compete_for_prizes: >-
+          Prize distribution may be restricted to qualifying teams. Check terms
+          and conditions for full details and to see if you qualify.
+        interested_in_employment: >-
+          Are you interested receiving internship or employment emails from
+          %{organization}?
+        age: Age will be used in aggregate statistics and are held confidentially.
+        resume: Please provide us with a copy of your resume in PDF format
+        transcript: >-
+          Please provide us with a copy of your unofficial transcript in PDF
+          format
+        password: We need your current password to update your account information.
+        destroy: >-
+          Deleting your account will remove you from your team. In order to
+          rejoin a team you will have to be re-invited.
       password:
-        password_edit_header: 'Change your password'
-        forgot_password_header: 'Forgot your password'
-        retrieve_access_instructions: 'Resend instructions'
-        resend_unlock_instructions: 'Resend unlock instructions'
-      error: "prohibited your user from being updated:"
+        password_edit_header: Change your password
+        forgot_password_header: Forgot your password
+        retrieve_access_instructions: Resend instructions
+        resend_unlock_instructions: Resend unlock instructions
+      error: 'prohibited your user from being updated:'
     destroy:
-      confirm: 'Are you sure you want to delete your account?'
+      confirm: Are you sure you want to delete your account?
     new:
       required_fields_notice_1: 'Note: Fields marked with'
-      required_fields_notice_2: 'can not be blank.'
-      register: 'Register for the CTF'
-      confirmations_legend: 'Resend Confirmation Instructions'
-      password_reset_legend: 'Send a Password Reset'
-      sessions_legend: 'Login'
+      required_fields_notice_2: can not be blank.
+      register: Register for the CTF
+      confirmations_legend: Resend Confirmation Instructions
+      password_reset_legend: Send a Password Reset
+      sessions_legend: Login
     activation:
-      activation_header: 'Activate your Account'
+      activation_header: Activate your Account
     join_team:
-      header: 'Join a Team'
-      pending_team_invites_header: 'Pending Team Invitations'
-      invites_header_desc: 'Teams that would like you to join them'
-      delete_invite_confirmation: 'Are you sure you want to delete this invitation?'
-      pending_team_requests_header: 'Pending Team Requests'
-      requests_header_desc: 'Teams that you have requested to join'
-      delete_request_confirmation: 'Are you sure you want to delete this request?'
-      search_for_team_header: 'Search for a Team'
-      reset_filters: 'Reset Filters'
+      header: Join a Team
+      pending_team_invites_header: Pending Team Invitations
+      invites_header_desc: Teams that would like you to join them
+      delete_invite_confirmation: Are you sure you want to delete this invitation?
+      pending_team_requests_header: Pending Team Requests
+      requests_header_desc: Teams that you have requested to join
+      delete_request_confirmation: Are you sure you want to delete this request?
+      search_for_team_header: Search for a Team
+      reset_filters: Reset Filters
       teams_table:
-        name_header: 'Name'
-        affiliation_header: 'Affiliation'
-        spots_header: 'Spots Available'
-        division_header: 'Division'
-        request_join_header: 'Request to Join'
-        request_join_button: 'Request'
+        name_header: Name
+        affiliation_header: Affiliation
+        spots_header: Spots Available
+        division_header: Division
+        request_join_header: Request to Join
+        request_join_button: Request
     login:
-      login_header: 'Access Your Account'
-      remember_login: 'Remember Me'
+      login_header: Access Your Account
+      remember_login: Remember Me
   admin:
-    should_not_do_action: 'Admins should use the Rails Admin console to perform administrative actions.'
-    download_not_available: 'The download you have selected is not available.'
+    should_not_do_action: >-
+      Admins should use the Rails Admin console to perform administrative
+      actions.
+    download_not_available: The download you have selected is not available.
   application:
     admin:
-      dashboard: 'Admin Dashboard'
-      post_message: 'Post a message'
-      view_submitted_flags: 'View submitted flags'
-      award_achievement: 'Award an achievement'
-      create_score_adjustment: 'Create score adjustment'
+      dashboard: Admin Dashboard
+      post_message: Post a message
+      view_submitted_flags: View submitted flags
+      award_achievement: Award an achievement
+      create_score_adjustment: Create score adjustment
     navbar:
-      challenges: 'Challenges'
-      messages: 'Messages'
-      achievements: 'Achievements'
-      summary: 'Summary'
-      contact: 'Contact'
+      challenges: Challenges
+      messages: Messages
+      achievements: Achievements
+      summary: Summary
+      contact: Contact
       greeting: 'Hello, '
-    game_name_if_organization_not_set: 'Gameboard'
-    log_out: 'Log out'
-    log_in: 'Log in'
-    edit_account: 'Edit Account'
+    game_name_if_organization_not_set: Gameboard
+    log_out: Log out
+    log_in: Log in
+    edit_account: Edit Account
     open_source_statement_html: 'Gameboard and registration software is %{href} free to use!'
-    open_source_link_text: 'available'
+    open_source_link_text: available
     github_link: 'https://github.com/mitre-cyber-academy/ctf-scoreboard'
     terms_of_use:
-      terms_of_service: 'Terms of Service'
-      terms_and_conditions: 'Terms and Conditions'
+      terms_of_service: Terms of Service
+      terms_and_conditions: Terms and Conditions
       no_terms_and_conditions: There are no terms and conditions associated with this game.
       no_terms_of_service: There are no terms of service associated with this game.
   messages:
-    messages_header: 'Messages'
-    no_messages: 'No Messages'
+    messages_header: Messages
+    no_messages: No Messages
   home:
     index:
-      description: 'Description'
-      when_to_compete: 'When to compete'
-      when_to_compete_info: "This competition will run from %{start_time} until %{end_time}"
-      stuck: "Help, I'm Stuck!"
-      stuck_info: "We'd be happy to give you a hand if you %{contact_url}"
-      contact_us: 'contact us'
-      view_team: 'View Team'
-      join_team: 'Join Team'
-      create_team: 'Create Team'
-      edit_team: 'Edit Team'
-      login_or_register: 'Log in / Register'
-      login: 'Log in'
-      register: 'Register'
-      back_to_top: 'Back to top'
+      description: Description
+      when_to_compete: When to compete
+      when_to_compete_info: 'This competition will run from %{start_time} until %{end_time}'
+      stuck: 'Help, I''m Stuck!'
+      stuck_info: 'We''d be happy to give you a hand if you %{contact_url}'
+      contact_us: contact us
+      view_team: View Team
+      join_team: Join Team
+      create_team: Create Team
+      edit_team: Edit Team
+      login_or_register: Log in / Register
+      login: Log in
+      register: Register
+      back_to_top: Back to top
       catchprase:
-        before_completion: 'Register for the CTF'
-        game_open: 'Competition in Progress'
-        game_completed: 'Competition has Completed'
+        before_completion: Register for the CTF
+        game_open: Competition in Progress
+        game_completed: Competition has Completed
   user_mailer:
     completion_reminder:
       title: '%{title}: Competition Reminder'
       greeting: 'Hello %{fullname}!'
-      reminder_line_1: 'This is a reminder for the upcoming %{organization} %{title} which will start at %{starttime}.'
-      reminder_line_2: 'Click the link below to login and check your account'
+      reminder_line_1: >-
+        This is a reminder for the upcoming %{organization} %{title} which will
+        start at %{starttime}.
+      reminder_line_2: Click the link below to login and check your account
     invite_user:
       title: '%{title}: Invite to join team %{teamname}'
       greeting: 'Hello %{email}!'
-      invite_line_1: 'You have been invited to join the team'
+      invite_line_1: You have been invited to join the team
       invite_line_2: 'for the upcoming %{organization} %{title}'
-      register: 'Click the link below to register an account to view the invitation.'
-      view: 'Click the link below to view the invitiation.'
+      register: Click the link below to register an account to view the invitation.
+      view: Click the link below to view the invitation.
     message_notification:
       title: '%{title} New Message: %{messagetitle}'
       greeting: 'Hello %{fullname}'
-      view_all: 'View all Messages on Scoreboard'
+      view_all: View all Messages on Scoreboard
     open_source:
       title: '%{title}: Challenges Released'
       greeting: 'Hello %{fullname}'
       view_solutions: 'All solved challenges from %{title} have been released with solutions '
-      location_name: 'here'
-      goodbye: 'Have a great day!'
+      location_name: here
+      goodbye: Have a great day!
     ranking:
       title: '%{title}: Congratulations! '
       greeting: 'Hello %{fullname}!'
-      ranking_line: 'Congratulations on completing %{title}! Your team, %{team} came ranked %{ranked}.'
-      thanks: 'Thanks for participating!'
+      ranking_line: >-
+        Congratulations on completing %{title}! Your team, %{team} came ranked
+        %{ranked}.
+      thanks: Thanks for participating!
     user_request:
       title: '%{title}: Request from %{fullname} to join %{teamname}'
       greeting: 'Hello %{fullname}!'
       request_line_1: '%{username} has requested to join your team %{team}'
-      request_line_2: 'Click the link below to view and accept or reject the request.'
-      view_team_dashboard: 'View Team Dashboard'
+      request_line_2: Click the link below to view and accept or reject the request.
+      view_team_dashboard: View Team Dashboard
     reset_password:
       greeting: 'Hello %{fullname}!'
-      reset_password_line_1: 'Someone has requested a link to change your password, and you can do this through the link below.'
-      change_password_link: 'Change my password'
+      reset_password_line_1: >-
+        Someone has requested a link to change your password, and you can do
+        this through the link below.
+      change_password_link: Change my password
       change_password_line_2: 'If you did not request this, please ignore this email.'
-      change_password_line_3: 'Your password will not change until you access the link above and create a new one.'
+      change_password_line_3: >-
+        Your password will not change until you access the link above and create
+        a new one.
     confirmation:
       greeting: 'Hello %{fullname}!'
-      confirmation_line_1: 'Thank you for registering for our upcoming CTF event.'
+      confirmation_line_1: Thank you for registering for our upcoming CTF event.
       confirmation_line_2: 'If you wish to finish this registration, please use the link below.'
-      confirm_account: 'Confirm my account'
-      error: 'If you feel you have received this message in error, please do not click the link above.'
+      confirm_account: Confirm my account
+      error: >-
+        If you feel you have received this message in error, please do not click
+        the link above.
     unlock_instructions:
       greeting: 'Hello %{fullname}!'
-      unlock_line_1: 'Your account has been locked due to an excessive amount of unsuccessful sign in attempts.'
+      unlock_line_1: >-
+        Your account has been locked due to an excessive amount of unsuccessful
+        sign in attempts.
       unlock_line_2: 'Click the link below to unlock your account:'
-      unlock_account_link: 'Unlock my account'
+      unlock_account_link: Unlock my account
