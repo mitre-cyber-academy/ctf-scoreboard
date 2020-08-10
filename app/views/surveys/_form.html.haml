@@ -7,22 +7,19 @@
           %li= message
 
   %h3= t('surveys.new.header')
-
-  .field
-    = f.label :difficulty
-    = render partial: "surveys/star_rating", locals: { category: :difficulty, f: f }
-    = f.hidden_field :difficulty
-  .field
-    = f.label :realism
-    = render partial: "surveys/star_rating", locals: { category: :realism, f: f }
-    = f.hidden_field :realism
-  .field
-    = f.label :interest
-    = render partial: "surveys/star_rating", locals: { category: :interest, f: f }
-    = f.hidden_field :interest
-  .field
-    = f.label :comment
-    = f.text_area :comment
+  .rating
+    .field
+      = f.label :difficulty
+      = render partial: "surveys/star_rating", locals: { category: :difficulty, f: f }
+    .field
+      = f.label :realism
+      = render partial: "surveys/star_rating", locals: { category: :realism, f: f }
+    .field
+      = f.label :interest
+      = render partial: "surveys/star_rating", locals: { category: :interest, f: f }
+    .field
+      = f.label :comment
+      = f.text_area :comment
   .field
     = f.hidden_field :submitted_flag_id
   .field
