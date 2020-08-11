@@ -12,10 +12,11 @@ class SurveysControllerTest < ActionController::TestCase
 
   test 'create new survey' do
     team_user = create(:user_with_team)
-    standard_challenge = create(:standard_challenge)
     sign_in team_user
-    submitted_flag = create(:submitted_flag, user: team_user, challenge: standard_challenge)
-    post :create, params: { survey: { difficulty: 5, realism: 5, interest: 5, comment: "MyText", submitted_flag_id: submitted_flag.id } }
+    submitted_flag = create(:submitted_flag, user: team_user, challenge: @standard_challenge)
+    assert_difference 'Survey.count', +1 do
+      post :create, params: { survey: { difficulty: 5, realism: 5, interest: 5, comment: "MyText", submitted_flag_id: submitted_flag.id } }
+    end
     assert_redirected_to game_path
     assert_match I18n.t('surveys.submitted'), flash[:notice]
   end

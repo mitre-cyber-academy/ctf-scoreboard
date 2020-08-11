@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :survey do
-    difficulty { 1 }
-    realism { 1 }
-    interest { 1 }
+    difficulty { Faker::Number.between(from:1, to:5) }
+    realism { Faker::Number.between(from:1, to:5) }
+    interest { Faker::Number.between(from:1, to:5) }
     comment { "MyText" }
     submitted_flag_id { 1 }
   end
