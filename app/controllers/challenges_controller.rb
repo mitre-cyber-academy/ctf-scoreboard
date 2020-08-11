@@ -16,6 +16,7 @@ class ChallengesController < ApplicationController
     flash.now[:notice] = I18n.t('flag.accepted') if @solved_challenge
   end
 
+  # rubocop:disable Metrics/AbcSize
   def update
     if @flag_found
       @solved_challenge = @flag_found.save_solved_challenge(current_user)
@@ -29,6 +30,7 @@ class ChallengesController < ApplicationController
 
     render :show
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
 
