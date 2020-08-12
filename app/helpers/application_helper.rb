@@ -28,6 +28,6 @@ module ApplicationHelper
   end
 
   def amount_of_errors(alerts)
-    pluralize(alerts.length, I18n.t('challenges.error_singular')) + ':'
+    "#{pluralize(alerts.length, I18n.t('challenges.error_singular'))}:"
   end
 end
