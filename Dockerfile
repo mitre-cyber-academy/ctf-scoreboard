@@ -10,11 +10,10 @@ RUN apt update
 
 RUN apt install -y libpq-dev
 
-RUN /bin/bash -c "bundle config set without 'development test'; bundle install"
+RUN bundle config set without 'development test'; bundle install
 
 COPY . .
 
 EXPOSE 3000
 
 CMD bash -c "bundle exec rails s -b 0.0.0.0"
-

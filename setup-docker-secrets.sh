@@ -6,7 +6,6 @@ else
 	(umask 066; touch .env)
 	cat >.env - << EOF
 POSTGRES_PASSWORD=$(openssl rand -hex 33)
-SECRET_KEY_BASE=$(openssl rand -hex 64)
 EOF
 fi
 
