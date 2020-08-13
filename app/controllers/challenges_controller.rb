@@ -14,6 +14,9 @@ class ChallengesController < ApplicationController
     @solvable = @challenge.can_be_solved_by(current_user.team)
     @solved_video_url = @solved_challenge.flag.video_url if @solved_challenge
     flash.now[:notice] = I18n.t('flag.accepted') if @solved_challenge
+    if @solved_challenge
+      @survey = Survey.find_by(team: current_user.team.id)
+    end
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -22,8 +25,7 @@ class ChallengesController < ApplicationController
       @solved_challenge = @flag_found.save_solved_challenge(current_user)
       @solved_video_url = @flag_found.video_url
       flash.now[:notice] = I18n.t('flag.accepted')
-      @survey = Survey.new
-      @survey.submitted_flag_id = @submitted_flag.id
+      @survey = Survey.create(submitted_flag_id: @submitted_flag.id, team_id: current_user.team.id)
     else
       flash.now[:alert] = wrong_flag_messages.sample
     end

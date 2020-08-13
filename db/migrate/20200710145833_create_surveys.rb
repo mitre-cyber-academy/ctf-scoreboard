@@ -6,6 +6,7 @@ class CreateSurveys < ActiveRecord::Migration[6.0]
       t.integer :interest, default: 0, null: false
       t.text :comment, default: "", null: true
       t.integer :submitted_flag_id, null: false
+      t.references :team, foreign_key: true
       t.timestamps
     end
     add_foreign_key "surveys", "submitted_flags"

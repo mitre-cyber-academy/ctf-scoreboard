@@ -436,6 +436,7 @@ en:
       unlock_account_link: 'Unlock my account'
   surveys:
     submitted: 'Survey Submitted!'
+    invalid: 'Invalid survey submitted.'
     new:
       header: 'Review Solved Challenge'
       submit_btn: 'Submit Survey'

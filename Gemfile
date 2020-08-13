@@ -7,6 +7,7 @@ gem 'awesome_nested_fields'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap-kaminari-views'
 gem 'bootstrap-sass', '~> 2.3.2.2'
+gem 'byebug'
 gem 'carrierwave-postgresql', '< 0.3.0' # Can be upgraded once https://github.com/diogob/carrierwave-postgresql/issues/33
 gem 'chartkick'
 gem 'delayed_job'
@@ -48,6 +49,7 @@ end
 group :test do
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false
+  gem 'byebug'
   gem 'ffi-hunspell'
   gem 'rails-controller-testing'
   gem 'rubocop', require: false

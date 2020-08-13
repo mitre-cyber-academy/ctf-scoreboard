@@ -38,7 +38,7 @@
     .control-group
       = invisible_recaptcha_tags text: 'Submit', :class => "btn btn-primary"
 
-- if @flag_found
+- if @solved_challenge
   %hr/
   = render partial: "surveys/form"
   %hr/

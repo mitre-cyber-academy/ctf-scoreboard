@@ -184,8 +184,10 @@ ActiveRecord::Schema.define(version: 2020_07_10_145833) do
     t.integer "interest", default: 0, null: false
     t.text "comment", default: ""
     t.integer "submitted_flag_id", null: false
+    t.bigint "team_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_id"], name: "index_surveys_on_team_id"
   end
 
   create_table "teams", id: :serial, force: :cascade do |t|
@@ -292,5 +294,6 @@ ActiveRecord::Schema.define(version: 2020_07_10_145833) do
   add_foreign_key "flags", "teams"
   add_foreign_key "submitted_flags", "flags"
   add_foreign_key "surveys", "submitted_flags"
+  add_foreign_key "surveys", "teams"
   add_foreign_key "teams", "divisions"
 end
