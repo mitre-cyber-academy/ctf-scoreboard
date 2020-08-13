@@ -34,6 +34,10 @@ else
 	echo "Moving files and cleaning up..."
 	mv -f new.cert.cert nginx/certs/ssl_certificate.crt
 	mv -f new.cert.key nginx/certs/ssl_certificate_key.key
+	# Put SSL Certificate in nginx/certs/ssl_certificate.crt (-rw-r--r--, )
+	sudo chmod 644 nginx/certs/ssl_certificate.crt
+	# Put SSL Certificate Signing Key in nginx/certs/ssl_certificate_key.key (-rw-------, chmod 600)
+	sudo chmod 600 nginx/certs/ssl_certificate_key.key
 	rm temp.cert.csr
 fi
 
