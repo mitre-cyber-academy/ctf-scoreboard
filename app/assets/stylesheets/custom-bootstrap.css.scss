@@ -35,7 +35,6 @@ th.text-center {
 }
 
 .control-label-required {
-	@extend .control-label !optional;
 	font-weight: bold;
 }
 
