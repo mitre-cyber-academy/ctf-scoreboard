@@ -324,7 +324,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    scout_apm (2.6.8)
+    scout_apm (2.6.9)
       parser
     sentry-raven (3.0.0)
       faraday (>= 1.0)
