@@ -1,23 +1,26 @@
 // Place all the styles related to the challenges controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-@media (max-device-width: 767px) {
-	.container {
-		max-width: 100% !important;
-		margin-right: 0 !important;
-		margin-left: 0 !important;
-	}
-	h1 {
-		margin-right: auto;
-		margin-left: 1em;
-	}
-	nav {
-		margin-right: -2%;
-		margin-left: auto;
-	}
-	footer {
-		margin-right: auto;
-		margin-left: auto;
-	}
-}
 
+@media (max-device-width: 767px) {
+    .container {
+        max-width: 100% !important;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+
+    h1 {
+        margin-right: auto;
+        margin-left: 1em;
+    }
+
+    nav {
+        margin-right: -2%;
+        margin-left: auto;
+    }
+
+    footer {
+        margin-right: auto;
+        margin-left: auto;
+    }
+}

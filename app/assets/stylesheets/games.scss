@@ -1,25 +1,25 @@
 // Place all the styles related to the games controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
 #clock {
-	h4 {
-		font-weight: normal;
-	}
-	padding-top: 11pt;
+  h4 {
+    font-weight: normal;
+  }
+  padding-top: 11pt;
 }
 
 @media (max-width: 767px) {
-	#clock {
-		padding-right: 22px;
-	}
+  #clock {
+    padding-right: 22px;
+  }
 }
 
 .table-bolded {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .multi-category-challenge .thumbnail {
-	padding: 10px;
-	line-height: 1.5;
+  padding: 10px;
+  line-height: 1.5;
 }
-

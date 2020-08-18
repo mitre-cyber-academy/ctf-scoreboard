@@ -1,23 +1,22 @@
 html {
-	min-height: 100%;
-	position: relative;
+  min-height: 100%;
+  position: relative;
 }
 
 body {
-	max-height: 100%;
-	-ms-overflow-style: -ms-autohiding-scrollbar;
-	-webkit-overflow-scrolling: touch;
+  max-height: 100%;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  -webkit-overflow-scrolling: touch;
 }
 
 .well {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 #page-footer {
-	width: 100%;
-	position: absolute;
-	bottom: 0;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
 }
-

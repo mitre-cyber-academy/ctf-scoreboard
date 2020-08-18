@@ -1,16 +1,16 @@
 // Place all the styles related to the team controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
 // Make FontAwesome black by default 
 i.fa {
-	color: black;
+    color: black;
 }
 
 // Align the remove user button in team users table
 #usertable i {
-	display: inline-block;
-	width: 100%;
-	margin-left: 20%;
-	color: black;
+    display: inline-block;
+    width: 100%;
+    margin-left: 20%;
+    color: black;
 }
-

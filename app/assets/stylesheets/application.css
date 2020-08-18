@@ -13,20 +13,17 @@
  *= require_custom-bootstrap
  */
 
- .helpertext-wrapper {
-	display: inline-block;
+.helpertext-wrapper {
+  display: inline-block;
 }
-
 .helpertext-wrapper-overflow {
-	display: block;
-	overflow: hidden;
-	text-overflow: ellipsis;
+  display: block;
+  overflow: hidden;
+  text-overflow:ellipsis;
 }
-
 .table-overflow {
-	table-layout: fixed;
+  table-layout: fixed;
 }
-
 .tooltip {
-	word-wrap: break-word;
+  word-wrap: break-word;
 }
