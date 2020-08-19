@@ -35,15 +35,15 @@ If the project is being hosted on Heroku a daily task can be created using the H
 
 #### Gameboard
 
-![gameboard](https://i.imgur.com/UgkPX5q.png)
+![gameboard](https://i.imgur.com/9NkEPac.png)
 
 #### Administration Dashboard
 
-![admin dashboard](https://i.imgur.com/lzj7U3m.png)
+![admin dashboard](https://i.imgur.com/T9Fth6g.png)
 
 #### Administration Dashboard -> Add challenge
 
-![add challenge](https://i.imgur.com/ZRyimTp.png)
+![add challenge](https://i.imgur.com/kjkZ1pI.png)
 
 ##### More screenshots available on the [wiki](https://github.com/mitre-cyber-academy/ctf-scoreboard/wiki/Screenshots).
 

@@ -1,6 +1,7 @@
 - tbody_class ||= ''
+- tbody_id ||= ''
 
-%tbody{class: tbody_class}
+%tbody{class: tbody_class, id: tbody_id}
   - teams&.each&.with_index(starting_rank) do |t, i|
     - score = t.current_score
     - percent = score.to_f / max_score.to_f * 100.0
@@ -10,5 +11,5 @@
       %td= t.achievements.size
       %td= score
       %td
-        .progress{ :style => "margin:0;" }
-          .bar{ :style => "width:#{percent}%;" }
+        .progress{ :style => "margin:0; height:20px;" }
+          .progress-bar{ :style => "width:#{percent}%;" }

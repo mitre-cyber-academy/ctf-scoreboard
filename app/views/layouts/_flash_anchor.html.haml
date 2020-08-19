@@ -3,7 +3,7 @@
     %a.close{"data-dismiss" => "alert", :href => "#"} ×
     = notice
 - if !flash[:alert].blank?
-  .alert.alert-error
+  .alert.alert-danger
     %a.close{"data-dismiss" => "alert", :href => "#"} ×
     - if alert.is_a?(Enumerable)
       = amount_of_errors(alert)

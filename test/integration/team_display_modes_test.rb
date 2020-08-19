@@ -7,8 +7,15 @@ class TeamDisplayModesTest < ActionDispatch::IntegrationTest
   def setup
     @game = create(:active_game)
   end
-  
-  test 'team creation page' do
+
+  test 'team creation header shows when visiting team creation page' do
+    sign_in create(:user)
+    get "/teams/new"
+
+    assert_select 'h1', /Create a Team/
+  end
+
+  test 'ensure that there is a form on the team creation page' do
     sign_in create(:user)
     get "/teams/new"
 
@@ -31,7 +38,7 @@ class TeamDisplayModesTest < ActionDispatch::IntegrationTest
     get "/users/join_team"
 
     assert_select 'form[id=filterrific_filter]' do
-      assert_select 'div[class=row]' do
+      assert_select 'div[class=form-group\ row]' do
         assert_select 'div:nth-child(1)', /Team Name/
         assert_select 'div:nth-child(2)', /Affiliation/
         assert_select 'div:nth-child(3)', /Location/
@@ -54,7 +61,7 @@ class TeamDisplayModesTest < ActionDispatch::IntegrationTest
     assert_select 'h1', /ineligible/
     assert_select 'h1', /100/
 
-    assert_select 'table[class=table\ table-condensed\ table-striped]' do
+    assert_select 'table[class=table\ table-condensed\ table-striped\ table-hover]' do
       assert_select 'thead' do
         assert_select 'tr' do
           assert_select 'th:nth-child(1)', I18n.t('teams.users_table.team_leader_header')
@@ -62,7 +69,7 @@ class TeamDisplayModesTest < ActionDispatch::IntegrationTest
           assert_select 'th:nth-child(3)', I18n.t('teams.users_table.grade_header')
           assert_select 'th:nth-child(4)', I18n.t('teams.users_table.prize_eligibility_header')
           assert_select 'th:nth-child(5)', I18n.t('teams.users_table.remove_user_header')
-          assert_select 'th:nth-child(6)', I18n.t('teams.users_table.change_captian_header')
+          assert_select 'th:nth-child(6)', I18n.t('teams.users_table.change_captain_header')
         end
       end
       assert_select 'tbody' do
@@ -105,7 +112,7 @@ class TeamDisplayModesTest < ActionDispatch::IntegrationTest
 
     get "/teams/#{team.id}/summary"
 
-    assert_select 'table[class=table\ table-bordered\ table-striped]' do
+    assert_select 'table[class=table\ table-bordered\ table-striped\ table-hover]' do
       assert_select 'thead' do
         assert_select 'tr' do
           assert_select 'th:nth-child(1)', I18n.t('teams.summary.solved_challenges_table.challenge_header')

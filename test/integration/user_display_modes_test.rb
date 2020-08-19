@@ -15,11 +15,11 @@ class UserDisplayModesTest < ActionDispatch::IntegrationTest
     assert_select 'h1', /Edit Account/
   end
 
-  test 'ensure that there is a form on the team creation page' do
+  test 'ensure that there is a edit and delete form on the user edit page' do
     sign_in create(:user)
     get "/users/edit"
 
-    assert_select 'form[id=edit_user]' do
+    assert_select 'form[id=user-form]' do
       assert_select 'label', 'Full name'
       assert_select 'label', 'Email'
       assert_select 'label', 'Affiliation'
@@ -34,6 +34,10 @@ class UserDisplayModesTest < ActionDispatch::IntegrationTest
       assert_select 'label', 'Resume'
       assert_select 'label', 'Unofficial transcript'
       assert_select 'label', 'Current password'
+    end
+
+    assert_select 'form[id=delete-user-form]' do
+      assert_select 'label', 'Delete account'
     end
   end
 end

@@ -1,7 +1,7 @@
 -# For PentestGames, @challenge here can actually be a flag object since Pentest challenges belong to teams + challenges and are linked by a flag object.
 -#
 - content_for :admin_menu do
-  %li= link_to t('challenges.admin_edit_challenge', challengename: @challenge.name), admin_edit_url(@challenge)
+  %a.dropdown-item{:href => admin_edit_url(@challenge)}= t('challenges.admin_edit_challenge', challengename: @challenge.name)
 
 - content_for :header do
   = @challenge.name
@@ -23,28 +23,25 @@
   %div#sponsorInfo{ :style => "margin-bottom:40px;" }
     %h3#sponsorName= t('challenges.show.sponsor')
     - unless @challenge.sponsor_logo.empty?
-      = image_tag(@challenge.sponsor_logo, :id => "sponsorLogo")
+      = image_tag(@challenge.sponsor_logo, :id => "sponsorLogo", :class => "w-25")
     - unless @challenge.sponsor_description.empty?
       = sanitize(Kramdown::Document.new(@challenge.sponsor_description).to_html)
 
 - if @solvable
-  = form_for :challenge, url: submit_url(@defense_team, @challenge), method: "put", html: { class: "well form-inline", style: "margin-bottom:40px;" } do |f|
-    .control-group
-      %p
-        = t('challenges.submit_flag')
-    .control-group
-      .controls
-        = f.text_field :submitted_flag, :class => "span5"
+  = form_for :challenge, url: submit_url(@defense_team, @challenge), method: "put", html: { class: "card card-body bg-light", style: "margin-bottom:40px;" } do |f|
+    .form-group
+      .col-xs-2
+      = f.label t('challenges.submit_flag')
+      = f.text_field :submitted_flag, :class => "form-control col-sm-10"
     .control-group
       = invisible_recaptcha_tags text: 'Submit', :class => "btn btn-primary"
-
 - if @solved_challenge
   %hr/
   = render partial: "surveys/form"
   %hr/
   
 - if @solved_by.length > 0
-  %table.table.table-bordered.table-striped
+  %table.table.table-bordered.table-striped.table-hover
     %thead
       %tr
         %th #

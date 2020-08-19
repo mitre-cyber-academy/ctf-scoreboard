@@ -26,7 +26,7 @@ class AchievementDisplayModesTest < ActionDispatch::IntegrationTest
     sign_in create(:user)
     get "/game/achievements"
     
-    assert_select 'table[class=table\ table-bordered\ table-striped]' do
+    assert_select 'table[class=table\ table-bordered\ table-striped\ table-hover]' do
       assert_select 'thead' do
         assert_select 'tr' do
           assert_select 'th:nth-child(1)', I18n.t('achievements.index.table_header_achievement_name')
