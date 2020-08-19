@@ -89,14 +89,14 @@ class Team < ApplicationRecord
     (1 + (division.ordered_teams.index self))
   end
 
-  # rubocop:disable Metrics/AbcSize
   # Takes a query and the column it is filtering and returns results.
   def self.search_by(query, column_to_filter)
     # condition query, parse into individual keywords
     terms = query.to_s.downcase.split(/\s+/)
     # replace "*" with "%" for wildcard searches,
     # prepend and append '%', remove duplicate '%'s
-    terms = terms.map { |e| ('%' + e.tr('*', '%') + '%').gsub(/%+/, '%') }
+    # string concatenation here works much better than interpolation
+    terms = terms.map { |e| ('%' + e.tr('*', '%') + '%').gsub(/%+/, '%') } # rubocop:disable Style/StringConcatenation
     # configure number of OR conditions for provision
     # of interpolation arguments. Adjust this if you
     # change the number of OR conditions.
@@ -109,7 +109,6 @@ class Team < ApplicationRecord
       *terms.map { |e| [e] * num_or_conditions }.flatten
     )
   end
-  # rubocop:enable Metrics/AbcSize
 
   def cleanup
     destroy if users.empty?

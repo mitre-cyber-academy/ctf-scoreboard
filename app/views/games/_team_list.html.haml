@@ -1,9 +1,8 @@
 - if teams.nil? or teams.size.eql? 0
-  .zero-items-text
-    %h4= t('game.team_list.no_teams')
+  %h4.zero-items-text= t('teams.summary.zero_teams_text')
 - else
   - max = 0
-  %table.table.table-bordered.table-striped
+  %table.table.table-bordered.table-striped.table-hover
     %thead
       %tr
         %th{ :style => "width:50px;" } #
@@ -11,24 +10,19 @@
         %th{ :style => "width:100px;" }= t('game.team_list.team_achievements') # The team's achievements
         %th{ :style => "width:100px;" }= t('game.team_list.team_points') # The number of points the team has
         %th{ :style => "width:50%;" }
-    %tbody
-      - teams.each_with_index do |t, i|
-      / Current score only exists due to the division.rb model creating it inside of
-      / filter_and_sort_teams, it is used here since it saves us from doing a costly
-      / score recalculation for each user.
-      - score = t.current_score
-      - if score > max
-        - max = score
-      - percent = score.to_f / max.to_f * 100.0
-        %tr
-          %td= i + 1
-          %td.break-word= link_to display_name(t), summary_team_path(t)
-          %td= t.achievements.size
-          %td= score
-          %td
-            .progress{ :style => "margin:0;" }
-              .bar{ :style => "width:#{percent}%;" }
-    - if @view_all_teams_link
+      / Get the first teams score and use that as the full score bar
+      - max_score = teams.first.current_score
+      / We pass in starting_rank here to start the list at the proper index
+      = render partial: 'games/team_list_tbody', locals: { teams: teams.slice(0..5), starting_rank: 1, max_score: max_score }
+      / This part of the list is hidden until the user clicks the 'Show/Hide Teams' button below
+      = render partial: 'games/team_list_tbody', locals: { |
+               teams: teams.slice(6..),                    |
+               starting_rank: 7,                           |
+               max_score: max_score,                       |
+               tbody_id: 'hiddenUntilToggle',              |
+               tbody_class: 'd-none'                       |
+        }                                                  |
+    - if teams.count > 5
       %tr
         %td{align: 'center', colspan: '5', style: 'text-align: center;'}
-          = link_to t('game.view_all_teams'), game_teams_path
+          = link_to t('game.team_list.team_show_hide_btn'), "#", :class => "toggler"

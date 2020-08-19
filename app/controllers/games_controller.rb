@@ -46,7 +46,6 @@ class GamesController < ApplicationController
   end
 
   def summary
-    @view_all_teams_link = true
     respond_to do |format|
       format.html
       format.json { render json: { standings: @game.all_teams_information } }

@@ -1,4 +1,4 @@
-%table.table.table-condensed.table-striped.table-overflow
+%table.table.table-condensed.table-striped.table-overflow.table-hover
   %thead
   %tr
     %th.span2= t('teams.invite.invites_table.email_header')
@@ -15,16 +15,16 @@
         %td
           - if current.user.nil?
             .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('teams.show.eligible_help') }
-              %i.icon-question-sign
+              = fa_icon 'question-circle'
           - else
             = eligible?(current)
         %td
           - if current.user.nil?
             .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('teams.show.eligible_help') }
-              %i.icon-question-sign
+              = fa_icon 'question-circle'
           - else
             = current.user.division
         - if @team_captain
           %td
             = link_to team_user_invite_path(@team, current), method: :delete, data: { confirm: t('teams.show.cancel_invite.confirm') } do
-              %i.icon-remove
+              = fa_icon 'ban'

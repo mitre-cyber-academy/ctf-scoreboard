@@ -1,45 +1,39 @@
-%ul.nav.pull-right
+%li.nav-item.dropdown
   - if user_signed_in?
-    %li.dropdown
-      %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-        = greeting_for_dropdown(current_user)
-        %b.caret
-      %ul.dropdown-menu
-        %li
-          - if current_user.admin?
-            = link_to t('application.admin.dashboard'), rails_admin_path
-            %li.divider
-            %li= link_to t('application.admin.post_message'), rails_admin.new_path("message")
-            %li= link_to t('application.admin.view_submitted_flags'), rails_admin.index_path("submitted_flag")
-            %li= link_to t('application.admin.award_achievement'), rails_admin.new_path("achievement")
-            %li= link_to t('application.admin.create_score_adjustment'), rails_admin.new_path("score_adjustment")
-            - if content_for?(:admin_menu)
-              %li.divider
-              = yield :admin_menu
-          - elsif current_user.on_a_team?
-            = link_to t('home.index.view_team'), team_path(current_user.team_id)
-            - if current_user.team_captain?
-              = link_to t('home.index.edit_team'), edit_team_path(current_user.team_id)
-          - else
-            = link_to t('home.index.join_team'), join_team_users_path
-            = link_to t('home.index.create_team'), new_team_path
-          %li.divider
-        %li
-          = link_to t('application.edit_account'), edit_user_registration_path, :method => :get
-          = link_to t('application.log_out'), destroy_user_session_path, :method => :delete
+    %a#navbarDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :style => "color: #fff",:href => "#", :role => "button"}
+      = greeting_for_dropdown(current_user)
+    .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "navbarDropdown"}
+      - if current_user.admin?
+        %a.dropdown-item{:href => rails_admin_path}= t('application.admin.dashboard')
+        .dropdown-divider
+        %a.dropdown-item{:href => rails_admin.new_path("message")}= t('application.admin.post_message')
+        %a.dropdown-item{:href => rails_admin.index_path("submitted_flag")}= t('application.admin.view_submitted_flags')
+        %a.dropdown-item{:href => rails_admin.index_path("achievement")}= t('application.admin.award_achievement')
+        %a.dropdown-item{:href => rails_admin.index_path("score_adjustment")}= t('application.admin.create_score_adjustment')
+        - if content_for?(:admin_menu)
+          .dropdown-divider
+            = yield :admin_menu
+        .dropdown-divider
+      - elsif current_user.on_a_team?
+        %a.dropdown-item{:href => team_path(current_user.team_id)}= t('home.index.view_team')
+        - if current_user.team_captain?
+          %a.dropdown-item{:href => edit_team_path(current_user.team_id)}= t('home.index.edit_team')
+        .dropdown-divider
+      - else
+        %a.dropdown-item{:href => join_team_users_path}= t('home.index.join_team')
+        %a.dropdown-item{:href => new_team_path}= t('home.index.create_team')
+        .dropdown-divider
+      %a.dropdown-item{:href => edit_user_registration_path}= t('application.edit_account')
+      %a.dropdown-item{:href => destroy_user_session_path, "data-method" => :delete}= t('application.log_out')
   - else
     - unless @game.nil?
-      %li.dropdown
-        %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-          - if @game.registration_enabled
-            = t('home.index.login_or_register')
-          - else
-            = t('home.index.login')
-          %b.caret
-        %ul.dropdown-menu
-          %li
-            =link_to t('application.log_in'), new_user_session_path
-            - if @game.registration_enabled
-              %li.divider
-              %li
-                =link_to t('home.index.register'), new_user_registration_path
+      %a#navbarDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :style => "color: #fff",:href => "#", :role => "button"}
+        - if @game.registration_enabled
+          = t('home.index.login_or_register')
+        - else
+          = t('home.index.login')
+      .dropdown-menu{"aria-labelledby" => "navbarDropdown"}
+        %a.dropdown-item{:href => new_user_session_path}= t('application.log_in')
+        - if @game.registration_enabled
+          .dropdown-divider
+          %a.dropdown-item{:href => new_user_registration_path}= t('home.index.register')
