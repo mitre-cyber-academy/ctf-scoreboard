@@ -55,7 +55,7 @@ en:
       division_header: Appropriate Division
       prize_eligibility_header: Prize Eligible
       remove_user_header: Remove
-      change_captian_header: Change Captain
+      change_captain_header: Change Captain
       compete_for_prizes_true: 'Yes'
       compete_for_prizes_false: 'No'
     summary:
@@ -260,6 +260,7 @@ en:
         current_password_placeholder: Current Password
         delete_account: Delete Account
         major_area_of_study: Major/Area of study
+      submit: 'Submit'
       help:
         affiliation: >-
           If you are a student, please list your school. If you are an industry
@@ -434,3 +435,5 @@ en:
         sign in attempts.
       unlock_line_2: 'Click the link below to unlock your account:'
       unlock_account_link: Unlock my account
+  # Set a default fallback for use if no organization is set on the game.
+  default_organization: 'us'

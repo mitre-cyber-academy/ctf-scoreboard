@@ -26,7 +26,7 @@
   - unless @game.after_competition?
     - if user_signed_in?
       .btn-toolbar
-        .pagination-centered
+        .pagination-centered.mx-auto
           - if current_user.on_a_team?
             .btn-group
               = link_to t('home.index.join_team'), team_path(current_user.team_id), :class => "btn btn-large btn-primary"
@@ -37,6 +37,6 @@
               = link_to t('home.index.create_team'), new_team_path, :class => "btn btn-large btn-primary"
     - elsif @game.registration_enabled
       .btn-toolbar
-        .pagination-centered
+        .pagination-centered.mx-auto
           .btn-group
             = link_to t('home.index.register'), new_user_registration_path, :class => "btn btn-large btn-primary"

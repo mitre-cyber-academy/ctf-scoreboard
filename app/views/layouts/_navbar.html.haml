@@ -1,20 +1,22 @@
-%a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
-  %span.icon-bar
-  %span.icon-bar
-  %span.icon-bar
-= link_to(organization_for_navbar(@game), '/', class: 'brand')
-.nav-collapse.collapse
-  - if @game
-    %ul.nav
-      %li{:class => active_navbar?(game_path) }
-        = always_link_to_if_admin(!@game.before_competition?, t('application.navbar.challenges'), game_path){}
-      %li{:class => active_navbar?(game_messages_path) }
-        = link_to(game_messages_path) do
+%nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+  %a.navbar-brand{:href => "/"}= organization_for_navbar(@game)
+  %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", :type => "button"}
+    %span.navbar-toggler-icon
+  #navbarSupportedContent.collapse.navbar-collapse.justify-content-between
+    %ul.navbar-nav
+      %li.nav-item
+        %a.nav-link{:href => game_path, :class => active_navbar?(game_path)}= t('application.navbar.challenges')
+      %li.nav-item
+        %a.nav-link{:href => game_messages_path, :class => active_navbar?(game_messages_path)}
           = t('application.navbar.messages')
-          %span.badge.badge-important= unread_messages(@unread_message_count)
-      %li{:class => active_navbar?(game_achievements_path) }
-        = always_link_to_if_admin(!@game.before_competition?, t('application.navbar.achievements'), game_achievements_path){}
-      %li{:class => active_navbar?(game_summary_path) }
-        = always_link_to_if_admin(!@game.before_competition?, t('application.navbar.summary'), game_summary_path){}
-      %li
-        = link_to_unless(@game.contact_url.blank?, t('application.navbar.contact'), @game.contact_url, target: '_blank'){}
+          %span.badge.badge-pill.badge-info= unread_messages(@unread_message_count)
+      %li.nav-item
+        %a.nav-link{:href => game_achievements_path, :class => active_navbar?(game_achievements_path)}= t('application.navbar.achievements')
+      %li.nav-item
+        %a.nav-link{:href => game_summary_path, :class => active_navbar?(game_summary_path)}= t('application.navbar.summary')
+      - unless @game.nil?
+        - unless @game.contact_url.nil?
+          %li.nav-item
+            %a.nav-link{:href => @game.contact_url}= t('application.navbar.contact')
+    %ul.nav.navbar-nav
+      = render partial: 'layouts/dropdown'
