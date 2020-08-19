@@ -64,3 +64,10 @@ jobs:
         with:
           name: coverage-report
           path: coverage
+
+      - name: Upload logs
+        uses: actions/upload-artifact@master
+        if: always()
+        with:
+          name: bullet-log
+          path: log

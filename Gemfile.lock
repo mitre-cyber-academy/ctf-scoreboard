@@ -81,6 +81,9 @@ GEM
       rails (>= 3.1)
     brakeman (4.9.0)
     builder (3.2.4)
+    bullet (6.1.0)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     bundler-audit (0.7.0.1)
       bundler (>= 1.2.0, < 3)
       thor (>= 0.18, < 2)
@@ -354,6 +357,7 @@ GEM
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.7.0)
+    uniform_notifier (1.13.0)
     warden (1.2.8)
       rack (>= 2.0.6)
     websocket-driver (0.7.3)
@@ -371,6 +375,7 @@ DEPENDENCIES
   bootstrap (~> 4.5.0)
   bootstrap4-kaminari-views
   brakeman
+  bullet
   bundler-audit
   carrierwave-postgresql (< 0.3.0)
   chartkick
