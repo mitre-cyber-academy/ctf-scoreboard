@@ -418,6 +418,7 @@ RailsAdmin.config do |config|
       field :start
       field :stop
       field :description
+      field :registration_enabled
       field :board_layout
       field :team_size
       field :organization

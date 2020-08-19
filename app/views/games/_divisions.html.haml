@@ -4,7 +4,7 @@
     %ul.nav.nav-tabs#summaryTabs
       - divisions.each do |d|
         %li{ :class => ('active' if active_division.eql? d) }
-          = link_to "#{d.name}", "#division-#{d.id}-tab", "data-toggle"=>"tab"
+          = link_to "#{d.name}", "#division-#{d.id}-tab", "data-toggle"=>"tab", :class => 'nav-link text-dark'
     .tab-content
       - divisions.each do |d|
         .tab-pane{ :class => ('active' if active_division.eql? d), :id => "division-#{d.id}-tab" }

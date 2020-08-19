@@ -1,7 +1,7 @@
 %h3
   = t('users.join_team.pending_team_requests_header')
   %small= t('users.join_team.requests_header_desc')
-%table.table.table-condensed.table-striped
+%table.table.table-condensed.table-striped.table-hover
   %thead
   %tr
     %th= t('teams.invite.requested_join_team_table.team_name_header')
@@ -14,4 +14,4 @@
         %td=current.created_at.strftime("%b %d %Y")
         %td
           = link_to team_user_request_path(current.team, current), method: :delete, data: {confirm: t('users.join_team.delete_request_confirmation')} do
-            %i.icon-remove
+            = fa_icon 'remove'

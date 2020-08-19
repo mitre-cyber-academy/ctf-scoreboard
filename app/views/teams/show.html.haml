@@ -4,7 +4,7 @@
 - content_for :subheading do
   = t('teams.show.subheading', affiliation: @team.affiliation)
 
-%table.table.table-condensed.table-striped
+%table.table.table-condensed.table-striped.table-hover#usertable
   %thead
     %tr
       %th.span1= t('teams.users_table.team_leader_header')
@@ -14,13 +14,13 @@
       %th= t('teams.users_table.remove_user_header')
       - if @team_captain
         %th
-          = t('teams.users_table.change_captian_header')
+          = t('teams.users_table.change_captain_header')
   - @team.users.each do |current|
     %tbody
       %tr{ :class=>'success' }
         %td
           -if current == @team.team_captain
-            %i.icon-ok
+            = fa_icon 'check'
         %td=current.email
         %td=current.division
         %td
@@ -31,46 +31,52 @@
         %td
           - if current_user.can_remove?(current)
             = link_to team_user_leave_team_path(current.team, current), method: :delete, data: { confirm: t('teams.show.remove_user_confirm') } do
-              %i.icon-remove
+              .pl-4
+                = fa_icon 'user-times'
         - if @team_captain
           %td
             - if current_user.can_promote?(current)
               = link_to team_user_promote_path(current.team_id, current), method: :get, data: { confirm: t('teams.show.promote_confirm') } do
-                %i.icon-star
+                .pl-3.pl-lg-5
+                  = fa_icon 'exchange'
 %hr
-.row
-  .span6
-    %h4
-      = t('teams.show.team_prize_eligibility_status')
-    = t('teams.show.eligible_currently')
-    - if @team.eligible?
-      = t('teams.show.eligible_true')
-    - else
-      %b= t('teams.show.eligible_false_not')
-      = t('teams.show.eligible_false')
-  .span6
-    %h4
-      = t('teams.show.team_division_status')
-    = t('teams.show.currently_selected_division', division: @team.division.name)
-    - if @team.appropriate_division_level?
-      = t('teams.show.division_true')
-    - else
-      = t('teams.show.division_false')
+.container
+  .row
+    .col-sm
+      %h4= t('teams.show.team_prize_eligibility_status')
+      = t('teams.show.eligible_currently')
+      - if @team.eligible?
+        = t('teams.show.eligible_true')
+      - else
+        %b= t('teams.show.eligible_false_not')
+        = t('teams.show.eligible_false')
+    .col-sm
+      %h4= t('teams.show.team_division_status')
+      = t('teams.show.currently_selected_division', division: @team.division.name)
+      - if @team.appropriate_division_level?
+        = t('teams.show.division_true')
+      - else
+        = t('teams.show.division_false')
 %hr
-.row
-  .span6
-    %h3= t('teams.show.pending_invites_header')
-    - if @pending_invites.empty?
-      = t('teams.show.pending_invites_false')
-    - else
-      = render partial: 'teams/invites_table'
-    - if team_editable?
-      = render partial: 'teams/invites_form'
-  .span6
-    %h3= t('teams.show.pending_requests_header')
-    - if @pending_requests.empty?
-      = t('teams.show.pending_requests_false')
-    - else
-      = render partial: 'teams/requests_table'
+.container
+  .row
+    .col-sm
+      %h3= t('teams.show.pending_invites_header')
+      - if @pending_invites.empty?
+        = t('teams.show.pending_invites_false')
+      - else
+        = render partial: 'teams/invites_table'
+    .col-sm
+      %h3= t('teams.show.pending_requests_header')
+      - if @pending_requests.empty?
+        = t('teams.show.pending_requests_false')
+      - else
+        = render partial: 'teams/requests_table'
+%br
+.container
+  .row
+    .col-sm-6
+      - if team_editable?
+        = render partial: 'teams/invites_form'
 %hr
 = render partial: 'team_summary'

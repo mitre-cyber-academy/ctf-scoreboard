@@ -1,14 +1,16 @@
 - if resource.errors.any?
-  .alert.alert-error
+  .alert.alert-danger
     %a.close{"data-dismiss" => "alert", :href => "#"} ×
     = pluralize(resource.errors.count, "error")
     = t('users.edit.error')
     %ul.errors
       - resource.errors.full_messages.each do |msg|
         %li= msg
-= user.label :email, :class => "control-label-required"
-.input-append
-  = user.email_field :email, :id => "appendedInputButton"
-  = user.submit t('users.edit.password.retrieve_access_instructions'), :class => "btn"
-%br/
-= render "users/shared/links"
+.form-group
+  = user.label :email, :class => "control-label-required"
+  .input-group
+    = user.email_field :email, :class => "form-control textarea"
+    .input-group-append
+      = user.submit t('users.edit.password.retrieve_access_instructions'), :class => "btn btn-primary"
+  %br/
+  = render "users/shared/links"
