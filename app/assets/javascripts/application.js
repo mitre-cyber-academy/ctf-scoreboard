@@ -11,9 +11,11 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery_ujs
 //= require_tree .
 //= require jquery.nested-fields
 // Loads all Bootstrap javascripts
+//= require popper
 //= require bootstrap
 //= require filterrific/filterrific-jquery
 //= require highcharts
@@ -22,3 +24,7 @@
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+
+var submitUserForm = function () {
+  document.getElementById("user-form").submit();
+};

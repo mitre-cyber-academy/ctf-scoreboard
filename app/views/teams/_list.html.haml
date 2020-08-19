@@ -5,13 +5,13 @@
         = link_to(                                     |
           t('users.join_team.reset_filters'),          |
           reset_filterrific_url,                       |
-          :class => "btn btn-small"                    |
+          :class => "btn btn-small btn-secondary"      |
         )                                              |
       = page_entries_info teams # provided by kaminari
     - if !teams.empty?
       %hr/
       %div
-        %table.table.table-hover.table-bordered
+        %table.table.table-hover.table-bordered.table-hover
           %thead
             %tr
               %th= t('users.join_team.teams_table.name_header')
@@ -27,5 +27,5 @@
                   %td= team.affiliation
                   %td= team.slots_available
                   %td= team.division.name
-                  %td= button_to t('users.join_team.teams_table.request_join_button'), team_user_requests_path(team), :class => "btn btn-default"
-  = paginate teams, :theme => 'twitter-bootstrap' # provided by kaminari
+                  %td= button_to t('users.join_team.teams_table.request_join_button'), team_user_requests_path(team), :class => "btn btn-primary"
+  = paginate teams, :theme => 'twitter-bootstrap-4' # provided by kaminari

@@ -48,12 +48,14 @@ class UserRequestsController < ApplicationController
   # accept the users request.
   # Reducing the Cyclomatic Complexity on this severely reduces the readability of this function
   # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def captain_of_team_requested
     @user_request = current_user&.team&.user_requests&.find(params[:id])
     @team = @user_request&.team
     raise ActiveRecord::RecordNotFound unless @user_request&.team&.team_captain&.eql?(current_user)
   end
   # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # Only allow team captain and the user requesting to delete a user request.
   def check_if_able_to_reject

@@ -5,7 +5,7 @@
   %h4.zero-items-text= t('game.show.no_challenges')
 - else
   -# Render based on the user selected gameboard layout
-  = render partial: "games/#{@game.board_layout}_table"
+  #challengeTable= render partial: "games/#{@game.board_layout}_table"
   - unless @pentest_challenges.empty?
     %hr
     -# Always render PentestChallenges. This provides us with the ability to

@@ -26,14 +26,14 @@ class ApplicationDisplayModesTest < ActionDispatch::IntegrationTest
   test 'navigation bar shows all fields when logged out' do
     get "/"
     
-    assert_select 'a[class=brand]', @game.organization, "Organization should show in navigation bar"
+    assert_select 'a[class=navbar-brand]', @game.organization, "Organization should show in navigation bar"
     assert_select "a[href=#{game_path.dump}]", I18n.t('application.navbar.challenges'), "Challenges should show in navigation bar"
     assert_select "a[href=#{game_messages_path.dump}]", I18n.t('application.navbar.messages'), "Messages should show in navigation bar"
     assert_select "a[href=#{game_achievements_path.dump}]", I18n.t('application.navbar.achievements'), "Achievements should show in navigation bar"
     assert_select "a[href=#{game_summary_path.dump}]", I18n.t('application.navbar.summary'), "Summary should show in navigation bar"
     assert_select "a[href=#{@game.contact_url.dump}]", I18n.t('application.navbar.contact'), "Contact should show in navigation bar if contact_url is defined in game"
     
-    assert_select 'a[class=dropdown-toggle]', I18n.t('home.index.login_or_register'), "Log in / Register should show in navigation bar while not signed in"
+    assert_select 'a[class=nav-link\ dropdown-toggle]', I18n.t('home.index.login_or_register'), "Log in / Register should show in navigation bar while not signed in"
     assert_select "a[href=#{new_user_session_path.dump}]", I18n.t('home.index.login'), "Login should show in navigation bar dropdown while not signed in"
     assert_select "a[href=#{new_user_registration_path.dump}]", I18n.t('home.index.register'), "Register should show in navigation bar dropdown while not signed in"
   end
