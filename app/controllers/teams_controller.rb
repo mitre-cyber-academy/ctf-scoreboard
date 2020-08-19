@@ -20,7 +20,6 @@ class TeamsController < ApplicationController
 
   def summary
     @score_adjustments = @team.score_adjustments
-    @solved_challenges = @team.solved_challenges
     prepare_team_flag_submissions
   end
 
