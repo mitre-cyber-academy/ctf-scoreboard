@@ -45,12 +45,12 @@
     = f.label :area_of_study, t('users.edit.label.major_area_of_study'), :class => "control-label"
     = f.text_field :area_of_study, :class => "form-control w-50 textarea"
   %hr.divider-hr.w-50.mb-3.mt-3
-  .form-check#compete-for-prizes
+  .form-check.form-group#compete-for-prizes
     = f.check_box :compete_for_prizes, :class => "form-check-input"
     = f.label :compete_for_prizes, :class => "form-check-label"
     %small.form-text.text-muted.w-50
       = t('users.edit.help.compete_for_prizes')
-  .form-check
+  .form-check.form-group
     = f.check_box :interested_in_employment, :class => "form-check-input"
     = f.label :interested_in_employment, :class => "form-check-label"
     %small.form-text.text-muted.w-50

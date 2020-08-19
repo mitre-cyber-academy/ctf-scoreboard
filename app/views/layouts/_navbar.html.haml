@@ -2,14 +2,14 @@
   %a.navbar-brand{:href => "/"}= organization_for_navbar(@game)
   %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", :type => "button"}
     %span.navbar-toggler-icon
-  #navbarSupportedContent.collapse.navbar-collapse
-    %ul.navbar-nav.mr-auto
+  #navbarSupportedContent.collapse.navbar-collapse.justify-content-between
+    %ul.navbar-nav
       %li.nav-item
         %a.nav-link{:href => game_path, :class => active_navbar?(game_path)}= t('application.navbar.challenges')
       %li.nav-item
-        %form.form-inline
-          %a.nav-link{:href => game_messages_path, :class => active_navbar?(game_messages_path)}= t('application.navbar.messages')
-          %span.badge.badge-important.text-info= unread_messages(@unread_message_count)
+        %a.nav-link{:href => game_messages_path, :class => active_navbar?(game_messages_path)}
+          = t('application.navbar.messages')
+          %span.badge.badge-pill.badge-info= unread_messages(@unread_message_count)
       %li.nav-item
         %a.nav-link{:href => game_achievements_path, :class => active_navbar?(game_achievements_path)}= t('application.navbar.achievements')
       %li.nav-item
@@ -18,5 +18,5 @@
         - unless @game.contact_url.nil?
           %li.nav-item
             %a.nav-link{:href => @game.contact_url}= t('application.navbar.contact')
-    %form.form-inline.my-2.my-lg-0
+    %ul.nav.navbar-nav
       = render partial: 'layouts/dropdown'
