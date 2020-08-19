@@ -26,10 +26,10 @@
 %hr
 .container
   .row
-    .col-sm
-      - if @defensive_points
+    - if @defensive_points
+      .col-sm
         = render partial: 'teams/defensive_points_table'
-    .col-sm
+    .col-sm-6
       %h3.text-muted= t('teams.summary.score_adjustments_header')
       - if @score_adjustments.size == 0
         .zero-items-text= t('teams.summary.zero_items_text')

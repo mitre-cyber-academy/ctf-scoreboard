@@ -1,66 +1,67 @@
-= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => { :multipart => "true", :class => "form-horizontal"}) do |f|
-  - if resource.errors.any?
-    .alert.alert-danger
-      %a.close{"data-dismiss" => "alert", :href => "#"} ×
-      = pluralize(resource.errors.count, "error")
-      = t('users.edit.error')
-      %ul.errors
-        - resource.errors.full_messages.each do |msg|
-          %li= msg
-  %label.label-custom
-    = t('users.new.required_fields_notice_1')
-    %span{:style => "color: red;"} *
-    = t('users.new.required_fields_notice_2')
-  .form-group
-    = f.label :full_name, :class => "control-label-required"
-    = f.text_field :full_name, :class => "form-control w-50 textarea", maxlength: 255
-  .form-group
-    = f.label :email, :class => "control-label-required"
-    = f.email_field :email, :class => "form-control w-50 textarea", :value => params[:email] ||= f.object.email
-  .form-group
-    = f.label :affiliation, :class => "control-label-required"
-    = f.text_field :affiliation, :class => "form-control w-50 textarea", maxlength: 255
-    %small.form-text.text-muted.w-50
-      = t('users.edit.help.affiliation')
-  .form-group
-    = f.label :year_in_school, :class => "control-label-required"
-    = f.select :year_in_school, options_for_select(year_in_school_enum, resource.year_in_school), { :include_blank => '' }, :class => "form-control w-50", :onChange => "hidePrizesCheckbox()"
-    %small.form-text.text-muted
-      = t('users.edit.help.year_in_school')
-  .form-group
-    = f.label :state, :class => "control-label-required"
-    = f.select :state, options_for_select(state_enum, resource.state), { :include_blank => '' }, :class => "form-control w-50", :onChange => "hidePrizesCheckbox()"
-    %small.form-text.text-muted
-      = t('users.edit.help.state')
-  .form-group
-    = f.label :password, :class => required_for_update?(on_update_page)
-    = f.password_field :password, :input_html => {:autofocus => true}, :class => "form-control w-50 textarea"
-  .form-group
-    = f.label :password_confirmation, t('users.edit.label.password_confirmation_2'), :class => required_for_update?(on_update_page)
-    = f.password_field :password_confirmation, :class => "form-control w-50 textarea"
-  .form-group
-    = f.label :age, :class => "control-label"
-    = f.number_field :age, :class => "form-control w-50 textarea"
-  .form-group
-    = f.label :area_of_study, t('users.edit.label.major_area_of_study'), :class => "control-label"
-    = f.text_field :area_of_study, :class => "form-control w-50 textarea"
-  %hr.divider-hr.w-50.mb-3.mt-3
-  .form-check.form-group#compete-for-prizes
-    = f.check_box :compete_for_prizes, :class => "form-check-input"
-    = f.label :compete_for_prizes, :class => "form-check-label"
-    %small.form-text.text-muted.w-50
-      = t('users.edit.help.compete_for_prizes')
-  .form-check.form-group
-    = f.check_box :interested_in_employment, :class => "form-check-input"
-    = f.label :interested_in_employment, :class => "form-check-label"
-    %small.form-text.text-muted.w-50
-      = t('users.edit.help.interested_in_employment')
-  .mb-3
-  -# If a user is updating their information then on_update_page should be passed to the partial as true,
-  -# if this is a new user registering then on_update_page should be false.
-  - if on_update_page
-    = render partial: 'users/registrations/update_user_form', locals: { f: f }
-  .controls
-    = invisible_recaptcha_tags text: 'Submit', :class => "btn btn-primary"
+.col-md-6
+  = form_for(resource, as: resource_name, url: registration_path(resource_name), :html => { :multipart => "true", :class => "form-horizontal", id: 'user-form'}) do |f|
+    - if resource.errors.any?
+      .alert.alert-danger
+        %a.close{"data-dismiss" => "alert", :href => "#"} ×
+        = pluralize(resource.errors.count, "error")
+        = t('users.edit.error')
+        %ul.errors
+          - resource.errors.full_messages.each do |msg|
+            %li= msg
+    %label.label-custom
+      = t('users.new.required_fields_notice_1')
+      %span{:style => "color: red;"} *
+      = t('users.new.required_fields_notice_2')
+    .form-group
+      = f.label :full_name, :class => "control-label-required"
+      = f.text_field :full_name, :class => "form-control textarea", maxlength: 255
+    .form-group
+      = f.label :email, :class => "control-label-required"
+      = f.email_field :email, :class => "form-control textarea", :value => params[:email] ||= f.object.email
+    .form-group
+      = f.label :affiliation, :class => "control-label-required"
+      = f.text_field :affiliation, :class => "form-control textarea", maxlength: 255
+      %small.form-text.text-muted
+        = t('users.edit.help.affiliation')
+    .form-group
+      = f.label :year_in_school, :class => "control-label-required"
+      = f.select :year_in_school, options_for_select(year_in_school_enum, resource.year_in_school), { :include_blank => '' }, :class => "form-control", :onChange => "hidePrizesCheckbox()"
+      %small.form-text.text-muted
+        = t('users.edit.help.year_in_school')
+    .form-group
+      = f.label :state, :class => "control-label-required"
+      = f.select :state, options_for_select(state_enum, resource.state), { :include_blank => '' }, :class => "form-control", :onChange => "hidePrizesCheckbox()"
+      %small.form-text.text-muted
+        = t('users.edit.help.state')
+    .form-group
+      = f.label :password, :class => required_for_update?(on_update_page)
+      = f.password_field :password, :input_html => {:autofocus => true}, :class => "form-control textarea"
+    .form-group
+      = f.label :password_confirmation, t('users.edit.label.password_confirmation_2'), :class => required_for_update?(on_update_page)
+      = f.password_field :password_confirmation, :class => "form-control textarea"
+    .form-group
+      = f.label :age, :class => "control-label"
+      = f.number_field :age, :class => "form-control textarea"
+    .form-group
+      = f.label :area_of_study, t('users.edit.label.major_area_of_study'), :class => "control-label"
+      = f.text_field :area_of_study, :class => "form-control textarea"
+    %hr.my-3
+    .form-check.form-group#compete-for-prizes
+      = f.check_box :compete_for_prizes, :class => "form-check-input"
+      = f.label :compete_for_prizes, :class => "form-check-label"
+      %small.form-text.text-muted
+        = t('users.edit.help.compete_for_prizes')
+    .form-check.form-group
+      = f.check_box :interested_in_employment, :class => "form-check-input"
+      = f.label :interested_in_employment, :class => "form-check-label"
+      %small.form-text.text-muted
+        = t('users.edit.help.interested_in_employment', organization: @game.organization || t('default_organization'))
+    .mb-3
+    -# If a user is updating their information then on_update_page should be passed to the partial as true,
+    -# if this is a new user registering then on_update_page should be false.
+    - if on_update_page
+      = render partial: 'users/registrations/update_user_form', locals: { f: f }
+    .controls
+      = invisible_recaptcha_tags text: 'Submit', callback: 'submitUserForm', :class => "btn btn-primary"
   - if on_update_page
     = render partial: 'users/registrations/delete_user_form'

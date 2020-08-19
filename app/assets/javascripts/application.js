@@ -24,3 +24,7 @@
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+
+var submitUserForm = function () {
+  document.getElementById("user-form").submit();
+};

@@ -14,7 +14,7 @@
       %th= t('teams.users_table.remove_user_header')
       - if @team_captain
         %th
-          = t('teams.users_table.change_captian_header')
+          = t('teams.users_table.change_captain_header')
   - @team.users.each do |current|
     %tbody
       %tr{ :class=>'success' }
@@ -31,12 +31,14 @@
         %td
           - if current_user.can_remove?(current)
             = link_to team_user_leave_team_path(current.team, current), method: :delete, data: { confirm: t('teams.show.remove_user_confirm') } do
-              = fa_icon 'user-times'
+              .pl-4
+                = fa_icon 'user-times'
         - if @team_captain
           %td
             - if current_user.can_promote?(current)
               = link_to team_user_promote_path(current.team_id, current), method: :get, data: { confirm: t('teams.show.promote_confirm') } do
-                %i.exchange-alt
+                .pl-3.pl-lg-5
+                  = fa_icon 'exchange'
 %hr
 .container
   .row
@@ -73,7 +75,7 @@
 %br
 .container
   .row
-    .col-sm
+    .col-sm-6
       - if team_editable?
         = render partial: 'teams/invites_form'
 %hr

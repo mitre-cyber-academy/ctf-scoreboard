@@ -69,7 +69,7 @@ class TeamDisplayModesTest < ActionDispatch::IntegrationTest
           assert_select 'th:nth-child(3)', I18n.t('teams.users_table.grade_header')
           assert_select 'th:nth-child(4)', I18n.t('teams.users_table.prize_eligibility_header')
           assert_select 'th:nth-child(5)', I18n.t('teams.users_table.remove_user_header')
-          assert_select 'th:nth-child(6)', I18n.t('teams.users_table.change_captian_header')
+          assert_select 'th:nth-child(6)', I18n.t('teams.users_table.change_captain_header')
         end
       end
       assert_select 'tbody' do
