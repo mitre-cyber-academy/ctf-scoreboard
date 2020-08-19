@@ -11,4 +11,4 @@
         %small= m.updated_at.strftime("%b %e, %R %Z")
       = sanitize(Kramdown::Document.new(m.text).to_html)
     %hr
-  = paginate @messages, :theme => 'twitter-bootstrap'
+  = paginate @messages, :theme => 'twitter-bootstrap-4'

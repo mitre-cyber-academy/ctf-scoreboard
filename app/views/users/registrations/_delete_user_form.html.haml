@@ -1,9 +1,8 @@
 %hr
-= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => { :multipart => "true", :class => "form-horizontal"}, :method => :delete) do |f|
-  .control-group
-    .helpertext-wrapper{  'data-toggle' => 'tooltip', 'data-placement' => 'right', :title => t('users.edit.help.destroy') }
-      = f.label :area_of_study, t('users.edit.label.delete_account'), :class => "control-label"
-      .controls
-        .input-append
-          = f.password_field :current_password, :class => "textarea", :placeholder => t('users.edit.label.current_password_placeholder')
-          = button_tag t('users.edit.label.delete_account'), :label => t('users.edit.label.delete_account'), :class => 'btn btn-danger', :data => { :confirm => t('users.destroy.confirm') }
+= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => { :multipart => "true", :class => "form-horizontal", :id => 'delete-user-form' }, :method => :delete) do |f|
+  .form-group
+    = f.label :delete_account
+    .input-group
+      = f.password_field :current_password, :class => "form-control textarea", :placeholder => t('users.edit.label.current_password_placeholder')
+      .input-group-append
+        = button_tag t('users.edit.label.delete_account'), :label => t('users.edit.label.delete_account'), :class => 'btn btn-danger', :data => { :confirm => t('users.destroy.confirm') }

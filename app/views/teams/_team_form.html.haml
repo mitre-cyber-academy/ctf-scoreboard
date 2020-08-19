@@ -1,22 +1,25 @@
-=form_for @team, :html => { :class => "form-horizontal"} do |f|
-  %legend= t('teams.edit.legend')
-  %label.label-custom
-    = t('forms.required_fields_notice_html')
-  .control-group
-    = f.label :team_name, :class => "control-label-required"
-    .controls
-      = f.text_field :team_name, :class => "textarea", maxlength: 255
-  .control-group
-    = f.label :affiliation, :class => "control-label-required"
-    .controls
-      = f.text_field :affiliation, :class => "textarea", maxlength: 255
-  .control-group
-    = f.label :division, :class => "control-label-required"
-    .controls
-      = f.collection_select :division_id, @divisions, :id, :name
-  .control-group
-    = f.label :looking_for_members, :class => "control-label", "data-placement" => "top", "data-toggle" => "tooltip", :title => I18n.t('teams.edit.looking_for_members_tooltip')
-    .controls
-      = f.check_box :looking_for_members
+.col-md-6
+  =form_for @team, :html => { :class => "form-horizontal"} do |f|
+    %legend= t('teams.edit.legend')
+    %label.label-custom
+      = t('forms.required_fields_notice_html')
+    .form-group
+      = f.label :team_name, :class => "control-label-required"
+      .controls
+        = f.text_field :team_name, :class => "form-control textarea", maxlength: 255
+    .form-group
+      = f.label :affiliation, :class => "control-label-required"
+      .controls
+        = f.text_field :affiliation, :class => "form-control textarea", maxlength: 255
+    .form-group
+      = f.label :division, :class => "control-label-required"
+      .controls
+        = f.collection_select :division_id, @divisions, :id, :name, {}, {:class => 'form-control'}
+    .form-group
+      = f.label :looking_for_members, :class => "form-control form-check-input", "data-placement" => "top", "data-toggle" => "tooltip", :title => I18n.t('teams.edit.looking_for_members_tooltip')
+      .controls
+        = f.check_box :looking_for_members
   .controls
-    = button_tag "Submit", :class => "btn"
+
+    .controls
+      = button_tag "Submit", :class => "btn btn-primary"
