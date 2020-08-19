@@ -19,7 +19,7 @@ RailsAdmin.config do |config|
   config.actions do
     # root actions
     dashboard                     # mandatory
-    # collection actions 
+    # collection actions
     index                         # mandatory
     new do
       except ['Challenge', 'FeedItem', 'SolvedChallenge', 'Flag'] # Block users from adding items from their parent classes instead of their own classes

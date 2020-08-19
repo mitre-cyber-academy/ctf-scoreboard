@@ -435,5 +435,11 @@ en:
         sign in attempts.
       unlock_line_2: 'Click the link below to unlock your account:'
       unlock_account_link: Unlock my account
+  surveys:
+    submitted: 'Survey Submitted!'
+    invalid: 'Invalid survey submitted.'
+    new:
+      header: 'Review Solved Challenge'
+      submit_btn: 'Submit Survey'
   # Set a default fallback for use if no organization is set on the game.
   default_organization: 'us'

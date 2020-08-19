@@ -58,6 +58,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :surveys, only: %i[create update]
+
   get '/game/summary' => 'games#summary'
   get '/game/teams' => 'games#teams'
 

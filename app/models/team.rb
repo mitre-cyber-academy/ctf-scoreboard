@@ -14,7 +14,7 @@ class Team < ApplicationRecord
   # Current_score is so we don't have to have any logic to handle
   # which class we are rendering in the game summary view.
   attr_accessor :rank, :current_score
-
+  has_many :surveys
   # This has_many is only applicable to Pentest Challenges
   has_many :defense_flags, dependent: :destroy
   has_many :feed_items, dependent: :destroy

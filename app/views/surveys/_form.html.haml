@@ -1,0 +1,28 @@
+= form_for @survey, html: { class: "well form-inline", style: "margin-bottom:40px;" } do |f|
+  - if @survey.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@survey.errors.count, "error")} prohibited this survey from being saved:"
+      %ul
+        - @survey.errors.full_messages.each do |message|
+          %li= message
+
+  %h3= t('surveys.new.header')
+  .rating
+    .field
+      = f.label :difficulty
+      = render partial: "surveys/star_rating", locals: { category: :difficulty, f: f }
+    .field
+      = f.label :realism
+      = render partial: "surveys/star_rating", locals: { category: :realism, f: f }
+    .field
+      = f.label :interest
+      = render partial: "surveys/star_rating", locals: { category: :interest, f: f }
+    .field
+      = f.label :comment
+      = f.text_area :comment
+  .field
+    = f.hidden_field :submitted_flag_id
+  .field
+    = f.hidden_field :team_id
+  .field
+    = f.submit t('surveys.new.submit_btn'), class: "btn btn-primary"

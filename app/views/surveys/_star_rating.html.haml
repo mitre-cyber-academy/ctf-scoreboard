@@ -1,0 +1,5 @@
+.rating
+  %span.star-cb-group
+    - [5, 4, 3, 2, 1].each do |rating|
+      = f.radio_button category, rating, { :name => "survey[#{category}]", :id => "#{category}_#{rating}", :value => rating }
+      %label{:for => "#{category}_#{rating}"}
