@@ -329,7 +329,7 @@ GEM
       tilt
     scout_apm (2.6.9)
       parser
-    sentry-raven (3.0.0)
+    sentry-raven (3.0.2)
       faraday (>= 1.0)
     sexp_processor (4.15.0)
     simplecov (0.19.0)
