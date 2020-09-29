@@ -83,6 +83,7 @@ class ChallengesControllerTest < ActionController::TestCase
       }
     end
     assert :success
+    assert_select 'input#challenge_submitted_flag', 1, 'Flag submission box should be visible with a bad submission'
     assert true, wrong_flag_messages.include?(flash[:notice])
   end
 
@@ -120,6 +121,7 @@ class ChallengesControllerTest < ActionController::TestCase
     flag_text = @pentest_challenge.defense_flags.find_by(team_id: @team2.id).flag
     put :update, params: { id: @pentest_challenge, team_id: @team2, challenge: { submitted_flag: flag_text } }
     assert_response :success
+    assert_select "input#challenge_submitted_flag", {count: 0}, 'Flag submission box should not be present when team has solved challenge'
     assert_equal I18n.t('flag.accepted'), flash[:notice]
   end
 
@@ -128,6 +130,7 @@ class ChallengesControllerTest < ActionController::TestCase
     sign_in @team1.team_captain
     get :show, params: { id: @pentest_challenge, team_id: @team2 }
     assert_response :success
+    assert_select "input#challenge_submitted_flag", {count: 0}, 'Flag submission box should not be present when team has solved challenge'
     assert_equal I18n.t('flag.accepted'), flash[:notice]
   end
 
@@ -136,6 +139,7 @@ class ChallengesControllerTest < ActionController::TestCase
     sign_in @team1.team_captain
     get :show, params: { id: @standard_challenge }
     assert_response :success
+    assert_select "input#challenge_submitted_flag", {count: 0}, 'Flag submission box should not be present when team has solved challenge'
     assert_equal I18n.t('flag.accepted'), flash[:notice]
   end
 
@@ -145,6 +149,7 @@ class ChallengesControllerTest < ActionController::TestCase
     sign_in @team1.team_captain
     get :show, params: { id: share_chal }
     assert_response :success
+    assert_select "input#challenge_submitted_flag", {count: 0}, 'Challenge flag submission box should not be present when team has solved challenge'
     assert_equal I18n.t('flag.accepted'), flash[:notice]
   end
 end

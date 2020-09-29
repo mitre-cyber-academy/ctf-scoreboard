@@ -6,12 +6,11 @@ class ChallengesController < ApplicationController
   before_action :enforce_access
   before_action :load_game, :load_message_count
   before_action :find_challenge
-  before_action :find_solved_by, only: %i[show update]
+  before_action :find_solved_by, :check_solvable_by, only: %i[show update]
   before_action :valid_captcha, :find_and_log_flag, :on_team?, only: [:update]
 
   def show
     @solved_challenge = @challenge.get_solved_challenge_for(current_user.team)
-    @solvable = @challenge.can_be_solved_by(current_user.team)
     @solved_video_url = @solved_challenge.flag.video_url if @solved_challenge
     flash.now[:notice] = I18n.t('flag.accepted') if @solved_challenge
   end
@@ -20,12 +19,11 @@ class ChallengesController < ApplicationController
     if @flag_found
       @solved_challenge = @flag_found.save_solved_challenge(current_user)
       @solved_video_url = @flag_found.video_url
+      @solvable = false
       flash.now[:notice] = I18n.t('flag.accepted')
     else
       flash.now[:alert] = wrong_flag_messages.sample
     end
-    @solvable = @challenge.can_be_solved_by(current_user.team)
-
     render :show
   end
 
@@ -45,6 +43,10 @@ class ChallengesController < ApplicationController
 
   def find_solved_by
     @solved_by = @challenge.solved_challenges.includes(team: :division).order(created_at: :asc)
+  end
+
+  def check_solvable_by
+    @solvable = @challenge.can_be_solved_by(current_user.team)
   end
 
   def find_and_log_flag
