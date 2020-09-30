@@ -24,20 +24,14 @@ else
 	echo "SSL Certificate does not exist, creating self-signed certificate..."
 	echo "Do not use a self-signed certificate in a production environment."
 	echo
-	echo "Generating certificate signing request..."
-	sudo openssl req -new > temp.cert.csr
-	echo "Generating signing key..."
-	sudo openssl rsa -in privkey.pem -out new.cert.key
 	echo "Generating certificate (Expires in 7 days)..."
-	sudo openssl x509 -in temp.cert.csr -out new.cert.cert -req -signkey new.cert.key -days 7 # 7 Days so it isn't used in production
-	echo "Moving files and cleaning up..."
-	mv -f new.cert.cert nginx/certs/ssl_certificate.crt
-	mv -f new.cert.key nginx/certs/ssl_certificate_key.key
-	# Put SSL Certificate in nginx/certs/ssl_certificate.crt (-rw-r--r--, )
-	sudo chmod 644 nginx/certs/ssl_certificate.crt
-	# Put SSL Certificate Signing Key in nginx/certs/ssl_certificate_key.key (-rw-------, chmod 600)
-	sudo chmod 600 nginx/certs/ssl_certificate_key.key
-	rm temp.cert.csr
+	openssl req -newkey rsa:4096 \
+							-x509 \
+							-sha256 \
+							-days 7 \
+							-nodes \
+							-out nginx/certs/ssl_certificate.crt \
+							-keyout nginx/certs/ssl_certificate_key.key
 fi
 
 echo "Done"
