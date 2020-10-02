@@ -61,12 +61,31 @@ RailsAdmin.config do |config|
           hide
         end
       end
-
       [:start, :stop].each do |f|
         configure f do
           help "Required - Must be in UTC."
         end
       end
+      field :title
+      field :start
+      field :stop
+      field :description
+      field :board_layout
+      field :team_size
+      field :organization
+      field :contact_email
+      field :prizes_available
+      field :prizes_text
+      field :enable_completion_certificates
+      field :completion_certificate_template
+      field :recruitment_text
+      field :open_source_url
+      field :request_team_location
+      field :location_required
+      field :contact_url
+      field :footer
+      field :terms_of_service
+      field :terms_and_conditions
     end
   end
 

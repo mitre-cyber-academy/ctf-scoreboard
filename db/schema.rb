@@ -136,6 +136,8 @@ ActiveRecord::Schema.define(version: 2020_07_27_151127) do
     t.text "terms_and_conditions"
     t.integer "board_layout", default: 0, null: false
     t.boolean "registration_enabled", default: true, null: false
+    t.boolean "request_team_location", default: false, null: false
+    t.boolean "location_required", default: false, null: false
   end
 
   create_table "messages", id: :serial, force: :cascade do |t|
@@ -198,6 +200,7 @@ ActiveRecord::Schema.define(version: 2020_07_27_151127) do
     t.boolean "eligible", default: false
     t.integer "slots_available", default: 0
     t.boolean "looking_for_members", default: true, null: false
+    t.string "team_location", default: ""
     t.index "lower((team_name)::text)", name: "index_teams_on_team_name_unique", unique: true
     t.index ["division_id"], name: "index_teams_on_division_id"
     t.index ["team_captain_id"], name: "index_teams_on_team_captain_id"

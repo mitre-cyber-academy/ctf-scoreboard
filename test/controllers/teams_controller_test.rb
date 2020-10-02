@@ -351,6 +351,14 @@ class TeamsControllerTest < ActionController::TestCase
     assert_select 'h3', 'Per User Statistics'
   end
 
+  test 'edit a teams location' do
+    user = create(:user_with_team) 
+    sign_in user 
+    patch :update, params: { team: {team_location: 'location' }, id: user.team } 
+    assert_redirected_to team_path(user.team) 
+    assert 'location', user.team.team_location
+  end
+
   test 'summary pentest game' do
     Game.first.destroy
     create(:active_game)
