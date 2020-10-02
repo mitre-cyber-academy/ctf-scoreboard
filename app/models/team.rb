@@ -30,6 +30,7 @@ class Team < ApplicationRecord
   belongs_to :team_captain, class_name: 'User'
   accepts_nested_attributes_for :user_invites
   validates :team_name, :affiliation, presence: true, length: { maximum: 255 }, obscenity: true
+  validates :team_location, presence: true, if: -> { Game.instance.location_required? }, obscenity: true
   validates :team_name, uniqueness: { case_sensitive: false }
 
   after_save :refresh_team_info

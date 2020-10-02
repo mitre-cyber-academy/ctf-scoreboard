@@ -91,6 +91,7 @@ class TeamsController < ApplicationController
       :affiliation,
       :division_id,
       :looking_for_members,
+      :team_location,
       user_invites_attributes: [:email]
     )
   end
