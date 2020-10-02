@@ -36,7 +36,11 @@ class DefenseFlag < Flag
   end
 
   def start_calculation_at
-    super || Game.instance.start
+    super || challenge&.open_challenge_at || Game.instance.start
+  end
+
+  def stop_calculation_at
+    challenge&.close_challenge_at || Game.instance.stop
   end
 
   def open?
