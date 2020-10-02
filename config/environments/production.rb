@@ -58,10 +58,6 @@ Rails.application.configure do
   # Use a different cache store in production.
   config.cache_store = :memory_store, { size: 64.megabytes, expires_in: 5.minutes }
 
-  # Use a real queuing backend for Active Job (and separate queues per environment).
-  # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "ctf_registration_production"
-
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
