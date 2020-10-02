@@ -214,6 +214,49 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model 'FileSubmissionChallenge' do
+    edit do
+      [
+        :sponsor,
+        :sponsor_logo,
+        :sponsor_description
+      ].each do |title|
+        configure title do
+          css_class do
+            "#{self.name}_field sponsorship_fields_toggle"
+          end
+        end
+      end
+      configure :sponsored do
+        css_class do
+          "#{self.name}_field sponsorship_fields_toggler"
+        end
+      end
+      [
+        :defense_period,
+        :defense_points,
+        :unsolved_increment_period,
+        :unsolved_increment_points,
+        :initial_shares,
+        :solved_decrement_shares,
+        :first_capture_point_bonus,
+        :solved_decrement_period,
+        :submitted_flags
+      ].each do |field|
+        configure field do
+          hide
+        end
+      end
+    end
+    list do
+      field :name
+      field :description
+      field :categories
+      field :point_value
+      field :created_at
+    end
+  end
+
   config.model 'ChallengeCategory' do
     visible false
   end
@@ -442,6 +485,23 @@ RailsAdmin.config do |config|
       field :user
       field :text
       field :flag
+    end
+  end
+
+  config.model 'FileSubmission' do
+    edit do
+      field :challenge
+      field :user
+      field :submitted_bundle
+      field :description
+      field :demoed
+    end
+    list do
+      field :challenge
+      field :user
+      field :submitted_bundle
+      field :description
+      field :demoed
     end
   end
 

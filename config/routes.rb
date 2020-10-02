@@ -68,6 +68,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :file_submissions, only: [] do
+    member do
+      get :submitted_bundle
+    end
+  end
+
   root to: 'home#index'
 end
 # rubocop:enable Metrics/BlockLength
