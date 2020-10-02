@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_23_173255) do
+ActiveRecord::Schema.define(version: 2020_07_27_151127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,16 @@ ActiveRecord::Schema.define(version: 2020_06_23_173255) do
     t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "file_submissions", force: :cascade do |t|
+    t.bigint "challenge_id", null: false
+    t.bigint "user_id", null: false
+    t.oid "submitted_bundle", null: false
+    t.text "description", default: "", null: false
+    t.boolean "demoed", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "flags", id: :serial, force: :cascade do |t|
@@ -279,6 +289,8 @@ ActiveRecord::Schema.define(version: 2020_06_23_173255) do
   add_foreign_key "challenge_categories", "categories"
   add_foreign_key "challenge_categories", "challenges"
   add_foreign_key "challenges", "games"
+  add_foreign_key "file_submissions", "challenges"
+  add_foreign_key "file_submissions", "users"
   add_foreign_key "flags", "teams"
   add_foreign_key "submitted_flags", "flags"
   add_foreign_key "teams", "divisions"
