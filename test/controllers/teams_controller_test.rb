@@ -190,7 +190,7 @@ class TeamsControllerTest < ActionController::TestCase
   test 'update a team when game is open and team is not in top ten' do
     user = create(:user_with_team)
     sign_in user
-    patch :update, params: { team: { team_name: 'team_one_newname', affiliation: 'school1' }, id: user.team }
+    patch :update, params: { team: { team_name: 'team_one_newname', affiliation: 'school1', looking_for_members: false }, id: user.team }
     assert I18n.t('teams.update_successful'), flash[:notice]
     assert_redirected_to team_path(user.team)
   end
@@ -199,7 +199,7 @@ class TeamsControllerTest < ActionController::TestCase
     team = create(:team)
     user = create(:user_with_team)
     sign_in user
-    patch :update, params: { team: { team_name: 'team_one_newname', affiliation: 'school1' }, id: team }
+    patch :update, params: { team: { team_name: 'team_one_newname', affiliation: 'school1', looking_for_members: false }, id: team }
     assert I18n.t('teams.invalid_permissions'), flash[:alert]
     assert_redirected_to @controller.user_root_path
   end

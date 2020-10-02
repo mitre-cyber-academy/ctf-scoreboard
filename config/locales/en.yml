@@ -17,9 +17,9 @@ en:
       table_header_when: When
   teams:
     edit:
-      header: Edit your Team
-      legend: New Team Information
-      note: All fields are required.
+      header: 'Edit your Team'
+      legend: 'New Team Information'
+      looking_for_members_tooltip: 'When this box is checked, your team will be displayed for users searching to join a team. When unchecked you will still be able to invite new users to your team by email.'
     new:
       header: Create a Team
     invite:
@@ -290,12 +290,10 @@ en:
     destroy:
       confirm: Are you sure you want to delete your account?
     new:
-      required_fields_notice_1: 'Note: Fields marked with'
-      required_fields_notice_2: can not be blank.
-      register: Register for the CTF
-      confirmations_legend: Resend Confirmation Instructions
-      password_reset_legend: Send a Password Reset
-      sessions_legend: Login
+      register: 'Register for the CTF'
+      confirmations_legend: 'Resend Confirmation Instructions'
+      password_reset_legend: 'Send a Password Reset'
+      sessions_legend: 'Login'
     activation:
       activation_header: Activate your Account
     join_team:
@@ -435,5 +433,7 @@ en:
         sign in attempts.
       unlock_line_2: 'Click the link below to unlock your account:'
       unlock_account_link: Unlock my account
+  forms:
+    required_fields_notice_html: 'Note: Fields marked with <span style="color:red;">*</span> can not be blank.'
   # Set a default fallback for use if no organization is set on the game.
   default_organization: 'us'

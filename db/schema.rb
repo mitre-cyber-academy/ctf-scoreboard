@@ -197,6 +197,7 @@ ActiveRecord::Schema.define(version: 2020_07_27_151127) do
     t.integer "division_id"
     t.boolean "eligible", default: false
     t.integer "slots_available", default: 0
+    t.boolean "looking_for_members", default: true, null: false
     t.index "lower((team_name)::text)", name: "index_teams_on_team_name_unique", unique: true
     t.index ["division_id"], name: "index_teams_on_division_id"
     t.index ["team_captain_id"], name: "index_teams_on_team_captain_id"

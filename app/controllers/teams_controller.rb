@@ -86,7 +86,13 @@ class TeamsController < ApplicationController
   end
 
   def team_params
-    params.require(:team).permit(:team_name, :affiliation, :division_id, user_invites_attributes: [:email])
+    params.require(:team).permit(
+      :team_name,
+      :affiliation,
+      :division_id,
+      :looking_for_members,
+      user_invites_attributes: [:email]
+    )
   end
 
   private
