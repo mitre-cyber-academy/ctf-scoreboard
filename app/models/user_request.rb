@@ -32,9 +32,7 @@ class UserRequest < ApplicationRecord
   end
 
   def accept
-    if team.full?
-      false
-    elsif user_on_team? # Check to make sure user isn't already on a team.
+    if team.full? || user_on_team? # Check to make sure user isn't already on a team.
       false
     else
       update(status: :Accepted)
