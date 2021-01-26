@@ -1,0 +1,46 @@
+{
+  // The name of the game; will appear on the scoreboard
+  "game_name": "2020 MITRE Summer eCTF",
+  // The description of the competition
+  "description": "The 2020 Summer Embedded Capture the Flag",
+  // The time (in UTC) that the competition starts at
+  "start_time": "June 17, 2020 13:00",
+  // The time (in UTC) that the competition ends at
+  "stop_time": "August 12, 2020 3:59",
+  // The format that the above times are in
+  "time_format_string": "%B %d, %Y %H:%M",
+
+  // Scoring settings
+
+  // The number of points each flag starts at
+  "point_value": 500,
+  // The number of points awarded to the first team to capture the flag
+  "first_capture_point_bonus": 50,
+
+  // The number of shares the first team to capture the flag will get.
+  // This will decrease by SHARE_DECREMENT number of shares every
+  // ELAPSED_TIME hours. This must be at least
+  // `SHARE_DECREMENT * (time-of-competition / ELAPSED_TIME)`
+  // to prevent negative share values
+  "share_increment": 800,
+
+  // how many fewer shares each team gets after each elapsed time unit from
+  // first capture
+  "share_decrement": 1,
+  // time in hours at which point shares are decremented
+  "elapsed_time": 1,
+
+  // number of points a challenge will raise by after not being solved
+  "point_increment": 24,
+  // time between the total number of points raising if it hasn't been solved
+  "point_elapsed_time": 24,
+
+  // amount of time (in hours) before giving the team defense points
+  "defense_elapsed_time": 24,
+  // number of points awarded to a team if they successfully defend
+  "defense_point_increment": 24,
+
+  // Set this variable to True if you want to have optional implementation flags
+  // Used this is 2020 for things like larger file sizes, high quality audio, etc.
+  "optional_implementation_features": false
+}

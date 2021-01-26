@@ -6,7 +6,9 @@ if ENV['CI'] || ENV['LOCAL_COVERAGE']
   SimpleCov.minimum_coverage 100
 end
 
-SimpleCov.start 'rails'
+SimpleCov.start 'rails' do
+  add_filter 'lib/tasks'
+end
 
 ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../../config/environment', __FILE__)
@@ -59,4 +61,16 @@ end
 
 def remove_html_artifacts(email_body)
   strip_tags(email_body).gsub('=0D', '').gsub('E2=80=A6', '').gsub('=', '').gsub("\r", '').gsub("\n", '')
+end
+
+def capture_stdout(&block)
+  begin
+    $stdout = StringIO.new
+    yield
+    result = {}
+    result[:stdout] = $stdout.string
+  ensure
+    $stdout = STDOUT
+  end
+  result
 end
