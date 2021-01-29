@@ -70,7 +70,3 @@ group :assets do
   gem 'mini_racer', platforms: :ruby
   gem 'uglifier'
 end
-
-group :production do
-  gem 'scout_apm'
-end
