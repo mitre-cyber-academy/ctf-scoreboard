@@ -14,6 +14,19 @@ class EctfSetupRakeTask < ActiveSupport::TestCase
     end
   end
 
+  test 'the reset task clears all tables' do
+    create(:active_game)
+    create(:standard_challenge, flag_count: 3)
+    create(:pentest_challenge_with_flags)
+    create(:team, additional_member_count: 2)
+
+    Rake::Task["ectf:reset"].execute
+
+    ApplicationRecord.descendants.each do |model|
+      assert_equal 0, model.count
+    end
+  end
+
   test 'setup teams rake task properly loads teams for an ECTF Game and prints the result' do
     # Game must be setup before running this task
     Rake::Task["ectf:initialize_game"].execute(game_settings_path: 'test/files/ectf/settings.json')
