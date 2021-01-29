@@ -4,7 +4,7 @@
 namespace :ectf do
   desc 'Reset the game back to a clean state'
   task reset: %i[destructive environment] do
-    Game.instance.destroy
+    Game.instance&.destroy
     User.all.destroy_all
   end
 
