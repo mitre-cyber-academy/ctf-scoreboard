@@ -1,0 +1,20 @@
+{
+  "Intercept Broadcast": {
+    "description": "Obtain the flag from the broadcasting device"
+  },
+  "Intercept Send": {
+    "description": "Obtain the flag from the transmitting device"
+  },
+  "Device Spoof": {
+    "description": "Have a checkpoint SED accept a packet with a device ID it does not recognize and read the flag from the insecure channel"
+  },
+  "Invalid Message": {
+    "description": "Have the user code of any deployed UAV SED receive a message from a checkpoint SED that is anything other than the clear airway confirmed message  and read the flag from the insecure channel"
+  },
+  "Custom Message": {
+    "description": "Have the user code of any deployed UAV SED receive the drop package message10 and read the flag from the insecure channel"
+  },
+  "Code Execution": {
+    "description": "Gain code execution to call the function at 0xf000 and read the flag from the insecure channel"
+  }
+}
