@@ -52,7 +52,7 @@ jobs:
           RAILS_ENV: test
         run: |
           bundle exec brakeman -qAzw1
-          bundle exec bundle-audit check --update
+          bundle exec bundle-audit check --update --ignore CVE-2021-21305 CVE-2021-21288
           bundle exec rails db:create
           bundle exec rails test
           bundle exec rails spellcheck
