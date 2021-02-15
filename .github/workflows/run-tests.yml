@@ -9,7 +9,7 @@ name: Test and push coverage to coveralls
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     services:
       db:
         image: postgres:12
@@ -25,6 +25,7 @@ jobs:
           --health-retries 5
     steps:
       - uses: actions/checkout@v2
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
 
