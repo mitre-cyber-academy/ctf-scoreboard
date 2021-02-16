@@ -1,14 +1,14 @@
 - content_for :header do
   = t('users.login.login_header')
 %legend= t('users.new.sessions_legend')
-= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-horizontal"}) do |f|
+= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { class: "form-horizontal", autocomplete: "off" }) do |f|
   .form-group
     = f.label :email, :class => "control-label"
-    = f.email_field :email, :tabindex => "1", :class => "form-control w-50" 
+    = f.email_field :email, :tabindex => "1", :class => "form-control w-50"
     = render 'users/shared/create_user_link'
   .form-group
     = f.label :password, :class => "control-label"
-    = f.password_field :password, :tabindex => "2", :class => "form-control w-50" 
+    = f.password_field :password, :tabindex => "2", :class => "form-control w-50"
     = render 'users/shared/reset_your_password'
   - if devise_mapping.rememberable?
     .form-group
