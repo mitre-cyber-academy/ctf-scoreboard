@@ -51,6 +51,12 @@ GEM
       activesupport (= 6.0.3.5)
     activerecord-precounter (0.4.0)
       activerecord (>= 5)
+    activerecord-session_store (1.1.3)
+      actionpack (>= 4.0)
+      activerecord (>= 4.0)
+      multi_json (~> 1.11, >= 1.11.2)
+      rack (>= 1.5.2, < 3)
+      railties (>= 4.0)
     activestorage (6.0.3.5)
       actionpack (= 6.0.3.5)
       activejob (= 6.0.3.5)
@@ -205,6 +211,7 @@ GEM
       libv8 (~> 8.4.255)
     minitest (5.14.3)
     msgpack (1.4.2)
+    multi_json (1.15.0)
     multipart-post (2.1.1)
     nested_form (0.3.2)
     nio4r (2.5.5)
@@ -378,6 +385,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-precounter
+  activerecord-session_store
   awesome_nested_fields
   bootsnap (>= 1.1.0)
   bootstrap (~> 4.5.0)
