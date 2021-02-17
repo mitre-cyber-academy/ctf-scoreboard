@@ -3,6 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'activerecord-precounter'
+gem 'activerecord-session_store'
 gem 'awesome_nested_fields'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.5.0'
