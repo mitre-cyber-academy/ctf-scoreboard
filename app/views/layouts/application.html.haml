@@ -2,8 +2,9 @@
 %html
   %head
     %title= @game&.title
+    = csp_meta_tag
     = stylesheet_link_tag    "application"
-    = javascript_include_tag "application"
+    = javascript_include_tag "application", nonce: true
     = csrf_meta_tags
   %body
     = render partial: 'layouts/navbar'
