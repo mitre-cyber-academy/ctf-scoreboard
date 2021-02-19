@@ -34,7 +34,7 @@
       = f.label t('challenges.submit_flag')
       = f.text_field :submitted_flag, :class => "form-control col-sm-10"
     .control-group
-      = invisible_recaptcha_tags text: 'Submit', :class => "btn btn-primary"
+      = invisible_recaptcha_tags nonce: content_security_policy_nonce, text: 'Submit', :class => "btn btn-primary"
 
 - if @solved_by.length > 0
   %table.table.table-bordered.table-striped.table-hover

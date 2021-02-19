@@ -1,0 +1,1 @@
+Chartkick.options[:nonce] = true

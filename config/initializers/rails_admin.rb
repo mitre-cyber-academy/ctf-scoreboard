@@ -12,6 +12,8 @@ RailsAdmin.config do |config|
   # RailsAdmin may need a way to know who the current user is]
   config.current_user_method(&:current_user) # auto-generated
 
+  config.show_gravatar = false
+
   config.authorize_with do
     redirect_to main_app.root_path unless current_user.try(:admin?)
   end
