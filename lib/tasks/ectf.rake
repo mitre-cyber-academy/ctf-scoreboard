@@ -97,6 +97,7 @@ namespace :ectf do
                                 solved_decrement_shares: settings['share_decrement'],
                                 solved_decrement_period: settings['elapsed_time'],
                                 unsolved_increment_period: settings['point_elapsed_time'],
+                                unsolved_increment_points: settings['point_increment'],
                                 defense_points: settings['defense_point_increment'],
                                 defense_period: settings['defense_elapsed_time'],
                                 state: 'closed',
