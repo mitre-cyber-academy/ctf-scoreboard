@@ -117,7 +117,8 @@ namespace :ectf do
 
     game.pentest_challenges.each do |challenge|
       challenge.update(state: :open)
-      challenge_flag = "ectf{#{challenge.name.gsub(/\W/, '').downcase}_#{SecureRandom.hex}}"
+      challenge_title = challenge.name[0...challenge.name.rindex(' ')].gsub(/\W/, '').downcase
+      challenge_flag = "ectf{#{challenge_title}_#{SecureRandom.hex(8)}}"
       DefenseFlag.create!(
         flag: challenge_flag,
         type: 'DefenseFlag',
