@@ -85,7 +85,7 @@ GEM
     bootstrap4-kaminari-views (1.0.1)
       kaminari (>= 0.13)
       rails (>= 3.1)
-    brakeman (5.0.1)
+    brakeman (5.0.4)
     builder (3.2.4)
     bundler-audit (0.8.0)
       bundler (>= 1.2.0, < 3)
