@@ -26,6 +26,10 @@
 # Ignore sensitive files
 .gmail_env
 .dev_vars
+.env
+.env-prod
+nginx/certs/ssl_certificate.crt
+nginx/certs/ssl_certificate_key.key
 
 # Ignore simplecov output.
 coverage
@@ -34,3 +38,5 @@ coverage
 
 node_modules/
 logfile
+
+/config/master.key

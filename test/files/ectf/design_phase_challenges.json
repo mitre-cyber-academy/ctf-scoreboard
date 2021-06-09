@@ -1,0 +1,22 @@
+{
+  "Read the Rules": {
+    "values": ["ectf{readtherules_flag}"],
+    "description": "If you read the rules, you'll know",
+    "points": 100
+  },
+  "Boot Reference": {
+    "values": ["ectf{boot_flag}"],
+    "description": "Provision and boot the scewl_echo_server and the flag_sed SEDs to receive a flag.",
+    "points": 100
+  },
+  "Design Document": {
+    "values": ["ectf{document_flag}"],
+    "description": "Submit a design document containing descriptions of how each command will work on your system ",
+    "points": 100
+  },
+  "Test SED": {
+    "values": ["ectf{testsed_flag}"],
+    "description": "Submit an SED that performs valid tests (within the expected use) of SCEWL. ",
+    "points": 100
+  }
+}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_23_173255) do
+ActiveRecord::Schema.define(version: 2021_02_16_004841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,6 +90,16 @@ ActiveRecord::Schema.define(version: 2020_06_23_173255) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "file_submissions", force: :cascade do |t|
+    t.bigint "challenge_id", null: false
+    t.bigint "user_id", null: false
+    t.oid "submitted_bundle", null: false
+    t.text "description", default: "", null: false
+    t.boolean "demoed", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "flags", id: :serial, force: :cascade do |t|
     t.integer "challenge_id"
     t.string "flag"
@@ -126,6 +136,8 @@ ActiveRecord::Schema.define(version: 2020_06_23_173255) do
     t.text "terms_and_conditions"
     t.integer "board_layout", default: 0, null: false
     t.boolean "registration_enabled", default: true, null: false
+    t.boolean "request_team_location", default: false, null: false
+    t.boolean "location_required", default: false, null: false
   end
 
   create_table "messages", id: :serial, force: :cascade do |t|
@@ -167,6 +179,15 @@ ActiveRecord::Schema.define(version: 2020_06_23_173255) do
     t.index ["item", "table", "month", "year"], name: "index_rails_admin_histories"
   end
 
+  create_table "sessions", force: :cascade do |t|
+    t.string "session_id", null: false
+    t.text "data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
+    t.index ["updated_at"], name: "index_sessions_on_updated_at"
+  end
+
   create_table "submitted_flags", id: :serial, force: :cascade do |t|
     t.integer "challenge_id"
     t.integer "user_id"
@@ -187,6 +208,8 @@ ActiveRecord::Schema.define(version: 2020_06_23_173255) do
     t.integer "division_id"
     t.boolean "eligible", default: false
     t.integer "slots_available", default: 0
+    t.boolean "looking_for_members", default: true, null: false
+    t.string "team_location", default: ""
     t.index "lower((team_name)::text)", name: "index_teams_on_team_name_unique", unique: true
     t.index ["division_id"], name: "index_teams_on_division_id"
     t.index ["team_captain_id"], name: "index_teams_on_team_captain_id"
@@ -279,6 +302,8 @@ ActiveRecord::Schema.define(version: 2020_06_23_173255) do
   add_foreign_key "challenge_categories", "categories"
   add_foreign_key "challenge_categories", "challenges"
   add_foreign_key "challenges", "games"
+  add_foreign_key "file_submissions", "challenges"
+  add_foreign_key "file_submissions", "users"
   add_foreign_key "flags", "teams"
   add_foreign_key "submitted_flags", "flags"
   add_foreign_key "teams", "divisions"

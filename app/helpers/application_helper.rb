@@ -20,7 +20,7 @@ module ApplicationHelper
   end
 
   def unread_messages(num_unread)
-    num_unread unless num_unread&.eql? 0
+    num_unread unless num_unread.eql? 0
   end
 
   def active_navbar?(page)

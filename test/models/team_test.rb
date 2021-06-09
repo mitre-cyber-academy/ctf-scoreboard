@@ -135,4 +135,16 @@ class TeamTest < ActiveSupport::TestCase
     assert_equal challenge.point_value, team.score
   end
 
+  test 'cannot create team if location_required is true but no location is given' do
+    @game = create(:active_game, location_required: true)
+    assert_raises(ActiveRecord::RecordInvalid) {
+      team = create(:team)
+      assert_contains team.errors, "Team location can't be blank"
+    }
+  end
+
+  test 'create team with location' do
+    team = create(:team, team_location: 'earth')
+    assert_equal team.team_location, 'earth'
+  end
 end

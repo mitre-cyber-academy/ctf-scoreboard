@@ -28,9 +28,7 @@ class UserInvite < ApplicationRecord
   end
 
   def accept
-    if team.full?
-      false
-    elsif user.nil? || !user.team.nil? # Check to make sure user isn't already on a team.
+    if team.full? || user.nil? || !user.team.nil? # Check to make sure user isn't already on a team.
       false
     else
       update(status: :Accepted)

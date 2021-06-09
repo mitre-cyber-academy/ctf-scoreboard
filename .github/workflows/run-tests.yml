@@ -9,7 +9,7 @@ name: Test and push coverage to coveralls
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     services:
       db:
         image: postgres:12
@@ -25,6 +25,7 @@ jobs:
           --health-retries 5
     steps:
       - uses: actions/checkout@v2
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
 
@@ -32,9 +33,9 @@ jobs:
         uses: actions/cache@v1
         with:
           path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          key: ${{ runner.os }}-${{ secrets.CACHE_VERSION }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
-            ${{ runner.os }}-gems-
+            ${{ runner.os }}-${{ secrets.CACHE_VERSION }}-gems-
 
       - name: Install hunspell library
         run: |
@@ -52,7 +53,7 @@ jobs:
           RAILS_ENV: test
         run: |
           bundle exec brakeman -qAzw1
-          bundle exec bundle-audit check --update
+          bundle exec bundle-audit check --update --ignore CVE-2021-21305 CVE-2021-21288
           bundle exec rails db:create
           bundle exec rails test
           bundle exec rails spellcheck

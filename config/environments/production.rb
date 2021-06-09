@@ -46,7 +46,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  config.force_ssl = ENV['FORCE_SSL'] != 'false'
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -57,10 +57,6 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   config.cache_store = :memory_store, { size: 64.megabytes, expires_in: 5.minutes }
-
-  # Use a real queuing backend for Active Job (and separate queues per environment).
-  # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "ctf_registration_production"
 
   config.action_mailer.perform_caching = false
 

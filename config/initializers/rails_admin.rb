@@ -12,6 +12,8 @@ RailsAdmin.config do |config|
   # RailsAdmin may need a way to know who the current user is]
   config.current_user_method(&:current_user) # auto-generated
 
+  config.show_gravatar = false
+
   config.authorize_with do
     redirect_to main_app.root_path unless current_user.try(:admin?)
   end
@@ -19,7 +21,7 @@ RailsAdmin.config do |config|
   config.actions do
     # root actions
     dashboard                     # mandatory
-    # collection actions 
+    # collection actions
     index                         # mandatory
     new do
       except ['Challenge', 'FeedItem', 'SolvedChallenge', 'Flag'] # Block users from adding items from their parent classes instead of their own classes
@@ -61,12 +63,31 @@ RailsAdmin.config do |config|
           hide
         end
       end
-
       [:start, :stop].each do |f|
         configure f do
           help "Required - Must be in UTC."
         end
       end
+      field :title
+      field :start
+      field :stop
+      field :description
+      field :board_layout
+      field :team_size
+      field :organization
+      field :contact_email
+      field :prizes_available
+      field :prizes_text
+      field :enable_completion_certificates
+      field :completion_certificate_template
+      field :recruitment_text
+      field :open_source_url
+      field :request_team_location
+      field :location_required
+      field :contact_url
+      field :footer
+      field :terms_of_service
+      field :terms_and_conditions
     end
   end
 
@@ -199,6 +220,49 @@ RailsAdmin.config do |config|
         :submitted_flags,
         :solved_challenges,
         :type
+      ].each do |field|
+        configure field do
+          hide
+        end
+      end
+    end
+    list do
+      field :name
+      field :description
+      field :categories
+      field :point_value
+      field :created_at
+    end
+  end
+
+  config.model 'FileSubmissionChallenge' do
+    edit do
+      [
+        :sponsor,
+        :sponsor_logo,
+        :sponsor_description
+      ].each do |title|
+        configure title do
+          css_class do
+            "#{self.name}_field sponsorship_fields_toggle"
+          end
+        end
+      end
+      configure :sponsored do
+        css_class do
+          "#{self.name}_field sponsorship_fields_toggler"
+        end
+      end
+      [
+        :defense_period,
+        :defense_points,
+        :unsolved_increment_period,
+        :unsolved_increment_points,
+        :initial_shares,
+        :solved_decrement_shares,
+        :first_capture_point_bonus,
+        :solved_decrement_period,
+        :submitted_flags
       ].each do |field|
         configure field do
           hide
@@ -442,6 +506,23 @@ RailsAdmin.config do |config|
       field :user
       field :text
       field :flag
+    end
+  end
+
+  config.model 'FileSubmission' do
+    edit do
+      field :challenge
+      field :user
+      field :submitted_bundle
+      field :description
+      field :demoed
+    end
+    list do
+      field :challenge
+      field :user
+      field :submitted_bundle
+      field :description
+      field :demoed
     end
   end
 

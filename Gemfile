@@ -2,7 +2,10 @@
 
 source 'https://rubygems.org'
 
+ruby '~> 2.7.2'
+
 gem 'activerecord-precounter'
+gem 'activerecord-session_store'
 gem 'awesome_nested_fields'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.5.0'
@@ -35,6 +38,7 @@ gem 'rails_admin'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'rubyzip'
 gem 'sentry-raven'
+gem 'settingslogic', '~> 2.0.9'
 
 group :development do
   gem 'letter_opener'
@@ -61,12 +65,11 @@ end
 # in production environments by default.
 group :assets do
   gem 'coffee-rails'
-  gem 'sass-rails'
+  # sass-rails 6.0 causes a stacktrace intermittently similar to
+  # https://github.com/sass/sassc-rails/issues/122
+  # Not worth upgrading, just go straight to webpacker
+  gem 'sass-rails', '~> 5.0'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'mini_racer', platforms: :ruby
   gem 'uglifier'
-end
-
-group :production do
-  gem 'scout_apm'
 end

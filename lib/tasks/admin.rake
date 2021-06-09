@@ -11,14 +11,13 @@ namespace :db do
     email = ui.ask('Your Email: ')
     password = ui.ask('Enter password: ') { |q| q.echo = false }
     confirm  = ui.ask('Confirm password: ') { |q| q.echo = false }
-
     user = User.new(full_name: name, email: email, password: password, password_confirmation: confirm, admin: true)
     user.skip_confirmation!
     if user.save
       puts "User account '#{email}' created."
     else
-      puts
       puts 'Problem creating user account:'
+      puts
       puts user.errors.full_messages
     end
   end

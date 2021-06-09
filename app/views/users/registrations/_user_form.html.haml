@@ -9,9 +9,7 @@
           - resource.errors.full_messages.each do |msg|
             %li= msg
     %label.label-custom
-      = t('users.new.required_fields_notice_1')
-      %span{:style => "color: red;"} *
-      = t('users.new.required_fields_notice_2')
+      = t('forms.required_fields_notice_html')
     .form-group
       = f.label :full_name, :class => "control-label-required"
       = f.text_field :full_name, :class => "form-control textarea", maxlength: 255
