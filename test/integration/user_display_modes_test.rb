@@ -5,7 +5,7 @@ class UserDisplayModesTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   def setup
-    @game = create(:active_game)
+    @game = create(:active_game, employment_opportunities_available: true)
   end
 
   test 'team creation header shows when visiting team creation page' do
@@ -13,6 +13,15 @@ class UserDisplayModesTest < ActionDispatch::IntegrationTest
     get "/users/edit"
 
     assert_select 'h1', /Edit Account/
+  end
+
+  test 'ensure that interested in employment is absent when employment opportunities are not available' do
+    @game.update(employment_opportunities_available: false)
+
+    sign_in create(:user)
+    get "/users/edit"
+
+    assert_select 'label', {count: 0, text: 'Interested in employment'}
   end
 
   test 'ensure that there is a edit and delete form on the user edit page' do
