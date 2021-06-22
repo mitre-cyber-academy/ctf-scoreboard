@@ -406,7 +406,6 @@ RailsAdmin.config do |config|
       field :team
       field :challenge_state
       field :start_calculation_at
-      field :design_phase
     end
     list do
       field :challenge
@@ -423,7 +422,6 @@ RailsAdmin.config do |config|
       field :api_url
       field :video_url
       field :start_calculation_at
-      field :design_phase
     end
     list do
       field :challenge
@@ -445,6 +443,7 @@ RailsAdmin.config do |config|
       field :organization
       field :contact_email
       field :prizes_available
+      field :employment_opportunities_available
       field :prizes_text
       field :enable_completion_certificates
       field :completion_certificate_template
