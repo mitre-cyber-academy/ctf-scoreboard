@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_16_004841) do
+ActiveRecord::Schema.define(version: 2021_06_22_182216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 2021_02_16_004841) do
     t.integer "first_capture_point_bonus", default: 0
     t.string "type"
     t.integer "solved_decrement_period", default: 1
-    t.boolean "design_phase", default: false
     t.bigint "game_id"
     t.boolean "sponsored", default: false, null: false
     t.text "sponsor", default: ""
@@ -109,8 +108,6 @@ ActiveRecord::Schema.define(version: 2021_02_16_004841) do
     t.integer "challenge_state", default: 0, null: false
     t.datetime "start_calculation_at"
     t.string "type"
-    t.boolean "design_phase", default: false
-    t.index ["design_phase"], name: "index_flags_on_design_phase"
     t.index ["team_id"], name: "index_flags_on_team_id"
   end
 
@@ -138,6 +135,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_004841) do
     t.boolean "registration_enabled", default: true, null: false
     t.boolean "request_team_location", default: false, null: false
     t.boolean "location_required", default: false, null: false
+    t.boolean "employment_opportunities_available", default: false
   end
 
   create_table "messages", id: :serial, force: :cascade do |t|

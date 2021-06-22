@@ -49,11 +49,12 @@
       = f.label :compete_for_prizes, :class => "form-check-label"
       %small.form-text.text-muted
         = t('users.edit.help.compete_for_prizes')
-    .form-check.form-group
-      = f.check_box :interested_in_employment, :class => "form-check-input"
-      = f.label :interested_in_employment, :class => "form-check-label"
-      %small.form-text.text-muted
-        = t('users.edit.help.interested_in_employment', organization: @game.organization || t('default_organization'))
+    - if @game.employment_opportunities_available
+      .form-check.form-group
+        = f.check_box :interested_in_employment, :class => "form-check-input"
+        = f.label :interested_in_employment, :class => "form-check-label"
+        %small.form-text.text-muted
+          = t('users.edit.help.interested_in_employment', organization: @game.organization || t('default_organization'))
     .mb-3
     -# If a user is updating their information then on_update_page should be passed to the partial as true,
     -# if this is a new user registering then on_update_page should be false.
