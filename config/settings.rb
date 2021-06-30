@@ -7,18 +7,18 @@ require 'settingslogic'
 # across deployment types. Since SettingsLogic does ERB parsing, we
 # are also able to load some basic settings using environment variables.
 # For a full list of settings that can be applied using environment
-# variables, check vulcan.default.yml.
+# variables, check scoreboard.default.yml.
 #
-# Note, once you create a vulcan.yml, environment variable parsing
+# Note, once you create a scoreboard.yml, environment variable parsing
 # will no longer work unless you include the `ENV` declarations in
-# your copy of vulcan.yml as well.
+# your copy of scoreboard.yml as well.
 #
 class Settings < Settingslogic
   class << self
     def find_config
       # There are 2 locations that we check for config files,
       # either we check the default location or we check if
-      # the user has created a vulcan.yml
+      # the user has created a scoreboard.yml
       ['scoreboard.yml', 'scoreboard.default.yml'].each do |config|
         path = get_full_path_for(config)
         return path if path.exist?
