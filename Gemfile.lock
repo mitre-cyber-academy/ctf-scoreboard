@@ -328,7 +328,7 @@ GEM
     ruby2_keywords (0.0.4)
     ruby_parser (3.15.0)
       sexp_processor (~> 4.9)
-    rubyzip (2.3.1)
+    rubyzip (2.3.2)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
