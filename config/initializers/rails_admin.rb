@@ -443,6 +443,7 @@ RailsAdmin.config do |config|
       field :contact_email
       field :prizes_available
       field :employment_opportunities_available
+      field :restrict_top_ten_teams
       field :prizes_text
       field :enable_completion_certificates
       field :completion_certificate_template
