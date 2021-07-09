@@ -25,3 +25,5 @@ Style/HashTransformValues:
   Enabled: true
 Documentation:
   Enabled: false
+Naming/InclusiveLanguage:
+  Enabled: false
