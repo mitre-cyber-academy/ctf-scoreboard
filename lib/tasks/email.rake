@@ -19,11 +19,6 @@ namespace :email do
     end
   end
 
-  desc 'Send challenge open source notification email to all users'
-  task open_source_email: :environment do
-    Game.instance.open_source
-  end
-
   desc 'Send email depending on date in relation to game start and end'
   task automated_email: :environment do
     game = Game.instance

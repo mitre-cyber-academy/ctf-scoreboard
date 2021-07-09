@@ -20,10 +20,10 @@ FactoryBot.define do
       start { Time.now.utc }
       stop { Time.now.utc + 10.hours }
       contact_email { Faker::Internet.free_email }
-      open_source_url { Faker::Internet.url(host: 'github.com') }
       prizes_available { false }
       team_size { 5 }
       enable_completion_certificates { false }
+      restrict_top_ten_teams { true }
       recruitment_text { 'Jobs and internships are available if you meet the following requirements' }
       prizes_text { 'Prizes are available if you meet the following requirements' }
       board_layout { :jeopardy }

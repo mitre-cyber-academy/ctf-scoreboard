@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_22_182216) do
+ActiveRecord::Schema.define(version: 2021_07_09_152922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,7 +124,6 @@ ActiveRecord::Schema.define(version: 2021_06_22_182216) do
     t.text "footer"
     t.integer "team_size", default: 5
     t.string "contact_email"
-    t.string "open_source_url"
     t.boolean "prizes_available", default: false
     t.text "recruitment_text"
     t.boolean "enable_completion_certificates", default: false
@@ -136,6 +135,7 @@ ActiveRecord::Schema.define(version: 2021_06_22_182216) do
     t.boolean "request_team_location", default: false, null: false
     t.boolean "location_required", default: false, null: false
     t.boolean "employment_opportunities_available", default: false
+    t.boolean "restrict_top_ten_teams", default: true
   end
 
   create_table "messages", id: :serial, force: :cascade do |t|

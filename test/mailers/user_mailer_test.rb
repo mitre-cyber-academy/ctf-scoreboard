@@ -147,13 +147,4 @@ class UserMailerTest < ActionMailer::TestCase
     assert email.has_attachments?
   end
 
-  test 'open source email' do
-    email = UserMailer.open_source(@first_place_user).deliver_now
-
-    assert_not ActionMailer::Base.deliveries.empty?
-
-    assert_equal [@game.contact_email], email.from
-    assert_equal [@first_place_user.email], email.to
-    assert_equal "#{@game.title}: Challenges Released", email.subject
-  end
 end

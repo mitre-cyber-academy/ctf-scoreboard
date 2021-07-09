@@ -223,6 +223,25 @@ class TeamsControllerTest < ActionController::TestCase
     assert_redirected_to @controller.user_root_path
   end
 
+  test 'team captain can send invites while in top ten when restrict_top_ten_teams is false' do
+    @game.update(restrict_top_ten_teams: false)
+    team = create(:team_in_top_ten_standard_challenges)
+    sign_in team.team_captain
+    patch :invite, params: { team: { user_invites_attributes: { '0': {email: 'mitrectfnewuserfake@mail.google.com'}}}, id: team}
+    assert I18n.t('teams.update_successful'), flash[:notice]
+    assert_redirected_to team_path(team)
+  end
+
+  test 'can update team when game is open and team is in top ten when restrict_top_ten_teams is false' do
+    @game.update(restrict_top_ten_teams: false)
+    team = create(:team_in_top_ten_standard_challenges)
+    sign_in team.team_captain
+
+    patch :update, params: { team: { team_name: 'team_three_newname', affiliation: 'i do not know' }, id: team }
+    assert I18n.t('teams.update_successful'), flash[:notice]
+    assert_redirected_to team_path(team)
+  end
+
   test "solved challenges table displays correctly with 0 solved challenges" do
     user = create(:user_with_team)
     StandardSolvedChallenge.destroy_all
@@ -352,10 +371,10 @@ class TeamsControllerTest < ActionController::TestCase
   end
 
   test 'edit a teams location' do
-    user = create(:user_with_team) 
-    sign_in user 
-    patch :update, params: { team: {team_location: 'location' }, id: user.team } 
-    assert_redirected_to team_path(user.team) 
+    user = create(:user_with_team)
+    sign_in user
+    patch :update, params: { team: {team_location: 'location' }, id: user.team }
+    assert_redirected_to team_path(user.team)
     assert 'location', user.team.team_location
   end
 

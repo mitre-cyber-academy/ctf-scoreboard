@@ -35,13 +35,6 @@ class GameTest < ActiveSupport::TestCase
     assert_equal User.all.size, ActionMailer::Base.deliveries.size
   end
 
-  test 'send open source emails' do
-    game = create(:ended_game)
-    create(:team)
-    game.open_source
-    assert_equal User.all.size, ActionMailer::Base.deliveries.size
-  end
-
   test 'before competition' do
     game = create(:ended_game)
     assert_not game.before_competition?
