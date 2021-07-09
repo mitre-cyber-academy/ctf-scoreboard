@@ -389,12 +389,6 @@ en:
       title: '%{title} New Message: %{messagetitle}'
       greeting: 'Hello %{fullname}'
       view_all: View all Messages on Scoreboard
-    open_source:
-      title: '%{title}: Challenges Released'
-      greeting: 'Hello %{fullname}'
-      view_solutions: 'All solved challenges from %{title} have been released with solutions '
-      location_name: here
-      goodbye: Have a great day!
     ranking:
       title: '%{title}: Congratulations! '
       greeting: 'Hello %{fullname}!'

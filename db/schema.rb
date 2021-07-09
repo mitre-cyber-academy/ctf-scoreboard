@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_22_182216) do
+ActiveRecord::Schema.define(version: 2021_07_09_152922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,7 +124,6 @@ ActiveRecord::Schema.define(version: 2021_06_22_182216) do
     t.text "footer"
     t.integer "team_size", default: 5
     t.string "contact_email"
-    t.string "open_source_url"
     t.boolean "prizes_available", default: false
     t.text "recruitment_text"
     t.boolean "enable_completion_certificates", default: false
@@ -206,8 +205,8 @@ ActiveRecord::Schema.define(version: 2021_06_22_182216) do
     t.integer "division_id"
     t.boolean "eligible", default: false
     t.integer "slots_available", default: 0
-    t.boolean "looking_for_members", default: true, null: false
     t.string "team_location", default: ""
+    t.boolean "looking_for_members", default: true, null: false
     t.index "lower((team_name)::text)", name: "index_teams_on_team_name_unique", unique: true
     t.index ["division_id"], name: "index_teams_on_division_id"
     t.index ["team_captain_id"], name: "index_teams_on_team_captain_id"
