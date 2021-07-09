@@ -45,11 +45,6 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: I18n.t('user_mailer.ranking.title', title: @game.title))
   end
 
-  def open_source(user)
-    @user = user
-    mail(to: @user.email, subject: I18n.t('user_mailer.open_source.title', title: @game.title))
-  end
-
   def message_notification(user, message)
     @user = user
     @message = message

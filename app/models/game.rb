@@ -95,12 +95,6 @@ class Game < ApplicationRecord
     results.collect { |team| { pos: team.rank, team: team.team_name, score: team.current_score } }
   end
 
-  def open_source
-    User.all.find_each do |usr|
-      UserMailer.open_source(usr).deliver_later
-    end
-  end
-
   def max_category_size
     categories_with_standard_challenges.values.map(&:length).max || 0
   end

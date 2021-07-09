@@ -81,7 +81,6 @@ RailsAdmin.config do |config|
       field :enable_completion_certificates
       field :completion_certificate_template
       field :recruitment_text
-      field :open_source_url
       field :request_team_location
       field :location_required
       field :contact_url
@@ -450,7 +449,6 @@ RailsAdmin.config do |config|
       field :footer
       field :contact_url
       field :recruitment_text
-      field :open_source_url
       field :terms_of_service
       field :terms_and_conditions
     end
