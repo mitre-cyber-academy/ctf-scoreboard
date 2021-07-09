@@ -23,6 +23,7 @@ FactoryBot.define do
       prizes_available { false }
       team_size { 5 }
       enable_completion_certificates { false }
+      restrict_top_ten_teams { true }
       recruitment_text { 'Jobs and internships are available if you meet the following requirements' }
       prizes_text { 'Prizes are available if you meet the following requirements' }
       board_layout { :jeopardy }
