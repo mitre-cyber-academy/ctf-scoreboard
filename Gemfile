@@ -73,3 +73,5 @@ group :assets do
   gem 'mini_racer', platforms: :ruby
   gem 'uglifier'
 end
+
+gem "country_select", "~> 6.0"

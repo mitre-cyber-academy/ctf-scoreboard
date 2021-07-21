@@ -23,13 +23,18 @@
         = t('users.edit.help.affiliation')
     .form-group
       = f.label :year_in_school, :class => "control-label-required"
-      = f.select :year_in_school, options_for_select(year_in_school_enum, resource.year_in_school), { :include_blank => '' }, :class => "form-control", :onChange => "hidePrizesCheckbox()"
+      = f.select :year_in_school, options_for_select(year_in_school_enum, resource.year_in_school), { :include_blank => '' }, :class => "form-control"
       %small.form-text.text-muted
         = t('users.edit.help.year_in_school')
-    .form-group
-      = f.label :state, :class => "control-label-required"
-      = f.select :state, options_for_select(state_enum, resource.state), { :include_blank => '' }, :class => "form-control", :onChange => "hidePrizesCheckbox()"
+    .form-group 
+      = f.label :country, :class => "control-label-required"
+      = f.country_select :country, {priority_countries: ["US"]}, :class => "form-control", :id => "countries_select"
       %small.form-text.text-muted
+        =t('users.edit.help.country')
+    .form-group#state
+      = f.label :state, :class => "control-label-required"
+      = f.select :state, options_for_select(state_enum, resource.state), { :include_blank => '' }, :class => "form-control"
+      %small.form-text.text-mute
         = t('users.edit.help.state')
     .form-group
       = f.label :password, :class => required_for_update?(on_update_page)

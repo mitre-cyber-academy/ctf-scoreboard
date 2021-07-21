@@ -266,6 +266,7 @@ en:
           If you are a student, please list your school. If you are an industry
           professional please list your professional organization.
         state: Enter the state in which you are a resident.
+        country: Enter the country in which you are a resident.
         compete_for_prizes: >-
           Prize distribution may be restricted to qualifying teams. Check terms
           and conditions for full details and to see if you qualify.

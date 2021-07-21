@@ -71,7 +71,7 @@ class User < ApplicationRecord
     # First line required fields, second line optional
     # Really just broken out into 2 lines to appease rubocop
     %i[
-      full_name affiliation year_in_school state
+      full_name affiliation year_in_school state country
       compete_for_prizes interested_in_employment gender age area_of_study resume transcript
     ]
   end
