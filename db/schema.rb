@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_09_152922) do
+ActiveRecord::Schema.define(version: 2021_07_30_140045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(version: 2021_07_09_152922) do
     t.integer "challenge_state", default: 0, null: false
     t.datetime "start_calculation_at"
     t.string "type"
+    t.string "custom_congrat_text"
     t.index ["team_id"], name: "index_flags_on_team_id"
   end
 
@@ -206,8 +207,8 @@ ActiveRecord::Schema.define(version: 2021_07_09_152922) do
     t.integer "division_id"
     t.boolean "eligible", default: false
     t.integer "slots_available", default: 0
-    t.boolean "looking_for_members", default: true, null: false
     t.string "team_location", default: ""
+    t.boolean "looking_for_members", default: true, null: false
     t.index "lower((team_name)::text)", name: "index_teams_on_team_name_unique", unique: true
     t.index ["division_id"], name: "index_teams_on_division_id"
     t.index ["team_captain_id"], name: "index_teams_on_team_captain_id"

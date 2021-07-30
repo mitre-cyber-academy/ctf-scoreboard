@@ -12,7 +12,7 @@ class ChallengesController < ApplicationController
   def show
     @solved_challenge = @challenge.get_solved_challenge_for(current_user.team)
     @solved_video_url = @solved_challenge.flag.video_url if @solved_challenge
-    flash.now[:notice] = I18n.t('flag.accepted') if @solved_challenge
+    flash.now[:notice] = "#{@challenge.custom_congrat_text}" if @solved_challenge
   end
 
   def update
@@ -20,7 +20,7 @@ class ChallengesController < ApplicationController
       @solved_challenge = @flag_found.save_solved_challenge(current_user)
       @solved_video_url = @flag_found.video_url
       @solvable = false
-      flash.now[:notice] = I18n.t('flag.accepted')
+      flash.now[:notice] = "#{@challenge.custom_congrat_text}"
     else
       flash.now[:alert] = wrong_flag_messages.sample
     end

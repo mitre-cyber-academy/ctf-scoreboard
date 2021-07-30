@@ -403,6 +403,7 @@ RailsAdmin.config do |config|
       field :api_url
       field :video_url
       field :team
+      field :custom_congrat_text
       field :challenge_state
       field :start_calculation_at
     end
