@@ -402,8 +402,8 @@ RailsAdmin.config do |config|
       field :flag
       field :api_url
       field :video_url
+      field :success_text
       field :team
-      field :custom_congrat_text
       field :challenge_state
       field :start_calculation_at
     end
@@ -421,6 +421,7 @@ RailsAdmin.config do |config|
       field :flag
       field :api_url
       field :video_url
+      field :success_text
       field :start_calculation_at
     end
     list do

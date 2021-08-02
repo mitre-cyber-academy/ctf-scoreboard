@@ -15,10 +15,11 @@
     = t('challenges.show.no_desc')
   - else
     = sanitize(Kramdown::Document.new(@challenge.description).to_html)
-- if !@solved_video_url.blank?
+- unless @solved_video_url.blank?
   .embed-container
     = embed(@solved_video_url)
-
+- unless @success_text.blank? 
+  = sanitize(Kramdown::Document.new(@success_text).to_html)
 - if @challenge.sponsored
   %div#sponsorInfo{ :style => "margin-bottom:40px;" }
     %h3#sponsorName= t('challenges.show.sponsor')

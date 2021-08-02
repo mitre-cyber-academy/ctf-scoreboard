@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_30_140045) do
+ActiveRecord::Schema.define(version: 2021_08_02_184413) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 2021_07_30_140045) do
     t.integer "challenge_state", default: 0, null: false
     t.datetime "start_calculation_at"
     t.string "type"
-    t.string "custom_congrat_text"
+    t.text "success_text"
     t.index ["team_id"], name: "index_flags_on_team_id"
   end
 
