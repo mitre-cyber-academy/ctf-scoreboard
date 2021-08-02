@@ -11,14 +11,18 @@ class ChallengesController < ApplicationController
 
   def show
     @solved_challenge = @challenge.get_solved_challenge_for(current_user.team)
-    @solved_video_url = @solved_challenge.flag.video_url if @solved_challenge
-    flash.now[:notice] = I18n.t('flag.accepted') if @solved_challenge
+    return unless @solved_challenge
+
+    @solved_video_url = @solved_challenge.flag.video_url
+    @success_text = @solved_challenge.flag.success_text
+    flash.now[:notice] = I18n.t('flag.accepted')
   end
 
   def update
     if @flag_found
       @solved_challenge = @flag_found.save_solved_challenge(current_user)
       @solved_video_url = @flag_found.video_url
+      @success_text = @flag_found.success_text
       @solvable = false
       flash.now[:notice] = I18n.t('flag.accepted')
     else
