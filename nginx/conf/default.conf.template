@@ -28,7 +28,6 @@ server {
     proxy_set_header    Host               $host;
 
     location / {
-		add_header Access-Control-Allow-Origin *;
 		try_files $uri @proxy;
 	}
 
