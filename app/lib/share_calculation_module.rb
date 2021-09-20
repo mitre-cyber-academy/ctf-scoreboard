@@ -19,6 +19,6 @@ module ShareCalculationModule
   # Calc point value takes the flag start time and challenge first solve time and calculates
   # the total value of the challenge that will be divided between the solving teams
   def calc_point_value(start_time, first_solve_time)
-    point_value + ((first_solve_time - start_time) / unsolved_increment_period.hours) * unsolved_increment_points
+    point_value + (((first_solve_time - start_time) / unsolved_increment_period.hours) * unsolved_increment_points)
   end
 end
