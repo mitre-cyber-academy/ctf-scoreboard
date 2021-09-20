@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_20_151842) do
+ActiveRecord::Schema.define(version: 2021_09_20_153354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -263,8 +263,6 @@ ActiveRecord::Schema.define(version: 2021_09_20_151842) do
     t.string "state", limit: 2
     t.boolean "compete_for_prizes", default: false
     t.boolean "admin", default: false
-    t.float "latitude"
-    t.float "longitude"
     t.string "country"
     t.datetime "messages_stamp", default: "1970-01-01 00:00:00", null: false
     t.boolean "interested_in_employment", default: false
