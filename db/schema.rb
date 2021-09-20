@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_20_153354) do
+ActiveRecord::Schema.define(version: 2021_09_20_154425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(version: 2021_09_20_153354) do
     t.boolean "location_required", default: false, null: false
     t.boolean "employment_opportunities_available", default: false
     t.boolean "restrict_top_ten_teams", default: true
+    t.text "privacy_notice"
   end
 
   create_table "messages", id: :serial, force: :cascade do |t|

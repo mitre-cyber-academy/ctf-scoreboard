@@ -339,6 +339,9 @@ en:
     open_source_statement_html: 'Gameboard and registration software is %{href} free to use!'
     open_source_link_text: available
     github_link: 'https://github.com/mitre-cyber-academy/ctf-scoreboard'
+    privacy:
+      privacy_notice: Privacy Notice
+      no_notice: There is no privacy notice associated with this game.
     terms_of_use:
       terms_of_service: Terms of Service
       terms_and_conditions: Terms and Conditions

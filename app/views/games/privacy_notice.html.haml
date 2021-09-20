@@ -1,0 +1,7 @@
+- content_for :header do
+  = t('application.privacy.privacy_notice')
+
+- if @game&.privacy_notice.blank?
+  = t('application.privacy.no_notice')
+- else
+  = sanitize(Kramdown::Document.new(@game&.privacy_notice).to_html)
