@@ -20,11 +20,6 @@ FactoryBot.define do
       end
     end
 
-    factory :user_with_resume do
-      resume { File.open(Rails.root.join('test/files/regular.pdf')) }
-      transcript { File.open(Rails.root.join('test/files/regular.pdf')) }
-    end
-
     factory :admin do
       admin { true }
     end

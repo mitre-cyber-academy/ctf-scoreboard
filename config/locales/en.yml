@@ -274,10 +274,6 @@ en:
           Are you interested receiving internship or employment emails from
           %{organization}?
         age: Age will be used in aggregate statistics and are held confidentially.
-        resume: Please provide us with a copy of your resume in PDF format
-        transcript: >-
-          Please provide us with a copy of your unofficial transcript in PDF
-          format
         password: We need your current password to update your account information.
         destroy: >-
           Deleting your account will remove you from your team. In order to

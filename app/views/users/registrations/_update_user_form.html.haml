@@ -1,12 +1,5 @@
 %hr.my-3
 .form-group
-  = f.label :resume, :class => "control-label"
-  = f.file_field :resume, :class => "col-sm-12"
-.form-group
-  = f.label :unofficial_transcript, :class => "control-label"
-  = f.file_field :transcript, :class => "col-sm-12"
-%hr.my-3
-.form-group
   = f.label :current_password, :class => "form-control-file control-label-required"
   = f.password_field :current_password, :class => "form-control textarea"
   %small.form-text.text-muted
