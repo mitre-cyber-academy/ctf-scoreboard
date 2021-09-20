@@ -9,7 +9,6 @@ class User < ApplicationRecord
     full_name
     affiliation
     year_in_school
-    age
     state
     compete_for_prizes
     admin
@@ -39,8 +38,8 @@ class User < ApplicationRecord
     validates :email, uniqueness: true, presence: true
     validates :full_name, :affiliation, presence: true, length: { maximum: 255 }, obscenity: true
     validates :state, presence: true, if: -> { country.eql? 'US' }
-    validates :age, numericality: { greater_than_or_equal_to: 0, less_than: 200 }, allow_blank: true
     validates :year_in_school, inclusion: { in: [0, 9, 10, 11, 12, 13, 14, 15, 16] }, presence: true
+    validates :age_requirement_accepted, presence: true
   end
 
   before_validation -> { self.state = nil }, unless: -> { country.eql? 'US' }
@@ -51,7 +50,7 @@ class User < ApplicationRecord
     # First line required fields, second line optional
     # Really just broken out into 2 lines to appease rubocop
     %i[
-      full_name affiliation year_in_school state country
+      full_name affiliation year_in_school state country age_requirement_accepted
       compete_for_prizes interested_in_employment gender age area_of_study
     ]
   end

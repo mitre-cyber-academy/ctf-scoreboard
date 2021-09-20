@@ -39,7 +39,8 @@ namespace :ectf do
                                                                       password_confirmation: password,
                                                                       year_in_school: 12,
                                                                       compete_for_prizes: true,
-                                                                      confirmed_at: DateTime.now
+                                                                      confirmed_at: DateTime.now,
+                                                                      age_requirement_accepted: true
                                                                     })
       user = User.create!(user_info)
       user_logins << user_info.slice('email', :password)

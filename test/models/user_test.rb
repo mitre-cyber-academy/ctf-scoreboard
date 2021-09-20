@@ -32,6 +32,12 @@ class UserTest < ActiveSupport::TestCase
     assert_nil(user.state)
   end
 
+  test 'user will not save if they do not accept age requirement' do
+    user = build(:user, age_requirement_accepted: false)
+    assert_equal(false, user.save)
+    assert_equal true, user.errors.added?(:age_requirement_accepted, 'can\'t be blank')
+  end
+
   test 'user is a team captain' do
     team = create(:team, additional_member_count: 1)
     captain = team.team_captain

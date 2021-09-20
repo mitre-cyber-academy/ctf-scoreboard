@@ -275,6 +275,9 @@ en:
           %{organization}?
         age: Age will be used in aggregate statistics and are held confidentially.
         password: We need your current password to update your account information.
+        minimum_age_restriction: >-
+          This competition requires all users to be at least %{age} years or older in order
+          to be able to compete.
         destroy: >-
           Deleting your account will remove you from your team. In order to
           rejoin a team you will have to be re-invited.

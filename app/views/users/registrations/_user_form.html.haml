@@ -26,7 +26,7 @@
       = f.select :year_in_school, options_for_select(year_in_school_enum, resource.year_in_school), { :include_blank => '' }, :class => "form-control"
       %small.form-text.text-muted
         = t('users.edit.help.year_in_school')
-    .form-group 
+    .form-group
       = f.label :country, :class => "control-label-required"
       = f.country_select :country, {priority_countries: ["US"]}, :class => "form-control", :id => "countries_select"
       %small.form-text.text-muted
@@ -43,9 +43,6 @@
       = f.label :password_confirmation, t('users.edit.label.password_confirmation_2'), :class => required_for_update?(on_update_page)
       = f.password_field :password_confirmation, :class => "form-control textarea"
     .form-group
-      = f.label :age, :class => "control-label"
-      = f.number_field :age, :class => "form-control textarea"
-    .form-group
       = f.label :area_of_study, t('users.edit.label.major_area_of_study'), :class => "control-label"
       = f.text_field :area_of_study, :class => "form-control textarea"
     %hr.my-3
@@ -60,6 +57,12 @@
         = f.label :interested_in_employment, :class => "form-check-label"
         %small.form-text.text-muted
           = t('users.edit.help.interested_in_employment', organization: @game.organization || t('default_organization'))
+    - unless on_update_page
+      .form-check.form-group
+        = f.check_box :age_requirement_accepted, :class => "form-check-input"
+        = f.label :"Are you #{@game.minimum_age} years of age or older?", :class => "form-check-label"
+        %small.form-text.text-muted
+          = t('users.edit.help.minimum_age_restriction', age: @game.minimum_age)
     .mb-3
     -# If a user is updating their information then on_update_page should be passed to the partial as true,
     -# if this is a new user registering then on_update_page should be false.
