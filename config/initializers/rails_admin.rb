@@ -75,6 +75,7 @@ RailsAdmin.config do |config|
       field :location_required
       field :contact_url
       field :footer
+      field :privacy_notice
       field :terms_of_service
       field :terms_and_conditions
     end

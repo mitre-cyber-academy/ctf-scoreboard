@@ -5,7 +5,7 @@ require 'zip'
 class GamesController < ApplicationController
   include ApplicationModule
 
-  before_action :load_game, only: %i[terms_and_conditions terms_of_service]
+  before_action :load_game, only: %i[terms_and_conditions terms_of_service privacy_notice]
 
   before_action only: %i[completion_certificate_template] do
     load_game(:users)
@@ -33,6 +33,8 @@ class GamesController < ApplicationController
   def terms_and_conditions; end
 
   def terms_of_service; end
+
+  def privacy_notice; end
 
   def show
     prepare_pentest_challenge_table # Always show PentestChallenges, no matter the Gameboard type
