@@ -9,6 +9,7 @@ FactoryBot.define do
     state { Faker::Address.state_abbr }
     country { 'US' }
     password { Faker::Internet.password(min_length: 12) }
+    age_requirement_accepted { true }
 
     compete_for_prizes { false }
 

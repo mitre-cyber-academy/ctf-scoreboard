@@ -38,7 +38,6 @@ class UserDisplayModesTest < ActionDispatch::IntegrationTest
       assert_select 'label', 'Confirm Password'
       assert_select 'label', 'Compete for prizes'
       assert_select 'label', 'Interested in employment'
-      assert_select 'label', 'Age'
       assert_select 'label', 'Major/Area of study'
       assert_select 'label', 'Current password'
     end
