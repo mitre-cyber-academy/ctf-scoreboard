@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_02_184413) do
+ActiveRecord::Schema.define(version: 2021_09_20_151842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -207,8 +207,8 @@ ActiveRecord::Schema.define(version: 2021_08_02_184413) do
     t.integer "division_id"
     t.boolean "eligible", default: false
     t.integer "slots_available", default: 0
-    t.string "team_location", default: ""
     t.boolean "looking_for_members", default: true, null: false
+    t.string "team_location", default: ""
     t.index "lower((team_name)::text)", name: "index_teams_on_team_name_unique", unique: true
     t.index ["division_id"], name: "index_teams_on_division_id"
     t.index ["team_captain_id"], name: "index_teams_on_team_captain_id"
@@ -268,8 +268,6 @@ ActiveRecord::Schema.define(version: 2021_08_02_184413) do
     t.string "country"
     t.datetime "messages_stamp", default: "1970-01-01 00:00:00", null: false
     t.boolean "interested_in_employment", default: false
-    t.oid "resume"
-    t.oid "transcript"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

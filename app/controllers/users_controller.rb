@@ -5,7 +5,6 @@ class UsersController < ApplicationController
   include UserModule
   include UserHelper
 
-  before_action :deny_if_not_admin, :fetch_user_by_id, only: %i[resume transcript]
   before_action :user_logged_in?
   before_action :load_game, :load_message_count
   before_action :prevent_action_after_game, only: %i[join_team leave_team promote]
@@ -59,14 +58,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def resume
-    download_file(@user.resume, @user.full_name)
-  end
-
-  def transcript
-    download_file(@user.transcript, @user.full_name)
-  end
-
   private
 
   # Only allow the team captain or the current user to remove the current user from a team.
@@ -76,10 +67,6 @@ class UsersController < ApplicationController
 
   def check_promote_permissions
     raise ActiveRecord::RecordNotFound unless team_captain?
-  end
-
-  def fetch_user_by_id
-    @user = User.find_by(id: params[:id].to_i)
   end
 
   def fetch_user_team

@@ -43,8 +43,6 @@ Rails.application.routes.draw do
 
   # game
   resource :game, only: %i[show] do
-    get :resumes
-    get :transcripts
     get :completion_certificate_template
     get :terms_of_service
     get :terms_and_conditions
@@ -60,13 +58,6 @@ Rails.application.routes.draw do
 
   get '/game/summary' => 'games#summary'
   get '/game/teams' => 'games#teams'
-
-  resources :users, only: [] do
-    member do
-      get :resume
-      get :transcript
-    end
-  end
 
   resources :file_submissions, only: [] do
     member do

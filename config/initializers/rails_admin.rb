@@ -37,16 +37,6 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Game' do
-    show do
-      [:resumes, :transcripts].each do |title|
-        configure title do
-          formatted_value do
-            bindings[:view].link_to("Download #{title.to_s.singularize} bundle", Rails.application.routes.url_helpers.send("#{title}_game_path"))
-          end
-        end
-      end
-    end
-
     edit do
       [
         :teams,
@@ -556,8 +546,6 @@ RailsAdmin.config do |config|
       field :compete_for_prizes
       field :country
       field :interested_in_employment
-      field :resume
-      field :transcript
       field :password
       field :password_confirmation
       field :reset_password_sent_at

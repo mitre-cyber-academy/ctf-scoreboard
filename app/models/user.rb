@@ -16,9 +16,6 @@ class User < ApplicationRecord
     current_sign_in_ip
   ]
 
-  mount_uploader :resume, ResumeUploader
-  mount_uploader :transcript, TranscriptUploader
-
   belongs_to :team, optional: true
   has_many :feed_items, dependent: :destroy
   has_many :user_invites, dependent: :destroy
@@ -55,7 +52,7 @@ class User < ApplicationRecord
     # Really just broken out into 2 lines to appease rubocop
     %i[
       full_name affiliation year_in_school state country
-      compete_for_prizes interested_in_employment gender age area_of_study resume transcript
+      compete_for_prizes interested_in_employment gender age area_of_study
     ]
   end
 

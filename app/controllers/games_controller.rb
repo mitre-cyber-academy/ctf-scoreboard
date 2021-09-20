@@ -7,7 +7,7 @@ class GamesController < ApplicationController
 
   before_action :load_game, only: %i[terms_and_conditions terms_of_service]
 
-  before_action only: %i[resumes transcripts completion_certificate_template] do
+  before_action only: %i[completion_certificate_template] do
     load_game(:users)
     deny_if_not_admin
   end
@@ -50,14 +50,6 @@ class GamesController < ApplicationController
       format.html
       format.json { render json: { standings: @game.all_teams_information } }
     end
-  end
-
-  def resumes
-    send_data create_zip_of('resume').read, filename: 'resumes.zip'
-  end
-
-  def transcripts
-    send_data create_zip_of('transcript').read, filename: 'transcripts.zip'
   end
 
   def completion_certificate_template
@@ -126,22 +118,5 @@ class GamesController < ApplicationController
       OpenStruct.new(name: I18n.t('game.summary.challenge_table.teams_header')), @game&.pentest_challenges
     ].flatten
     @teams_with_assoc = @game.teams_associated_with_flags_and_pentest_challenges
-  end
-
-  # Creates a zip from any collection of files available on the user model.
-  # For example, create_zip_of('resume') will create a zip of all resumes
-  # uploaded by all teams, broken out into the team folders.
-  def create_zip_of(uploader)
-    compressed_filestream = Zip::OutputStream.write_buffer do |zos|
-      @game.users.each do |user|
-        next unless (file_contents = user.send(uploader).read)
-
-        zos.put_next_entry "#{uploader.pluralize}/#{user.team_id}/#{user.full_name}.pdf"
-        zos.write file_contents
-      end
-    end
-
-    compressed_filestream.rewind
-    compressed_filestream
   end
 end
