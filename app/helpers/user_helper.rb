@@ -68,8 +68,7 @@ module UserHelper
       %w[Washington WA],
       ['West Virginia', 'WV'],
       %w[Wisconsin WI],
-      %w[Wyoming WY],
-      ['Outside US', 'NA']
+      %w[Wyoming WY]
     ]
   end
   # rubocop:enable Metrics/MethodLength
