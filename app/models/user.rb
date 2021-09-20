@@ -25,26 +25,7 @@ class User < ApplicationRecord
   has_many :user_requests, dependent: :destroy
   has_many :submitted_flags, dependent: :destroy
 
-  geocoded_by :current_sign_in_ip
-  after_validation :geocode, unless: :geocoded?
-
   scope :interested_in_employment, -> { where(interested_in_employment: true) }
-
-  reverse_geocoded_by :latitude, :longitude do |obj, results|
-    obj.country = case results.first.data['country']
-                  when 'USA'
-                    'United States'
-                  when 'RSA'
-                    'South Africa'
-                  when 'ROC'
-                    'Taiwan'
-                  when 'PRC'
-                    'China'
-                  else
-                    results.first.data['country']
-                  end
-  end
-  after_validation :reverse_geocode, if: ->(obj) { obj.latitude_changed? || obj.longitude_changed? }
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -60,10 +41,12 @@ class User < ApplicationRecord
     before_save :clear_compete_for_prizes
     validates :email, uniqueness: true, presence: true
     validates :full_name, :affiliation, presence: true, length: { maximum: 255 }, obscenity: true
-    validates :state, presence: true
+    validates :state, presence: true, if: -> { country.eql? 'US' }
     validates :age, numericality: { greater_than_or_equal_to: 0, less_than: 200 }, allow_blank: true
     validates :year_in_school, inclusion: { in: [0, 9, 10, 11, 12, 13, 14, 15, 16] }, presence: true
   end
+
+  before_validation -> { self.state = nil }, unless: -> { country.eql? 'US' }
 
   before_create :skip_confirmation!, unless: -> { Settings.local_login.email_confirmation }
 
@@ -153,7 +136,7 @@ class User < ApplicationRecord
   # When a user is not in school the frontend sets the value to 0 and when they are located out
   # of the USA the state is set to NA.
   def clear_compete_for_prizes
-    return unless year_in_school.eql?(0) || state.eql?('NA')
+    return if country.eql?('US') && !year_in_school.eql?(0)
 
     self.compete_for_prizes = false
     nil # http://apidock.com/rails/ActiveRecord/RecordNotSaved

@@ -1,7 +1,7 @@
 showHideState = () ->
-  if $('#countries_select').val() == "US" 
+  if $('#countries_select').val() == "US"
     $('#state').show()
-  else 
+  else
     $('#state').hide()
 window.runOnPageLoad = () ->
   showHideState()
@@ -13,4 +13,3 @@ window.runOnPageLoad = () ->
     $('#compete-for-prizes').show()
 $(document).ready(window.runOnPageLoad)
 $(document).on('page:load', window.runOnPageLoad)
-

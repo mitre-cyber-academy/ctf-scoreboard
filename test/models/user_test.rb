@@ -16,14 +16,20 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'user must be in the US to compete for prizes' do
-    user = create(:user, year_in_school: 12, state: 'NA', compete_for_prizes: true)
+    user = create(:user, year_in_school: 12, country: 'UK', compete_for_prizes: true)
     assert_equal(false, user.compete_for_prizes)
   end
 
   test 'user previously not in the US can compete for prizes' do
-    user = create(:user, year_in_school: 12, state: 'NA', compete_for_prizes: false)
-    user.update(state: 'FL', compete_for_prizes: true)
+    user = create(:user, year_in_school: 12, country: 'UK', compete_for_prizes: false)
+    user.update(country: 'US', compete_for_prizes: true)
     assert_equal(true, user.compete_for_prizes)
+  end
+
+  test 'user state is nil if country is outside US' do
+    user = create(:user, country: 'AF', state: 'FL')
+    user.save
+    assert_nil(user.state)
   end
 
   test 'user is a team captain' do
@@ -80,36 +86,6 @@ class UserTest < ActiveSupport::TestCase
     captain = team.team_captain
     player_list = team.users.where.not(id: captain)
     assert_equal(false, player_list.first.can_remove?(player_list.last))
-  end
-
-  stubs = [
-    {'country' => 'USA', 'country_code' => 'US'},
-    {'country' => 'RSA', 'country_code' => 'ZA'},
-    {'country' => 'PRC', 'country_code' => 'CN'},
-    {'country' => 'ROC', 'country_code' => 'TW'},
-    {'country' => 'country', 'country_code' => 'country'}
-  ]
-
-  countries = [
-    'United States',
-    'South Africa',
-    'China',
-    'Taiwan',
-    'country'
-  ]
-
-  unless ENV['TEST_OFFLINE']
-    stubs.each_with_index do |stub, idx|
-      Geocoder::Lookup::Test.reset
-      test "users country is calculated on save #{stub['country_code']}" do
-        Geocoder::Lookup::Test.set_default_stub([stub])
-        user = build(:user, current_sign_in_ip: '3.1.1.1')
-        user.save
-        assert user.geocoded?
-        assert_equal countries[idx], user.country
-      end
-      Geocoder::Lookup::Test.reset
-    end
   end
 
   test 'link to invitiations' do

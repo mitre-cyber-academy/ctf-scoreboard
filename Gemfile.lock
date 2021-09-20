@@ -149,7 +149,6 @@ GEM
       railties (>= 3.2, < 7)
     formtastic (4.0.0)
       actionpack (>= 5.2.0)
-    geocoder (1.6.7)
     globalid (0.5.2)
       activesupport (>= 5.0)
     groupdate (5.2.2)
@@ -419,7 +418,6 @@ DEPENDENCIES
   filterrific
   font-awesome-rails
   formtastic
-  geocoder
   groupdate
   haml-rails
   highcharts-rails

@@ -7,6 +7,7 @@ FactoryBot.define do
     affiliation { Faker::Educator.university }
     year_in_school { Faker::Number.between(from: 9, to: 16) }
     state { Faker::Address.state_abbr }
+    country { 'US' }
     password { Faker::Internet.password(min_length: 12) }
 
     compete_for_prizes { false }
