@@ -2,7 +2,7 @@ require 'test_helper'
 
 class DivisionTest < ActiveSupport::TestCase
   def setup
-    @game = create(:active_game, division_count: 2, start: 1.hour.ago, stop: 10.hours.from_now)
+    @game = create(:active_game, division_count: 2, start: 1.hour.ago, stop: 10.hours.from_now, prizes_available: true)
     @division = @game.divisions.first
     create_list(:team, 10, division: @division)
     create_list(:team, 10, division: @division, compete_for_prizes: true)
@@ -28,7 +28,20 @@ class DivisionTest < ActiveSupport::TestCase
 
     # All the indexes of teams who are eligible should be to the left of indexes of ineligible teams
     eligible_team_locations = ordered_teams.collect(&:eligible)
-    assert eligible_team_locations.index(true) < eligible_team_locations.index(false)
+    assert eligible_team_locations.rindex(true) < eligible_team_locations.index(false)
+  end
+
+  test 'teams are sorted by only score when prizes are not available in the game' do
+    @game.update(prizes_available: false)
+
+    @division.teams.each do |team|
+      create(:standard_solved_challenge, team: team, point_value: Faker::Number.between(from: 100, to: 500))
+    end
+
+    ordered_teams = @division.ordered_teams
+    assert_equal @division.teams.size, ordered_teams.size
+
+    assert_equal ordered_teams.sort { |a, b| b.score <=> a.score }.map(&:score), ordered_teams.map(&:score)
   end
 
 

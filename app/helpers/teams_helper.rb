@@ -2,7 +2,7 @@
 
 module TeamsHelper
   def display_name(team)
-    return team.team_name if team.eligible?
+    return team.team_name if team.eligible? || !Game.instance.prizes_available
 
     "#{team.team_name} (#{I18n.t('challenges.team_ineligible_for_prizes')})"
   end

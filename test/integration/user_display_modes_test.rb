@@ -5,7 +5,7 @@ class UserDisplayModesTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   def setup
-    @game = create(:active_game, employment_opportunities_available: true)
+    @game = create(:active_game, employment_opportunities_available: true, prizes_available: true)
   end
 
   test 'team creation header shows when visiting team creation page' do
@@ -44,6 +44,16 @@ class UserDisplayModesTest < ActionDispatch::IntegrationTest
 
     assert_select 'form[id=delete-user-form]' do
       assert_select 'label', 'Delete account'
+    end
+  end
+
+  test 'ensure that there is no compete for prizes when prizes are not available' do
+    @game.update(prizes_available: false)
+    sign_in create(:user)
+    get "/users/edit"
+
+    assert_select 'form[id=user-form]' do
+      assert_select 'label', { count: 0, text: 'Compete for prizes' }
     end
   end
 end

@@ -3,12 +3,18 @@ require 'test_helper'
 class TeamsHelperTest < ActionView::TestCase
 
   def setup
-    @game = create(:active_game)
+    @game = create(:active_game, prizes_available: true)
   end
 
   test 'display name ineligible' do
     team = create(:team)
     assert_includes display_name(team), '(ineligible)'
+  end
+
+  test 'display name does not include ineligible when no prizes are available' do
+    @game.update(prizes_available: false)
+    team = create(:team)
+    assert_equal team.team_name, display_name(team)
   end
 
   test 'display name eligible' do

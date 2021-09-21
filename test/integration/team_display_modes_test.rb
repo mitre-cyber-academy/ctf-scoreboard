@@ -5,7 +5,7 @@ class TeamDisplayModesTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   def setup
-    @game = create(:active_game)
+    @game = create(:active_game, prizes_available: true)
   end
 
   test 'team creation header shows when visiting team creation page' do
