@@ -61,7 +61,9 @@ class Challenge < ApplicationRecord
   end
 
   def get_solved_challenge_for(team)
-    solved_challenges.find { |sc| sc.team_id.eql?(team&.id) }
+    # Persisted ones are saved in the database, this ensures that when we are getting
+    # solved challenges we only show ones that are successfully validated and saved
+    solved_challenges.filter(&:persisted?).find { |sc| sc.team_id.eql?(team&.id) }
   end
 
   def can_be_solved_by(team)
