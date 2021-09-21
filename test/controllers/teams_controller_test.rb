@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TeamsControllerTest < ActionController::TestCase
   def setup
-    @game = create(:active_game)
+    @game = create(:active_game, prizes_available: true)
   end
 
   test 'unauthenticated users should not be able to access new team page' do
@@ -74,6 +74,15 @@ class TeamsControllerTest < ActionController::TestCase
     assert_select "h4", "Team Division Status"
     assert_select "h3", "Pending User Invites"
     assert_select "h4", "Invite a Team Member"
+  end
+
+  test 'when prizes are not available prize eligibility status is hidden' do
+    @game.update(prizes_available: false)
+    user = create(:user_with_team)
+    sign_in user
+    get :show, params: { id: user.team }
+    assert_response :success
+    assert_select "h4", { count: 0, text: "Team Prize Eligibility Status" }
   end
 
   test 'authenticated users without a team cannot view teams show page' do

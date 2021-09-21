@@ -6,11 +6,10 @@ class TeamTest < ActiveSupport::TestCase
   end
 
   test 'creating a new team sets the team captain as a user' do
-    team = create(:team)
-    assert_equal team.users.first, team.team_captain
-    team.users.delete(team.team_captain)
-    team.save
-    assert_equal team.users.first, team.team_captain
+    team = build(:team)
+    assert_equal [], team.users
+    assert team.save
+    assert_equal team.team_captain, team.users.first
   end
 
   test 'deleting the last user on a team deletes the team' do

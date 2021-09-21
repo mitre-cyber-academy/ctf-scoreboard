@@ -10,7 +10,8 @@
       %th.span1= t('teams.users_table.team_leader_header')
       %th= t('teams.users_table.email_header')
       %th= t('teams.users_table.grade_header')
-      %th.span2= t('teams.users_table.prize_eligibility_header')
+      - if @game.prizes_available?
+        %th.span2= t('teams.users_table.prize_eligibility_header')
       %th= t('teams.users_table.remove_user_header')
       - if @team_captain
         %th
@@ -23,11 +24,12 @@
             = fa_icon 'check'
         %td=current.email
         %td=current.division
-        %td
-          -if current.compete_for_prizes
-            = t('teams.users_table.compete_for_prizes_true')
-          -else
-            = t('teams.users_table.compete_for_prizes_false')
+        - if @game.prizes_available?
+          %td
+            -if current.compete_for_prizes
+              = t('teams.users_table.compete_for_prizes_true')
+            -else
+              = t('teams.users_table.compete_for_prizes_false')
         %td
           - if current_user.can_remove?(current)
             = link_to team_user_leave_team_path(current.team, current), method: :delete, data: { confirm: t('teams.show.remove_user_confirm') } do
@@ -42,21 +44,23 @@
 %hr
 .container
   .row
-    .col-sm
-      %h4= t('teams.show.team_prize_eligibility_status')
-      = t('teams.show.eligible_currently')
-      - if @team.eligible?
-        = t('teams.show.eligible_true')
-      - else
-        %b= t('teams.show.eligible_false_not')
-        = t('teams.show.eligible_false')
+    - if @game.prizes_available?
+      .col-sm
+        %h4= t('teams.show.team_prize_eligibility_status')
+        = t('teams.show.eligible_currently')
+        - if @team.eligible?
+          = t('teams.show.eligible_true')
+        - else
+          %b= t('teams.show.eligible_false_not')
+          = t('teams.show.eligible_false')
     .col-sm
       %h4= t('teams.show.team_division_status')
       = t('teams.show.currently_selected_division', division: @team.division.name)
-      - if @team.appropriate_division_level?
-        = t('teams.show.division_true')
-      - else
-        = t('teams.show.division_false')
+      - if @game.prizes_available?
+        - if @team.appropriate_division_level?
+          = t('teams.show.division_true')
+        - else
+          = t('teams.show.division_false')
 %hr
 .container
   .row
