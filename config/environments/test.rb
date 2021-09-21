@@ -48,9 +48,18 @@ Rails.application.configure do
   # For testing use the inline queue adapter.
   config.active_job.queue_adapter = :inline
 
+  # Raise exceptions for disallowed deprecations.
+  config.active_support.disallowed_deprecation = :raise
+
+  # Tell Active Support which deprecation messages to disallow.
+  config.active_support.disallowed_deprecation_warnings = []
+
   # Raises error for missing translations.
-  # config.action_view.raise_on_missing_translations = true
+  # config.i18n.raise_on_missing_translations = true
 
   # Set default URL for mailer to mimic production
   config.action_mailer.default_url_options = { host: 'test.mitrecyberacademy.org' }
+
+  # Annotate rendered view with file names.
+  # config.action_view.annotate_rendered_view_with_filenames = true
 end
