@@ -10,27 +10,35 @@
   .card.card-body.bg-light
     .container
       .form-group.row
-        .col-md-3
+        .col-lg
           Team Name
           = f.text_field(                                                   |
               :filter_team_name,                                            |
               class: 'filterrific-periodically-observed form-control span3' |
             )                                                               |
-        .col-md-3
+        .col-lg
           Affiliation
           = f.text_field(                                                   |
               :filter_affiliation,                                          |
               class: 'filterrific-periodically-observed form-control span3' |
             )                                                               |
-        .col-md-3
-          Location
+        .col-lg
+          Country
           = f.select(                                 |
-              :location,                              |
-              @filterrific.select_options[:location], |
+              :country,                               |
+              @filterrific.select_options[:country],  |
               { :include_blank => '- Any -' },        |
               :class => "span2 form-control",         |
             )                                         |
-        .col-md-3
+        .col-lg#state
+          State
+          = f.select(                                 |
+              :state,                              |
+              @filterrific.select_options[:state],    |
+              { :include_blank => '- Any -' },        |
+              :class => "span2 form-control",         |
+            )                                         |
+        .col-lg
           Division
           = f.select(                                 |
               :division,                              |

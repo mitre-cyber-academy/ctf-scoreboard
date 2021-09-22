@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/jhund/filterrific.git
+  revision: 4cad74076b837329901a19c83f2458d7ca3b7b80
+  branch: 5.x
+  specs:
+    filterrific (5.2.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -148,7 +155,6 @@ GEM
     ffi (1.15.3)
     ffi-hunspell (0.6.1)
       ffi (~> 1.0)
-    filterrific (5.2.2)
     font-awesome-rails (4.7.0.7)
       railties (>= 3.2, < 7)
     formtastic (4.0.0)
@@ -418,7 +424,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   ffi-hunspell
-  filterrific
+  filterrific!
   font-awesome-rails
   formtastic
   groupdate

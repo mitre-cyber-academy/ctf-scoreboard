@@ -17,7 +17,7 @@
 // Loads all Bootstrap javascripts
 //= require popper
 //= require bootstrap
-//= require filterrific/filterrific-jquery
+//= require filterrific/filterrific
 //= require highcharts
 //= require chartkick
 
