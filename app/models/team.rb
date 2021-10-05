@@ -39,7 +39,8 @@ class Team < ApplicationRecord
     available_filters: %i[
       filter_team_name
       filter_affiliation
-      location
+      country
+      state
       division
     ]
   )
@@ -56,7 +57,11 @@ class Team < ApplicationRecord
     search_by(query, 'teams.affiliation')
   }
 
-  scope :location, lambda { |query|
+  scope :country, lambda { |query|
+    joins(:users).where(users: { country: query })
+  }
+
+  scope :state, lambda { |query|
     joins(:users).where(users: { state: query })
   }
 

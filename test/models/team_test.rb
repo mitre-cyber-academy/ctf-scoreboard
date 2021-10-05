@@ -99,9 +99,15 @@ class TeamTest < ActiveSupport::TestCase
     assert_equal results.first, team
   end
 
-  test 'filter location' do
+  test 'filter state' do
     team = create(:team)
-    results = Team.location(team.users.first.state)
+    results = Team.state(team.users.first.state)
+    assert_equal results.first, team
+  end
+
+  test 'filter country' do
+    team = create(:team)
+    results = Team.country(team.users.first.country)
     assert_equal results.first, team
   end
 

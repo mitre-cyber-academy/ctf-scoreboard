@@ -16,7 +16,9 @@ gem 'country_select', '~> 6.0'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'devise'
-gem 'filterrific'
+# Temporary until a filteriffic version with the native (non-jquery) version of filteriffic is released
+# https://github.com/jhund/filterrific/pull/203
+gem 'filterrific', github: 'jhund/filterrific', branch: '5.x'
 gem 'font-awesome-rails'
 gem 'formtastic'
 gem 'groupdate'
