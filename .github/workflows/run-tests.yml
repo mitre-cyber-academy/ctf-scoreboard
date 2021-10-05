@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-20.04
     services:
       db:
-        image: postgres:12
+        image: postgres:13
         env:
           POSTGRES_HOST_AUTH_METHOD: trust
         ports:

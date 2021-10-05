@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   db:
-    image: postgres:12
+    image: postgres:13
     restart: unless-stopped
     volumes:
       - scoreboard_data:/var/lib/postgresql/data
