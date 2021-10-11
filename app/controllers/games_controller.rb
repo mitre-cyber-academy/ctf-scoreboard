@@ -5,7 +5,7 @@ require 'zip'
 class GamesController < ApplicationController
   include ApplicationModule
 
-  before_action :load_game, only: %i[terms_and_conditions terms_of_service privacy_notice]
+  before_action :load_game, only: %i[terms_of_service privacy_notice]
 
   before_action only: %i[completion_certificate_template] do
     load_game(:users)
@@ -29,8 +29,6 @@ class GamesController < ApplicationController
   before_action :load_message_count
 
   def teams; end
-
-  def terms_and_conditions; end
 
   def terms_of_service; end
 

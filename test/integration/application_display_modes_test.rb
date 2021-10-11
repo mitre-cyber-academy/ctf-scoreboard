@@ -12,7 +12,6 @@ class ApplicationDisplayModesTest < ActionDispatch::IntegrationTest
       stop: Time.now.utc + 5.days,
       description: 'Example Description',
       terms_of_service: 'Example ToS',
-      terms_and_conditions: 'Example TAC',
       organization: 'Example Organization',
       contact_url: 'https://example.com',
       footer: 'Example Footer',

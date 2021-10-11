@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_21_184637) do
+ActiveRecord::Schema.define(version: 2021_10_11_144501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -158,7 +158,6 @@ ActiveRecord::Schema.define(version: 2021_09_21_184637) do
     t.boolean "enable_completion_certificates", default: false
     t.oid "completion_certificate_template"
     t.text "prizes_text"
-    t.text "terms_and_conditions"
     t.integer "board_layout", default: 0, null: false
     t.boolean "registration_enabled", default: true, null: false
     t.boolean "request_team_location", default: false, null: false
