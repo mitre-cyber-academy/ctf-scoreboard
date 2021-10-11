@@ -347,8 +347,6 @@ en:
       no_notice: There is no privacy notice associated with this game.
     terms_of_use:
       terms_of_service: Terms of Service
-      terms_and_conditions: Terms and Conditions
-      no_terms_and_conditions: There are no terms and conditions associated with this game.
       no_terms_of_service: There are no terms of service associated with this game.
   messages:
     messages_header: Messages

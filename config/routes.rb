@@ -46,7 +46,6 @@ Rails.application.routes.draw do
     get :completion_certificate_template
     get :privacy_notice
     get :terms_of_service
-    get :terms_and_conditions
     resources :messages, only: [:index]
     resources :achievements, only: [:index]
     resources :divisions, only: [:index]
