@@ -77,7 +77,6 @@ RailsAdmin.config do |config|
       field :footer
       field :privacy_notice
       field :terms_of_service
-      field :terms_and_conditions
     end
   end
 
@@ -444,7 +443,6 @@ RailsAdmin.config do |config|
       field :contact_url
       field :recruitment_text
       field :terms_of_service
-      field :terms_and_conditions
     end
     list do
       field :title
@@ -539,7 +537,6 @@ RailsAdmin.config do |config|
       field :email
       field :affiliation
       field :year_in_school.to_s
-      field :age
       field :area_of_study
       field :location
       field :personal_email
@@ -562,7 +559,6 @@ RailsAdmin.config do |config|
     list do
       field :full_name
       field :email
-      field :age
       field :current_sign_in_at
       field :sign_in_count
       field :interested_in_employment
