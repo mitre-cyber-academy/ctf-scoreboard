@@ -32,7 +32,7 @@
           = t('home.index.login_or_register')
         - else
           = t('home.index.login')
-      .dropdown-menu{"aria-labelledby" => "navbarDropdown"}
+      .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "navbarDropdown"}
         %a.dropdown-item{:href => new_user_session_path}= t('application.log_in')
         - if @game.registration_enabled
           .dropdown-divider
