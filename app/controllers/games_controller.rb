@@ -12,7 +12,7 @@ class GamesController < ApplicationController
     deny_if_not_admin
   end
   before_action only: %i[summary teams] do
-    load_game(:divisions)
+    load_game(divisions: :teams)
     load_users_and_divisions
   end
   before_action only: %i[show] do
