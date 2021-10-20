@@ -11,9 +11,10 @@ class GamesController < ApplicationController
     load_game(:users)
     deny_if_not_admin
   end
-  before_action only: %i[summary teams] do
+  before_action only: %i[summary] do
     load_game(divisions: :teams)
     load_users_and_divisions
+    load_game_graph_data
   end
   before_action only: %i[show] do
     deny_users_to_non_html_formats
@@ -25,10 +26,7 @@ class GamesController < ApplicationController
     )
   end
   before_action :filter_access_before_game_open
-  before_action :load_game_graph_data, only: %i[summary]
   before_action :load_message_count
-
-  def teams; end
 
   def terms_of_service; end
 

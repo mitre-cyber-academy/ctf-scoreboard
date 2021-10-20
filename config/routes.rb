@@ -57,7 +57,6 @@ Rails.application.routes.draw do
   end
 
   get '/game/summary' => 'games#summary'
-  get '/game/teams' => 'games#teams'
 
   resources :file_submissions, only: [] do
     member do
