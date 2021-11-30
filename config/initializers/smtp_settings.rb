@@ -5,6 +5,8 @@
 # loaded at that point.
 
 if Rails.env.production? && Settings.smtp.enabled
+  raise 'Cannot enable SMTP without an EXTERNAL_URL set' unless Settings.external_url
+  Rails.application.config.action_mailer.default_url_options = { host: Settings.external_url }
   Rails.application.config.action_mailer.delivery_method = :smtp
 
   ActionMailer::Base.delivery_method = :smtp
