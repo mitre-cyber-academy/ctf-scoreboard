@@ -98,7 +98,7 @@ class GamesController < ApplicationController
 
   def prepare_teams_x_challenges_table
     @headings = [
-      OpenStruct.new(name: I18n.t('game.summary.challenge_table.teams_header')), @standard_challenges
+      Struct.new(:name).new(I18n.t('game.summary.challenge_table.teams_header')), @standard_challenges
     ].flatten
     @teams = @game&.teams
   end
@@ -113,7 +113,7 @@ class GamesController < ApplicationController
     @pentest_challenges = @game&.pentest_challenges
     ActiveRecord::Precounter.new(@pentest_challenges).precount(:solved_challenges)
     @pentest_table_heading = [
-      OpenStruct.new(name: I18n.t('game.summary.challenge_table.teams_header')), @game&.pentest_challenges
+      Struct.new(:name).new(I18n.t('game.summary.challenge_table.teams_header')), @game&.pentest_challenges
     ].flatten
     @teams_with_assoc = @game.teams_associated_with_flags_and_pentest_challenges
   end
