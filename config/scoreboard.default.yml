@@ -3,6 +3,7 @@
 # Any changes will requre a restart of the scoreboard service.
 
 defaults: &defaults
+  external_url: <%= ENV['EXTERNAL_URL'] %>
   smtp:
     enabled: <%= ActiveModel::Type::Boolean.new.cast(ENV['SCOREBOARD_ENABLE_SMTP']) %>
     settings:
