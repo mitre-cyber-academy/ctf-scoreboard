@@ -15,7 +15,7 @@ filterifficShowHideState = () ->
 
 window.runOnPageLoad = () ->
   showHideState()
-  filterifficShowHideState()
+  # filterifficShowHideState()
   $('#filterrific_country').change(filterifficShowHideState)
   $('#countries_select').change(showHideState)
   if $('#user_state').val() == "NA" or $('#user_year_in_school').val() == "0"

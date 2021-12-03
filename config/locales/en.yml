@@ -8,6 +8,10 @@ en:
               blank: You cannot invite your invisible friend.
               invalid: address is not valid.
               uniqueness: Email address previously invited to team.
+        user:
+          attributes:
+            password:
+              password_reqs: 'must be at least 8 characters long and include a lower case character, upper case character, digit, and symbol'
   achievements:
     index:
       header: Achievements
