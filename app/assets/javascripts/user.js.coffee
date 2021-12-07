@@ -8,10 +8,11 @@ filterifficShowHideState = () ->
   if $('#filterrific_country').val() == "US"
     $('#state').show()
   else
-    $('#filterrific_state').val('')
-    document.getElementById("filterrific_state")
-            .dispatchEvent(new Event("change"))
-    $('#state').hide()
+    if $('#filterrific_state').length
+      $('#filterrific_state').val('')
+      document.getElementById("filterrific_state")
+              .dispatchEvent(new Event("change"))
+      $('#state').hide()
 
 window.runOnPageLoad = () ->
   showHideState()

@@ -27,7 +27,7 @@ class User < ApplicationRecord
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable,
-         :rememberable, :trackable, :confirmable, :secure_validatable
+         :rememberable, :trackable, :confirmable, :validatable
 
   # These are things we require user to have but do not require of admins.
   with_options unless: :admin? do
