@@ -27,7 +27,7 @@ class User < ApplicationRecord
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable,
-         :rememberable, :trackable, :confirmable, :secure_validatable
+         :rememberable, :trackable, :confirmable, :validatable
 
   # These are things we require user to have but do not require of admins.
   with_options unless: :admin? do
@@ -39,8 +39,6 @@ class User < ApplicationRecord
     validates :full_name, :affiliation, presence: true, length: { maximum: 255 }, obscenity: true
     validates :state, presence: true, if: -> { country.eql? 'US' }
     validates :year_in_school, inclusion: { in: [0, 9, 10, 11, 12, 13, 14, 15, 16] }, presence: true
-    validates :password, confirmation: true, length: { minimum: 8 }
-    validates :password_confirmation, presence: true
     validates :age_requirement_accepted, presence: true
   end
 
