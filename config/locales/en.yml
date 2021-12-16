@@ -409,8 +409,8 @@ en:
         Someone has requested a link to change your password, and you can do
         this through the link below.
       change_password_link: Change my password
-      change_password_line_2: 'If you did not request this, please ignore this email.'
-      change_password_line_3: >-
+      reset_password_line_2: 'If you did not request this, please ignore this email.'
+      reset_password_line_3: >-
         Your password will not change until you access the link above and create
         a new one.
     confirmation:
