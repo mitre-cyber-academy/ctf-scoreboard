@@ -175,7 +175,7 @@ GEM
       actionpack (>= 5.2.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    groupdate (5.2.3)
+    groupdate (5.2.4)
       activesupport (>= 5)
     haml (5.2.2)
       temple (>= 0.8.0)
