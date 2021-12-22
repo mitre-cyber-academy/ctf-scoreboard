@@ -45,8 +45,8 @@ Rails.application.routes.draw do
   resource :game, only: %i[show] do
     get :completion_certificate_template
     get :privacy_notice
-    get :terms_of_service
     get :summary
+    get :terms_of_service
     resources :messages, only: [:index]
     resources :achievements, only: [:index]
     resources :divisions, only: [:index]
