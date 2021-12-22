@@ -107,7 +107,7 @@ class TeamsControllerTest < ActionController::TestCase
 
   test 'team summary page correctly redirects if the team does not exist' do
     get :summary, params: { id: '9999999999999' }
-    assert_redirected_to game_summary_path
+    assert_redirected_to summary_game_path
     assert_equal I18n.t('teams.does_not_exist'), flash[:alert]
   end
 

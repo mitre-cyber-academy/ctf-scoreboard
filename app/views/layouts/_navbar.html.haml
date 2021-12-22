@@ -13,7 +13,7 @@
       %li.nav-item
         %a.nav-link{:href => game_achievements_path, :class => active_navbar?(game_achievements_path)}= t('application.navbar.achievements')
       %li.nav-item
-        %a.nav-link{:href => game_summary_path, :class => active_navbar?(game_summary_path)}= t('application.navbar.summary')
+        %a.nav-link{:href => summary_game_path, :class => active_navbar?(summary_game_path)}= t('application.navbar.summary')
       - unless @game.nil?
         - unless @game.contact_url.nil?
           %li.nav-item

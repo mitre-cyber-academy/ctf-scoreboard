@@ -128,7 +128,7 @@ class TeamsController < ApplicationController
   def load_team
     @team = Team.find_by(id: params[:id].to_i)
     @solved_challenges = @team.solved_challenges unless @team.nil?
-    redirect_back(fallback_location: game_summary_path, alert: I18n.t('teams.does_not_exist')) unless @team
+    redirect_back(fallback_location: summary_game_path, alert: I18n.t('teams.does_not_exist')) unless @team
   end
 
   def load_admin_stats

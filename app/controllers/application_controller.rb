@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   def user_root_path
     if @game&.open? && current_user&.on_a_team?
-      game_summary_path
+      summary_game_path
     elsif current_user&.on_a_team?
       team_path(current_user.team_id)
     else
