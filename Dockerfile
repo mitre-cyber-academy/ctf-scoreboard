@@ -10,7 +10,7 @@ RUN apt update
 
 RUN apt install -y libpq-dev
 
-RUN bundle config set without 'development test'; bundle install
+RUN gem update --system; bundle config set without 'development test'; bundle install
 
 COPY . .
 
