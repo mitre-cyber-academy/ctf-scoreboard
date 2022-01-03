@@ -14,7 +14,7 @@ See [wiki instructions](https://github.com/mitre-cyber-academy/ctf-scoreboard/wi
 
 #### Testing
 
-Once you have installed the application using the development steps shown above, the tests can be run by running `bundle exec rake test`.
+Once you have installed the application using the development steps shown above, the tests can be run by running `bundle exec rails test`.
 
 To generate a local code coverage report in `coverage/index.html` set the `$LOCAL_COVERAGE` environment variable: `export LOCAL_COVERAGE=true`
 

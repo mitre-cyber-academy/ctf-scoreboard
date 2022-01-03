@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   resource :game, only: %i[show] do
     get :completion_certificate_template
     get :privacy_notice
+    get :summary
     get :terms_of_service
     resources :messages, only: [:index]
     resources :achievements, only: [:index]
@@ -55,8 +56,6 @@ Rails.application.routes.draw do
       resources :challenges, only: %i[show update]
     end
   end
-
-  get '/game/summary' => 'games#summary'
 
   resources :file_submissions, only: [] do
     member do
