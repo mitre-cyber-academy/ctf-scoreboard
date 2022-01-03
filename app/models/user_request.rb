@@ -11,8 +11,6 @@ class UserRequest < ApplicationRecord
 
   validates :status, inclusion: { in: statuses.keys, allow_blank: true }
 
-  validates :team, :user, presence: true
-
   validate :uniqueness_of_pending_request, on: :create
 
   scope :pending_requests, -> { where(status: 'Pending') }

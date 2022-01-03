@@ -57,9 +57,9 @@ module FlagChallengeShareModule
   end
 
   def calc_offensive_shares_for_solved_challenges
-    solved_challenges.map do |solved_challenge|
+    solved_challenges.to_h do |solved_challenge|
       [solved_challenge.team, calc_shares(first_solve_time, solved_challenge.created_at)]
-    end.to_h
+    end
   end
 
   # This takes the challenge first solve time and uses this information to calculate
