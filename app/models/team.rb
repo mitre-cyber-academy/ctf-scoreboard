@@ -145,9 +145,9 @@ class Team < ApplicationRecord
   end
 
   def calc_defensive_points
-    defense_flags.map do |flag|
+    defense_flags.to_h do |flag|
       [flag.name, flag.calc_defensive_points.round]
-    end.to_h
+    end
   end
 
   def submitted_flags_per_hour(group_method)
