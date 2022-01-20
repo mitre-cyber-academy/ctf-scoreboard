@@ -24,6 +24,7 @@ class Game < ApplicationRecord
     has_many :standard_solved_challenges, through: :divisions
     has_many :pentest_solved_challenges, through: :divisions
     has_many :solved_challenges, through: :divisions
+    has_many :pages
   end
 
   enum board_layout: { jeopardy: 0, teams_x_challenges: 1, multiple_categories: 2, title_and_description: 3 }

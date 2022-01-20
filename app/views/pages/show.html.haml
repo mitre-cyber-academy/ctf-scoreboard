@@ -1,0 +1,11 @@
+- content_for :header do
+  - if @page.title.blank?
+    = t('pages.show.no_title')
+  - else
+    = @page.title
+
+%div{ :style => "margin-bottom:40px;" }
+  - if @page.body.blank?
+    = t('pages.show.no_body')
+  - else
+    = sanitize(Kramdown::Document.new(@page.body, :input => 'markdown').to_html)

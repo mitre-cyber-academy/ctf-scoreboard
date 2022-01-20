@@ -351,6 +351,10 @@ en:
   messages:
     messages_header: Messages
     no_messages: No Messages
+  pages:
+    show:
+      no_title: Page
+      no_body: This page is empty
   home:
     index:
       description: Description

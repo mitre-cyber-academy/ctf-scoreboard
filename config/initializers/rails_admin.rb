@@ -594,6 +594,30 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model 'Page' do
+    edit do
+      field :title
+      field :body
+      field :path do
+        label 'mitrestemctf.org/game/pages/'
+      end
+      field :game
+    end
+    list do
+      field :title
+      field :path do
+        label 'Link'
+        pretty_value do
+          v = bindings[:view]
+          page = bindings[:object]
+          url = page.path
+          v.link_to(url, '/game/pages/' + url)
+        end
+      end
+      field :game
+    end
+  end
+
   # If you want to track changes on your models:
   # config.audit_with :history, 'User'
 

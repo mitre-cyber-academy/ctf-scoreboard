@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_11_144501) do
+ActiveRecord::Schema.define(version: 2022_01_18_221736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -195,6 +195,17 @@ ActiveRecord::Schema.define(version: 2021_10_11_144501) do
     t.index ["reset_password_token"], name: "index_models_on_reset_password_token", unique: true
   end
 
+  create_table "pages", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "game_id", null: false
+    t.string "path", null: false
+    t.index ["game_id", "path"], name: "index_pages_on_game_id_and_path", unique: true
+    t.index ["game_id"], name: "index_pages_on_game_id"
+  end
+
   create_table "rails_admin_histories", id: :serial, force: :cascade do |t|
     t.text "message"
     t.string "username"
@@ -236,8 +247,8 @@ ActiveRecord::Schema.define(version: 2021_10_11_144501) do
     t.integer "division_id"
     t.boolean "eligible", default: false
     t.integer "slots_available", default: 0
-    t.boolean "looking_for_members", default: true, null: false
     t.string "team_location", default: ""
+    t.boolean "looking_for_members", default: true, null: false
     t.index "lower((team_name)::text)", name: "index_teams_on_team_name_unique", unique: true
     t.index ["division_id"], name: "index_teams_on_division_id"
     t.index ["team_captain_id"], name: "index_teams_on_team_captain_id"
@@ -331,6 +342,7 @@ ActiveRecord::Schema.define(version: 2021_10_11_144501) do
   add_foreign_key "file_submissions", "challenges"
   add_foreign_key "file_submissions", "users"
   add_foreign_key "flags", "teams"
+  add_foreign_key "pages", "games"
   add_foreign_key "submitted_flags", "flags"
   add_foreign_key "teams", "divisions"
 end
