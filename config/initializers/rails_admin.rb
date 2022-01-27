@@ -597,7 +597,12 @@ RailsAdmin.config do |config|
   config.model 'Page' do
     edit do
       field :title
-      field :body
+      field :body do
+        partial "markdown_input"
+      end
+      field :preview do
+        partial "markdown_output"
+      end
       field :path do
         label 'mitrestemctf.org/game/pages/'
       end
