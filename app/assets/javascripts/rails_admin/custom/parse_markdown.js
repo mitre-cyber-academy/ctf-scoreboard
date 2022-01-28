@@ -1,5 +1,5 @@
 $(document).on('rails_admin.dom_ready', function() {
-  if($('.markdown-input').length && $('.markdown-output').length){
+  if($('.markdown-input').length && $('.markdown-output').length) {
     const input = $('.markdown-input')[0]
     const output = $('.markdown-output')[0]
     output.innerHTML = marked.parse(input.value)
