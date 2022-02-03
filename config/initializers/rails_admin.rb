@@ -604,7 +604,7 @@ RailsAdmin.config do |config|
         partial "markdown_output"
       end
       field :path do
-        label 'mitrestemctf.org/game/pages/'
+        partial "page_url"
       end
       field :game
     end
