@@ -131,6 +131,9 @@ en:
       pending_invites_false: There are no pending invitations to join your team at this time.
       pending_requests_header: Pending User Requests
       invite_member_header: Invite a Team Member
+      open_invite: Use an open invite code
+      direct_invite: Or send a direct invite
+      generate_code: Generate New Code
       pending_invites_header: Pending User Invites
       eligible: 'Yes'
       ineligible: 'No'
