@@ -1,8 +1,13 @@
 require "test_helper"
 
-class PagesControllerTest < ActionDispatch::IntegrationTest
+class PagesControllerTest < ActionController::TestCase
+
+  def setup
+    create(:active_game)
+  end
+
   test "should get index" do
-    get pages_index_url
+    get :index
     assert_response :success
   end
 end
