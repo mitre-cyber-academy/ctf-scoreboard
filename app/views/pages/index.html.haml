@@ -1,9 +1,8 @@
 - content_for :header do
   = t('pages.index.pages_header')
 - if @pages.count == 0
-  .zero-items-text
-  %h4= t('pages.index.no_pages')
+  %h4{ class: "zero-items-text" }= t('pages.no_pages')
 - else
   - @pages.each do |page|
     %div.page
-      %a= link_to page.title, game_page_path(page.path)
+      = link_to page.title, game_page_path(page.path)
