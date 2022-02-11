@@ -28,7 +28,7 @@ class ApplicationDisplayModesTest < ActionDispatch::IntegrationTest
     assert_select "a[href=#{game_path.dump}]", I18n.t('application.navbar.challenges'), "Challenges should show in navigation bar"
     assert_select "a[href=#{game_messages_path.dump}]", I18n.t('application.navbar.messages'), "Messages should show in navigation bar"
     assert_select "a[href=#{game_achievements_path.dump}]", I18n.t('application.navbar.achievements'), "Achievements should show in navigation bar"
-    assert_select "a[href=#{game_summary_path.dump}]", I18n.t('application.navbar.summary'), "Summary should show in navigation bar"
+    assert_select "a[href=#{summary_game_path.dump}]", I18n.t('application.navbar.summary'), "Summary should show in navigation bar"
     assert_select "a[href=#{@game.contact_url.dump}]", I18n.t('application.navbar.contact'), "Contact should show in navigation bar if contact_url is defined in game"
 
     assert_select 'a[class=nav-link\ dropdown-toggle]', I18n.t('home.index.login_or_register'), "Log in / Register should show in navigation bar while not signed in"
