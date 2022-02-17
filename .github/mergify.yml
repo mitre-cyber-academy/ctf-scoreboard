@@ -9,7 +9,6 @@ pull_request_rules:
       - "#approved-reviews-by>=1"
       - base=master
       - label=ready-to-merge
-      - check-success=Build
     actions:
         queue:
           name: default
@@ -19,7 +18,6 @@ pull_request_rules:
       - "#approved-reviews-by>=1"
       - base=master
       - label=dependencies
-      - check-success=Build
     actions:
         queue:
           name: default
