@@ -13,7 +13,7 @@ class UserInvite < ApplicationRecord
 
   validate :uniqueness_of_invite, on: :create
 
-  validates :email, :team, presence: true
+  validates :email, presence: true
 
   validates :status, inclusion: { in: statuses.keys }
 
