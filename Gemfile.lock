@@ -253,7 +253,7 @@ GEM
       rack
       rake (>= 0.8.1)
     pdf-core (0.9.0)
-    pg (1.2.3)
+    pg (1.3.3)
     popper_js (1.14.7)
     prawn (2.4.0)
       pdf-core (~> 0.9.0)
