@@ -16,14 +16,14 @@ module UserHelper
 
   def country_enum
     countries = ISO3166::Country.all.map do |country|
-      [country.name, country.alpha2]
+      [country.iso_short_name, country.alpha2]
     end
 
     countries.sort.sort_by { |_name, code| code == 'US' ? 0 : 1 }
   end
 
   def state_enum
-    ISO3166::Country.find_country_by_name('United States').states.map { |key, struct| [struct.name, key] }
+    ISO3166::Country.find_country_by_unofficial_names('United States').states.map { |key, struct| [struct.name, key] }
   end
 
   def required_for_update?(on_update_page)
