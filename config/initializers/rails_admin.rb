@@ -2,6 +2,7 @@
 # See github.com/sferik/rails_admin for more informations
 
 RailsAdmin.config do |config|
+  config.asset_source = :sprockets
   ################  Global configuration  ################
 
   # Set the admin name here (optional second array element will appear in red). For example:
