@@ -2,7 +2,9 @@
 # See github.com/sferik/rails_admin for more informations
 
 RailsAdmin.config do |config|
+  # Needed for Rails Admin 3.0 to avoid Webpacker causing errors
   config.asset_source = :sprockets
+
   ################  Global configuration  ################
 
   # Set the admin name here (optional second array element will appear in red). For example:
