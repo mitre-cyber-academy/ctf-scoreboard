@@ -67,10 +67,7 @@ end
 # in production environments by default.
 group :assets do
   gem 'coffee-rails'
-  # sass-rails 6.0 causes a stacktrace intermittently similar to
-  # https://github.com/sass/sassc-rails/issues/122
-  # Not worth upgrading, just go straight to webpacker
-  gem 'sass-rails', '~> 5.0'
+  gem 'sass-rails', '>= 5'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'mini_racer', platforms: :ruby
   gem 'uglifier'
