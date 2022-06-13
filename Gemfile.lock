@@ -433,7 +433,6 @@ DEPENDENCIES
   rubocop-rails
   rubyzip
   sass-rails (>= 5)
-  sassc-rails
   sentry-raven
   settingslogic (~> 2.0.9)
   simplecov
