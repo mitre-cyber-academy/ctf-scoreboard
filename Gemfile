@@ -72,4 +72,3 @@ group :assets do
   gem 'mini_racer', platforms: :ruby
   gem 'uglifier'
 end
-gem 'sassc-rails'
