@@ -125,7 +125,7 @@ GEM
       countries (~> 4.2)
       sort_alphabetical (~> 1.1)
     crass (1.0.6)
-    delayed_job (4.1.10)
+    delayed_job (4.1.11)
       activesupport (>= 3.0, < 8.0)
     delayed_job_active_record (4.1.7)
       activerecord (>= 3.0, < 8.0)
