@@ -47,6 +47,7 @@ Rails.application.routes.draw do
     get :privacy_notice
     get :summary
     get :terms_of_service
+    resources :pages, only: %i[index show]
     resources :messages, only: [:index]
     resources :achievements, only: [:index]
     resources :divisions, only: [:index]
